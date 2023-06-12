@@ -1,4 +1,4 @@
-# Facil Market Proyect
+# Easy Market Proyect
 Final proyect at Henry Bootcamp to Marketplace app ♥
 
 <hr>
