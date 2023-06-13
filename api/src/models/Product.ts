@@ -1,4 +1,4 @@
-import {Model, Table, Column, DataType, BelongsToMany, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript"
+import {Model, Table, Column, DataType, BelongsToMany,BelongsTo, HasMany, ForeignKey  } from "sequelize-typescript"
 import Categories from "./Category";
 import Users from "./User";
 import ProductCategories from "./relations/ProductCategories";
@@ -64,17 +64,20 @@ class Products extends Model {
 
     })
     price!: number
-
-    @ForeignKey(() => Users)
+    
+    
     //relaciones
-    @BelongsToMany(() => Categories, () => ProductCategories, "productId",  'categoryId')
-    categories!: Categories[];
-    async addCategory(category: Categories): Promise<void> {
-      await this.$add("categories", category);
-    } 
 
-    @BelongsTo(() => Users)
-    user!: Users;
+    
+    @BelongsToMany(() => Categories, () => ProductCategories)
+    categories!: Categories[];
+    // async addCategory(category: Categories): Promise<void> {
+    //     await this.$add("categories", category);
+    // } 
+    
+    @ForeignKey(() => Users)
+    @BelongsTo(() => Users,{foreignKey: 'userId', as: 'productUser' })
+  
 
     @HasMany(()=> Reviews)
     reviews!: Reviews

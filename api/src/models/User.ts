@@ -1,6 +1,6 @@
-import {Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
+import {Model, Table, Column, DataType, HasMany} from "sequelize-typescript";
 import Products from "./Product";
-// import Reviews from "./Reviews";
+import Reviews from "./Reviews";
 
 @Table({
     tableName: 'users',
@@ -45,12 +45,13 @@ class Users extends Model {
     })
     image!: string
 
-  
+    
     @HasMany(() => Products)
-    atProducts!: Products;
+    products!: Products;
 
-    // @HasMany(()=> Reviews)
-    // reviews!: Reviews;
+    
+    @HasMany(()=> Reviews)
+    reviews!: Reviews;
 }
 
 export default Users

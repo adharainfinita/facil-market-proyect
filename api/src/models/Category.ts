@@ -24,9 +24,9 @@ class Categories extends Model {
 
     @BelongsToMany(() => Products, () => ProductCategories)
     products!: Products[];
-    async addProducts(product: Products): Promise<void> {
-      await this.$add("products", product);
-    }
+    // async addProducts(product: Products): Promise<void> {
+    //   await this.$add("products", product);
+    // }
 }
 
 

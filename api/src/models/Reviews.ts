@@ -21,12 +21,13 @@ class Reviews extends Model {
     text!: string
 
     @ForeignKey(() => Users)
+    @BelongsTo(() => Users, {as:"userReview"})
+    userID!: Users;
 
-    @BelongsTo(() => Users)
-    user!: Users;
-
-    @BelongsTo(() => Products)
-    products!: Products;
+    
+    @ForeignKey(()=> Products)
+    @BelongsTo(() => Products, { as:"productReview"})
+    productID!: Products;
 
 }
 

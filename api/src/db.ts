@@ -26,7 +26,7 @@ const database = new Sequelize(
             host: DB_HOST,
             port: Number(DB_PORT),
             dialect: 'postgres',
-            models: [Users, Products,Categories, Reviews, ProductCategories],
+            models: [Products,Categories, ProductCategories, Reviews, Users],
         logging: false,
         native: false,
     },
