@@ -1,20 +1,25 @@
+import { products } from "../utils/data"
+
 function ProductCard() {
     
     return(
        <>
-       <div>
-        <img src="https://gsmphone.co/wp-content/uploads/2022/12/iPhone14Pro-1_900x.webp" alt="" />
-        <div>
-            <h3>Nombre del producto</h3>
+       {products.map((product) => {
+        return(
+        <div key={product.id}>
+            <img src="https://gsmphone.co/wp-content/uploads/2022/12/iPhone14Pro-1_900x.webp" alt={product.nombre} />
             <div>
-                <p>Categories</p>
+                <h3>{product.nombre}</h3>
+                <p>Location</p>
+                <div>
+                    <p>{product.categoria}</p>
+                </div>
+                <h4>{product.precio}</h4>
             </div>
-            <h4>$1.000</h4>
         </div>
-       </div>
-       {2+2 ? <div>
-        <button>Active</button>
-        </div> : ''}
+        )
+        })}
+       
        </>
     )
   }
