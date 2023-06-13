@@ -1,20 +1,32 @@
-import { products } from "../utils/data"
+interface Product{
+    id: number,
+    title: string 
+    price: number
+    category: string
+    description: string
+    image: string
+}
 
-function ProductCard() {
-    
+type productList = {
+    products: Array<Product>
+}
+
+
+function ProductCard(props: productList) {
+    const products =  props.products
     return(
        <>
        {products.map((product) => {
         return(
         <div key={product.id}>
-            <img src="https://gsmphone.co/wp-content/uploads/2022/12/iPhone14Pro-1_900x.webp" alt={product.nombre} />
+            <img src={product.image} alt={product.title} />
             <div>
-                <h3>{product.nombre}</h3>
+                <h3>{product.title}</h3>
                 <p>Location</p>
                 <div>
-                    <p>{product.categoria}</p>
+                    <p>{product.category}</p>
                 </div>
-                <h4>{product.precio}</h4>
+                <h4>{product.price}</h4>
             </div>
         </div>
         )
