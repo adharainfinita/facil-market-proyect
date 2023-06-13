@@ -1,8 +1,9 @@
 
 // UI Settings.
-
+@import "./base/variables";
+@import "./base/settings";
 
 // Components.
-
+@import "./components/navbar";
 @import "./components/footer";
 @import "./components/terms"

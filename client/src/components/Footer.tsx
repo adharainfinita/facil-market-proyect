@@ -9,25 +9,19 @@ const Footer: React.FC = () => {
             <h2>Sobre Nosotros</h2>
             <ul>
               <li>email: acaVaUnEmail@outlook.com</li>
-              <li><a href="/productos">quienes somos</a></li>
-              <li>donennos tenemos hambre</li>
+              <li><a href="/productos" className="footer-link">quienes somos</a></li>
             </ul>
           </div>
           <div className="footer-Help">
             <h2>Ayuda</h2>
             <ul>
               <li>
-                <a href="/ayuda" target="_blank">
-                  Comprar
+                <a href="/terminos_y_condiciones" className="footer-link">
+                  Términos y Condiciones
                 </a>
               </li>
               <li>
-                <a href="/ayuda" target="_blank">
-                  Vender
-                </a>
-              </li>
-              <li>
-                <a href="/preguntas_precuentes" target="_blank">
+                <a href="/preguntas_precuentes" className="footer-link" target="_blank">
                   Preguntas Frecuentes
                 </a>
               </li>
@@ -37,18 +31,13 @@ const Footer: React.FC = () => {
             <h2>Seguridad</h2>
             <ul>
               <li>
-                <a href="https://www.argentina.gob.ar/economia/comercio/defensadelconsumidor" target="_blank">
+                <a href="https://www.argentina.gob.ar/economia/comercio/defensadelconsumidor" className="footer-link" target="_blank">
                   Defensa al Consumidor
                 </a>
               </li>
               <li>
-                <a href="/privacidad" target="_blank">
+                <a href="/privacidad" className="footer-link" target="_blank">
                   Privacidad
-                </a>
-              </li>
-              <li>
-                <a href="/terminos_y_condiciones">
-                  Términos y Condiciones
                 </a>
               </li>
             </ul>
