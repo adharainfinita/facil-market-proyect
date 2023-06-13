@@ -1,0 +1,27 @@
+/* Agrega esto a tu archivo de estilos CSS */
+.footer{
+    background-color: grey;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .footer-import {
+    display: flex;
+    flex-basis: 100%;
+  }
+  
+  .footer-contact,
+  .footer-Help,
+  .footer-security {
+    flex-basis: calc(33.33% - 10px);
+    margin-right: 10px;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

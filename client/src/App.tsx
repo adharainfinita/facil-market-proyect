@@ -1,7 +1,15 @@
+import Footer from "./components/Footer"
+import { Route, Routes } from "react-router-dom";
+import Terms from "./components/Terms";
+
 function App() {
   return (
     <>
-      <h1>Facil-Market</h1>
+    <Routes>
+
+    <Route path="/" element={<Footer/>} />
+    <Route path="/terminos_y_condiciones" element={<Terms/>} />
+      </Routes>
     </>
   );
 }
