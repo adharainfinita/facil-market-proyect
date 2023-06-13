@@ -1,0 +1,63 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #111;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    color: #111;
+
+    li:nth-child(2) {
+      gap: 2px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__icon-person {
+    font-size: 1.8rem;
+    border: 2px solid #1D428A;
+    border-radius: 50%;
+    color: #79BE21;
+  }
+  &__button {
+    box-shadow:inset 0px 1px 0px 0px #caefab;
+    background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background-color:#77d42a;
+    border-radius:6px;
+    border:1px solid #268a16;
+    display:inline-block;
+    cursor:pointer;
+    color:#306108;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #aade7c;
+
+    &:hover {
+      background:linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
+      background-color:#5cb811;
+    }
+    &:active {
+      position:relative;
+      top:1px;
+    }
+  }
+}
