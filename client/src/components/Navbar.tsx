@@ -1,5 +1,5 @@
 import logo from "../assets/marketplace_logo.png";
-import { RxPerson } from "react-icons/rx";
+// import { RxPerson } from "react-icons/rx";
 import { BsChevronDown } from "react-icons/bs";
 
 function Navbar() {
@@ -16,11 +16,11 @@ function Navbar() {
           Categorías <BsChevronDown />
         </li>
         <li>Nosotros</li>
+        <button className="nav__button-sell">Vender</button>
       </ul>
 
       <div className="nav__user">
-        <RxPerson className="nav__icon-person" />
-        <button className="nav__button">Vender</button>
+        <button className="nav__button-login">Iniciar Sesión</button>
       </div>
     </nav>
   );
