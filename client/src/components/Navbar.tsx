@@ -1,22 +1,28 @@
 import logo from "../assets/marketplace_logo.png";
-// import { RxPerson } from "react-icons/rx";
 import { BsChevronDown } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <nav className="nav">
-      <div className="nav__logo">
-        <img width={70} src={logo} alt="marketplace logo" />
-        <h1>Facil Market</h1>
-      </div>
+      <Link to="/">
+        <div className="nav__logo">
+          <img width={70} src={logo} alt="marketplace logo" />
+          <h1>Facil Market</h1>
+        </div>
+      </Link>
 
       <ul className="nav__items">
-        <li>Inicio</li>
+        <Link to="/">
+          <li>Inicio</li>
+        </Link>
         <li>
           Categorías <BsChevronDown />
         </li>
         <li>Nosotros</li>
-        <button className="nav__button-sell">Vender</button>
+        <Link to="/vender">
+          <button className="nav__button-sell">Vender</button>
+        </Link>
       </ul>
 
       <div className="nav__user">
