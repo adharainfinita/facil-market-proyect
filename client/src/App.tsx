@@ -4,11 +4,14 @@ import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./pages/Form";
 import Login from "./pages/Login"
-
+import Banner from "./components/Banner";
+import FeaturedCategory from "./components/FeaturedCategory";
 function App() {
   return (
     <>
       <Navbar />
+      <Banner />
+      <FeaturedCategory />
 
       <Routes>
         <Route path="/vender" element={<Form />} />

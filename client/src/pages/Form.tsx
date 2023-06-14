@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface FormData {
+export interface FormData {
   category: string;
   productName: string | number;
   description: string | number;
