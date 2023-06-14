@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validate } from "../services/registerValidation";
+import { validate } from "../utils/registerValidation";
 
 interface newUser{
     name: string
