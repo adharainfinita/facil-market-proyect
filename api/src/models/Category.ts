@@ -15,4 +15,3 @@ export default class Category extends Model {
 	})
 	id!: number;
 }
-export default Categories
