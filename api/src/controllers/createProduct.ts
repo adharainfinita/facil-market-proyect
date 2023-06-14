@@ -1,12 +1,28 @@
-/* import { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import Product from '../models/Product';
 import Category from '../models/Category';
 import User from '../models/User';
-import Review from '../models/Review';
 
-export const createProduct = async (req: Request, res: Response) => {
+export async function createProduct(req: Request, res: Response) {
   try {
-    const {
+    // Verificar si el usuario está registrado
+    const userId = req.body.userId; // Suponiendo que el ID del usuario se pasa en el cuerpo de la solicitud
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    // Verificar si la categoría existe y obtener su nombre
+    const categoryId = req.body.categoryId; // Suponiendo que el ID de la categoría se pasa en el cuerpo de la solicitud
+    const category = await Category.findByPk(categoryId);
+    if (!category) {
+      return res.status(404).json({ error: 'Categoría no encontrada' });
+    }
+
+    const { name, description, stock, qualification, image, location, price } = req.body;
+
+    // Crear el producto
+    const product = await Product.create({
       name,
       description,
       stock,
@@ -14,50 +30,13 @@ export const createProduct = async (req: Request, res: Response) => {
       image,
       location,
       price,
-      categoryID,
-      userID,
-      reviewsID
-    } = req.body;
-
-    // Verificar si la categoría existe
-    const category = await Category.findByPk(categoryID);
-    if (!category) {
-      return res.status(400).json({ message: 'La categoría no existe' });
-    }
-
-    // Verificar si el usuario existe
-    const user = await User.findByPk(userID);
-    if (!user) {
-      return res.status(400).json({ message: 'El usuario no existe' });
-    }
-
-    // Verificar si la reseña existe (si reviewsID está presente)
-    if (reviewsID) {
-      const review = await Review.findByPk(reviewsID);
-      if (!review) {
-        return res.status(400).json({ message: 'La reseña no existe' });
-      }
-    }
-
-    // Crear el nuevo producto en la base de datos
-    const product = await Product.create({
-      name: name as string,
-      description: description as string,
-      stock: stock as number,
-      qualification: qualification as number,
-      image: image as string,
-      location: location as string,
-      price: price as number,
-      categoryID: categoryID as number,
-      userID: userID as number,
-      reviewsID: reviewsID as number,
+      categoryID: category,
+      userID: userId,
     });
 
-    res.status(201).json(product);
+    return res.status(201).json(product);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al crear el producto' });
+    return res.status(500).json({ error: 'Ha ocurrido un error al crear el producto' });
   }
-};
- */
-
+}

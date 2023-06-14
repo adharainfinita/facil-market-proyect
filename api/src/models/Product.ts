@@ -1,7 +1,6 @@
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Category from './Category';
 import User from './User';
-import Review from './Review';
 
 @Table({ tableName: 'products' })
 export default class Product extends Model {
@@ -73,15 +72,4 @@ export default class Product extends Model {
 
   @BelongsTo(() => User)
   user!: User;
-
-  @ForeignKey(() => Review)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  reviewsID?: number;
-
-  @BelongsTo(() => Review)
-  review?: Review;
-
 }

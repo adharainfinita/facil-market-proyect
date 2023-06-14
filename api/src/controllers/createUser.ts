@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 
-export const createUser = async (req: Request, res: Response) => {
+const createUser = async function (req: Request, res: Response) {
   try {
     const { name, lastName, password, email, image } = req.body;
 
@@ -30,3 +30,5 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Error creating user' });
   }
 };
+
+export default createUser;
