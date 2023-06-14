@@ -1,0 +1,38 @@
+// Agrega esto a tu archivo de estilos SCSS
+
+
+.footer {
+  background-color: $color-fondo;
+  color: $color-texto;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .footer-import {
+    display: flex;
+    flex-basis: 100%;
+  }
+
+  .footer-contact,
+  .footer-Help,
+  .footer-security {
+    flex-basis: calc(33.33% - 10px);
+    margin-right: 10px;
+    text-decoration: none;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer-link {
+    color: $color-texto;
+  }
+}
