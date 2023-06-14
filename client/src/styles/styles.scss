@@ -4,10 +4,11 @@
 @import "./base/settings";
 
 // Components.
+
 @import "./components/navbar";
+@import "./components/searchBar";
 @import "./components/footer";
 @import "./components/terms";
-@import "./components/card";
+@import './components/banner';
 @import "./components/home";
-@import './components/banner'
-
+@import "./components/card";

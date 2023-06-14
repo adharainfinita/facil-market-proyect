@@ -1,5 +1,3 @@
-
-import * as React from 'react';
 import image1 from '../assets/Playstation-Transparent-PNG.png';
 import image2 from '../assets/casa.png';
 import image3 from '../assets/White-Kids-Superstar-Adidas-Shoes-PNG.png';
