@@ -8,10 +8,10 @@ function App() {
      <Navbar />
 
     <Routes>
-<Route path="/terminos_y_condiciones" element={<Terms/>} />
+    <Route path="/terminos_y_condiciones" element={<Terms/>} />
 
-  </Routes>     
-  <Footer/>
+    </Routes>     
+    <Footer/>
     </>
   );
 }

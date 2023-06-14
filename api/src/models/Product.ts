@@ -1,87 +1,97 @@
-import {Model, Table, Column, DataType, BelongsToMany,BelongsTo, HasMany, ForeignKey  } from "sequelize-typescript"
-import Categories from "./Category";
-import Users from "./User";
-import ProductCategories from "./relations/ProductCategories";
-import Reviews from "./Reviews";
-//investigrar @Scopes
+import {
+	Table,
+	Column,
+	Model,
+	DataType,
+	ForeignKey,
+	BelongsTo,
+} from "sequelize-typescript";
+import Category from "./Category";
+import User from "./User";
 
-@Table({
-    tableName: 'products',
-})
+@Table({ tableName: "products" })
+export default class Product extends Model {
+	@Column({
+		type: DataType.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+	})
+	id!: number;
 
-class Products extends Model {
-    
-    @Column({
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true   
-    })
-    id!: number 
+	@Column({
+		type: DataType.STRING,
+		allowNull: false,
+	})
+	name!: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    name!: string
+	@Column({
+		type: DataType.TEXT,
+		allowNull: true,
+	})
+	description?: string;
 
-    @Column({
-        type: DataType.TEXT,
-        allowNull: false,
-    })
-    description!: string
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
+	})
+	stock!: number;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
+	@Column({
+		type: DataType.FLOAT,
+		allowNull: true,
+	})
+	rating?: number;
 
-    })
-    stock!: number
+	@Column({
+		type: DataType.STRING,
+		allowNull: true,
+	})
+	image?: string;
 
-    @Column({
-        type: DataType.FLOAT,
-        allowNull: false,
+	//Cambié la condición de nulo de ubicación. Necesitamos saber donde se encuentra el produto.
+	@Column({
+		type: DataType.STRING,
+		allowNull: false,
+	})
+	location?: string;
 
-    })
-    calification!: number
+	@Column({
+		type: DataType.FLOAT,
+		allowNull: false,
+	})
+	price!: number;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
+	//...... Relaciones
 
-    })
-    image!: string
+	@ForeignKey(() => Category)
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
+	})
+	categoryID!: number;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
+	@Column({
+		type: DataType.STRING,
+		allowNull: true,
+	})
+	categoryName!: string;
 
-    })
-    location!: string
+	@BelongsTo(() => Category)
+	category!: Category;
 
-    @Column({
-        type: DataType.FLOAT,
-        allowNull: false,
+	@ForeignKey(() => User)
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
+	})
+	userID!: number;
 
-    })
-    price!: number
-    
-    
-    //relaciones
+	@Column({
+		type: DataType.STRING,
+		allowNull: true,
+	})
+	userName!: string;
 
-    
-    @BelongsToMany(() => Categories, () => ProductCategories)
-    categories!: Categories[];
-    // async addCategory(category: Categories): Promise<void> {
-    //     await this.$add("categories", category);
-    // } 
-    
-    @ForeignKey(() => Users)
-    @BelongsTo(() => Users,{foreignKey: 'userId', as: 'productUser' })
-  
-
-    @HasMany(()=> Reviews)
-    reviews!: Reviews
-
+	@BelongsTo(() => User)
+	user!: User;
 }
-
-export default Products
