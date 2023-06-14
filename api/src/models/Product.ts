@@ -61,7 +61,6 @@ export default class Product extends Model {
 	})
 	price!: number;
 
-
 	//...... Relaciones
 
 	@ForeignKey(() => Category)
@@ -71,7 +70,6 @@ export default class Product extends Model {
 	})
 	categoryID!: number;
 
-
 	@Column({
 		type: DataType.STRING,
 		allowNull: true,
@@ -80,8 +78,6 @@ export default class Product extends Model {
 
 	@BelongsTo(() => Category)
 	category!: Category;
-
-
 
 	@ForeignKey(() => User)
 	@Column({
@@ -98,5 +94,4 @@ export default class Product extends Model {
 
 	@BelongsTo(() => User)
 	user!: User;
-
 }
