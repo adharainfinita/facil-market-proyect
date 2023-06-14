@@ -25,8 +25,8 @@ function Home() {
     
     return (
         <>
-            <h3>Productos más vendidos</h3>
-            {products? <ProductCard products={products}/> : ''}
+            <h3 className="trend-title">Productos más vendidos</h3>
+            {products ? <ProductCard products={products}/> : ''}
         </>
     );
   }
