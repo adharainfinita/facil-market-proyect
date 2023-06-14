@@ -22,7 +22,7 @@ export function validate(inputs: newUser){
     if (!regEmail.test(inputs.email)) errors.email = "Ingresa un correo válido (Max: 35 caracteres)" 
     if (!regPass.test(inputs.password)) errors.password = "La contraseña debe contener: Un numero y tener entre 6 a 10 caracteres"
 
-    if (inputs.password !== inputs.confirm) // Compara la contraseña y la confirmación
+    if (inputs.confirm && inputs.password !== inputs.confirm) // Compara la contraseña y la confirmación
     errors.confirm = "Las contraseñas no coinciden";
     
     if (!urlRegex.test(inputs.image)) errors.image = "Ingresa una URL válida"
