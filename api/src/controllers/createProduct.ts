@@ -1,32 +1,39 @@
-import { Request, Response } from "express";
 import Product from "../models/Product";
-import Category from "../models/Category";
-import User from "../models/User";
+// import { productProps } from "../utils/propsModel";
+import findUser from "./findUser";
+import findCategory from "./findCategory"
 
-const createProduct = async (req: Request, res: Response) => {
-	try {
+interface localProps {
+	name: string,
+	description: string,
+	location: string,
+	stock: number;
+	rating: number;
+	image: string;
+	price: number;
+	userID: number;
+	categoryID: number
+}
+
+const createProduct = async ({name, description,location, stock, rating, image, price, userID, categoryID}: localProps) => {
+	
 		//? Verificar si el usuario está registrado
-		const { userId } = req.body;
-
-		const user = await User.findByPk(userId);
-		if (!user) {
-			throw new Error("Usuario no encontrado");
+		let id = userID
+		const userFound = await findUser({id});
+		if (!userFound) {
+			throw new Error("User not found");
 		}
 
 		//? Verificar si la categoría existe y obtener su nombre
-		const { categoryId } = req.body;
-
-		if (!categoryId) {
-			throw new Error("Categoría no encontrada");
+	
+		id = categoryID
+		const categoryFound = await findCategory({id});
+		if (!categoryFound) {
+			throw new Error("Category not found");
 		}
 
-		const category = await Category.findByPk(categoryId);
-
-		const { name, description, stock, rating, image, location, price } =
-			req.body;
-
 		//? Crear el producto
-		const product = await Product.create({
+		return await Product.create({
 			name,
 			description,
 			stock,
@@ -34,15 +41,12 @@ const createProduct = async (req: Request, res: Response) => {
 			image,
 			location,
 			price,
-			userID: userId,
-			categoryID: category?.id,
-			nameCategory: category?.name,
+			userID: userFound.id,
+			userName: userFound?.name,
+			categoryID: categoryFound?.id,
+			categoryName: categoryFound?.name,
 		});
 
-		return res.status(201).json(product);
-	} catch (error: any) {
-		return res.status(500).json({ error: error.message });
-	}
 };
 
 export default createProduct;

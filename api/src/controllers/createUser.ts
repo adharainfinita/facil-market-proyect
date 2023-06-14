@@ -1,30 +1,24 @@
-import { Request, Response } from "express";
+import { userProps } from "../utils/propsModel";
 import User from "../models/User";
+import findUser from "./findUser";
 
-const createUser = async (req: Request, res: Response) => {
-	try {
-		const { name, lastName, password, email, image } = req.body;
 
-		const data = {
-			name,
-			lastName,
-			password,
-			email,
-			image,
-		};
+const createUser = async ({id, name, lastName, password, email, image}: userProps) => {
+	
 
-		//? Verificar si ya existe el usuario
-		const userExist = await User.findOne({ where: { email } });
+	//? Verificar si ya existe el usuario
+	const userExist = await findUser({id});
 
-		if (userExist) {
-			throw new Error("The user already exists");
-		}
-
-		const user = await User.create(data);
-		return res.status(201).json(user);
-	} catch (error: any) {
-		return res.status(500).json({ error: error.message });
+	if (userExist) {
+		throw new Error("The user already exists");
 	}
+
+	return await User.create({
+		name, 
+		lastName, 
+		password, 
+		email, 
+		image})
 };
 
 export default createUser;

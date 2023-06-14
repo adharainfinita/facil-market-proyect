@@ -48,9 +48,10 @@ export default class Product extends Model {
 	})
 	image?: string;
 
+	//Cambié la condición de nulo de ubicación. Necesitamos saber donde se encuentra el produto.
 	@Column({
 		type: DataType.STRING,
-		allowNull: true,
+		allowNull: false,
 	})
 	location?: string;
 
@@ -59,6 +60,9 @@ export default class Product extends Model {
 		allowNull: false,
 	})
 	price!: number;
+
+
+	//...... Relaciones
 
 	@ForeignKey(() => Category)
 	@Column({
@@ -70,14 +74,14 @@ export default class Product extends Model {
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: false,
+		allowNull: true,
 	})
-	nameCategory!: string;
-
-
+	categoryName!: string;
 
 	@BelongsTo(() => Category)
 	category!: Category;
+
+
 
 	@ForeignKey(() => User)
 	@Column({
@@ -85,6 +89,12 @@ export default class Product extends Model {
 		allowNull: false,
 	})
 	userID!: number;
+
+	@Column({
+		type: DataType.STRING,
+		allowNull: true,
+	})
+	userName!: string;
 
 	@BelongsTo(() => User)
 	user!: User;
