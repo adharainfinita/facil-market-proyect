@@ -6,12 +6,17 @@ interface localProps{
  }
 
 export const createUser = async ({id, name, lastName, password, email, image}: userProps) => {
-	return await User.create({
+	
+	const userFound = await findUser({param: email})
+	if(!userFound){
+		return await User.create({
 		name, 
 		lastName, 
 		password, 
 		email, 
 		image})
+	}
+	
 };
 
 

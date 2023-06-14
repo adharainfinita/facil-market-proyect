@@ -9,9 +9,8 @@ const postCategory = async(req: Request, res: Response) =>{
 
 		return res.status(201).json(newCategory);
 	} catch (error:any) {
-        return error.message.includes("alredy exists")
-		? res.status(400).json({message:error.message})
-		: res.status(500).json({error: error.status});
+
+		return res.status(400).json({message:error.message})
 	}
 }
 

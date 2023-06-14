@@ -14,10 +14,10 @@ import {productCreate} from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 
 //* POST
+router.post("/review", reviewCreate , postReview);
 router.post("/product", productCreate, postProduct);
 router.post("/user", validateCreate, postUser);
 router.post("/category", categoryCreate, postCategory);
-router.post("/review", reviewCreate , postReview);
 
 //* GET
 router.get("/product", getAllProducts);
