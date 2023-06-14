@@ -3,10 +3,14 @@ import { check, body } from "express-validator";
 import { validateResult } from "../helpers/validationResult";
 
 const categoryCreate = [
+<<<<<<< HEAD
 	body()
 		.exists()
 		.notEmpty()
 		.withMessage("El campo de la solicitud está vacío MASTER"),
+=======
+	body(),
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
 
 	check("id").not().exists(),
 

@@ -3,10 +3,14 @@ import { check, body } from "express-validator";
 import { validateResult } from "../helpers/validationResult";
 
 export const productCreate = [
+<<<<<<< HEAD
 	body()
 		.exists()
 		.notEmpty()
 		.withMessage("El campo de la solicitud está vacío MASTER"),
+=======
+	body(),
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
 
 	check("id").not().exists(),
 
@@ -27,9 +31,13 @@ export const productCreate = [
 		})
 		.withMessage("Has excedido el número de caracteres"),
 
+<<<<<<< HEAD
 	check("stock")
 		.isNumeric()
 		.withMessage("El stock debe ser preciso"),
+=======
+	check("stock").isInt().withMessage("El stock debe ser un número entero"),
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
 
 	check("rating")
 		.isFloat({
@@ -40,6 +48,7 @@ export const productCreate = [
 
 	check("price").isNumeric().isDecimal(),
 
+<<<<<<< HEAD
 	check("categoryID")
 		.isNumeric()
 		.not()
@@ -51,6 +60,11 @@ export const productCreate = [
 		.not()
 		.isDecimal()
 		.withMessage("Las FK deben ser números y enteros"),
+=======
+	check("categoryID").isInt().withMessage("Las FK deben ser números y enteros"),
+
+	check("userID").isInt().withMessage("Las FK deben ser números y enteros"),
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
 	(req: Request, res: Response, next: NextFunction) => {
 		validateResult(req, res, next);
 	},

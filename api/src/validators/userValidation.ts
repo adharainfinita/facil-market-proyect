@@ -3,7 +3,9 @@ import { check, body } from "express-validator";
 import { validateResult } from "../helpers/validationResult";
 
 export const validateCreate = [
+	body(),
 
+<<<<<<< HEAD
 	body('fieldName')
 	.exists()
 	.notEmpty().withMessage('El campo de la solicitud está vacío MASTER'),
@@ -29,10 +31,40 @@ export const validateCreate = [
 				throw new Error("Tu nombre no puede contener números");
 			}
 			if (!/^[a-zA-Z\s]+$/.test(value)) {
+=======
+	check("id").not().exists(),
+
+	check("name")
+		.customSanitizer((value, { req }) => {
+			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
+		})
+		.isString()
+		.custom((value, { req }) => {
+			if (/\d/.test(value)) {
+				// Verificar si contiene números utilizando una expresión regular
+				throw new Error("Tu nombre no puede contener números");
+			}
+			if (!/^[a-zA-Z0-9\s]+$/.test(value)) {
 				throw new Error("No se permiten caracteres especiales");
 			}
 			return true;
 		})
+		.withMessage("Tu nombre solo puede contener letras"),
+
+	check("lastName")
+		.isString()
+		.custom((value, { req }) => {
+			if (/\d/.test(value)) {
+				// Verificar si contiene números utilizando una expresión regular
+				throw new Error("Tu apellido no puede contener números");
+			}
+			if (!/^[a-zA-Z0-9\s]+$/.test(value)) {
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
+				throw new Error("No se permiten caracteres especiales");
+			}
+			return true;
+		})
+<<<<<<< HEAD
 		.withMessage("Tu nombre debe sólo puede contener letras"),
 
 	check("lastName")
@@ -55,6 +87,12 @@ export const validateCreate = [
 		.customSanitizer((value, { req }) => {
 			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
 		}),
+=======
+		.customSanitizer((value, { req }) => {
+			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
+		}),
+
+>>>>>>> dbdf6f37b048f1fe4b2a137d14a807dc6fa3d6a2
 	check("email").isEmail(),
 
 	check("password")
