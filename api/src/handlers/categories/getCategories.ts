@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {findAllCategories} from "../controllers/finderGenericModels";
+import {findAllCategories} from "../../controllers/categoryControllers";
 
 const getAllCategories = async(req: Request, res:Response) =>{
     try {

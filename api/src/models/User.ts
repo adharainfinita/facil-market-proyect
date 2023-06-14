@@ -36,7 +36,7 @@ export default class User extends Model {
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: false,
+		allowNull: true,
 	})
 	image!: string;
 }

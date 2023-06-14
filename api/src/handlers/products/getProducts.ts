@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {findAllProducts} from "../controllers/finderGenericModels";
+import {findAllProducts} from "../../controllers/productControllers";
 
 
 const getAllProducts = async(req:Request, res: Response) =>{

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {findAllUsers} from "../controllers/finderGenericModels";
+import {findAllUsers} from "../../controllers/userControllers";
 
 
 const getAllUsers = async(req: Request, res:Response) =>{

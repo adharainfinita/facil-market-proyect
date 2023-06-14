@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import createUser from "../controllers/createUser";
-import { userProps } from "../utils/propsModel";
+import {createUser} from "../../controllers/userControllers";
+import { userProps } from "../../utils/propsModel";
 
  const postUser = async(req: Request, res: Response) => {
     
@@ -21,12 +21,9 @@ import { userProps } from "../utils/propsModel";
 		if(newUser){
             return res.status(201).json(newUser);
         }
-        throw Error("Problem in data structure");
 
 	} catch (error: any) {
-       return error.message.includes("data") || error.message.includes("user")
-        ? res.status(400).json({ error: error.message })
-		: res.status(500).json({ error: error.message });
+		res.status(500).json({ error: error.message });
 	}
 }
 export default postUser;

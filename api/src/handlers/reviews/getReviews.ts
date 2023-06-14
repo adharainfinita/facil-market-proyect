@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {findAllReviews} from "../controllers/finderGenericModels";
+import {findAllReviews} from "../../controllers/reviewControllers";
 
 const getAllReviews = async(req:Request, res: Response) => {
     try {

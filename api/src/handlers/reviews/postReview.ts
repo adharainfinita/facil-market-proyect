@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import createReview from "../controllers/createReview";
-import { reviewProps } from "../utils/propsModel";
+import {createReview} from "../../controllers/reviewControllers";
+import { reviewProps } from "../../utils/propsModel";
 
 const postReviews = async (req: Request, res: Response)=>{
     try {
