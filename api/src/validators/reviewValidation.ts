@@ -14,14 +14,16 @@ export const reviewCreate = [
 			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
 		})
 		.isLength({
-			min: 2,
+			min: 4,
 			max: 2000,
 		})
-		.withMessage("La reseña no puede superar los 2000 caracteres"),
+		.withMessage("El texto debe contener entre 4 y 2000 caracteres"),
 
-	check("userID").isInt().withMessage("Las FK deben ser números y enteros"),
+	check("userID").isInt().withMessage("El UserID debe ser números y enteros."),
 
-	check("productID").isInt().withMessage("Las FK deben ser números y enteros"),
+	check("productID")
+		.isInt()
+		.withMessage("El ProductID debe ser números y enteros."),
 
 	check("rating")
 		.isFloat({

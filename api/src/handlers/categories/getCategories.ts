@@ -5,7 +5,7 @@ const getAllCategories = async (req: Request, res: Response) => {
 	try {
 		const allCategories = await findAllCategories();
 
-		if (!allCategories) throw new Error("No hay categorías creadas");
+		if (!allCategories) throw new Error("No available categories found");
 
 		return res.status(200).json(allCategories);
 	} catch (error: any) {

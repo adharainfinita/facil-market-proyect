@@ -10,7 +10,7 @@ import Category from "./Category";
 import User from "./User";
 
 @Table({ tableName: "products" })
-export default class Product extends Model {
+class Product extends Model {
 	@Column({
 		type: DataType.INTEGER,
 		primaryKey: true,
@@ -95,3 +95,5 @@ export default class Product extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 }
+
+export default Product;

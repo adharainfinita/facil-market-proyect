@@ -2,14 +2,7 @@ const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 const regPass = /^(?=\S*?[0-9]).{6,10}\S$/;
 const regEmail = /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}).{0,35}$/i
 
-interface newUser{
-    name: string
-    lastName: string
-    password: string
-    email:string
-    image: string
-    confirm?: string
-}
+import { newUser } from "./interfaces";
 
 export function validate(inputs: newUser){
     let errors: Partial<newUser> = {}
