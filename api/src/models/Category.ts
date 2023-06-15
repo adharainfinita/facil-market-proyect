@@ -15,7 +15,4 @@ class Category extends Model {
 	})
 	id!: number;
 }
-<<<<<<< HEAD
-=======
-export default Category;
->>>>>>> f4046072e2f867c2325aa6668c9cff5e3cc0b86b
+export default Category
