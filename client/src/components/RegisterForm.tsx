@@ -2,7 +2,7 @@ import { useState } from "react";
 import { validate } from "../utils/registerValidation";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser, UserState } from "../redux/userSlice";
+import { addUser, UserState } from "../redux/features/userSlice";
 import axios from "axios";
 
 
@@ -32,22 +32,18 @@ const Register = () => {
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
-    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
+    setErrors(validate({...inputs, [e.target.name]: e.target.value }))
   };
 
-  const handleShowPassword = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+const handleShowPassword = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+}
 
-  const handleConfirmPassword = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPsw(e.target.value);
-    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
-  };
+const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    setConfirmPsw(e.target.value)
+    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }))
+}
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,6 +126,17 @@ const Register = () => {
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
+        <div className="form-group">
+          <label>Confirmar contraseña:</label>
+          <input 
+            type="password" 
+            name="confirm" 
+            value={confirmPsw}
+            onChange={(e) => handleConfirmPassword(e)} 
+          />
+          {errors.confirm && <p className="error">{errors.confirm}</p>}
+        </div>
+
 
         <div className="form-group">
           <label>Email:</label>
@@ -149,7 +156,7 @@ const Register = () => {
             name="image"
             value={inputs.image}
             onChange={(e) => handleInputs(e)}
-            placeholder="Ingresa una URL de tu imagen"
+            placeholder="Ingrese una url"
           />
           {errors.image && <p className="error">{errors.image}</p>}
         </div>
