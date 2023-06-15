@@ -1,24 +1,14 @@
 import { useState } from "react";
 import { validate } from "../utils/registerValidation";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addUser, UserState } from "../redux/features/userSlice";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { newUser } from "../utils/interfaces";
+import { postUser } from "../services/userServices";
 
-
-interface NewUser {
-  name: string;
-  lastName: string;
-  password: string;
-  email: string;
-  image: string;
-  confirm?: string;
-}
 
 const Register = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const [inputs, setInputs] = useState<NewUser>({
+  const [inputs, setInputs] = useState<newUser>({
     name: "",
     lastName: "",
     password: "",
@@ -26,7 +16,7 @@ const Register = () => {
     image: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errors, setErrors] = useState<Partial<NewUser>>({});
+  const [errors, setErrors] = useState<Partial<newUser>>({});
   const [confirmPsw, setConfirmPsw] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -50,15 +40,18 @@ const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
   
     try {
       // Realizar la solicitud POST al back-end
-      const response = await axios.post("http://localhost:3001/user", inputs);
+      const response = await postUser(inputs);
+  console.log(response);
   
       // Verificar la respuesta del servidor
-      if (response.status === 201) {
+      if(response){
+         alert("Registro exitoso")
+        // console.log("Registro exitoso");
+        if(formSubmitted) navigate('/login')
+      }
         // El registro se creó exitosamente en la base de datos
         // Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
-        dispatch(addUser(response.data));
-        console.log("Registro exitoso");
-      }
+     
     } catch (error) {
       // Ocurrió un error al procesar la solicitud
       // Puedes manejar aquí la lógica de manejo de errores
