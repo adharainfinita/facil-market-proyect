@@ -12,11 +12,11 @@ const categoryCreate = [
 		.notEmpty()
 		.isString()
 		.isLength({
-			min: 2,
-			max: 100,
+			min: 4,
+			max: 25,
 		})
 		.withMessage(
-			"La categoría debe ser un string y no debe superar los 100 caracteres"
+			"La categoría debe ser una cadena y debe tener entre 4 y 25 caracteres"
 		)
 		.customSanitizer((value, { req }) => {
 			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
