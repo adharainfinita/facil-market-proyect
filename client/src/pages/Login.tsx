@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUsers, addUser, setUserValidator  } from "../redux/features/userSlice";
+import { addUser, setUserValidator  } from "../redux/features/userSlice";
 // import { fetchUsers } from "../redux/features/getUserSlice";
 import { RootState } from "../redux/store";
 import { UserData } from "../utils/interfaces";
@@ -23,16 +23,11 @@ const Login: React.FC = () => {
   // const userValidator = useSelector((state: RootState) => state.userValidator.value);
 
   useEffect(() => {
-    try {
-      fetch(`http://localhost:3001/user`)
-       .then(response => response.json())
-       .then(data => dispatch(getUsers(data)))
-       }
-       catch (error) {
-       console.log(error);
-   } 
-  
-    }, [dispatch, access, localController]);
+     if(access){
+    navigate('/')
+   }
+
+    }, [dispatch, access, navigate, localController]);
 
 console.log('local', localController);
 console.log('global' ,access);
@@ -63,26 +58,23 @@ console.log('global' ,access);
       dispatch(addUser(formData));
 
     console.log("Datos del formulario:", formData);
-    const userFound = users.filter(match => match.email === user.email)
-    console.log(userFound);
-    if(userFound.length) {
+    const response = handleAccess()
+   
+    console.log(response);
+    if(response.length) {
       setLocalController(true);
-      handleRedirection()
     }
-     if(!userFound.length) {
+     if(!response.length) {
       setMessage("Usuario no encontrado")
     setLocalController(false)
      }
       // dispatch(setUserValidator(false)); // Actualiza el estado userValidator a false
     }
 
-  const  handleRedirection = () =>{
-   
+  const  handleAccess = () =>{
+    const userFound =users.filter(match => match.email === user.email)
       dispatch(setUserValidator(true));
-      if(access){
-     localController && navigate('/')
-    }
-
+    return userFound
     }
   
   const handleShowPassword = () => { 

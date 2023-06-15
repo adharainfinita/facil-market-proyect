@@ -8,8 +8,22 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUsers } from "./redux/features/userSlice";
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    try {
+      fetch(`http://localhost:3001/user`)
+       .then(response => response.json())
+       .then(data => dispatch(getUsers(data)))
+       }
+       catch (error) {
+       console.log(error);
+   } })
+
   return (
     <>
       <Navbar />
