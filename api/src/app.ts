@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import morgan from "morgan";
+import morgan from 'morgan';
 import router from "./routes/routes";
 
 const server = express();
