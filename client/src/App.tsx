@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
-
+import DetailProduct from "./components/DetailProduct";
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
         <Route path="/terminos_y_condiciones" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/product/detail/:id" element={<DetailProduct/>} />
       </Routes>
       <Footer />
     </>

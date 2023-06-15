@@ -74,9 +74,12 @@ const productSlice = createSlice({
     },
     getDetail:  (state, action: PayloadAction<Product>) =>{
       state.detail = action.payload
+    },
+    cleanDetail: (state, action: PayloadAction<Product>) =>{
+      state.detail = action.payload
     }
 	},
 });
 
-export const {getProducts, getDetail, filterProducts, orderProducts} = productSlice.actions;
+export const {getProducts, getDetail, filterProducts, orderProducts, cleanDetail} = productSlice.actions;
 export default productSlice.reducer;
