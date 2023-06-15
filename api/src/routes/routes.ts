@@ -21,6 +21,7 @@ import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 
+
 //* POST
 router.post("/product", productCreate, postProduct);
 router.post("/user", validateCreate, postUser);
