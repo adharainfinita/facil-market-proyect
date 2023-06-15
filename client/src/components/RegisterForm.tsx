@@ -2,7 +2,7 @@ import { useState } from "react";
 import { validate } from "../utils/registerValidation";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser, UserState } from "../redux/userSlice";
+import { addUser, UserState } from "../redux/features/userSlice";
 import axios from "axios";
 
 
@@ -27,7 +27,6 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errors, setErrors] = useState<Partial<NewUser>>({});
-  const [confirmPsw, setConfirmPsw] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,12 +41,6 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleConfirmPassword = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPsw(e.target.value);
-    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,7 +70,6 @@ const Register = () => {
       email: "",
       image: "",
     });
-    setConfirmPsw("");
     setErrors({});
     setFormSubmitted(true);
   };

@@ -13,6 +13,7 @@ import categoryCreate from "../validators/categoryValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 
+
 //* POST
 router.post("/product", productCreate, postProduct);
 router.post("/user", validateCreate, postUser);
