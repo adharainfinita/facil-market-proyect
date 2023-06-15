@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from "../services/getTrendProducts";
 import Banner from "../components/Banner";
+import FeaturedCategory from "../components/FeaturedCategory";
 
 interface Product{
     id: number,
@@ -27,6 +28,7 @@ function Home() {
     return (
         <>
             <Banner />
+            <FeaturedCategory />
             <h3 className="trend-title">Productos más vendidos</h3>
             {products ? <ProductCard products={products}/> : ''}
 
