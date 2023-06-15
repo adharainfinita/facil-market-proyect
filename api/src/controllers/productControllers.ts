@@ -1,6 +1,7 @@
 import Product from "../models/Product";
 import { findCategoryByID } from "./categoryControllers";
 import { findUser } from "./userControllers";
+import { Op } from "sequelize";
 
 interface localProps {
 	name: string;
@@ -57,3 +58,20 @@ export const createProduct = async ({
 };
 
 export const findAllProducts = async () => await Product.findAll();
+
+//? Buscar productos por nombre
+export const findProductByName = async (name: string) => {
+	const responseDB = await Product.findAll({
+		where: { name: { [Op.iLike]: `%${name}%` } },
+	});
+
+	if (!name) {
+		throw new Error(`Name was expected`);
+	}
+
+	if (!Object.keys(responseDB).length) {
+		throw new Error(`No results found for: ${name}`);
+	}
+
+	return responseDB;
+};
