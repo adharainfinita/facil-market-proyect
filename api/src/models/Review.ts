@@ -10,7 +10,7 @@ import User from "./User";
 import Product from "./Product"; // Importa el modelo Producto
 
 @Table({ tableName: "reviews" })
-export default class Review extends Model {
+class Review extends Model {
 	@Column({
 		type: DataType.INTEGER,
 		primaryKey: true,
@@ -50,3 +50,5 @@ export default class Review extends Model {
 	})
 	rating?: number;
 }
+
+export default Review;
