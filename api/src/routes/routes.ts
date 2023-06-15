@@ -13,6 +13,7 @@ import getAllCategories from "../handlers/categories/getCategories";
 import getAllUsers from "../handlers/users/getUsers";
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
+import getProductById from "../handlers/products/getProductById";
 
 //! UTILS
 import categoryCreate from "../validators/categoryValidation";
@@ -32,5 +33,6 @@ router.get("/review", getAllReviews);
 router.get("/user", getAllUsers);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
+router.get("/product/:id", getProductById);
 
 export default router;
