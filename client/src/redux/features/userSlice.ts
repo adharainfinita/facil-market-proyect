@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../utils/interfaces";
+import { User, UserData } from "../../utils/interfaces";
 
 
 export interface UserState {
-  value: User[]
+  users: User[],
+  userLogin: UserData;
+  userValidation: boolean
 }
 
 const initialState: UserState = {
-  value: []
+  users: [],
+  userLogin: {
+    email: "",
+    password: "",
+  },
+  userValidation: false
 };
 
 const userSlice = createSlice({
@@ -16,27 +23,28 @@ const userSlice = createSlice({
   reducers: {
     //* Acciones para traer usuarios y leerlos
     getUsers: (state, action: PayloadAction<User[]>) => {
-     state.value = action.payload
+     state.users = action.payload
     },
-    // getUserDetail:(state, action: PayloadAction<number>) => {
-
-    //   state.value = action.payload
-    //  },
-    // resetUser: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
-    
-    //* Acciones para modificar la información de un usuario en particular
+    addUser: (state, action: PayloadAction<UserData>) => {
+      state.userLogin = action.payload
+    },
+    resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
     // changeEmail: (state, action: PayloadAction<string>) => {
-    //   state.email = action.payload;
+    //   state.userLogin.email = action.payload;
     // },
     // changePassword: (state, action: PayloadAction<string>) => {
-    //   state.password = action.payload;
+    //   state.userLogin.password = action.payload;
     // },
     // changeImage: (state, action: PayloadAction<string>) => {
-    //   state.image = action.payload;
-    // },
+    //   state.userLogin.image = action.payload;
+    // }
+    setUserValidator: (state, action: PayloadAction<boolean>) => {
+    state.userValidation = action.payload;
+    }
   },
+  
 });
 
 
-export const { getUsers} = userSlice.actions;
+export const { getUsers, addUser, resetUsers, setUserValidator} = userSlice.actions;
 export default userSlice.reducer;

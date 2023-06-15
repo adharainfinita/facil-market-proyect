@@ -17,7 +17,7 @@ export const postUser = async(data: newUser) =>{
   
 }
 
-export const getUsers = async() =>{
+export const getAllUsers = async() =>{
   try {
     const response = await axios("http://localhost:3001/user");
     return response.data;
