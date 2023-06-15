@@ -25,8 +25,9 @@ function Navbar() {
         </Link>
       </ul>
 
-      <div className="nav__user">
+      <div className="nav__user"><Link to="/login">
         <button className="nav__button-login">Iniciar Sesión</button>
+        </Link>
       </div>
     </nav>
   );

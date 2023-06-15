@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface UserData {
   password: string | number;
@@ -56,6 +57,8 @@ const Login: React.FC = () => {
       </div>
 
       <button type="submit">Iniciar Sesión</button>
+      
+      <Link to="/register"><p>¿no tienes cuenta?</p></Link>
     </form>
   );
 };
