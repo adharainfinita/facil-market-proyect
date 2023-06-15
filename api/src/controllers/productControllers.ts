@@ -57,3 +57,20 @@ export const createProduct = async ({
 };
 
 export const findAllProducts = async () => await Product.findAll();
+
+///// search id /////
+export const findProductById = async (id : number) => {
+	if(!id){
+		throw new Error("The id cannot be a string")
+	}
+	
+  const product = await Product.findByPk(id);
+	
+
+  if (!product) {
+    throw new Error("product not found");
+  }
+
+
+  return product;
+};

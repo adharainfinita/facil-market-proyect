@@ -12,6 +12,7 @@ import { validateCreate } from "../validators/userValidation";
 import categoryCreate from "../validators/categoryValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
+import getProductById from "../handlers/products/getProductById";
 
 //* POST
 router.post("/product", productCreate, postProduct);
@@ -24,5 +25,6 @@ router.get("/product", getAllProducts);
 router.get("/review", getAllReviews);
 router.get("/user", getAllUsers);
 router.get("/category", getAllCategories);
+router.get("/product/:id", getProductById);
 
 export default router;
