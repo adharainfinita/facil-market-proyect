@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "../../utils/interfaces";
-
+import { RootState } from '../store';
 
 export interface ProductState {
 	products: Product[];
@@ -24,13 +24,16 @@ const initialState: ProductState = {
     nameCategory: '',
     userID: 0,
     userName: ''
-  }
+  },
 };
 
 const productSlice = createSlice({
 	name: "products",
 	initialState,
 	reducers: {
+    getSearchedProducts: (state, action: PayloadAction<Product[]>) => {
+      state.products = action.payload;
+    },
 		getProducts: (state, action: PayloadAction<Product[]>) => {
 			state.products = action.payload;
 			state.originalCopy = action.payload;
@@ -78,5 +81,6 @@ const productSlice = createSlice({
 	},
 });
 
-export const {getProducts, getDetail, filterProducts, orderProducts} = productSlice.actions;
+export const {getProducts, getDetail, filterProducts, orderProducts, getSearchedProducts} = productSlice.actions;
 export default productSlice.reducer;
+export const selectSearchedProducts = (state: RootState) => state.product.products;
