@@ -1,12 +1,4 @@
-interface Product{
-    id: number,
-    title: string 
-    price: number
-    category: string
-    description: string
-    image: string
-}
-
+import { Product } from "../utils/interfaces"
 type productList = {
     products: Array<Product>
 }
@@ -19,12 +11,12 @@ function ProductCard(props: productList) {
             {products.map((product) => {
             return(
             <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.title} />
+                <img src={product.image} alt={product.name} />
                 <div className="text">
-                    <p>{product.category}</p>
-                    <h3>{product.title}</h3>
+                    <p>{product.categoryName}</p>
+                    <h3>{product.name}</h3>
                     <h4>${product.price}</h4>
-                    <span>Ubicación</span>
+                    <span>{product.location}</span>
                 </div>
             </div>
             )

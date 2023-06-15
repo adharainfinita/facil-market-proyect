@@ -21,7 +21,7 @@ export interface Product {
 	location: string;
 	price: number;
 	categoryID: number;
-	nameCategory: string;
+	categoryName: string;
 	userID: number;
 	userName: string;
 }
