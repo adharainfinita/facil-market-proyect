@@ -6,6 +6,7 @@ import { addUser, setUserValidator } from "../redux/features/userSlice";
 import { RootState } from "../redux/store";
 import { UserData } from "../utils/interfaces";
 // import { getAllUsers } from "../services/userServices";
+import { setLoggedInUserId } from "../redux/features/userSlice";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Login: React.FC = () => {
 	const [formData, setFormData] = useState<UserData>({
 		password: "",
 		email: "",
-		id: 0
+		id: "",
 	});
 
 	const [message, setMessage] = useState("No has escrito nada");
@@ -66,10 +67,13 @@ const Login: React.FC = () => {
 	};
 
 	const handleAccess = () => {
-		const userFound = users.filter((match) => match.email === user.email);
-		dispatch(setUserValidator(true));
-		return userFound;
-	};
+  const userFound = users.filter((match) => match.email === user.email);
+  if (userFound.length) {
+    dispatch(setUserValidator(true));
+    dispatch(setLoggedInUserId(userFound[0].id)); // Actualiza el ID del usuario logueado
+  }
+  return userFound;
+};
 
 	const handleShowPassword = () => {
 		setShowPassword(!showPassword);

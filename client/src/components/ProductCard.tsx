@@ -9,12 +9,12 @@ function ProductCard(props: productList) {
 	return (
 		<>
 			<div className="cards-container">
-				{products.map((product) => {
+				{products.map((product, index) => {
 					return (
 						<Link to={`/product/detail/${product.id}`}>
-							<div key={product.id} className="product-card">
+							<div key={index} className="product-card">
 								<img src={product.image} alt={product.name} />
-								<div className="text">
+								<div key={index} className="text">
 									<p>{product.categoryName}</p>
 									<h3>{product.name}</h3>
 									<h4>${product.price}</h4>

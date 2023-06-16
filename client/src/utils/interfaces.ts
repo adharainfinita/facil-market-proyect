@@ -57,7 +57,7 @@ export interface newUser {
 export interface UserData {
 	password: string | number;
 	email: string | number;
-	id: number;
+	id: string;
 }
 
 // Interfaces de componentes
