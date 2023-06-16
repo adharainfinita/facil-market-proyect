@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./features/getUserSlice";
+import userReducer from "./features/userSlice";
 import productSlice from "./features/productSlice";
 import categorySlice from "./features/categorySlice";
-import userValidatorReducer from "../redux/features/userValidatorSlice";
 
 export const store = configureStore({
 	reducer: {
 		user: userReducer,
 		product: productSlice,
 		category: categorySlice,
-    userValidator: userValidatorReducer,
 	},
 });
 
