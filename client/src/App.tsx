@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
@@ -10,26 +9,33 @@ import Home from "./pages/Home";
 import FeaturedCategory from "./components/FeaturedCategory";
 import Register from "./components/RegisterForm";
 
+/* import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { arrayPromises } from "./services/categoryServices"; */
 
 function App() {
-  return (
-    <>
-      <Navbar />
+	/* const dispatch = useDispatch();
 
+	useEffect(() => {
+		const response = Promise.all(arrayPromises)
+	}, [dispatch]); */
 
-      <Routes>
-      <Route path="/catagorias" element={<FeaturedCategory/>} />
-      <Route path="/catagorias" element={<Banner/>} />
-      <Route path="/" element={<Home/>} />
-        <Route path="/vender" element={<Form />} />
-        <Route path="/terminos_y_condiciones" element={<Terms />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register/>} />
+	return (
+		<>
+			<Navbar />
 
-      </Routes>
-      <Footer />
-    </>
-  );
+			<Routes>
+				<Route path="/catagorias" element={<FeaturedCategory />} />
+				<Route path="/catagorias" element={<Banner />} />
+				<Route path="/" element={<Home />} />
+				<Route path="/vender" element={<Form />} />
+				<Route path="/terminos_y_condiciones" element={<Terms />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
+			</Routes>
+			<Footer />
+		</>
+	);
 }
 
 export default App;

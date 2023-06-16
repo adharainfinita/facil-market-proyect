@@ -1,14 +1,13 @@
 //! Dejar aquí todas las interfaces
 
-
 // Interfaces de de estados global
 export interface User {
-  id: string;
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  image: string;
+	id: string;
+	name: string;
+	lastName: string;
+	email: string;
+	password: string;
+	image: string;
 }
 
 export interface Product {
@@ -27,8 +26,8 @@ export interface Product {
 }
 
 export interface Category {
-  id: number;
-  name: string;
+	id: number;
+	name: string;
 }
 
 // Interfaces de servicios
@@ -44,28 +43,30 @@ export interface productData {
 }
 
 // Interfaces para formularios
-export interface newUser{
-  name: string
-  lastName: string
-  password: string
-  email:string
-  image: string
-  confirm?: string
+export interface newUser {
+	name: string;
+	lastName: string;
+	password: string;
+	email: string;
+	image: string;
+	confirm?: string;
 }
 
 export interface UserData {
-  password: string | number;
-  email: string | number;
+	password: string | number;
+	email: string | number;
 }
 
 // Interfaces de componentes
 
 export interface FormData {
-  category: string;
-  productName: string | number;
-  description: string | number;
-  location: string;
-  price: number;
-  stock: number;
+	userID: number;
+	categoryID?: number;
+	name: string;
+	description: string;
+	stock?: number;
+	rating?: number;
+	image: string;
+	location: string;
+	price?: number;
 }
-
