@@ -31,7 +31,7 @@ const useProduct = () => {
 					location: "",
 					price: 0.0,
 					categoryID: 0,
-					nameCategory: "",
+					categoryName: "",
 					userID: 0,
 					userName: "",
 				})
