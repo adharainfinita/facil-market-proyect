@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { validate } from "../utils/registerValidation";
-import { Link, useNavigate } from "react-router-dom";
-import { newUser } from "../utils/interfaces";
-import { postUser } from "../services/userServices";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser, UserState } from "../redux/features/userSlice";
+import axios from "axios";
 
+
+interface NewUser {
+  name: string;
+  lastName: string;
+  password: string;
+  email: string;
+  image: string;
+  confirm?: string;
+}
 
 const Register = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
 
-  const [inputs, setInputs] = useState<newUser>({
+  const [inputs, setInputs] = useState<NewUser>({
     name: "",
     lastName: "",
     password: "",
@@ -16,42 +26,36 @@ const Register = () => {
     image: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errors, setErrors] = useState<Partial<newUser>>({});
-  const [confirmPsw, setConfirmPsw] = useState("");
+  const [errors, setErrors] = useState<Partial<NewUser>>({});
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
-    setErrors(validate({...inputs, [e.target.name]: e.target.value }))
+    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
   };
 
-const handleShowPassword = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleShowPassword = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    setShowPassword(!showPassword)
-}
+    setShowPassword(!showPassword);
+  };
 
-const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
-    setConfirmPsw(e.target.value)
-    setErrors(validate({ ...inputs, [e.target.name]: e.target.value }))
-}
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
     try {
       // Realizar la solicitud POST al back-end
-      const response = await postUser(inputs);
-  console.log(response);
+      const response = await axios.post("http://localhost:3001/user", inputs);
   
       // Verificar la respuesta del servidor
-      if(response){
-         alert("Registro exitoso")
-        // console.log("Registro exitoso");
-        if(formSubmitted) navigate('/login')
-      }
+      if (response.status === 201) {
         // El registro se creó exitosamente en la base de datos
         // Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
-     
+        dispatch(addUser(response.data));
+        console.log("Registro exitoso");
+      }
     } catch (error) {
       // Ocurrió un error al procesar la solicitud
       // Puedes manejar aquí la lógica de manejo de errores
@@ -66,7 +70,6 @@ const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
       email: "",
       image: "",
     });
-    setConfirmPsw("");
     setErrors({});
     setFormSubmitted(true);
   };
@@ -119,17 +122,6 @@ const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
-        <div className="form-group">
-          <label>Confirmar contraseña:</label>
-          <input 
-            type="password" 
-            name="confirm" 
-            value={confirmPsw}
-            onChange={(e) => handleConfirmPassword(e)} 
-          />
-          {errors.confirm && <p className="error">{errors.confirm}</p>}
-        </div>
-
 
         <div className="form-group">
           <label>Email:</label>
@@ -149,7 +141,7 @@ const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
             name="image"
             value={inputs.image}
             onChange={(e) => handleInputs(e)}
-            placeholder="Ingrese una url"
+            placeholder="Ingresa una URL de tu imagen"
           />
           {errors.image && <p className="error">{errors.image}</p>}
         </div>

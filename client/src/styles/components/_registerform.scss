@@ -1,9 +1,8 @@
 .register-container {
+    max-width: 400px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #f1f1f1;
-    margin: 20px;
-    max-width: 500px;
-
+  
     h2 {
       text-align: center;
       margin-bottom: 20px;
@@ -17,12 +16,6 @@
       padding: 10px;
       margin-bottom: 10px;
       cursor: pointer;
-    }
-
-    .google-register:hover{
-      background-color: #fff;
-      color: #db4a39;
-      border: 1px solid #db4a39;
     }
   
     hr {
@@ -39,7 +32,6 @@
       label {
         display: block;
         margin-bottom: 5px;
-        font-weight: 550;
       }
   
       input {
@@ -47,12 +39,6 @@
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        outline: none;
-      }
-
-      input:focus{
-        box-shadow:2px 3px 3px #00c7329e ;
-        border: none;
       }
   
       .error {
@@ -79,18 +65,12 @@
   
       .submit-button {
         width: 100%;
-        background-color: #4caf50;
+        background-color: #007bff;
         color: white;
         border: none;
         padding: 10px;
         margin-top: 10px;
         cursor: pointer;
-      }
-
-      .submit-button:hover{
-        background-color: #fff;
-        color: #4caf50;
-        border: 1px solid #4caf50;
       }
     }
   

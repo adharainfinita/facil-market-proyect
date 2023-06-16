@@ -3,7 +3,7 @@ import { productData } from "../utils/interfaces";
 
 
 
-export const postProduct = async(data: productData) =>{ 
+export const postUser = async(data: productData) =>{ 
   try {
     const response = await axios.post("http://localhost:3001/product", data);
     return response.data
@@ -15,7 +15,7 @@ export const postProduct = async(data: productData) =>{
   }
 }
 
-export const getProducts = async() =>{
+export const getUsers = async() =>{
   try {
     const response = await axios("http://localhost:3001/product");
     return response.data;

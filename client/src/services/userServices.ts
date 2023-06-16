@@ -1,12 +1,10 @@
 import axios from "axios";
-import {newUser } from "../utils/interfaces";
+import { User } from "../utils/interfaces";
 
 
-export const postUser = async(data: newUser) =>{ 
+export const postUser = async(data: User) =>{ 
   try {
     const response = await axios.post("http://localhost:3001/user", data);
-    console.log(response);
-    
     return response.data
   } catch (error: any) {
     const errorMessage = error.response

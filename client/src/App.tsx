@@ -1,11 +1,12 @@
-
 import { Route, Routes } from "react-router-dom";
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./pages/Form";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
+import Banner from "./components/Banner";
 import Home from "./pages/Home";
+import FeaturedCategory from "./components/FeaturedCategory";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import { useEffect } from "react";
@@ -14,6 +15,9 @@ import { getUsers } from "./redux/features/userSlice";
 import { getProducts } from "./redux/features/productSlice";
 import Market from "./pages/Market";
 
+/* import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { arrayPromises } from "./services/categoryServices"; */
 
 function App() {
   const dispatch = useDispatch()
@@ -34,7 +38,11 @@ function App() {
   return (
     <>
       <Navbar />
+	{/* const dispatch = useDispatch();
 
+	useEffect(() => {
+		const response = Promise.all(arrayPromises)
+	}, [dispatch]); */}
 
       <Routes>
       <Route path="/" element={<Home/>} />

@@ -2,7 +2,14 @@ const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 const regPass = /^(?=\S*?[0-9]).{6,10}\S$/;
 const regEmail = /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}).{0,35}$/i
 
-import { newUser } from "./interfaces";
+interface newUser{
+    name: string
+    lastName: string
+    password: string
+    email:string
+    image: string
+    confirm?: string
+}
 
 export function validate(inputs: newUser){
     let errors: Partial<newUser> = {}
@@ -15,7 +22,7 @@ export function validate(inputs: newUser){
     if (!regEmail.test(inputs.email)) errors.email = "Ingresa un correo válido (Max: 35 caracteres)" 
     if (!regPass.test(inputs.password)) errors.password = "La contraseña debe contener: Un numero y tener entre 6 a 10 caracteres"
 
-    if (inputs.confirm && inputs.password !== inputs.confirm) // Compara la contraseña y la confirmación
+    if (inputs.password !== inputs.confirm) // Compara la contraseña y la confirmación
     errors.confirm = "Las contraseñas no coinciden";
     
     if (!urlRegex.test(inputs.image)) errors.image = "Ingresa una URL válida"
