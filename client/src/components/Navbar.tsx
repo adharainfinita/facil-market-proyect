@@ -2,10 +2,12 @@ import logo from "../assets/marketplace_logo.png";
 //import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
+import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
+  const dispatch = useDispatch()
   const userValidation = useSelector((state: RootState) => state.user.userValidation)
 
   return (
@@ -33,7 +35,8 @@ function Navbar() {
 
       <SearchBar/>
       <div className="nav__user"><Link to="/login">
-        <button className="nav__button-login">{userValidation === true ? 'Cerrar Sesión' : 'Iniciar Sesión'}</button>
+        {userValidation === false ? <button className="nav__button-login">Iniciar Sesión</button>
+         : <button className="nav__button-login" onClick={() => dispatch(setUserValidator(false))}>Cerrar Sesión</button>}
         </Link>
       </div>
     </nav>

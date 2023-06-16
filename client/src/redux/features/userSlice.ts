@@ -40,6 +40,11 @@ const userSlice = createSlice({
     // }
     setUserValidator: (state, action: PayloadAction<boolean>) => {
     state.userValidation = action.payload;
+
+    if (action.payload === false) {
+      state.userLogin = {email: '', password: ''}
+    }
+    //state.userLogin = {...state.userLogin, email: '', password: ''}
     }
   },
   

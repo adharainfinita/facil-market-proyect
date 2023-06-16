@@ -17,9 +17,11 @@ const SearchBar = () => {
   const handleSearch = async () => {
     const filteredProducts = await getProductsByName(searchTerm);
 
-    dispatch(getSearchedProducts(filteredProducts));
-    setSearchTerm('')
-    navigate('/products')
+    if(filteredProducts.length > 0){
+      dispatch(getSearchedProducts(filteredProducts));
+      setSearchTerm('')
+      navigate('/products')
+    }
   };
 
   return (
