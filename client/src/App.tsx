@@ -7,10 +7,25 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
+import DetailProduct from "./components/DetailProduct";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUsers } from "./redux/features/userSlice";
 import Market from "./pages/Market";
 
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    try {
+      fetch(`http://localhost:3001/user`)
+       .then(response => response.json())
+       .then(data => dispatch(getUsers(data)))
+       }
+       catch (error) {
+       console.log(error);
+   } })
+
   return (
     <>
       <Navbar />
@@ -23,6 +38,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
         <Route path="/products" element={<Market/>} />
+        <Route path="/product/detail/:id" element={<DetailProduct/>} />
       </Routes>
       <Footer />
     </>

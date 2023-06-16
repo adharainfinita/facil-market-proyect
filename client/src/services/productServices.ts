@@ -37,3 +37,17 @@ export const getProductsByName = async(name:string) =>{
     alert(errorMessage);
   }
 } 
+
+// export const getProductsById = async(id:number) =>{
+//   console.log(id);
+  
+//   try {
+//     const response = await axios(`http://localhost:3001/product/${id}`);
+//     return response.data;
+//   } catch (error: any) {
+//     const errorMessage = error.response
+//     ? error.response.data.error
+//     : error.message;
+//     alert(errorMessage);
+//   }
+// }

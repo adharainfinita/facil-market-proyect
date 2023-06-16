@@ -89,6 +89,9 @@ const productSlice = createSlice({
     },
     getDetail:  (state, action: PayloadAction<Product>) =>{
       state.detail = action.payload
+    },
+    cleanDetail: (state, action: PayloadAction<Product>) =>{
+      state.detail = action.payload
     }
 	},
   extraReducers: (builder) => {
@@ -104,6 +107,6 @@ const productSlice = createSlice({
   },
 });
 
-export const {getProducts, getDetail, filterProducts, orderProducts, getSearchedProducts} = productSlice.actions;
+export const {getProducts, getDetail, filterProducts, orderProducts, cleanDetail, getSearchedProducts} = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) => state.product.products;
