@@ -3,9 +3,9 @@ import { createCategory } from "../../controllers/categoryControllers";
 
 const postCategory = async (req: Request, res: Response) => {
 	try {
-		const { name } = req.body;
+		const { name, image, highlight } = req.body;
 
-		const newCategory = await createCategory({ name });
+		const newCategory = await createCategory({ name, image, highlight });
 
 		return res.status(201).json(newCategory);
 	} catch (error: any) {

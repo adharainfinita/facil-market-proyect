@@ -32,4 +32,5 @@ export interface reviewProps {
 export interface categoryProps {
 	id: number;
 	name: string;
+	image: string;
 }
