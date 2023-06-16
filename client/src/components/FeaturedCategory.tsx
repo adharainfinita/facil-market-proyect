@@ -1,31 +1,12 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../redux/features/categorySlice";
+
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { getCategory } from "../services/categoryServices";
 import { Category } from "../utils/interfaces";
 
 const FeaturedCategory = () => {
 
-    const dispatch = useDispatch();
-	const categories = useSelector((state: RootState) => state.category.value);
-
-	useEffect(() => {
-		// Aquí llamamos al servicio getCategory para obtener las categorías
-		const fetchCategories = async () => {
-			try {
-				const response = await getCategory();
-				if (response) {
-					dispatch(getCategories(response));
-				} else {
-					console.error("Error al obtener las categorías");
-				}
-			} catch (error) {
-				console.error("Error al obtener las categorías:", error);
-			}
-		};
-		fetchCategories();
-	}, [dispatch]);
+    
+    const categories = useSelector((state: RootState) => state.category.value);
 
     return (
         <div className="container-featured">
