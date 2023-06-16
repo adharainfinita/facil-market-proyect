@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import categories from "../utils/categories";
 import { FormData } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Formulario: React.FC = () => {
+	const categories = useSelector((state: RootState) => state.category.value);
+
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<FormData>>({});
 	const [formData, setFormData] = useState<FormData>({
@@ -43,12 +46,17 @@ const Formulario: React.FC = () => {
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 
-		//? Parseo de info
-		formData.stock = Number(formData.stock);
-		formData.price = Number(formData.price);
-		formData.categoryID = Number(formData.categoryID);
+		//? Si no tengo errores
+		if (!Object.keys(errors).length) {
+			//? Parseo de info
+			formData.stock = Number(formData.stock);
+			formData.price = Number(formData.price);
+			formData.categoryID = Number(formData.categoryID);
 
-		console.log(formData);
+			console.log(formData);
+		} else {
+			alert("Datos incompletos");
+		}
 	};
 
 	return (
