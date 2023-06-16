@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser, setUserValidator  } from "../redux/features/userSlice";
+// import { fetchUsers } from "../redux/features/getUserSlice";
+import { RootState } from "../redux/store";
+import { UserData } from "../utils/interfaces";
+// import { getAllUsers } from "../services/userServices";
 
-interface UserData {
-  password: string | number;
-  email: string | number;
-}
+
+
 
 const Login: React.FC = () => {
-  // Estado para los datos del formulario
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.userLogin);
+  const users = useSelector((state: RootState) => state.user.users);
+  const access = useSelector((state: RootState) => state.user.userValidation);
+
+  const [localController, setLocalController] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  // const userValidator = useSelector((state: RootState) => state.userValidator.value);
+
+  useEffect(() => {
+     if(access){
+    navigate('/')
+   }
+
+    }, [dispatch, access, navigate, localController]);
+
+console.log('local', localController);
+console.log('global' ,access);
+
+
   const [formData, setFormData] = useState<UserData>({
     password: "",
     email: "",
   });
 
-  // Manejador de cambios para los campos del formulario
+  const [message, setMessage] = useState("No has escrito nada");
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -22,12 +49,36 @@ const Login: React.FC = () => {
       [name]: value,
     }));
   };
-
-  // Manejador para el envío del formulario
+  
+  
+ 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+   
+      dispatch(addUser(formData));
+
     console.log("Datos del formulario:", formData);
-    // Aquí puedes realizar lógica adicional, como enviar los datos al servidor, etc.
+    const response = handleAccess()
+   
+    console.log(response);
+    if(response.length) {
+      setLocalController(true);
+    }
+     if(!response.length) {
+      setMessage("Usuario no encontrado")
+    setLocalController(false)
+     }
+      // dispatch(setUserValidator(false)); // Actualiza el estado userValidator a false
+    }
+
+  const  handleAccess = () =>{
+    const userFound =users.filter(match => match.email === user.email)
+      dispatch(setUserValidator(true));
+    return userFound
+    }
+  
+  const handleShowPassword = () => { 
+    setShowPassword(!showPassword); 
   };
 
   return (
@@ -47,15 +98,22 @@ const Login: React.FC = () => {
       <div className="form_group">
         <label htmlFor="password">Contraseña:</label>
         <input
-          type="password"
           id="password"
           name="password"
+          type={showPassword ? "text" : "password"}
           value={formData.password}
           onChange={handleChange}
         />
+        <button type="button" onClick={handleShowPassword}>Mostrar contraseña</button>
       </div>
 
-      <button type="submit">Iniciar Sesión</button>
+      <button type="submit">{!access ? 'Iniciar Sesión': 'Entrar'}</button>
+
+      <Link to="/register">
+        <p>¿No tienes cuenta?</p>
+      </Link>
+
+      {message && <p>{message}</p>}
     </form>
   );
 };
