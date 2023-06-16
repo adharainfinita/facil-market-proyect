@@ -4,7 +4,7 @@ import Category from "./src/models/Category";
 const PORT = 3001;
 
 database
-	.sync({ force: false })
+	.sync({ alter: true })
 	Category.sync()
 	.then(() => Category.loadDefaultCategories()) 
 	.then(() => {

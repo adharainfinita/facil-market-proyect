@@ -5,7 +5,8 @@ import { User, UserData } from "../../utils/interfaces";
 export interface UserState {
   users: User[],
   userLogin: UserData;
-  userValidation: boolean
+  userValidation: boolean;
+
 }
 
 const initialState: UserState = {
@@ -13,7 +14,7 @@ const initialState: UserState = {
   userLogin: {
     email: "",
     password: "",
-    id: 0,
+    id: "",
   },
   userValidation: false
 };
