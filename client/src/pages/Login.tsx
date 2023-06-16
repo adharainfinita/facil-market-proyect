@@ -31,6 +31,7 @@ const Login: React.FC = () => {
 	const [formData, setFormData] = useState<UserData>({
 		password: "",
 		email: "",
+		id: 0
 	});
 
 	const [message, setMessage] = useState("No has escrito nada");

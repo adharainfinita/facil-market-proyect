@@ -13,6 +13,7 @@ const initialState: UserState = {
   userLogin: {
     email: "",
     password: "",
+    id: 0,
   },
   userValidation: false
 };
