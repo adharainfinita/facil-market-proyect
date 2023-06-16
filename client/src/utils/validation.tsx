@@ -1,4 +1,4 @@
-import { FormData } from "../pages/Form";
+import { FormData } from "../components/FormCreateProduct";
 const validation = (formData: FormData) => {
   const errors = {};
 

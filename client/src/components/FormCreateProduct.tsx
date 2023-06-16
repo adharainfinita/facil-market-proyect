@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import categories from "../utils/categories";
 import { FormData } from "../utils/interfaces";
+import { validate } from "../utils/FormProductValidation";
 
 const Formulario: React.FC = () => {
 	//? Estado Local
+	const [errors, setErrors] = useState<Partial<FormData>>({});
 	const [formData, setFormData] = useState<FormData>({
 		userID: 1,
 		categoryID: 1,
 		name: "",
+		location: "",
 		description: "",
 		stock: 1,
 		image: "",
-		location: "",
 		price: 1,
 	});
 
@@ -28,6 +30,13 @@ const Formulario: React.FC = () => {
 			...prevFormData,
 			[campoActual]: valorActual,
 		}));
+
+		setErrors(
+			validate({
+				...formData,
+				[campoActual]: valorActual,
+			})
+		);
 	};
 
 	//? HandleSubmit
@@ -55,6 +64,7 @@ const Formulario: React.FC = () => {
 					value={formData.name}
 					onChange={handleChange}
 				/>
+				{errors.name && <p className="error">{errors.name}</p>}
 			</label>
 
 			<label htmlFor="form__input-location">
@@ -62,9 +72,11 @@ const Formulario: React.FC = () => {
 				<input
 					type="text"
 					name="location"
+					placeholder="Ingresa tu ubicación"
 					onChange={handleChange}
 					value={formData.location}
 				/>
+				{errors.location && <p className="error">{errors.location}</p>}
 			</label>
 
 			<label htmlFor="form__input-stock">
@@ -82,9 +94,11 @@ const Formulario: React.FC = () => {
 				<input
 					name="image"
 					type="text"
+					placeholder="URL de tu imagen"
 					onChange={handleChange}
 					value={formData.image}
 				/>
+				{errors.image && <p className="error">{errors.image}</p>}
 			</label>
 
 			<label htmlFor="form__category">Categoría:</label>
@@ -112,9 +126,11 @@ const Formulario: React.FC = () => {
 			<label htmlFor="form__description">Descripción:</label>
 			<textarea
 				name="description"
+				placeholder="Ingresa una descripción para tu producto"
 				value={formData.description}
 				onChange={handleChange}
 			/>
+			{errors.description && <p className="error">{errors.description}</p>}
 			<button type="submit">Enviar</button>
 		</form>
 	);
