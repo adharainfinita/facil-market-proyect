@@ -17,13 +17,30 @@ import { useDispatch } from "react-redux";
 import { getUsers } from "./redux/features/userSlice";
 import { getProducts } from "./redux/features/productSlice";
 import { getCategories } from "./redux/features/categorySlice";
-
+import { getCategory } from "./services/categoryServices";
 /* import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { arrayPromises } from "./services/categoryServices"; */
 
 function App() {
   const dispatch = useDispatch()
+  useEffect(() => {
+    // Aquí llamamos al servicio getCategory para obtener las categorías
+    const fetchCategories = async () => {
+            try {
+                const response = await getCategory();
+        if (response) {
+                    dispatch(getCategories(response));
+        } else {
+                    console.error("No existen categorias");
+        }
+      } catch (error) {
+                console.error("Error al obtener las categorías:", error);
+      }
+    };
+    fetchCategories();
+  }, [dispatch]);
+  
   useEffect(() => {
     try {
       fetch(`http://localhost:3001/user`)
@@ -34,9 +51,6 @@ function App() {
        .then(response => response.json())
        .then(data => dispatch(getProducts(data)))
 
-      /* fetch(`htpp://localhost:3001/category`)
-        .then(response => response.json())
-        .then(data => dispatch(getCategories(data))) */
       }
       catch (error) {
       console.log(error);
@@ -46,7 +60,7 @@ function App() {
     <>
       <Navbar />
 	{/* const dispatch = useDispatch();
-  
+
 	useEffect(() => {
 		const response = Promise.all(arrayPromises)
 	}, [dispatch]); */}
