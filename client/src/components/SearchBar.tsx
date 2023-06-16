@@ -9,17 +9,28 @@ const SearchBar = () => {
 	const dispatch = useDispatch();
 	const [searchTerm, setSearchTerm] = useState("");
 	const navigate = useNavigate();
+	const [error, setError] = useState("");
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
 
 	const handleSearch = async () => {
-		const filteredProducts = await getProductsByName(searchTerm);
-
-		dispatch(getSearchedProducts(filteredProducts));
+		try {
+			const filteredProducts = await getProductsByName(searchTerm);
+			if (filteredProducts.length === 0) {
+				setError(`No se encontro: ${searchTerm}`);
+				dispatch(getSearchedProducts(filteredProducts));
+			} else {
+				setError("");
+				dispatch(getSearchedProducts(filteredProducts));
+			}
+			setSearchTerm("");
+			navigate("/products");
+		} catch (error) {
+			console.error("Ocurrio un error durante la busqueda", error);
+		}
 		setSearchTerm("");
-		navigate("/products");
 	};
 
 	return (
@@ -36,6 +47,7 @@ const SearchBar = () => {
 					<SlMagnifier />
 				</button>
 			</div>
+			{error && <div>{error}</div>}
 		</div>
 	);
 };

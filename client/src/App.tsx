@@ -13,7 +13,7 @@ import Market from "./pages/Market";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers } from "./redux/features/userSlice";
-import { getProducts } from "./redux/features/productSlice";
+/* import { getProducts } from "./redux/features/productSlice"; */
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 /* import { useEffect } from "react";
@@ -45,12 +45,12 @@ function App() {
 				.then((response) => response.json())
 				.then((data) => dispatch(getUsers(data)));
 
-			fetch(`http://localhost:3001/product`)
+			/* fetch(`http://localhost:3001/product`)
 				.then((response) => response.json())
-				.then((data) => dispatch(getProducts(data)));
+				.then((data) => dispatch(getProducts(data)));*/
 		} catch (error) {
 			console.log(error);
-		}
+		} 
 	});
 
 	return (
