@@ -26,3 +26,14 @@ export const getProducts = async() =>{
     alert(errorMessage);
   }
 }
+export const getProductsByName = async(name:string) =>{
+  try {
+    const response = await axios(`http://localhost:3001/product/search?name=${name}`);
+    return response.data;
+  } catch (error: any) {
+    const errorMessage = error.response
+    ? error.response.data.error
+    : error.message;
+    alert(errorMessage);
+  }
+} 

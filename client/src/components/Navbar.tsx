@@ -1,6 +1,7 @@
 import logo from "../assets/marketplace_logo.png";
 import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   return (
@@ -11,6 +12,7 @@ function Navbar() {
           <h1>Facil Market</h1>
         </div>
       </Link>
+
 
       <ul className="nav__items">
         <Link to="/">
@@ -25,6 +27,7 @@ function Navbar() {
         </Link>
       </ul>
 
+      <SearchBar/>
       <div className="nav__user"><Link to="/login">
         <button className="nav__button-login">Iniciar Sesión</button>
         </Link>

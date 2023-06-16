@@ -1,8 +1,7 @@
   import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
   import { Product } from "../../utils/interfaces";
   import axios from "axios";
-
-
+  import { RootState } from '../store';
 
   export interface ProductState {
     products: Product[];
@@ -40,10 +39,17 @@
       }
   });
 
-  const productSlice = createSlice({
-    name: "products",
-    initialState,
-    reducers: {
+const productSlice = createSlice({
+	name: "products",
+	initialState,
+	reducers: {
+    getSearchedProducts: (state, action: PayloadAction<Product[]>) => {
+      state.products = action.payload;
+    },
+		getProducts: (state, action: PayloadAction<Product[]>) => {
+			state.products = action.payload;
+			state.originalCopy = action.payload;
+		},
 		filterProducts: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [];
 			action.payload === "All"
@@ -98,5 +104,6 @@
   },
 });
 
-export const { getDetail, filterProducts, orderProducts} = productSlice.actions;
+export const {getProducts, getDetail, filterProducts, orderProducts, getSearchedProducts} = productSlice.actions;
 export default productSlice.reducer;
+export const selectSearchedProducts = (state: RootState) => state.product.products;
