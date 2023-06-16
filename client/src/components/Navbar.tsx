@@ -1,9 +1,13 @@
 import logo from "../assets/marketplace_logo.png";
-import { BsChevronDown } from "react-icons/bs";
+//import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 function Navbar() {
+  const userValidation = useSelector((state: RootState) => state.user.userValidation)
+
   return (
     <nav className="nav">
       <Link to="/">
@@ -19,7 +23,7 @@ function Navbar() {
           <li>Inicio</li>
         </Link>
         <li>
-          Categorías <BsChevronDown />
+          <Link to='/products'><li>Market</li></Link>
         </li>
         <li>Nosotros</li>
         <Link to="/vender">
@@ -29,7 +33,7 @@ function Navbar() {
 
       <SearchBar/>
       <div className="nav__user"><Link to="/login">
-        <button className="nav__button-login">Iniciar Sesión</button>
+        <button className="nav__button-login">{userValidation === true ? 'Cerrar Sesión' : 'Iniciar Sesión'}</button>
         </Link>
       </div>
     </nav>

@@ -11,6 +11,7 @@ import DetailProduct from "./components/DetailProduct";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers } from "./redux/features/userSlice";
+import { getProducts } from "./redux/features/productSlice";
 import Market from "./pages/Market";
 
 
@@ -21,6 +22,10 @@ function App() {
       fetch(`http://localhost:3001/user`)
        .then(response => response.json())
        .then(data => dispatch(getUsers(data)))
+
+      fetch(`http://localhost:3001/product`)
+       .then(response => response.json())
+       .then(data => dispatch(getProducts(data)))
        }
        catch (error) {
        console.log(error);

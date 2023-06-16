@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { getSearchedProducts } from '../redux/features/productSlice';
 import { getProductsByName } from '../services/productServices';
 import {SlMagnifier} from "react-icons/sl"
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate()
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -16,6 +18,8 @@ const SearchBar = () => {
     const filteredProducts = await getProductsByName(searchTerm);
 
     dispatch(getSearchedProducts(filteredProducts));
+    setSearchTerm('')
+    navigate('/products')
   };
 
   return (

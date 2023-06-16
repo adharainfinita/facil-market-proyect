@@ -10,7 +10,7 @@ function Pagination(props: productList) {
     const products = props.products
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [perPage, setperPage] = useState(9)
+    const [perPage, setperPage] = useState(6)
     const [find, setFind] = useState<boolean>()
 
     useEffect(() => {
@@ -43,12 +43,12 @@ function Pagination(props: productList) {
     return(
         <>
         <ProductCard products={currentProducts}/>
-        <div>
-            <button disabled={currentPage === 1 || currentPage < 1} onClick={() => onSpecificPage('first')}>{'<<'}</button>
-            <button disabled={currentPage === 1 || currentPage < 1} onClick={onPreviusPage}>{'<'}</button>
+        <div className='page-controls'>
+            <button className='pag-buttons' disabled={currentPage === 1 || currentPage < 1} onClick={() => onSpecificPage('first')}>{'<<'}</button>
+            <button className='pag-buttons' disabled={currentPage === 1 || currentPage < 1} onClick={onPreviusPage}>{'<'}</button>
             <h3>Page {currentPage} of {pagesNumber}</h3>
-            <button disabled={currentPage === pagesNumber || currentPage > pagesNumber} onClick={onNextPage}>{'>'}</button>
-            <button disabled={currentPage === pagesNumber || currentPage > pagesNumber} onClick={() => onSpecificPage('last')}>{'>>'}</button>
+            <button className='pag-buttons' disabled={currentPage === pagesNumber || currentPage > pagesNumber} onClick={onNextPage}>{'>'}</button>
+            <button className='pag-buttons' disabled={currentPage === pagesNumber || currentPage > pagesNumber} onClick={() => onSpecificPage('last')}>{'>>'}</button>
         </div>
         </>
     )
