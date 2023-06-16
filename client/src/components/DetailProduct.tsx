@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useProduct from "../hooks/useProduct";
 
 const DetailProduct = () => {
@@ -20,6 +21,7 @@ const DetailProduct = () => {
                     <p className="detail-product-description">{product.description}</p>
                 </div>
             </div>
+            <Link to='/products'><button className="back-detail">{'<-'} Atras</button></Link>
         </div>
     )
 }

@@ -4,6 +4,27 @@
     align-items: center;
     height: 100vh;
     background-color: #dffbfe;
+    position: relative;
+
+    
+    .back-detail{
+      position: absolute;
+      background-color: green;
+      padding: 10px 30px;
+      top: 20px;
+      left: 20px;
+      color: #ffffff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      border-radius: .5rem;
+    }
+
+    .back-detail:hover{
+      background-color: #ffffff;
+      color: green;
+      border: 1px solid green;
+    }
   }
   
   .detail-product {
