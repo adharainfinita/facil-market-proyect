@@ -95,5 +95,31 @@ class Product extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 }
+/* public static async loadDefaultProducts() {
+	const defaultProducts = [
+		{ name: "Ropa y accesorios" },
+		{ name: "Computación" },
+		{ name: "Smartphone" },
+		{ name: "Electrodomesticos" },
+		{ name: "Indumentaria" },
+		{ name: "Inmuebles" },
+		{ name: "Vehiculos"},
+		{ name: "Hogar"},
+		{ name: "Belleza"},
+		{ name: "Libros"},
+	];
 
+	for (const ProductData of defaultProducts) {
+		const [product, created] = await Product.findOrCreate({
+			where: { name: categoryData.name },
+			defaults: categoryData,
+		});
+
+		if (created) {
+			console.log(`Created category: ${category.name}`);
+		} else {
+			console.log(`Category ${category.name} already exists.`);
+		}
+	} 
+}*/
 export default Product;
