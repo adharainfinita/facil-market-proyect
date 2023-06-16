@@ -4,6 +4,7 @@ import { validate } from "../utils/FormProductValidation";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
+
 const Formulario: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 
