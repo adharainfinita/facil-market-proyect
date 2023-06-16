@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers } from "./redux/features/userSlice";
 import { getProducts } from "./redux/features/productSlice";
+import { getCategories } from "./redux/features/categorySlice";
 
 /* import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -32,16 +33,20 @@ function App() {
       fetch(`http://localhost:3001/product`)
        .then(response => response.json())
        .then(data => dispatch(getProducts(data)))
-       }
-       catch (error) {
-       console.log(error);
+
+      /* fetch(`htpp://localhost:3001/category`)
+        .then(response => response.json())
+        .then(data => dispatch(getCategories(data))) */
+      }
+      catch (error) {
+      console.log(error);
    } })
 
   return (
     <>
       <Navbar />
 	{/* const dispatch = useDispatch();
-
+  
 	useEffect(() => {
 		const response = Promise.all(arrayPromises)
 	}, [dispatch]); */}

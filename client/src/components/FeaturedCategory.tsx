@@ -1,4 +1,56 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../redux/features/categorySlice";
+import { RootState } from "../redux/store";
+import { getCategory } from "../services/categoryServices";
+import { Category } from "../utils/interfaces";
 
+const FeaturedCategory = () => {
+
+    const dispatch = useDispatch();
+	const categories = useSelector((state: RootState) => state.category.value);
+
+	useEffect(() => {
+		// Aquí llamamos al servicio getCategory para obtener las categorías
+		const fetchCategories = async () => {
+			try {
+				const response = await getCategory();
+				if (response) {
+					dispatch(getCategories(response));
+				} else {
+					console.error("Error al obtener las categorías");
+				}
+			} catch (error) {
+				console.error("Error al obtener las categorías:", error);
+			}
+		};
+		fetchCategories();
+	}, [dispatch]);
+
+    return (
+        <div className="container-featured">
+
+            <h2 className="title-featured">Categorias destacadas</h2>
+
+            {categories.map((category: Category) => (
+				<div className="container-featuredcategory">
+
+                    <div key={category.id} className="image-featuredcategory">
+                        <img
+                            src={category.image}
+                            alt={category.name}
+                            className="category-image"
+                        />
+					</div>
+				        <h2 key={category.id}>{category.name}</h2>
+				</div>
+			))}
+        </div>
+    )
+}
+
+export default FeaturedCategory;
+/* 
 const FeaturedCategory = () => {
 
     return (
@@ -36,6 +88,6 @@ const FeaturedCategory = () => {
     )
 }
 
-export default FeaturedCategory;
+export default FeaturedCategory; */
 
 //smartphone , laptops , electrodomesticos , indumentaria , vehiculos , hogar, inmuebles
