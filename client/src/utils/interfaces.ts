@@ -62,14 +62,14 @@ export interface UserData {
 
 // Interfaces de componentes
 
-export interface FormData {
+export interface FormCreateProduct {
 	userID: number;
-	categoryID?: number;
+	categoryID: number;
 	name: string;
 	description: string;
-	stock?: number;
+	stock: number;
 	rating?: number;
 	image: string;
 	location: string;
-	price?: number;
+	price: number;
 }

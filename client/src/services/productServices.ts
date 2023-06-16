@@ -1,6 +1,5 @@
 import axios from "axios";
-import { FormData } from "../utils/interfaces";
-
+import { FormCreateProduct } from "../utils/interfaces";
 
 export const getProductsByName = async (name: string) => {
 	try {
@@ -31,7 +30,7 @@ export const getProductsByName = async (name: string) => {
 // }
 
 //? Create product
-export const postProduct = async (product: FormData) => {
+export const postProduct = async (product: FormCreateProduct) => {
 	try {
 		const response = await axios.post("http://localhost:3001/product", product);
 		return response.data;
@@ -40,9 +39,7 @@ export const postProduct = async (product: FormData) => {
 	}
 };
 
-
-
-export const getUsers = async () => {
+export const getAllProducts = async () => {
 	try {
 		const response = await axios("http://localhost:3001/product");
 		return response.data;

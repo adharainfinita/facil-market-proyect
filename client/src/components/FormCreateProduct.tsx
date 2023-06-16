@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { FormData } from "../utils/interfaces";
+import { FormCreateProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-
+import { postProduct } from "../services/productServices";
 
 const Formulario: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<FormData>>({});
-	const [formData, setFormData] = useState<FormData>({
-		userID: 1,
+	const [errors, setErrors] = useState<Partial<FormCreateProduct>>({});
+	const [formData, setFormData] = useState<FormCreateProduct>({
+		userID: 2,
 		categoryID: 1,
 		name: "",
 		location: "",
@@ -19,6 +19,7 @@ const Formulario: React.FC = () => {
 		stock: 1,
 		image: "",
 		price: 1,
+		rating: 0,
 	});
 
 	//? HandleChanges
@@ -54,7 +55,12 @@ const Formulario: React.FC = () => {
 			formData.price = Number(formData.price);
 			formData.categoryID = Number(formData.categoryID);
 
+			//? Creo el producto
 			console.log(formData);
+
+			postProduct(formData);
+
+			alert("Producto creado correctamente");
 		} else {
 			alert("Datos incompletos");
 		}
