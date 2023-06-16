@@ -11,8 +11,8 @@ const Formulario: React.FC = () => {
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<FormCreateProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: 2,
-		categoryID: 1,
+		userID: 0,
+		categoryID: 0,
 		name: "",
 		location: "",
 		description: "",
