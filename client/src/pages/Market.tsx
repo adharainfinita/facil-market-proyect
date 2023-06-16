@@ -8,15 +8,15 @@ import Pagination from "../components/Pagination";
 import Filters from "../components/Filters";
 
 function Market() {
-    //const dispatch = useDispatch()
-    const products = useSelector((state: RootState) => state.product.products);
+	//const dispatch = useDispatch()
+	const products = useSelector((state: RootState) => state.product.products);
 
-    return (
-        <>
-            <Filters />
-            <Pagination products={products}/>
-        </>
-    );
-  }
-  
-  export default Market;    
+	return (
+		<>
+			<Filters />
+			<Pagination products={products} />
+		</>
+	);
+}
+
+export default Market;

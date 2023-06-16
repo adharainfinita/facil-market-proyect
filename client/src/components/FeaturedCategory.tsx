@@ -1,34 +1,29 @@
-
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Category } from "../utils/interfaces";
 
 const FeaturedCategory = () => {
+	const categories = useSelector((state: RootState) => state.category.value);
 
-    
-    const categories = useSelector((state: RootState) => state.category.value);
+	return (
+		<div className="container-featured">
+			<h2 className="title-featured">Categorias destacadas</h2>
 
-    return (
-        <div className="container-featured">
-
-            <h2 className="title-featured">Categorias destacadas</h2>
-
-            {categories.map((category: Category) => (
+			{categories.map((category: Category) => (
 				<div className="container-featuredcategory">
-
-                    <div key={category.id} className="image-featuredcategory">
-                        <img
-                            src={category.image}
-                            alt={category.name}
-                            className="category-image"
-                        />
+					<div key={category.id} className="image-featuredcategory">
+						<img
+							src={category.image}
+							alt={category.name}
+							className="category-image"
+						/>
 					</div>
-				        <h2 key={category.id}>{category.name}</h2>
+					<h2 key={category.id}>{category.name}</h2>
 				</div>
 			))}
-        </div>
-    )
-}
+		</div>
+	);
+};
 
 export default FeaturedCategory;
 /* 

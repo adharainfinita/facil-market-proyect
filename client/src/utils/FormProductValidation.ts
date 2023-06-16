@@ -10,8 +10,8 @@ export const validate = (data: FormData) => {
 	//? validar name
 	if (!data.name) {
 		errors.name = "Este campo es obligatorio";
-	} else if (data.name.length > 20) {
-		errors.name = "Max: 20 caráracteres";
+	} else if (data.name.length > 35) {
+		errors.name = "Max: 35 caráracteres";
 	} else if (!nameRegex.test(data.name)) {
 		errors.name = "Ingresar una nombre valido";
 	}
