@@ -5,6 +5,7 @@ import { getAllProducts } from "../redux/features/productSlice";
 //import SearchBar from "../components/SearchBar";
 import { RootState } from "../redux/store";
 import Pagination from "../components/Pagination";
+import Filters from "../components/Filters";
 
 function Market() {
     const dispatch = useDispatch()
@@ -16,7 +17,8 @@ function Market() {
 
     return (
         <>
-         <Pagination products={products}/>
+            <Filters />
+            <Pagination products={products}/>
         </>
     );
   }
