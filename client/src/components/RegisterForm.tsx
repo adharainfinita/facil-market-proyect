@@ -2,7 +2,7 @@ import { useState } from "react";
 import { validate } from "../utils/registerValidation";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser, UserState } from "../redux/features/userSlice";
+import { addUser } from "../redux/features/userSlice";
 import axios from "axios";
 
 interface NewUser {
@@ -26,7 +26,7 @@ const Register = () => {
 	});
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [errors, setErrors] = useState<Partial<NewUser>>({});
-	const [formSubmitted, setFormSubmitted] = useState(false);
+	const [_formSubmitted, setFormSubmitted] = useState(false);
 
 	const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputs({ ...inputs, [e.target.name]: e.target.value });
