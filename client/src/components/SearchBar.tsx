@@ -14,7 +14,7 @@ const SearchBar = () => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
-
+	
 	const handleSearch = async () => {
 		try {
 			const filteredProducts = await getProductsByName(searchTerm);
@@ -35,6 +35,7 @@ const SearchBar = () => {
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
+
       handleSearch();
     }
   };
