@@ -14,7 +14,7 @@ interface NewUser {
 	confirm?: string;
 }
 
-const Register = () => {
+const RegisterForm = () => {
 	const dispatch = useDispatch();
 
 	const [inputs, setInputs] = useState<NewUser>({
@@ -28,20 +28,21 @@ const Register = () => {
 	const [errors, setErrors] = useState<Partial<NewUser>>({});
 	const [formSubmitted, setFormSubmitted] = useState(false);
 
-	const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setInputs({ ...inputs, [e.target.name]: e.target.value });
-		setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
+	const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const {name, value} = event.target 
+		setInputs({ ...inputs, [name]: value });
+		setErrors(validate({ ...inputs, [name]: value }));
 	};
 
 	const handleShowPassword = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
-		e.preventDefault();
+		event.preventDefault();
 		setShowPassword(!showPassword);
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
 		try {
 			// Realizar la solicitud POST al back-end
@@ -152,4 +153,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default RegisterForm;

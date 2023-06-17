@@ -6,7 +6,7 @@ import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
 
-const Formulario: React.FC = () => {
+const FormCreateProduct: React.FC = () => {
 	//? Estado Global
 	const { categories, idLogin } = useSelector((state: RootState) => ({
 		categories: state.category.value,
@@ -36,18 +36,17 @@ const Formulario: React.FC = () => {
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 		>
 	) => {
-		const campoActual = event.target.name;
-		const valorActual = event.target.value;
+		const { name, value } = event.target;
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
-			[campoActual]: valorActual,
+			[name]: value,
 		}));
 
 		setErrors(
 			validate({
 				...formData,
-				[campoActual]: valorActual,
+				[name]: value,
 			})
 		);
 	};
@@ -169,4 +168,4 @@ const Formulario: React.FC = () => {
 	);
 };
 
-export default Formulario;
+export default FormCreateProduct;
