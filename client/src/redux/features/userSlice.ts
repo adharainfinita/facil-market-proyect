@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User, UserData } from "../../utils/interfaces";
 
-
 export interface UserState {
-  users: User[],
+  users: User[];
   userLogin: UserData;
-  userValidation: boolean
+  userValidation: boolean;
 }
 
 const initialState: UserState = {
@@ -15,7 +14,7 @@ const initialState: UserState = {
     password: "",
     id: 0,
   },
-  userValidation: false
+  userValidation: false,
 };
 
 const userSlice = createSlice({
@@ -24,10 +23,10 @@ const userSlice = createSlice({
   reducers: {
     //* Acciones para traer usuarios y leerlos
     getUsers: (state, action: PayloadAction<User[]>) => {
-     state.users = action.payload
+      state.users = action.payload;
     },
     addUser: (state, action: PayloadAction<UserData>) => {
-      state.userLogin = action.payload
+      state.userLogin = action.payload;
     },
     resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
     // changeEmail: (state, action: PayloadAction<string>) => {
@@ -40,12 +39,11 @@ const userSlice = createSlice({
     //   state.userLogin.image = action.payload;
     // }
     setUserValidator: (state, action: PayloadAction<boolean>) => {
-    state.userValidation = action.payload;
-    }
+      state.userValidation = action.payload;
+    },
   },
-  
 });
 
-
-export const { getUsers, addUser, resetUsers, setUserValidator} = userSlice.actions;
+export const { getUsers, addUser, resetUsers, setUserValidator } =
+  userSlice.actions;
 export default userSlice.reducer;

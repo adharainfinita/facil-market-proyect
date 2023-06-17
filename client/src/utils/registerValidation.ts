@@ -12,7 +12,7 @@ interface newUser {
 }
 
 export function validate(inputs: newUser) {
-	let errors: Partial<newUser> = {};
+	const errors: Partial<newUser> = {};
 	if (!inputs.name) errors.name = "Agrega un nombre";
 	if (inputs.name.length > 35) errors.name = "(Max: 35 caracteres)";
 
