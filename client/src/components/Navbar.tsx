@@ -11,6 +11,7 @@ function Navbar() {
 	const userValidation = useSelector(
 		(state: RootState) => state.user.userValidation
 	);
+	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
 	return (
 		<nav className="nav">
@@ -38,6 +39,10 @@ function Navbar() {
 
 			<SearchBar />
 			<div className="nav__user">
+				<div>
+					<img src={userLogin.image} alt="user" className="nav__userLogo" />
+					<h5 className="nav___userName">{userLogin.name}</h5>
+				</div>
 				<Link to="/login">
 					{userValidation === false ? (
 						<button className="nav__button-login">Iniciar Sesión</button>

@@ -27,7 +27,7 @@ const initialState: ProductState = {
 		userName: "",
 	},
 };
-
+///
 export const getAllProducts = createAsyncThunk(
 	"products/getAllProducts",
 	async () => {
@@ -40,6 +40,7 @@ export const getAllProducts = createAsyncThunk(
 		}
 	}
 );
+///
 
 const productSlice = createSlice({
 	name: "products",
@@ -52,19 +53,31 @@ const productSlice = createSlice({
 			state.products = action.payload;
 			state.originalCopy = action.payload;
 		},
-		filterProducts: (state, action: PayloadAction<string>) => {
+		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [];
 			action.payload === "All"
-				? (productsFound = [...state.originalCopy])
-				: action.payload === "Categorías"
-				? (productsFound = state.originalCopy.filter(
-						(match) => match.categoryName === action.payload
-				  ))
-				: (productsFound = state.originalCopy.filter(
-						(match) => match.userName === action.payload
-				  ));
-
+				? productsFound = [...state.originalCopy]
+				: productsFound = state.originalCopy.filter(
+						(match) => match.categoryName === action.payload)
 			state.products = productsFound;
+		},
+		filterProductsByUser: (state, action: PayloadAction<string>) =>{
+			let productsFound: Product[] = [];
+			action.payload === "All"
+			? productsFound = [...state.originalCopy]
+			: productsFound = state.originalCopy.filter(
+				(match) => match.userName === action.payload)
+			state.products = productsFound;
+
+		},
+		filterProductsByLocation: (state, action: PayloadAction<string>) =>{
+			let productsFound: Product[] = [];
+			action.payload === "All"
+			? productsFound = [...state.originalCopy]
+			: productsFound = state.originalCopy.filter(
+				(match) => match.location === action.payload)
+			state.products = productsFound;
+
 		},
 		orderProducts: (state, action: PayloadAction<string>) => {
 			const productsCopy = [...state.products];
@@ -110,7 +123,9 @@ const productSlice = createSlice({
 export const {
 	getProducts,
 	getDetail,
-	filterProducts,
+	filterProductsByCategory,
+	filterProductsByUser,
+	filterProductsByLocation,
 	orderProducts,
 	cleanDetail,
 	getSearchedProducts,
