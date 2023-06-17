@@ -1,5 +1,8 @@
 //! Dejar aquí todas las interfaces
-
+export interface UXDataLogin {
+	id: string,
+	image: string
+}
 // Interfaces de de estados global
 export interface User {
 	id: string;
@@ -28,6 +31,8 @@ export interface Product {
 export interface Category {
 	id: number;
 	name: string;
+	image: string;
+	highlight: boolean;
 }
 
 // Interfaces de servicios
@@ -43,7 +48,7 @@ export interface productData {
 }
 
 // Interfaces para formularios
-export interface newUser {
+export interface NewUser {
 	name: string;
 	lastName: string;
 	password: string;
@@ -55,18 +60,20 @@ export interface newUser {
 export interface UserData {
 	password: string | number;
 	email: string | number;
+	id: string;
+	image: string;
 }
 
 // Interfaces de componentes
 
-export interface FormData {
+export interface FormCreateProduct {
 	userID: number;
-	categoryID?: number;
+	categoryID: number;
 	name: string;
 	description: string;
-	stock?: number;
+	stock: number;
 	rating?: number;
 	image: string;
 	location: string;
-	price?: number;
+	price: number;
 }
