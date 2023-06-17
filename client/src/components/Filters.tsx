@@ -21,7 +21,8 @@ const Filters = () => {
 		}
 		if (name === "forUser") {
 			dispatch(filterProductsByUser(value));
-		} else {
+		} 
+		if(name === 'forLocation') {
 			dispatch(filterProductsByLocation(value));
 		}
 	};
@@ -68,7 +69,7 @@ const Filters = () => {
 					<option value="All">Default</option>
 					{products.map((product: any, index: number) => (
 						<option key={index} value={product.location}>
-							{product.name}
+							{product.location}
 						</option>
 					))}
 				</select>

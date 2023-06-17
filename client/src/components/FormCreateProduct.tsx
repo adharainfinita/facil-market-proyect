@@ -51,8 +51,10 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
+	
+
 	//? HandleSubmit
-	const handleSubmit = async(event: React.FormEvent) => {
+	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 
 		//? Si no tengo errores
@@ -63,7 +65,7 @@ const FormCreateProduct: React.FC = () => {
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
-			await postProduct(formData);
+			postProduct(formData);
 			setFormData({
 				userID: Number(idLogin),
 				categoryID: 0,
