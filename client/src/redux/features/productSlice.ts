@@ -50,43 +50,45 @@ const productSlice = createSlice({
 			state.products = action.payload;
 			state.originalCopy = action.payload;
 		},
-		filterProducts: (state, action: PayloadAction<string>) => {
-			let productsFound: Product[] = [];
-			action.payload === "All"
-				? (productsFound = [...state.originalCopy])
-				: action.payload === "Categorías"
-				? (productsFound = state.originalCopy.filter(
-						(match) => match.categoryName === action.payload
-				  ))
-				: (productsFound = state.originalCopy.filter(
-						(match) => match.userName === action.payload
-				  ));
-
-			state.products = productsFound;
-		},
-    orderProducts: (state, action: PayloadAction<string>) =>{
-      const productsCopy = [...state.products];
-      if(action.payload.length === 3) {
-          action.payload === 'MAX' 
-          ? productsCopy.sort((a, b)=> b.price - a.price)
-          : productsCopy.sort((a, b)=> a.price - b.price)
+    filterProducts: (state, action: PayloadAction<string>) => {
+      const selectedLocation = action.payload;
+      let productsFound: Product[] = [];
+    
+      if (selectedLocation === "All") {
+        productsFound = [...state.originalCopy];
+      } else {
+        productsFound = state.originalCopy.filter((product) => product.location === selectedLocation);
       }
-      else {
-        action.payload === 'A' ?
-        (productsCopy.sort((a, b) => {
-          if(a.name < b.name) return -1
-          if(a.name > b.name) return 1;
-          return 0;
-        }))
-        : (productsCopy.sort((a, b) => {
-          if(a.name > b.name) return -1
-          if(a.name < b.name) return 1;
-          return 0;
-        }))
-      }
-      state.products = productsCopy;
-      state.originalCopy = productsCopy;
+    
+      state.products = productsFound;
     },
+
+    filterByLocation: (state, action: PayloadAction<string>) => {
+      const selectedLocation = action.payload;
+      let filteredProducts: Product[];
+
+      if (selectedLocation === "All") {
+        filteredProducts = [...state.originalCopy];
+      } else {
+        filteredProducts = state.originalCopy.filter((product) => product.location === selectedLocation);
+      }
+
+      state.products = filteredProducts;
+    },
+    
+    orderProducts: (state, action: PayloadAction<string>) => {
+      const orderDirection = action.payload;
+      const productsCopy = [...state.products];
+    
+      if (orderDirection === 'MAX') {
+        productsCopy.sort((a, b) => b.price - a.price);
+      } else if (orderDirection === 'MIN') {
+        productsCopy.sort((a, b) => a.price - b.price);
+      }
+    
+      state.products = productsCopy;
+    },
+    
     getDetail:  (state, action: PayloadAction<Product>) =>{
       state.detail = action.payload
     },
@@ -102,11 +104,10 @@ const productSlice = createSlice({
     builder.addCase(getAllProducts.rejected, (state, action) => {
       state.products = [];
       console.log(action);
-      
     });
   },
 });
 
-export const {getProducts, getDetail, filterProducts, orderProducts, cleanDetail, getSearchedProducts} = productSlice.actions;
+export const {getProducts, getDetail, filterProducts, orderProducts, cleanDetail, getSearchedProducts, filterByLocation} = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) => state.product.products;

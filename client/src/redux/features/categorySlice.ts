@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Category } from "../../utils/interfaces";
 
 interface CategoryState {
-  value: Category[]
+  value: Category[];
 }
 
-const initialState: CategoryState= {
-  value: []
+const initialState: CategoryState = {
+  value: [],
 }
 
 const categorySlice = createSlice({
@@ -14,10 +14,10 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     getCategories: (state, action: PayloadAction<Category[]>) => {
-      state.value = action.payload
-    }
-  }
-})
+      state.value = action.payload;
+    },
+  },
+});
 
-export const {getCategories} = categorySlice.actions;
+export const { getCategories } = categorySlice.actions;
 export default categorySlice.reducer;
