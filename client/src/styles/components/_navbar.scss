@@ -5,6 +5,13 @@
   font-family: Arial, Helvetica, sans-serif;
   color: #111;
 
+  &__userLogo{
+    width: 40px;
+  }
+  &__userName{
+    color: #111;
+  }
+
   &__logo {
     display: flex;
     align-items: center;

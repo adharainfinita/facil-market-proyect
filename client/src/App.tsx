@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
@@ -13,15 +13,12 @@ import Market from "./pages/Market";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers } from "./redux/features/userSlice";
-/* import { getProducts } from "./redux/features/productSlice"; */
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-/* import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { arrayPromises } from "./services/categoryServices"; */
 
 function App() {
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		// Aquí llamamos al servicio getCategory para obtener las categorías
 		const fetchCategories = async () => {
@@ -56,11 +53,6 @@ function App() {
 	return (
 		<>
 			<Navbar />
-			{/* const dispatch = useDispatch();
-
-	useEffect(() => {
-		const response = Promise.all(arrayPromises)
-	}, [dispatch]); */}
 
 			<Routes>
 				<Route path="/" element={<Home />} />

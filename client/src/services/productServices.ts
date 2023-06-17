@@ -37,6 +37,8 @@ export const getProductsByName = async (name: string) => {
 export const postProduct = async (product: FormCreateProduct) => {
 	try {
 		const { data } = await axios.post("http://localhost:3001/product", product);
+		console.log(data);
+		
 		return data;
 	} catch (error: any) {
 		return error.message;

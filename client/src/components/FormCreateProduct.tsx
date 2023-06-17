@@ -52,7 +52,7 @@ const FormCreateProduct: React.FC = () => {
 	};
 
 	//? HandleSubmit
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async(event: React.FormEvent) => {
 		event.preventDefault();
 
 		//? Si no tengo errores
@@ -63,7 +63,7 @@ const FormCreateProduct: React.FC = () => {
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
-			postProduct(formData);
+			await postProduct(formData);
 			setFormData({
 				userID: Number(idLogin),
 				categoryID: 0,
@@ -139,7 +139,7 @@ const FormCreateProduct: React.FC = () => {
 				value={formData.categoryID}
 				onChange={handleChange}
 			>
-				{categories.map((category, index) => (
+				{categories.map((category: any, index: number) => (
 					<option key={index} value={category.id}>
 						{category.name}
 					</option>
