@@ -33,21 +33,27 @@ const SearchBar = () => {
 		setSearchTerm("");
 	};
 
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 	return (
 		<div className="wrap">
-			<div className="search">
-				<input
-					type="text"
-					className="search__term"
-					placeholder="¿Qué estás buscando?"
-					value={searchTerm}
-					onChange={handleChange}
-				/>
-				<button type="submit" className="search__button" onClick={handleSearch}>
-					<SlMagnifier />
-				</button>
-			</div>
-			{error && <div>{error}</div>}
+				<div className="search">
+					<input
+						type="text"
+						className="search__term"
+						placeholder="¿Qué estás buscando?"
+						value={searchTerm}
+						onChange={handleChange}
+						onKeyDown={handleKeyDown}
+					/>
+					<button type="submit" className="search__button" onClick={handleSearch} >
+						<SlMagnifier />
+					</button>
+				</div>
+				{error && <div>{error}</div>}
 		</div>
 	);
 };

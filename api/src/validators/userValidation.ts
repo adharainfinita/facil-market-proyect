@@ -42,7 +42,7 @@ export const validateCreate = [
 
 	check("email").isEmail(),
 
-	check("password")
+	/* check("password")
 		.isStrongPassword({
 			minLength: 7,
 			minNumbers: 1,
@@ -71,7 +71,19 @@ export const validateCreate = [
 				throw new Error("Se necesita un número");
 			}
 			return true;
-		}),
+		}), */
+		check("password")
+		.isString()
+		.isLength({ min: 7 })
+		.withMessage("La contraseña es muy corta")
+		.isLength({max:30})
+		.withMessage("La contraseña es muy larga")
+		.matches(/[0-9]/)
+		.withMessage("La contraseña debe contener al menos un número"
+		),
+	(req: Request, res: Response, next: NextFunction) => {
+		validateResult(req, res, next);
+	},
 	(req: Request, res: Response, next: NextFunction) => {
 		validateResult(req, res, next);
 	},

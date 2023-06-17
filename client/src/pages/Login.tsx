@@ -5,6 +5,7 @@ import { addUser, setUserValidator } from "../redux/features/userSlice";
 
 import { RootState } from "../redux/store";
 import {  UserData } from "../utils/interfaces";
+import { getUsers } from "../redux/features/userSlice";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
@@ -19,6 +20,20 @@ const Login: React.FC = () => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
 	useEffect(() => {
+		try {
+			fetch(`http://localhost:3001/user`)
+				.then((response) => response.json())
+				.then((data) => dispatch(getUsers(data)));
+
+			/* fetch(`http://localhost:3001/product`)
+				.then((response) => response.json())
+				.then((data) => dispatch(getProducts(data)));*/
+		} catch (error) {
+			console.log(error);
+		}
+	}, [dispatch]);
+
+	useEffect(() => {
 		
 		if (access) {
 			localController && navigate("/");
@@ -26,6 +41,7 @@ const Login: React.FC = () => {
 	}, [dispatch, access, navigate, localController]);
 
 	const [formData, setFormData] = useState<UserData>({
+		name: "",
 		password: "",
 		email: "",
 		id: "",
