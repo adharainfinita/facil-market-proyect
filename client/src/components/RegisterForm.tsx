@@ -3,8 +3,8 @@ import { validate } from "../utils/registerValidation";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
-import axios from "axios";
-
+// import axios from "axios";
+import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 
 const RegisterForm = () => {
@@ -39,8 +39,8 @@ const RegisterForm = () => {
 
 		try {
 			// Realizar la solicitud POST al back-end
-			const response = await axios.post("http://localhost:3001/user", inputs);
-
+			// const response = await axios.post("http://localhost:3001/user", inputs);
+			const response = await postUser(inputs)
 			// Verificar la respuesta del servidor
 			if (response.status === 201) {
 				// El registro se creó exitosamente en la base de datos
@@ -51,6 +51,7 @@ const RegisterForm = () => {
 		} catch (error) {
 			// Ocurrió un error al procesar la solicitud
 			// Puedes manejar aquí la lógica de manejo de errores
+
 			console.error("Error al registrar el usuario", error);
 		}
 

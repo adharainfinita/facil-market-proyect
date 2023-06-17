@@ -1,7 +1,7 @@
 import axios from "axios";
-import { User } from "../utils/interfaces";
+import { NewUser} from "../utils/interfaces";
 
-export const postUser = async (userData: User) => {
+export const postUser = async (userData: NewUser) => {
 	try {
 		const { data } = await axios.post("http://localhost:3001/user", userData);
 		return data;

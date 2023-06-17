@@ -10,7 +10,7 @@ const FeaturedCategory = () => {
 			<h2 className="title-featured">Categorias destacadas</h2>
 
 			{categories.map(
-				(category: Category, index) =>
+				(category: Category, index: number) =>
 					// Verificar si category.highlight es true
 					category.highlight && (
 						<div key={index} className="container-featuredcategory">

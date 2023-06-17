@@ -51,6 +51,8 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
+	
+
 	//? HandleSubmit
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -139,7 +141,7 @@ const FormCreateProduct: React.FC = () => {
 				value={formData.categoryID}
 				onChange={handleChange}
 			>
-				{categories.map((category, index) => (
+				{categories.map((category: any, index: number) => (
 					<option key={index} value={category.id}>
 						{category.name}
 					</option>

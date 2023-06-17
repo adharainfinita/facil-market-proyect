@@ -5,7 +5,7 @@ const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
 import { FormCreateProduct } from "./interfaces";
 
 export const validate = (data: FormCreateProduct) => {
-	let errors: Partial<FormCreateProduct> = {};
+	const errors: Partial<FormCreateProduct> = {};
 
 	//? validar name
 	if (!data.name) {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserData } from "../../utils/interfaces";
+import { User, UserData, UXDataLogin } from "../../utils/interfaces";
 
 export interface UserState {
 	users: User[];
@@ -10,9 +10,11 @@ export interface UserState {
 const initialState: UserState = {
 	users: [],
 	userLogin: {
+		name: "",
 		email: "",
 		password: "",
 		id: "",
+		image: "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
 	},
 	userValidation: false,
 };
@@ -41,8 +43,9 @@ const userSlice = createSlice({
 		setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
 		},
-    setLoggedInUserId: (state, action: PayloadAction<string>) => {
-      state.userLogin.id = action.payload; // Actualiza el campo "id" en el estado userLogin
+    setLoggedInUserId: (state, action: PayloadAction<UXDataLogin>) => {
+      state.userLogin.id = action.payload.id;
+			state.userLogin.image = action.payload.image // Actualiza el campo "id" en el estado userLogin
     },
 	},
 });
