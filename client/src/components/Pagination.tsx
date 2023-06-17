@@ -10,8 +10,8 @@ function Pagination(props: productList) {
 	const products = props.products;
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage, setperPage] = useState(6);
-	const [find, setFind] = useState<boolean>();
+	const [perPage] = useState(6); //se modifico
+	const [_find, setFind] = useState<boolean>(); //se modifico
 
 	useEffect(() => {
 		setCurrentPage(1);

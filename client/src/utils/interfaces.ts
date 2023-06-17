@@ -45,7 +45,7 @@ export interface productData {
 }
 
 // Interfaces para formularios
-export interface newUser {
+export interface NewUser {
 	name: string;
 	lastName: string;
 	password: string;

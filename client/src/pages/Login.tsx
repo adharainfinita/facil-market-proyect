@@ -18,7 +18,6 @@ const Login: React.FC = () => {
 	const [localController, setLocalController] = useState(false);
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
-
 	useEffect(() => {
 		if (access) {
 			navigate("/");
@@ -62,13 +61,13 @@ const Login: React.FC = () => {
 	};
 
 	const handleAccess = () => {
-  const userFound = users.filter((match) => match.email === user.email);
-  if (userFound.length) {
-    dispatch(setLoggedInUserId(userFound[0].id)); // Actualiza el ID del usuario logueado
-    dispatch(setUserValidator(true));
-  }
-  return userFound;
-};
+		const userFound = users.filter((match) => match.email === user.email);
+		if (userFound.length) {
+			dispatch(setLoggedInUserId(userFound[0].id)); // Actualiza el ID del usuario logueado
+			dispatch(setUserValidator(true));
+		}
+		return userFound;
+	};
 
 	const handleShowPassword = () => {
 		setShowPassword(!showPassword);

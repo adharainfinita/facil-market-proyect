@@ -1,10 +1,10 @@
 import axios from "axios";
 import { User } from "../utils/interfaces";
 
-export const postUser = async (data: User) => {
+export const postUser = async (userData: User) => {
 	try {
-		const response = await axios.post("http://localhost:3001/user", data);
-		return response.data;
+		const { data } = await axios.post("http://localhost:3001/user", userData);
+		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
 			? error.response.data.error
@@ -15,8 +15,8 @@ export const postUser = async (data: User) => {
 
 export const getAllUsers = async () => {
 	try {
-		const response = await axios("http://localhost:3001/user");
-		return response.data;
+		const { data } = await axios("http://localhost:3001/user");
+		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
 			? error.response.data.error

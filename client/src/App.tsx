@@ -50,7 +50,7 @@ function App() {
 				.then((data) => dispatch(getProducts(data)));*/
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 	});
 
 	return (
