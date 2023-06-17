@@ -4,15 +4,23 @@ import { validate } from "../utils/FormProductValidation";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
+import { useNavigate } from "react-router-dom";
 
 const FormCreateProduct: React.FC = () => {
-	const categories = useSelector((state: RootState) => state.category.value);
+	//? Estado Global
+	const { categories, idLogin } = useSelector((state: RootState) => ({
+		categories: state.category.value,
+		idLogin: state.user.userLogin.id,
+	}));
+
+	//? hooks
+	const navigate = useNavigate();
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<FormCreateProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: 2,
-		categoryID: 1,
+		userID: Number(idLogin),
+		categoryID: 0,
 		name: "",
 		location: "",
 		description: "",
@@ -28,7 +36,7 @@ const FormCreateProduct: React.FC = () => {
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 		>
 	) => {
-		const {name, value} = event.target
+		const { name, value } = event.target;
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
@@ -55,11 +63,21 @@ const FormCreateProduct: React.FC = () => {
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
-			console.log(formData);
-
 			postProduct(formData);
-
+			setFormData({
+				userID: Number(idLogin),
+				categoryID: 0,
+				name: "",
+				location: "",
+				description: "",
+				stock: 1,
+				image: "",
+				price: 1,
+				rating: 0,
+			});
+			setErrors({});
 			alert("Producto creado correctamente");
+			navigate("/products");
 		} else {
 			alert("Datos incompletos");
 		}

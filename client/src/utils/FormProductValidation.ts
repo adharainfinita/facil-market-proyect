@@ -2,10 +2,10 @@
 const nameRegex = /^[a-zA-Z0-9\s]+$/;
 const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
 
-import { FormData } from "./interfaces";
+import { FormCreateProduct } from "./interfaces";
 
-export const validate = (data: FormData) => {
-	let errors: Partial<FormData> = {};
+export const validate = (data: FormCreateProduct) => {
+	let errors: Partial<FormCreateProduct> = {};
 
 	//? validar name
 	if (!data.name) {
