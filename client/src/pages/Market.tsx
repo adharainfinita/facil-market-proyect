@@ -9,10 +9,10 @@ import Filters from "../components/Filters";
 import { getProducts } from "../redux/features/productSlice";
 import { getAllProducts } from "../services/productServices";
 /* import { getProducts } from "../services/getTrendProducts"; */
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 function Market() {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const products = useSelector((state: RootState) => state.product.products);
 
 	useEffect(() => {
@@ -31,7 +31,6 @@ function Market() {
 		};
 		fetchCategories();
 	}, [dispatch]);
-
 
 	return (
 		<>

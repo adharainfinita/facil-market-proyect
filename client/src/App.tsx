@@ -6,7 +6,7 @@ import Form from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import RegisterForm from "./components/RegisterForm";
+import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
 
@@ -50,7 +50,7 @@ function App() {
 				.then((data) => dispatch(getProducts(data)));*/
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 	});
 
 	return (
@@ -67,7 +67,7 @@ function App() {
 				<Route path="/vender" element={<Form />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<RegisterForm />} />
+				<Route path="/register" element={<Register />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 			</Routes>
