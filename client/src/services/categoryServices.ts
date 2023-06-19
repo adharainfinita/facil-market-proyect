@@ -1,4 +1,6 @@
 import axios from "axios";
+import { URL_API } from "../utils/URLS";
+
 
 export interface Category {
 	name: string;
@@ -6,7 +8,7 @@ export interface Category {
 
 export const postCategory = async (data: string) => {
 	try {
-		const response = await axios.post("http://localhost:3001/category", {
+		const response = await axios.post(`${URL_API}/category`, {
 			name: data,
 		});
 		console.log(`Post successful for category: ${data}`);
@@ -20,7 +22,7 @@ export const postCategory = async (data: string) => {
 
 export const getCategory = async () => {
 	try {
-		const response = await axios("http://localhost:3001/category");
+		const response = await axios(`${URL_API}/category`);
 		return response.data;
 	} catch (error: any) {
 		const errorMessage = error.response
