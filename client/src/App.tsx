@@ -67,6 +67,7 @@ function App() {
 		fetchCategories();
 	}, [dispatch, getCategory]);
 
+
 	return (
 		<>
 			<Navbar />

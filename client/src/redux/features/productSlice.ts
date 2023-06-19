@@ -92,8 +92,9 @@ const productSlice = createSlice({
 				}
 			}
 			state.products = productsFound;
-
 		},
+
+
 		filterProductsByLocation: (state, action: PayloadAction<string>) =>{
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.location = action.payload;
@@ -110,7 +111,6 @@ const productSlice = createSlice({
 				}
 			}
 			state.products = productsFound;
-
 		},
 		resetFilters: (state,_action: PayloadAction<void>) =>{
 			state.requireFilters = initialState.requireFilters 
