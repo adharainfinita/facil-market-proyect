@@ -40,8 +40,14 @@ const userSlice = createSlice({
 		/* changeImage: (state, action: PayloadAction<string>) => {
 			state.userLogin.image = action.payload;
 		}, */
+		/* setUserValidator: (state, action: PayloadAction<boolean>) => {
+			state.userValidation = action.payload;
+		}, */
 		setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
+			if (!action.payload) {
+				state.userLogin = initialState.userLogin;
+			}
 		},
     setLoggedInUserId: (state, action: PayloadAction<UXDataLogin>) => {
       state.userLogin.id = action.payload.id;

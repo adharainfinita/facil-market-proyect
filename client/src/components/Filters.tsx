@@ -9,9 +9,9 @@ import {
 
 const Filters = () => {
 	const dispatch = useDispatch();
-
 	const categories = useSelector((state: RootState) => state.category.value);
-	const products = useSelector((state: RootState) => state.product.products);
+	// estoy usando la copia
+	const products = useSelector((state: RootState) => state.product.originalCopy);
 	const users = useSelector((state: RootState) => state.user.users);
 
 	const handleProductFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {

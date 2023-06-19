@@ -12,7 +12,6 @@ import Market from "./pages/Market";
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getUsers } from "./redux/features/userSlice";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 
@@ -35,20 +34,6 @@ function App() {
 		};
 		fetchCategories();
 	}, [dispatch]);
-
-	useEffect(() => {
-		try {
-			fetch(`http://localhost:3001/user`)
-				.then((response) => response.json())
-				.then((data) => dispatch(getUsers(data)));
-
-			/* fetch(`http://localhost:3001/product`)
-				.then((response) => response.json())
-				.then((data) => dispatch(getProducts(data)));*/
-		} catch (error) {
-			console.log(error);
-		}
-	});
 
 	return (
 		<>

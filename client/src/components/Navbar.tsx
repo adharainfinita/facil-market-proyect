@@ -8,10 +8,7 @@ import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
   const dispatch = useDispatch();
-  // const userValidation = useSelector(
-  //   (state: RootState) => state.user.userValidation
-  // );
-  // const userLogin = useSelector((state: RootState) => state.user.userLogin);
+
 	const {userValidation, userLogin} = useSelector((state: RootState) => state.user)
 
   return (
