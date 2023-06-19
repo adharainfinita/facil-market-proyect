@@ -33,6 +33,9 @@ function App() {
 			}
 		}
 		fetchUsers();
+	}, [dispatch, postUser, getAllUsers]);
+
+	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
@@ -46,6 +49,9 @@ function App() {
 			}
 		};
 		fetchProducts();
+	}, [dispatch, postProduct, getAllProducts]);
+		
+	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
@@ -59,7 +65,7 @@ function App() {
 			}
 		};
 		fetchCategories();
-	}, [dispatch, postUser, postProduct]);
+	}, [dispatch, getCategory]);
 
 	return (
 		<>
