@@ -40,7 +40,7 @@ function Navbar() {
 			<SearchBar />
 			<div className="nav__user">
 				<div>
-					<img src={userLogin.image} alt="user" className="nav__userLogo" />
+					<Link to="/profile"><img src={userLogin.image} alt="user" className="nav__userLogo" /></Link>
 					<h5 className="nav___userName">{userLogin.name}</h5>
 				</div>
 				<Link to="/login">

@@ -6,6 +6,7 @@ type productList = {
 
 function ProductCard(props: productList) {
 	const products = props.products;
+
 	return (
 		<>
 			<div className="cards-container">
@@ -17,7 +18,7 @@ function ProductCard(props: productList) {
 								<div key={index} className="text">
 									<p>{product.categoryName}</p>
 									<h3>{product.name}</h3>
-									<h4>${product.price}</h4>
+									<h4> ${product.price.toLocaleString("es-AR", {minimumFractionDigits: 0,})}</h4>
 									<span>{product.location}</span>
 								</div>
 							</div>

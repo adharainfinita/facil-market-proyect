@@ -10,7 +10,7 @@ import postProduct from "../handlers/products/postProduct";
 //! Handlers GET
 import getAllProducts from "../handlers/products/getAllProducts";
 import getAllCategories from "../handlers/categories/getCategories";
-import getAllUsers from "../handlers/users/getUsers";
+import {getAllUsers, getUserById} from "../handlers/users/getUsers";
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
@@ -21,6 +21,10 @@ import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 
+//! PUTS
+import updatePassword from "../handlers/users/updatePassword";
+router.put("/user/:userId", updatePassword)
+router.get("/user/:userId", getUserById)
 
 //* POST
 router.post("/product", productCreate, postProduct);

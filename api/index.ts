@@ -4,8 +4,7 @@ import Category from "./src/models/Category";
 const PORT = 3001;
 
 database
-	.sync({ alter: true})
-	Category.sync()
+	.sync({ force: true }) // Esto eliminará y recreará todas las tablas
 	.then(() => Category.loadDefaultCategories()) 
 	.then(() => {
 		server.listen(PORT, () => {

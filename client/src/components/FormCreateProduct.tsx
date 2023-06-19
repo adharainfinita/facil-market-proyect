@@ -26,7 +26,7 @@ const FormCreateProduct: React.FC = () => {
 		description: "",
 		stock: 1,
 		image: "",
-		price: 1,
+		price: 0,
 		rating: 0,
 	});
 
@@ -61,7 +61,7 @@ const FormCreateProduct: React.FC = () => {
 		if (!Object.keys(errors).length) {
 			//? Parseo de info
 			formData.stock = Number(formData.stock);
-			formData.price = Number(formData.price);
+			formData.price = Number(formData.stock)
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
@@ -80,8 +80,10 @@ const FormCreateProduct: React.FC = () => {
 			setErrors({});
 			alert("Producto creado correctamente");
 			navigate("/products");
+			console.log(formData.price)
 		} else {
 			alert("Datos incompletos");
+			console.log(formData.price)
 		}
 	};
 

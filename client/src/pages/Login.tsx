@@ -26,10 +26,12 @@ const Login: React.FC = () => {
 	}, [dispatch, access, navigate, localController]);
 
 	const [formData, setFormData] = useState<UserData>({
+		name:"",
+		lastName:"",
 		password: "",
 		email: "",
 		id: "",
-		image: ""
+		image: "",
 	});
 
 	const [message, setMessage] = useState("No has escrito nada");

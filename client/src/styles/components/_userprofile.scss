@@ -1,0 +1,71 @@
+.Profile__conteiner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 20px;
+  
+    .Profile__data {
+      display: flex;
+      flex-direction: column;
+      padding: 50px;
+      border: 1px black solid;
+      height: 700px;
+      width: 450px;
+      border-radius: 5px;
+      margin: 10px;
+  
+      .nav__userLogo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        object-fit: cover;
+        border: 4px solid #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+  
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #333333;
+        font-weight: bold;
+      }
+  
+      p {
+        font-size: 16px;
+        color: #666666;
+        margin-top: 20px;
+      }
+  
+      button {
+        margin-top: 10px;
+        background-color: #ffffff;
+        border: none;
+        padding: 5px 10px;
+        color: #333333;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  
+    .Profile__buys {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px black solid;
+      border-radius: 5px;
+      height: 700px;
+      margin: 10px;
+      
+  
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #333333;
+        font-weight: bold;
+
+      }
+    }
+  }
+  

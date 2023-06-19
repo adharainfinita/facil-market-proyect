@@ -10,6 +10,8 @@ export interface UserState {
 const initialState: UserState = {
 	users: [],
 	userLogin: {
+		name:"",
+		lastName:"",
 		email: "",
 		password: "",
 		id: "",
@@ -30,18 +32,21 @@ const userSlice = createSlice({
 			state.userLogin = action.payload;
 		},
 		resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
-		/* changeEmail: (state, action: PayloadAction<string>) => {
-			state.userLogin.email = action.payload;
-		}, */
-		/* changePassword: (state, action: PayloadAction<string>) => {
+		// changeEmail: (state, action: PayloadAction<string>) => {
+		// 	state.userLogin.email = action.payload;
+		// },
+		changePassword: (state, action: PayloadAction<string>) => {
 			state.userLogin.password = action.payload;
-		}, */
-		/* changeImage: (state, action: PayloadAction<string>) => {
-			state.userLogin.image = action.payload;
-		}, */
+		},
+		// changeImage: (state, action: PayloadAction<string>) => {
+		// 	state.userLogin.image = action.payload;
+		// },
 		setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
-		},
+			if (!action.payload) {
+			  state.userLogin = initialState.userLogin;
+			}
+		  },		  
     setLoggedInUserId: (state, action: PayloadAction<UXDataLogin>) => {
       state.userLogin.id = action.payload.id;
 			state.userLogin.image = action.payload.image // Actualiza el campo "id" en el estado userLogin
@@ -49,7 +54,7 @@ const userSlice = createSlice({
 	},
 });
 
-export const { getUsers, addUser, resetUsers, setUserValidator, setLoggedInUserId } =
+export const { getUsers, addUser, resetUsers, setUserValidator,changePassword, setLoggedInUserId} =
 	userSlice.actions;
 export default userSlice.reducer;
 

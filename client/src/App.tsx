@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
+import UserProfile from "./pages/UserProfile";
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -59,6 +60,7 @@ function App() {
 				<Route path="/vender" element={<Form />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/profile" element={<UserProfile />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
