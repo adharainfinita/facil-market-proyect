@@ -2,6 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Product, FiltersCaché } from "../../utils/interfaces";
 import axios from "axios";
 import { RootState } from "../store";
+import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
 	products: Product[];
@@ -34,18 +35,15 @@ const initialState: ProductState = {
 	},
 };
 ///
-export const getAllProducts = createAsyncThunk(
-	"products/getAllProducts",
-	async () => {
+export const getAllProducts =async () => {
 		try {
-			const { data } = await axios("http://localhost:3001/product");
+			const { data } = await axios(`${URL_API}/product`);
 			console.log(data);
 			return data;
 		} catch (error: any) {
 			throw new Error(error.message);
 		}
-	}
-);
+	};
 ///
 
 const productSlice = createSlice({
@@ -60,6 +58,33 @@ const productSlice = createSlice({
 			state.originalCopy = action.payload;
 		},
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
+			const categoryName = action.payload;
+			let productsFound: Product[] = [];
+
+			if (categoryName === "All") {
+				productsFound = [...state.originalCopy];
+			} else {
+				productsFound = state.originalCopy.filter((product) => product.categoryName === categoryName);
+			}
+
+			// Filtrar por otros criterios si están presentes en state.requireFilters
+			if (state.requireFilters.userName) {
+				productsFound = productsFound.filter((product) => product.userName === state.requireFilters.userName);
+			}
+			if (state.requireFilters.location) {
+				productsFound = productsFound.filter((product) => product.location === state.requireFilters.location);
+			}
+
+			return {
+				...state,
+				products: productsFound,
+				requireFilters: {
+					...state.requireFilters,
+					categoryName: categoryName,
+				},
+			};
+		},
+		/* filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.categoryName = action.payload;
 			if (action.payload === "All") state.requireFilters.categoryName = "";
@@ -71,7 +96,7 @@ const productSlice = createSlice({
 					productsFound = productsFound.filter(
 						(match) => match.userName === state.requireFilters.userName
 					);
-				}
+				} 
 				if (state.requireFilters.location) {
 					productsFound = productsFound.filter(
 						(match) => match.location === state.requireFilters.location
@@ -79,7 +104,7 @@ const productSlice = createSlice({
 				}
 			}
 			state.products = productsFound;
-		},
+		}, */
 		filterProductsByUser: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.userName = action.payload;
@@ -157,7 +182,7 @@ const productSlice = createSlice({
 			state.detail = action.payload;
 		},
 	},
-	extraReducers: (builder) => {
+	/* extraReducers: (builder) => {
 		builder.addCase(getAllProducts.fulfilled, (state, action) => {
 			state.products = action.payload;
 			state.originalCopy = action.payload;
@@ -166,7 +191,7 @@ const productSlice = createSlice({
 			state.products = [];
 			console.log(action);
 		});
-	},
+	}, */
 });
 
 export const {

@@ -5,6 +5,8 @@ import { addUser, setUserValidator } from "../redux/features/userSlice";
 
 import { RootState } from "../redux/store";
 import {  UserData } from "../utils/interfaces";
+import { getAllUsers } from "../services/userServices";
+import { getUsers } from "../redux/features/userSlice";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
@@ -27,6 +29,19 @@ const Login: React.FC = () => {
 		}
 	}, [dispatch, access, navigate, localController]);
 
+	useEffect(() => {
+		const fetchUsers = async() =>{
+			try {
+				const response = await getAllUsers()
+					if(response) {
+						dispatch(getUsers(response));
+					}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchUsers();
+	},[dispatch])
 	const [formData, setFormData] = useState<UserData>({
 		name: "",
 		password: "",

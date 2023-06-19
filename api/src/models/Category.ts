@@ -32,7 +32,7 @@ class Category extends Model {
 	public static async loadDefaultCategories() {
 		const defaultCategories = [
 			{
-				name: "Ropa y accesorios",
+				name: "Accesorios",
 				image:
 					"https://images.samsung.com/is/image/samsung/p6pim/ar/sm-a235mlbearo/gallery/ar-galaxy-a23-sm-a235-sm-a235mlbearo-532206854?$650_519_PNG$",
 				highlight: true,

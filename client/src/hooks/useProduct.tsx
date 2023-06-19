@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 // import { getProductsById } from "../services/productServices";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { URL_API } from "../utils/URLS";
 
 const useProduct = () => {
 	const { id } = useParams();
@@ -13,7 +14,7 @@ const useProduct = () => {
 
 	useEffect(() => {
 		try {
-			fetch(`https://facil-market-proyect-production.up.railway.app/product/${id}`)
+			fetch(`${URL_API}/product/${id}`)
 				.then((response) => response.json())
 				.then((data) => dispatch(getDetail(data)));
 		} catch (error) {

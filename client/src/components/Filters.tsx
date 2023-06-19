@@ -13,7 +13,7 @@ const Filters = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	// estoy usando la copia
 	const products = useSelector((state: RootState) => state.product.originalCopy);
-	const users = useSelector((state: RootState) => state.user.users);
+	/* const users = useSelector((state: RootState) => state.user.users); */
 
 	const handleProductFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = event.target;
@@ -27,9 +27,20 @@ const Filters = () => {
 			dispatch(filterProductsByLocation(value));
 		}
 	};
-	const resetAllFilters = ()=>{
-		dispatch(resetFilters())
-	}
+	const resetAllFilters = () => {
+		dispatch(resetFilters());
+
+		// Restablecer los valores predeterminados en los selectores
+		const categorySelect = document.getElementsByName(
+			"forCategory"
+		)[0] as HTMLSelectElement;
+		categorySelect.selectedIndex = 0;
+
+		const locationSelect = document.getElementsByName(
+			"forLocation"
+		)[0] as HTMLSelectElement;
+		locationSelect.selectedIndex = 0;
+	};
 	const handleOrderProduct = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		dispatch(orderProducts(event.target.value));
 	};
@@ -51,7 +62,7 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
-				<label htmlFor="forUser">Por usuario:</label>
+				{/* <label htmlFor="forUser">Por usuario:</label>
 				<select
 					name="forUser"
 					className="filter-select"
@@ -63,7 +74,7 @@ const Filters = () => {
 							{user.name}
 						</option>
 					))}
-				</select>
+				</select> */}
 				<label htmlFor="forLocation">Por locación:</label>
 				<select
 					name="forLocation"
