@@ -1,5 +1,4 @@
 import logo from "../assets/marketplace_logo.png";
-//import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useSelector, useDispatch } from "react-redux";

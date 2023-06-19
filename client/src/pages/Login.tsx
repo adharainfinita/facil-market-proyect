@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, setUserValidator } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { getAllUsers } from "../services/userServices";
+import { getUsers } from "../redux/features/userSlice";
 
 import { RootState } from "../redux/store";
 import { UserData } from "../utils/interfaces";
-import { getUsers } from "../redux/features/userSlice";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
@@ -21,20 +22,6 @@ const Login: React.FC = () => {
 
   const [localController, setLocalController] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  useEffect(() => {
-    try {
-      fetch(`http://localhost:3001/user`)
-        .then((response) => response.json())
-        .then((data) => dispatch(getUsers(data)));
-
-      /* fetch(`http://localhost:3001/product`)
-				.then((response) => response.json())
-				.then((data) => dispatch(getProducts(data)));*/
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
 
   useEffect(() => {
     if (access) {
@@ -65,6 +52,20 @@ const Login: React.FC = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getAllUsers();
+        if (response) {
+          dispatch(getUsers(response));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers();
+  }, [dispatch]);
 
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();

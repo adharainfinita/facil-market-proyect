@@ -5,6 +5,7 @@ import {
 	filterProductsByUser,
 	filterProductsByLocation,
 	orderProducts,
+	resetFilters
 } from "../redux/features/productSlice";
 
 const Filters = () => {
@@ -26,6 +27,9 @@ const Filters = () => {
 			dispatch(filterProductsByLocation(value));
 		}
 	};
+	const resetAllFilters = ()=>{
+		dispatch(resetFilters())
+	}
 	const handleOrderProduct = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		dispatch(orderProducts(event.target.value));
 	};
@@ -73,7 +77,9 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
+				<button type="button" onClick={resetAllFilters}>Reiniciar</button>
 			</section>
+
 
 			<section>
 				<h3 className="filter-title">ORDENAR</h3>

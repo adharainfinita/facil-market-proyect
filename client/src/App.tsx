@@ -9,17 +9,49 @@ import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-
+import { getUsers } from "./redux/features/userSlice";
+import { getAllUsers, postUser } from "./services/userServices";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import { getAllProducts, postProduct } from "./services/productServices";
+import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
+	
+	// useEffect(() => {
+	// 	const fetchUsers = async() =>{
+	// 		try {
+	// 			const response = await getAllUsers()
+	// 				if(response) {
+	// 					dispatch(getUsers(response));
+	// 				}
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	}
+	// 	fetchUsers();
+	// }, [dispatch]);
 
 	useEffect(() => {
-		// Aquí llamamos al servicio getCategory para obtener las categorías
+		const fetchProducts = async () => {
+			try {
+				const response = await getAllProducts();
+				if (response) {
+					dispatch(getProducts(response));
+				} else {
+					console.error("No existen productos");
+				}
+			} catch (error) {
+				console.error("Error al obtener los productos:", error);
+			}
+		};
+		fetchProducts();
+	}, [dispatch]);
+		
+	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
