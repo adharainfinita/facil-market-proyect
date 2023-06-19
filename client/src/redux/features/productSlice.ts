@@ -91,12 +91,6 @@ const productSlice = createSlice({
 					productsFound= productsFound.filter(match =>match.location === state.requireFilters.location)
 				}
 			}
-			let productsFound: Product[] = [];
-			action.payload === "All"
-				? (productsFound = [...state.originalCopy])
-				: (productsFound = state.originalCopy.filter(
-						(match) => match.categoryName === action.payload
-				  ));
 			state.products = productsFound;
 		},
 
@@ -116,6 +110,7 @@ const productSlice = createSlice({
 					productsFound= productsFound.filter(match =>match.userName === state.requireFilters.userName)
 				}
 			}
+			state.products = productsFound;
 		},
 		resetFilters: (state,_action: PayloadAction<void>) =>{
 			state.requireFilters = initialState.requireFilters 
