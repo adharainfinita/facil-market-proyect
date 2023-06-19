@@ -9,18 +9,18 @@ import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-import { getUsers } from "./redux/features/userSlice";
-import { getAllUsers, postUser } from "./services/userServices";
+/* import { getUsers } from "./redux/features/userSlice";
+import { getAllUsers, postUser } from "./services/userServices"; */
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import { getAllProducts, postProduct } from "./services/productServices";
-import { getProducts } from "./redux/features/productSlice";
+/* import { getAllProducts, postProduct } from "./services/productServices";
+import { getProducts } from "./redux/features/productSlice"; */
 
 function App() {
 	const dispatch = useDispatch();
-	
+
 	// useEffect(() => {
 	// 	const fetchUsers = async() =>{
 	// 		try {
@@ -36,7 +36,19 @@ function App() {
 	// }, [dispatch]);
 
 	useEffect(() => {
-		const fetchProducts = async () => {
+		/* const fetchUsers = async() =>{
+			try {
+				const response = await getAllUsers()
+					if(response) {
+						dispatch(getUsers(response));
+					}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchUsers(); */
+
+		/* const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
 				if (response) {
@@ -48,10 +60,7 @@ function App() {
 				console.error("Error al obtener los productos:", error);
 			}
 		};
-		fetchProducts();
-	}, [dispatch]);
-		
-	useEffect(() => {
+		fetchProducts(); */
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();

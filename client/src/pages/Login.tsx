@@ -6,175 +6,180 @@ import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { getAllUsers } from "../services/userServices";
 import { getUsers } from "../redux/features/userSlice";
-
 import { RootState } from "../redux/store";
 import { UserData } from "../utils/interfaces";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-  const { users, userValidation: access } = useSelector(
-    (state: RootState) => state.user
-  );
+	const { users, userValidation: access } = useSelector(
+		(state: RootState) => state.user
+	);
 
-  const [localController, setLocalController] = useState(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [localController, setLocalController] = useState(false);
+	const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (access) {
-      localController && navigate("/");
-    }
-  }, [dispatch, access, navigate, localController]);
+	useEffect(() => {
+		if (access) {
+			localController && navigate("/");
+		}
+	}, [dispatch, access, navigate, localController]);
 
-  const [formData, setFormData] = useState<UserData>({
-    name: "",
-    password: "",
-    email: "",
-    id: "",
-    image: "",
-  });
+	const [formData, setFormData] = useState<UserData>({
+		name: "",
+		password: "",
+		email: "",
+		id: "",
+		image: "",
+	});
 
-  const [message, setMessage] = useState("No has escrito nada");
+	useEffect(() => {
+		const fetchUsers = async () => {
+			try {
+				const response = await getAllUsers();
+				if (response) {
+					dispatch(getUsers(response));
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchUsers();
+	}, [dispatch]);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+	const [_message, setMessage] = useState("No has escrito nada");
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+	const handleChange = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => {
+		const { name, value } = event.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value,
+		}));
+	};
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getAllUsers();
-        if (response) {
-          dispatch(getUsers(response));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUsers();
-  }, [dispatch]);
+	const handleShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
 
-  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-    event.preventDefault();
-    // dispatch(addUser(formData));
-    console.log("Datos del formulario:", formData);
-    if (formData.email) {
-      const response = await handleAccess();
+	/* 	console.log('local', localController);
+console.log('global' ,access);
+	 */
 
-      if (!response[0]) {
-        setMessage("Usuario no encontrado");
-        setLocalController(false);
-      } else {
-        setMessage("Usuario encontrado");
-        dispatch(addUser(response[0]));
-        dispatch(setUserValidator(true));
-      }
-    }
+	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
+		event.preventDefault();
+		// dispatch(addUser(formData));
+		console.log("Datos del formulario:", formData);
+		if (formData.email) {
+			const response = await handleAccess();
+			/* console.log(response); */
 
-    console.log("Datos del formulario:", formData);
-  };
-  const handleAccess = async () => {
-    const userFound = users.filter(
-      (match: any) => match.email === formData.email
-    );
-    setLocalController(true);
-    const { id, image } = userFound[0];
-    setFormData({
-      ...formData,
-      id: id,
-      image: image,
-    });
-    return Promise.resolve(userFound);
-  };
+			if (!response[0]) {
+				setMessage("Usuario no encontrado");
+				setLocalController(false);
+			} else {
+				setMessage("Usuario encontrado");
 
-  return (
-    <div className="container-form">
-      <div className="forms">
-        <div className="form login">
-          <span className="form-title">Iniciar Sesión</span>
+				dispatch(addUser(response[0]));
+				dispatch(setUserValidator(true));
+			}
+		}
 
-          <form onSubmit={handleSubmit}>
-            <div className="input-field">
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Ingresa tu correo"
-                value={formData.email}
-                onChange={handleChange}
-                autoComplete="username"
-                required
-              />
-              <BiEnvelope className="icon" />
-            </div>
+		console.log("Datos del formulario:", formData);
+	};
+	const handleAccess = async () => {
+		const userFound = users.filter(
+			(match: any) => match.email === formData.email
+		);
+		setLocalController(true);
+		const { id, image } = userFound[0];
+		setFormData({
+			...formData,
+			id: id,
+			image: image,
+		});
+		return Promise.resolve(userFound);
+	};
 
-            <div className="input-field">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                id="password"
-                placeholder="Ingresa tu contraseña"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                autoComplete="current-password"
-              />
-              <BiLockAlt className="icon" />
+	return (
+		<div className="container-form">
+			<div className="forms">
+				<div className="form login">
+					<span className="form-title">Iniciar Sesión</span>
 
-              {showPassword ? (
-                <AiOutlineEye
-                  onClick={handleShowPassword}
-                  className="showHidePw"
-                />
-              ) : (
-                <AiOutlineEyeInvisible
-                  onClick={handleShowPassword}
-                  className="showHidePw"
-                />
-              )}
-            </div>
+					<form onSubmit={handleSubmit}>
+						<div className="input-field">
+							<input
+								type="text"
+								name="email"
+								id="email"
+								placeholder="Ingresa tu correo"
+								value={formData.email}
+								onChange={handleChange}
+								autoComplete="username"
+								required
+							/>
+							<BiEnvelope className="icon" />
+						</div>
 
-            <div className="checkbox-text">
-              <div className="checkbox-content">
-                <input type="checkbox" id="logCheck" />
-                <label className="text" htmlFor="logCheck">
-                  Recordarme
-                </label>
-              </div>
-              <a href="#" className="text">
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
+						<div className="input-field">
+							<input
+								type={showPassword ? "text" : "password"}
+								name="password"
+								id="password"
+								placeholder="Ingresa tu contraseña"
+								required
+								value={formData.password}
+								onChange={handleChange}
+								autoComplete="current-password"
+							/>
+							<BiLockAlt className="icon" />
 
-            <div className="input-field button">
-              <input type="submit" value="Iniciar Sesión" />
-            </div>
-          </form>
-          <div className="login-signup">
-            <span className="text">
-              ¿Aún no tienes una cuenta?
-              <a href="/register" className="text signup-text">
-                Regístrate aquí
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+							{showPassword ? (
+								<AiOutlineEye
+									onClick={handleShowPassword}
+									className="showHidePw"
+								/>
+							) : (
+								<AiOutlineEyeInvisible
+									onClick={handleShowPassword}
+									className="showHidePw"
+								/>
+							)}
+						</div>
+
+						<div className="checkbox-text">
+							<div className="checkbox-content">
+								<input type="checkbox" id="logCheck" />
+								<label className="text" htmlFor="logCheck">
+									Recordarme
+								</label>
+							</div>
+							<a href="#" className="text">
+								¿Olvidaste tu contraseña?
+							</a>
+						</div>
+
+						<div className="input-field button">
+							<input type="submit" value="Iniciar Sesión" />
+						</div>
+					</form>
+					<div className="login-signup">
+						<span className="text">
+							¿Aún no tienes una cuenta?
+							<a href="/register" className="text signup-text">
+								Regístrate aquí
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Login;
