@@ -5,13 +5,14 @@ import {
 	filterProductsByUser,
 	filterProductsByLocation,
 	orderProducts,
+	resetFilters
 } from "../redux/features/productSlice";
 
 const Filters = () => {
 	const dispatch = useDispatch();
-
 	const categories = useSelector((state: RootState) => state.category.value);
-	const products = useSelector((state: RootState) => state.product.products);
+	// estoy usando la copia
+	const products = useSelector((state: RootState) => state.product.originalCopy);
 	const users = useSelector((state: RootState) => state.user.users);
 
 	const handleProductFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -26,6 +27,9 @@ const Filters = () => {
 			dispatch(filterProductsByLocation(value));
 		}
 	};
+	const resetAllFilters = ()=>{
+		dispatch(resetFilters())
+	}
 	const handleOrderProduct = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		dispatch(orderProducts(event.target.value));
 	};
@@ -73,7 +77,9 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
+				<button type="button" onClick={resetAllFilters}>Reiniciar</button>
 			</section>
+
 
 			<section>
 				<h3 className="filter-title">ORDENAR</h3>

@@ -11,13 +11,18 @@ function ProductCard(props: productList) {
 			<div className="cards-container">
 				{products.map((product, index) => {
 					return (
-						<Link to={`/product/detail/${product.id}`}>
-							<div key={index} className="product-card">
+						<Link key={index} to={`/product/detail/${product.id}`}>
+							<div className="product-card">
 								<img src={product.image} alt={product.name} />
-								<div key={index} className="text">
+								<div className="text">
 									<p>{product.categoryName}</p>
 									<h3>{product.name}</h3>
-									<h4>${product.price}</h4>
+									<h4>
+										$
+										{product.price.toLocaleString("es-AR", {
+											minimumFractionDigits: 0,
+										})}
+									</h4>
 									<span>{product.location}</span>
 								</div>
 							</div>

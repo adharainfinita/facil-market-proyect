@@ -18,6 +18,8 @@ const Login: React.FC = () => {
 	const [localController, setLocalController] = useState(false);
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
+	
+
 	useEffect(() => {
 		
 		if (access) {
@@ -26,6 +28,7 @@ const Login: React.FC = () => {
 	}, [dispatch, access, navigate, localController]);
 
 	const [formData, setFormData] = useState<UserData>({
+		name: "",
 		password: "",
 		email: "",
 		id: "",
@@ -49,9 +52,9 @@ const Login: React.FC = () => {
 	};
 	
 
-	console.log('local', localController);
+/* 	console.log('local', localController);
 console.log('global' ,access);
-	
+	 */
 
 	
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
@@ -60,7 +63,7 @@ console.log('global' ,access);
 			console.log("Datos del formulario:", formData);
 		if(formData.email){
 		const response = await handleAccess()
-		console.log(response);
+		/* console.log(response); */
 		
 		if(!response[0]){
       setMessage("Usuario no encontrado")

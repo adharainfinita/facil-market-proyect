@@ -11,7 +11,7 @@ export const productCreate = [
 		.isString()
 		.isLength({
 			min: 3,
-			max: 150,
+			max: 35,
 		})
 		.customSanitizer((value, { req }) => {
 			return value.charAt(0).toLocaleUpperCase() + value.slice(1);
@@ -23,7 +23,7 @@ export const productCreate = [
 			min: 10,
 			max: 5000,
 		})
-		.withMessage("La descripción debe tener entre 10 y 500 caracteres"),
+		.withMessage("La descripción debe tener entre 10 y 5000 caracteres"),
 
 	check("stock").isInt().withMessage("Stock debe ser un número entero"),
 

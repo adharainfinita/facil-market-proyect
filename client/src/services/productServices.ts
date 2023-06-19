@@ -1,10 +1,12 @@
 import axios from "axios";
 import { FormCreateProduct } from "../utils/interfaces";
+import { URL_API } from "../utils/URLS";
+
 
 export const getProductsByName = async (name: string) => {
 	try {
 		const { data } = await axios(
-			`http://localhost:3001/product/search?name=${name}`
+			`${URL_API}/product/search?name=${name}`
 		);
 		if (data.length === 0) {
 			window.alert("Producto no encontrado");
@@ -36,7 +38,7 @@ export const getProductsByName = async (name: string) => {
 //? Create product
 export const postProduct = async (product: FormCreateProduct) => {
 	try {
-		const { data } = await axios.post("http://localhost:3001/product", product);
+		const { data } = await axios.post(`${URL_API}/product`, product);
 
 		
 		return data;
@@ -47,7 +49,7 @@ export const postProduct = async (product: FormCreateProduct) => {
 
 export const getAllProducts = async () => {
 	try {
-		const { data } = await axios("http://localhost:3001/product");
+		const { data } = await axios(`${URL_API}/product`);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
