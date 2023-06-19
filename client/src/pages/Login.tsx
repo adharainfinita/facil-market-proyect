@@ -57,29 +57,35 @@ console.log('global' ,access);
 	 */
 
 	
-	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();
-		// dispatch(addUser(formData));
-			console.log("Datos del formulario:", formData);
-		if(formData.email){
-		const response = await handleAccess()
-		/* console.log(response); */
-		
-		if(!response[0]){
-      setMessage("Usuario no encontrado")
-			setLocalController(false)
-		}
-	else {
-			setMessage('Usuario encontrado')
-			
-			dispatch(addUser(response[0]))
+const handleSubmit = async (event: React.FormEvent): Promise<void> => {
+	event.preventDefault();
+	console.log("Datos del formulario:", formData);
+
+	if (formData.email) {
+		const userFound = users.find((match: any) => match.email === formData.email);
+
+		if (!userFound) {
+			setMessage("Usuario no encontrado");
+			setLocalController(false);
+		} else if (userFound.password !== formData.password) {
+			setMessage("Contraseña incorrecta");
+			setLocalController(false);
+		} else {
+			setMessage("Usuario encontrado");
+			setLocalController(true);
+			setFormData({
+				...formData,
+				id: userFound.id,
+				image: userFound.image,
+			});
+			dispatch(addUser(userFound));
 			dispatch(setUserValidator(true));
 		}
 	}
-		
-		console.log("Datos del formulario:", formData);
-	};
-	const  handleAccess = async() =>{
+
+	console.log("Datos del formulario:", formData);
+};
+	/* const  handleAccess = async() =>{
     const userFound =users.filter((match:any) => match.email === formData.email)
       setLocalController(true)
 			const {id, image} = userFound[0];
@@ -87,9 +93,9 @@ console.log('global' ,access);
 				...formData,
 				id: id,
 				image: image
-			})
+			}) 
    return  Promise.resolve(userFound) 
-    }
+    }*/
 
 
 	return (

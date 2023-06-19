@@ -33,6 +33,7 @@ function App() {
 			}
 		}
 		fetchUsers();
+		
 		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
