@@ -20,18 +20,18 @@ import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
-	
+
 	useEffect(() => {
-		const fetchUsers = async() =>{
+		const fetchUsers = async () => {
 			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
+				const response = await getAllUsers();
+				if (response) {
+					dispatch(getUsers(response));
+				}
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 		fetchUsers();
 	}, [dispatch, postUser, getAllUsers]);
 
@@ -50,7 +50,7 @@ function App() {
 		};
 		fetchProducts();
 	}, [dispatch, postProduct, getAllProducts]);
-		
+
 	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
@@ -66,7 +66,6 @@ function App() {
 		};
 		fetchCategories();
 	}, [dispatch, getCategory]);
-
 
 	return (
 		<>

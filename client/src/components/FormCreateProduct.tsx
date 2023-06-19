@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormCreateProduct } from "../utils/interfaces";
+import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -17,7 +17,7 @@ const FormCreateProduct: React.FC = () => {
 	const navigate = useNavigate();
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<FormCreateProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(idLogin),
 		categoryID: 0,
@@ -51,8 +51,6 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
-	
-
 	console.log(formData);
 	//? HandleSubmit
 	const handleSubmit = (event: React.FormEvent) => {
@@ -66,8 +64,12 @@ const FormCreateProduct: React.FC = () => {
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
+			try {
+				postProduct(formData);
+			} catch (error: any) {
+				console.log(error.message);
+			}
 			
-			postProduct(formData);
 			setFormData({
 				userID: Number(idLogin),
 				categoryID: 0,
@@ -116,13 +118,14 @@ const FormCreateProduct: React.FC = () => {
 			</label>
 
 			<label htmlFor="form__input-stock">
-				Stock:
+				Unidades:
 				<input
 					name="stock"
 					value={formData.stock}
 					onChange={handleChange}
 					type="number"
 				/>
+				{errors.stock && <p className="error">{errors.stock}</p>}
 			</label>
 
 			<label htmlFor="form__input-location">
@@ -150,14 +153,17 @@ const FormCreateProduct: React.FC = () => {
 				))}
 			</select>
 
-			<label htmlFor="price">Price:</label>
-			<input
-				type="number"
-				id="price"
-				name="price"
-				value={formData.price}
-				onChange={handleChange}
-			/>
+			<label htmlFor="price">
+				Precio:
+				<input
+					type="number"
+					id="price"
+					name="price"
+					value={formData.price}
+					onChange={handleChange}
+				/>
+				{errors.price && <p className="error">{errors.price}</p>}
+			</label>
 
 			<label htmlFor="form__description">Descripción:</label>
 			<textarea
@@ -167,7 +173,7 @@ const FormCreateProduct: React.FC = () => {
 				onChange={handleChange}
 			/>
 			{errors.description && <p className="error">{errors.description}</p>}
-			<button type="submit">Enviar</button>
+			<button type="submit">Publicar</button>
 		</form>
 	);
 };

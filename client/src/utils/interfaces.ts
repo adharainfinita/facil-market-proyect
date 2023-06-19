@@ -14,9 +14,9 @@ export interface User {
 }
 
 export interface FiltersCaché {
-		userName: string | undefined,
-		categoryName: string  | undefined,
-		location: string | undefined
+	userName: string | undefined;
+	categoryName: string | undefined;
+	location: string | undefined;
 }
 
 export interface Product {
@@ -71,7 +71,7 @@ export interface UserData {
 	image: string;
 }
 
-// Interfaces de componentes
+//? Interfaces de componentes
 
 export interface FormCreateProduct {
 	userID: number;
@@ -83,4 +83,16 @@ export interface FormCreateProduct {
 	image: string;
 	location: string;
 	price: number;
+}
+
+export interface ErrorsFormProduct {
+	userID: number;
+	categoryID: number;
+	name: string;
+	description: string;
+	stock: string;
+	rating?: string;
+	image: string;
+	location: string;
+	price: string;
 }
