@@ -1,7 +1,7 @@
 //! Dejar aquí todas las interfaces
 export interface UXDataLogin {
-	id: string,
-	image: string
+	id: string;
+	image: string;
 }
 // Interfaces de de estados global
 export interface User {

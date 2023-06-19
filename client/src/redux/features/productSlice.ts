@@ -56,28 +56,29 @@ const productSlice = createSlice({
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [];
 			action.payload === "All"
-				? productsFound = [...state.originalCopy]
-				: productsFound = state.originalCopy.filter(
-						(match) => match.categoryName === action.payload)
+				? (productsFound = [...state.originalCopy])
+				: (productsFound = state.originalCopy.filter(
+						(match) => match.categoryName === action.payload
+				  ));
 			state.products = productsFound;
 		},
-		filterProductsByUser: (state, action: PayloadAction<string>) =>{
+		filterProductsByUser: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [];
 			action.payload === "All"
-			? productsFound = [...state.originalCopy]
-			: productsFound = state.originalCopy.filter(
-				(match) => match.userName === action.payload)
+				? (productsFound = [...state.originalCopy])
+				: (productsFound = state.originalCopy.filter(
+						(match) => match.userName === action.payload
+				  ));
 			state.products = productsFound;
-
 		},
-		filterProductsByLocation: (state, action: PayloadAction<string>) =>{
+		filterProductsByLocation: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [];
 			action.payload === "All"
-			? productsFound = [...state.originalCopy]
-			: productsFound = state.originalCopy.filter(
-				(match) => match.location === action.payload)
+				? (productsFound = [...state.originalCopy])
+				: (productsFound = state.originalCopy.filter(
+						(match) => match.location === action.payload
+				  ));
 			state.products = productsFound;
-
 		},
 		orderProducts: (state, action: PayloadAction<string>) => {
 			const productsCopy = [...state.products];
