@@ -1,9 +1,10 @@
 import axios from "axios";
 import { NewUser} from "../utils/interfaces";
+import { URL_API } from "../utils/URLS";
 
 export const postUser = async (userData: NewUser) => {
 	try {
-		const { data } = await axios.post("http://localhost:3001/user", userData);
+		const { data } = await axios.post(`${URL_API}/user`, userData);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
@@ -15,7 +16,7 @@ export const postUser = async (userData: NewUser) => {
 
 export const getAllUsers = async () => {
 	try {
-		const { data } = await axios("http://localhost:3001/user");
+		const { data } = await axios(`${URL_API}/user`);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response

@@ -13,6 +13,12 @@ export interface User {
 	image: string;
 }
 
+export interface FiltersCaché {
+		userName: string | undefined,
+		categoryName: string  | undefined,
+		location: string | undefined
+}
+
 export interface Product {
 	id: number;
 	name: string;

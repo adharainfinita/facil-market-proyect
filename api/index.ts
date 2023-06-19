@@ -1,7 +1,7 @@
 import server from "./src/app";
 import database from "./src/db";
 import Category from "./src/models/Category"; 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 database
 	.sync({ alter: true})
