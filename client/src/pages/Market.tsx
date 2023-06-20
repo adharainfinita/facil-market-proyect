@@ -1,18 +1,20 @@
 //import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getAllProducts } from "../redux/features/productSlice";
+import { useEffect } from "react";
+import { getProducts } from "../redux/features/productSlice";
+import { getAllProducts } from "../services/productServices";
 import { useDispatch } from "react-redux";
 //import SearchBar from "../components/SearchBar";
 import { RootState } from "../redux/store";
 import Pagination from "../components/Pagination";
 import Filters from "../components/Filters";
-import { useEffect } from "react";
-import { getProducts } from "../redux/features/productSlice";
+
 
 function Market() {
 	const products = useSelector((state: RootState) => state.product.products);
 	const dispatch = useDispatch();
 
+	
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
@@ -28,7 +30,6 @@ function Market() {
 		};
 		fetchProducts();
 	}, [dispatch]);
-
 	return (
 		<>
 			<Filters />
