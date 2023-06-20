@@ -1,4 +1,7 @@
 import axios from "axios";
+const URL_HOST = import.meta.env.VITE_HOST;
+//const URL_API = import.meta.env.VITE_API;
+
 
 export interface Category {
 	name: string;
@@ -6,7 +9,7 @@ export interface Category {
 
 export const postCategory = async (data: string) => {
 	try {
-		const response = await axios.post("http://localhost:3001/category", {
+		const response = await axios.post(`${URL_HOST}/category`, {
 			name: data,
 		});
 		console.log(`Post successful for category: ${data}`);
@@ -20,7 +23,7 @@ export const postCategory = async (data: string) => {
 
 export const getCategory = async () => {
 	try {
-		const response = await axios("http://localhost:3001/category");
+		const response = await axios(`${URL_HOST}/category`);
 		return response.data;
 	} catch (error: any) {
 		const errorMessage = error.response
