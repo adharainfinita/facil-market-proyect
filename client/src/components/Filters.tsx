@@ -37,14 +37,14 @@ const Filters = () => {
 	return (
 		<div className="filters-container">
 			<section className="filter-group">
-				<h3 className="filter-title">FILTRAR</h3>
+				<h3 className="filter-title">Filtros</h3>
 				<label htmlFor="forCategory">Por categoría:</label>
 				<select
 					name="forCategory"
 					className="filter-select"
 					onChange={handleProductFilter}
 				>
-					<option value="All">Todas las categorías</option>
+					<option value="All">Todas</option>
 					{categories.map((category: any) => (
 						<option key={category.name} value={category.name}>
 							{category.name}
@@ -77,12 +77,12 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
-				<button type="button" onClick={resetAllFilters}>Reiniciar</button>
+				<button type="button" onClick={resetAllFilters} className="reset-filters">Borrar</button>
 			</section>
 
 
-			<section>
-				<h3 className="filter-title">ORDENAR</h3>
+			<section className="order-group">
+				<h3 className="filter-title">Ordenar</h3>
 				<label htmlFor="forPrice">Por precio:</label>
 				<select
 					name="forPrice"
