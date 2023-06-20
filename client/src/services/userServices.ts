@@ -1,11 +1,12 @@
 import axios from "axios";
 import { NewUser} from "../utils/interfaces";
 import { URL_API } from "../utils/URLS";
+const URL_HOST = import.meta.env.VITE_HOST;
 import { UserData } from "../utils/interfaces";
 
 export const postUser = async (userData: NewUser) => {
 	try {
-		const { data } = await axios.post(`${URL_API}/user`, userData);
+		const { data } = await axios.post(`${URL_HOST}/user`, userData);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
@@ -17,7 +18,7 @@ export const postUser = async (userData: NewUser) => {
 
 export const getAllUsers = async () => {
 	try {
-		const { data } = await axios(`${URL_API}/user`);
+		const { data } = await axios(`${URL_HOST}/user`);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response

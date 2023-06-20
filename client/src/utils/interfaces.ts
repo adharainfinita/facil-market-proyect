@@ -5,62 +5,62 @@ export interface UXDataLogin {
 }
 // Interfaces de de estados global
 export interface User {
-	id: string;
-	name: string;
-	lastName: string;
-	email: string;
-	password: string;
-	image: string;
+  id: string;
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  image: string;
 }
 
 export interface FiltersCaché {
-		userName: string | undefined,
-		categoryName: string  | undefined,
-		location: string | undefined
+	userName: string | undefined;
+	categoryName: string | undefined;
+	location: string | undefined;
 }
 
 export interface Product {
-	id: number;
-	name: string;
-	description: string;
-	stock: number;
-	rating: number;
-	image: string;
-	location: string;
-	price: number;
-	categoryID: number;
-	categoryName: string;
-	userID: number;
-	userName: string;
+  id: number;
+  name: string;
+  description: string;
+  stock: number;
+  rating: number;
+  image: string;
+  location: string;
+  price: number;
+  categoryID: number;
+  categoryName: string;
+  userID: number;
+  userName: string;
 }
 
 export interface Category {
-	id: number;
-	name: string;
-	image: string;
-	highlight: boolean;
+  id: number;
+  name: string;
+  image: string;
+  highlight: boolean;
 }
 
 // Interfaces de servicios
 export interface productData {
-	id: number;
-	name: string;
-	description: string;
-	stock: number;
-	rating: number;
-	image: string;
-	location: string;
-	price: number;
+  id: number;
+  name: string;
+  description: string;
+  stock: number;
+  rating: number;
+  image: string;
+  location: string;
+  price: number;
 }
 
 // Interfaces para formularios
 export interface NewUser {
-	name: string;
-	lastName: string;
-	password: string;
-	email: string;
-	image: string;
-	confirm?: string;
+  name: string;
+  lastName: string;
+  password: string;
+  email: string;
+  image: string;
+  confirm?: string;
 }
 
 export interface UserData {
@@ -72,16 +72,33 @@ export interface UserData {
 	image: string;
 }
 
-// Interfaces de componentes
+//? Interfaces de componentes
 
 export interface FormCreateProduct {
+  userID: number;
+  categoryID: number;
+  name: string;
+  description: string;
+  stock: number;
+  rating?: number;
+  image: string;
+  location: string;
+  price: number;
+}
+
+export interface ErrorsFormProduct {
 	userID: number;
 	categoryID: number;
 	name: string;
 	description: string;
-	stock: number;
-	rating?: number;
+	stock: string;
+	rating?: string;
 	image: string;
 	location: string;
+<<<<<<< HEAD
 	price: number;
 }
+=======
+	price: string;
+}
+>>>>>>> f5861fd8804ccc9741a2953c59f89adb48050acc

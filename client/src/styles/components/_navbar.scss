@@ -4,11 +4,13 @@
   padding: 10px 15px;
   font-family: Arial, Helvetica, sans-serif;
   color: #111;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
   &__userLogo{
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
+    object-fit: cover;
   }
   &__userName{
     color: #111;
@@ -31,6 +33,9 @@
       gap: 2px;
       display: flex;
       align-items: center;
+    }
+    li {
+      color: #111;
     }
   }
 

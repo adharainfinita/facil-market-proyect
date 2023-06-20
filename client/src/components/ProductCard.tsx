@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Product } from "../utils/interfaces";
 type productList = {
-	products: Array<Product>;
+  products: Array<Product>;
 };
 
 function ProductCard(props: productList) {

@@ -50,13 +50,12 @@
 		/* Conteiner de imagenes previas */
 		.conteiner-pre-image {
 			display: flex;
-			width: 6rem;
+			width: 5rem;
 			height: 50%;
 			flex-direction: column;
 			gap: 1rem;
 			margin-top: 1rem;
 			margin-left: 1rem;
-
 
 			.pre-image {
 				display: flex;
@@ -80,17 +79,22 @@
 		}
 
 		/* Conteiner de imagen */
-
 		.detail-product-image {
-			width: 30rem;
+			width: 25rem;
 			height: 50%;
 			margin-top: 1rem;
+			border: 3px solid #dadada;
+			border-radius: 1rem;
+			cursor: pointer;
 
 			img {
 				width: 100%;
 				height: 100%;
 				border-radius: 1rem;
 			}
+		}
+		.detail-product-image:hover {
+			border-color: blue;
 		}
 
 		/* conteiner de informacion del producto*/
@@ -99,9 +103,9 @@
 			flex-direction: column;
 			gap: 1rem;
 			margin-top: 1rem;
-			width: 35rem;
+			width: 27rem;
 			height: 90%;
-			word-wrap: break-word;
+			overflow-wrap: break-word;
 
 			/* nombre y precio */
 			.conteiner-name-price {
@@ -124,19 +128,19 @@
 				flex-direction: column;
 				display: flex;
 				gap: 1rem;
-				height: 25rem;
 
 				.container-description {
+					display: flex;
+					flex-direction: column;
 					text-align: start;
 					overflow: auto;
 					width: 100%;
-					height: 18rem;
-
+					height: 16rem;
+					gap: .5rem;
 
 					.detail-product-description {
 						font-size: 1rem;
-						letter-spacing: 1px;
-						font-family: 'Times New Roman', Times, serif;
+						font-family: "Roboto", sans-serif;
 						text-align: justify;
 						padding-right: 1rem;
 						padding-left: 0.1rem;
@@ -146,14 +150,13 @@
 		}
 
 		/* Info vendedor */
-
 		.detail-product-sales {
 			display: flex;
 			flex-direction: column;
-			border: 4px solid #dadada;
+			border: 3px solid #dadada;
 			border-radius: 0.5rem;
 			gap: 1rem;
-			width: 35rem;
+			width: 30rem;
 			padding: 1rem;
 			margin-top: 1rem;
 			margin-right: 1rem;
@@ -188,6 +191,9 @@
 					top: 1px;
 				}
 			}
+		}
+		.detail-product-sales:hover {
+			border-color: blue;
 		}
 	}
 }

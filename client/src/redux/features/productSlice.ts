@@ -1,13 +1,14 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product, FiltersCaché } from "../../utils/interfaces";
 import axios from "axios";
 import { RootState } from "../store";
+//import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
 	products: Product[];
 	originalCopy: Product[];
 	detail: Product;
-	requireFilters: FiltersCaché
+	requireFilters: FiltersCaché;
 }
 
 const initialState: ProductState = {
@@ -30,23 +31,20 @@ const initialState: ProductState = {
 	requireFilters: {
 		userName: "",
 		categoryName: "",
-		location: ""
-	}
+		location: "",
+	},
 };
 ///
-export const getAllProducts = createAsyncThunk(
-	"products/getAllProducts",
-	async () => {
-		try {
-			const { data } = await axios("http://localhost:3001/product");
-			console.log(data);
-			return data;
-		} catch (error: any) {
-			throw new Error(error.message);
-		}
+export const getAllProducts = async () => {
+	try {
+		const { data } = await axios(`http://localhost:3001/product`);
+		return data;
+	} catch (error: any) {
+		throw new Error(error.message);
 	}
-);
-///
+};
+
+
 
 const productSlice = createSlice({
 	name: "products",
@@ -61,75 +59,81 @@ const productSlice = createSlice({
 		},
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			const categoryName = action.payload;
-			let productsFound: Product[] = [];
-		  
-			if (categoryName === "All") {
+			let productsFound = [];
+	  
+			if (categoryName === 'All') {
 			  productsFound = [...state.originalCopy];
 			} else {
-			  productsFound = state.originalCopy.filter((product) => product.categoryName === categoryName);
+			  productsFound = state.originalCopy.filter(
+				(product) => product.categoryName === categoryName
+			  );
 			}
-		  
+	  
 			// Filtrar por otros criterios si están presentes en state.requireFilters
 			if (state.requireFilters.userName) {
-			  productsFound = productsFound.filter((product) => product.userName === state.requireFilters.userName);
+			  productsFound = productsFound.filter(
+				(product) => product.userName === state.requireFilters.userName
+			  );
 			}
 			if (state.requireFilters.location) {
-			  productsFound = productsFound.filter((product) => product.location === state.requireFilters.location);
+			  productsFound = productsFound.filter(
+				(product) => product.location === state.requireFilters.location
+			  );
 			}
-		  
-			return {
-			  ...state,
-			  products: productsFound,
-			  requireFilters: {
-				...state.requireFilters,
-				categoryName: categoryName,
-			  },
-			};
+	  
+			state.products = productsFound;
+			state.requireFilters.categoryName = categoryName;
 		  },
-		  
-		filterProductsByUser: (state, action: PayloadAction<string>) =>{
+		filterProductsByUser: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.userName = action.payload;
-			if(action.payload === "All") state.requireFilters.userName = ""
+			if (action.payload === "All") state.requireFilters.userName = "";
 			else {
 				productsFound = state.originalCopy.filter(
-				(match) => 
-				match.userName === action.payload)
-				if(state.requireFilters.categoryName){
-					productsFound= productsFound.filter(match =>match.categoryName === state.requireFilters.categoryName)
+					(match) => match.userName === action.payload
+				);
+				if (state.requireFilters.categoryName) {
+					productsFound = productsFound.filter(
+						(match) => match.categoryName === state.requireFilters.categoryName
+					);
 				}
-				if(state.requireFilters.location){
-					productsFound= productsFound.filter(match =>match.location === state.requireFilters.location)
+				if (state.requireFilters.location) {
+					productsFound = productsFound.filter(
+						(match) => match.location === state.requireFilters.location
+					);
 				}
 			}
 			state.products = productsFound;
 		},
 
-
-		filterProductsByLocation: (state, action: PayloadAction<string>) =>{
+		filterProductsByLocation: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.location = action.payload;
-			if(action.payload === "All") state.requireFilters.location = ""
+			if (action.payload === "All") state.requireFilters.location = "";
 			else {
 				productsFound = state.originalCopy.filter(
-				(match) => 
-				match.location === action.payload)
-				if(state.requireFilters.categoryName){
-					productsFound= productsFound.filter(match =>match.categoryName === state.requireFilters.categoryName)
+					(match) => match.location === action.payload
+				);
+				if (state.requireFilters.categoryName) {
+					productsFound = productsFound.filter(
+						(match) => match.categoryName === state.requireFilters.categoryName
+					);
 				}
-				if(state.requireFilters.userName){
-					productsFound= productsFound.filter(match =>match.userName === state.requireFilters.userName)
+				if (state.requireFilters.userName) {
+					productsFound = productsFound.filter(
+						(match) => match.userName === state.requireFilters.userName
+					);
 				}
 			}
 			state.products = productsFound;
 		},
-		resetFilters: (state,_action: PayloadAction<void>) =>{
-			state.requireFilters = initialState.requireFilters 
-			state.products = state.originalCopy
+		resetFilters: (state, _action: PayloadAction<void>) => {
+			state.requireFilters = initialState.requireFilters;
+			state.products = state.originalCopy;
 		},
 		orderProducts: (state, action: PayloadAction<string>) => {
 			const productsCopy = [...state.products];
-			state.requireFilters.location = action.payload
+			state.requireFilters.location = action.payload;
 			if (action.payload.length === 3) {
 				action.payload === "MAX"
 					? productsCopy.sort((a, b) => b.price - a.price)
@@ -157,7 +161,7 @@ const productSlice = createSlice({
 			state.detail = action.payload;
 		},
 	},
-	extraReducers: (builder) => {
+	/* extraReducers: (builder) => {
 		builder.addCase(getAllProducts.fulfilled, (state, action) => {
 			state.products = action.payload;
 			state.originalCopy = action.payload;
@@ -166,7 +170,7 @@ const productSlice = createSlice({
 			state.products = [];
 			console.log(action);
 		});
-	},
+	}, */
 });
 
 export const {
@@ -178,7 +182,7 @@ export const {
 	orderProducts,
 	cleanDetail,
 	getSearchedProducts,
-	resetFilters
+	resetFilters,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) =>
