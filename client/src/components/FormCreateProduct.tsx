@@ -18,7 +18,7 @@ const FormCreateProduct: React.FC = () => {
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(idLogin),
-		categoryID: 0,
+		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
@@ -69,7 +69,7 @@ const FormCreateProduct: React.FC = () => {
 
 			setFormData({
 				userID: Number(idLogin),
-				categoryID: 0,
+				categoryID: 1,
 				name: "",
 				location: "",
 				description: "",
