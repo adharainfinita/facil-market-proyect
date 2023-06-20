@@ -43,7 +43,7 @@ const Login: React.FC = () => {
 				if (response) {
 					dispatch(getUsers(response));
 				}
-			} catch (error) {
+			} catch (error: any) {
 				console.log(error);
 			}
 		};
@@ -73,7 +73,6 @@ console.log('global' ,access);
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
 		event.preventDefault();
 		// dispatch(addUser(formData));
-		console.log("Datos del formulario:", formData);
 		if (formData.email) {
 			const response = await handleAccess();
 			/* console.log(response); */
@@ -88,8 +87,6 @@ console.log('global' ,access);
 				dispatch(setUserValidator(true));
 			}
 		}
-
-		console.log("Datos del formulario:", formData);
 	};
 	const handleAccess = async () => {
 		const userFound = users.filter(

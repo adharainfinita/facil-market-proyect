@@ -8,10 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const FormCreateProduct: React.FC = () => {
 	//? Estado Global
-	const { categories, idLogin } = useSelector((state: RootState) => ({
-		categories: state.category.value,
-		idLogin: state.user.userLogin.id,
-	}));
+	const categories = useSelector((state: RootState) => state.category.value);
+	const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
 
 	//? hooks
 	const navigate = useNavigate();
@@ -51,7 +49,6 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
-	console.log(formData);
 	//? HandleSubmit
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -69,7 +66,7 @@ const FormCreateProduct: React.FC = () => {
 			} catch (error: any) {
 				console.log(error.message);
 			}
-			
+
 			setFormData({
 				userID: Number(idLogin),
 				categoryID: 0,

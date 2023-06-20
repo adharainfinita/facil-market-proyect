@@ -38,7 +38,6 @@ const initialState: ProductState = {
 export const getAllProducts = async () => {
 	try {
 		const { data } = await axios(`http://localhost:3001/product`);
-		console.log(data);
 		return data;
 	} catch (error: any) {
 		throw new Error(error.message);
