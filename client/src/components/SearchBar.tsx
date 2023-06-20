@@ -10,13 +10,15 @@ const SearchBar = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
-
+	
+	
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
 	
 	const handleSearch = async () => {
 		try {
+			navigate("/products");
 			const filteredProducts = await getProductsByName(searchTerm);
 			if (filteredProducts.length === 0) {
 				setError(`No se encontro: ${searchTerm}`);
@@ -26,7 +28,6 @@ const SearchBar = () => {
 				dispatch(getSearchedProducts(filteredProducts));
 			}
 			setSearchTerm("");
-			navigate("/products");
 		} catch (error) {
 			console.error("Ocurrio un error durante la busqueda", error);
 		}

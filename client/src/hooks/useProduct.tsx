@@ -2,10 +2,9 @@ import { getDetail, cleanDetail } from "../redux/features/productSlice";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-// import { getProductsById } from "../services/productServices";
+import { getProductsById } from "../services/productServices";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { URL_API } from "../utils/URLS";
 
 const useProduct = () => {
 	const { id } = useParams();
@@ -14,9 +13,7 @@ const useProduct = () => {
 
 	useEffect(() => {
 		try {
-			fetch(`${URL_API}/product/${id}`)
-				.then((response) => response.json())
-				.then((data) => dispatch(getDetail(data)));
+			getProductsById(Number(id)).then((data) => dispatch(getDetail(data)));
 		} catch (error) {
 			console.log(error);
 		}

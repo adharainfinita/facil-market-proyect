@@ -15,9 +15,11 @@ export function validate(inputs: newUser) {
 	const errors: Partial<newUser> = {};
 	if (!inputs.name) errors.name = "Agrega un nombre";
 	if (inputs.name.length > 35) errors.name = "(Max: 35 caracteres)";
+	if (inputs.name.length < 3) errors.name = "(Min: 3 caracteres)";
 
 	if (!inputs.lastName) errors.lastName = "Agrega un apellido";
 	if (inputs.lastName.length > 35) errors.lastName = "(Max: 35 caracteres)";
+	if (inputs.lastName.length < 4) errors.lastName = "(Min: 4 caracteres)";
 
 	if (!regEmail.test(inputs.email))
 		errors.email = "Ingresa un correo válido (Max: 35 caracteres)";

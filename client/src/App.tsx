@@ -20,7 +20,7 @@ import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
-	
+
 	useEffect(() => {
 		/* const fetchUsers = async() =>{
 			try {
@@ -47,6 +47,7 @@ function App() {
 			}
 		};
 		fetchProducts(); 
+		
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
