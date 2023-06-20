@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product, FiltersCaché } from "../../utils/interfaces";
 import axios from "axios";
 import { RootState } from "../store";
