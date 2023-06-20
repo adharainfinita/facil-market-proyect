@@ -23,7 +23,7 @@ export const validate = (data: FormCreateProduct) => {
 	//? validar price
 	if (!data.price) {
 		errors.price = "Este campo es obligatorio.";
-	} else if (data.price < 0) {
+	} else if (data.price < 1) {
 		errors.price = "El valor ingresado no es válido";
 	}
 

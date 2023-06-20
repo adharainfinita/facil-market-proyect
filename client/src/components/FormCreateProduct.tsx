@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
+import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 
 const FormCreateProduct: React.FC = () => {
 	//? Estado Global
@@ -56,6 +57,9 @@ const FormCreateProduct: React.FC = () => {
 		//? Si no tengo errores
 		if (!Object.keys(errors).length) {
 			//? Parseo de info
+			formData.name = capitalizeFirstLetter(formData.name);
+			formData.location = capitalizeFirstLetter(formData.location);
+			formData.description = capitalizeFirstLetter(formData.description);
 			formData.stock = Number(formData.stock);
 			formData.price = Number(formData.price);
 			formData.categoryID = Number(formData.categoryID);
