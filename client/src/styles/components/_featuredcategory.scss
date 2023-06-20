@@ -1,71 +1,46 @@
 .container-featured {
-  background-color: rgba(213, 161, 255, 0.866);
-  padding: 5px;
-  border-radius: 5px;
-  width: 80%;
-  display: flex;
-  margin: 5px auto 2.5rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  justify-content: space-around;
-  text-align: center;
-}
+    padding: 5px; /* Ajusta el padding del contenedor principal */
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 15%;
+  }
 
-.container-featuredcategory {
-  justify-content: space-around;
-}
 
-.images-featuredcategory {
-  display: flex;
-  justify-content: space-around;
-}
+.container-featured{
 
-.image-featuredcategory {
-  background-color: rgba(236, 236, 236, 0.516);
-  border-radius: 5px;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease; /* Agrega una transición suave */
-}
+  .container-featuredcategory{
+    margin: 0px 5px;
+    width: 20%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: .5rem;
+    
 
-.image-featuredcategory:hover {
-  transform: translateY(
-    -5px
-  ); /* Mueve los contenedores hacia arriba en hover */
-}
+    img{
+      height: 120px;
+      transition: 0.5s;
+    }
 
-.image-featuredcategory h2 {
-  font-size: 10px;
-}
+    img:hover{
+      transform: scale(1.3);
+    }
 
-.category-image {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-}
+    h2{
+      padding: 10px 0px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      background-color: #77d42a;
+      color: #fff;
+      width: 100%;
+    }
+  }
 
-.title-featured {
-  font-size: 1.2rem;
-  text-align: center; /* Centra el texto horizontalmente */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(215, 103, 243);
-  width: 80%;
-  height: 25px;
-  margin: 0 auto;
-  margin-top: 20px;
-  border-radius: 5px;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
+
 }
-.category-name {
-  font-size: 15px;
-}
+  
+  
