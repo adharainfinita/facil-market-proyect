@@ -7,6 +7,7 @@ database.sync({ force: false });
 Category.sync()
 	.then(() => Category.loadDefaultCategories())
 	.then(() => {
+
 		server.listen(PORT, () => {
 			console.log(`Server raised with so much love in port: ${PORT}`);
 		});
