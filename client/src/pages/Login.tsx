@@ -49,7 +49,7 @@ const Login: React.FC = () => {
 			}
 		};
 		fetchUsers();
-	}, [dispatch]);
+	}, [dispatch, getAllUsers]);
 
 	const [_message, setMessage] = useState("No has escrito nada");
 

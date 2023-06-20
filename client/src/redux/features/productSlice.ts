@@ -57,33 +57,26 @@ const productSlice = createSlice({
 			state.products = action.payload;
 			state.originalCopy = action.payload;
 		},
+	
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
-			const categoryName = action.payload;
-			let productsFound = [];
-	  
-			if (categoryName === 'All') {
-			  productsFound = [...state.originalCopy];
-			} else {
-			  productsFound = state.originalCopy.filter(
-				(product) => product.categoryName === categoryName
-			  );
-			}
-	  
-			// Filtrar por otros criterios si están presentes en state.requireFilters
-			if (state.requireFilters.userName) {
-			  productsFound = productsFound.filter(
-				(product) => product.userName === state.requireFilters.userName
-			  );
-			}
-			if (state.requireFilters.location) {
-			  productsFound = productsFound.filter(
-				(product) => product.location === state.requireFilters.location
-			  );
-			}
-	  
+			let productsFound: Product[] = [...state.originalCopy];
+			state.requireFilters.categoryName = action.payload;
+			
+			if (action.payload === "All") state.requireFilters.categoryName = "";
+			else {
+				productsFound = state.originalCopy.filter(
+						(match) => 
+						match.categoryName === action.payload)
+						}
+						if(state.requireFilters.userName){
+					productsFound= productsFound.filter(match => match.userName === state.requireFilters.userName)	
+						}
+						if(state.requireFilters.location){
+						productsFound=	productsFound.filter(match =>match.location === state.requireFilters.location)
+						}
+			
 			state.products = productsFound;
-			state.requireFilters.categoryName = categoryName;
-		  },
+		},
 		filterProductsByUser: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.userName = action.payload;
@@ -91,7 +84,7 @@ const productSlice = createSlice({
 			else {
 				productsFound = state.originalCopy.filter(
 					(match) => match.userName === action.payload
-				);
+				);}
 				if (state.requireFilters.categoryName) {
 					productsFound = productsFound.filter(
 						(match) => match.categoryName === state.requireFilters.categoryName
@@ -102,18 +95,21 @@ const productSlice = createSlice({
 						(match) => match.location === state.requireFilters.location
 					);
 				}
-			}
+			
 			state.products = productsFound;
 		},
 
 		filterProductsByLocation: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.location = action.payload;
-			if (action.payload === "All") state.requireFilters.location = "";
+			if (action.payload === "All") {
+				state.requireFilters.location = "";
+				
+			}
 			else {
 				productsFound = state.originalCopy.filter(
 					(match) => match.location === action.payload
-				);
+				);}
 				if (state.requireFilters.categoryName) {
 					productsFound = productsFound.filter(
 						(match) => match.categoryName === state.requireFilters.categoryName
@@ -124,7 +120,7 @@ const productSlice = createSlice({
 						(match) => match.userName === state.requireFilters.userName
 					);
 				}
-			}
+			
 			state.products = productsFound;
 		},
 		resetFilters: (state, _action: PayloadAction<void>) => {
