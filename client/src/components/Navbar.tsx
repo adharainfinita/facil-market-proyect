@@ -26,11 +26,11 @@ function Navbar() {
 				<Link to="/">
 					<li>Inicio</li>
 				</Link>
-				<li>
-					<Link to="/products">
-						<li>Market</li>
-					</Link>
-				</li>
+
+				<Link to="/products">
+					<li>Market</li>
+				</Link>
+
 				<li>Nosotros</li>
 				<Link to="/vender">
 					<button className="nav__button-sell">Vender</button>

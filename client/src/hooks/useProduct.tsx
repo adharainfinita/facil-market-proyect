@@ -13,7 +13,7 @@ const useProduct = () => {
 
 	useEffect(() => {
 		try {
-			fetch(`http://localhost:3001/product/${id}`)
+			fetch(`https://facil-market-proyect-production.up.railway.app/product/${id}`)
 				.then((response) => response.json())
 				.then((data) => dispatch(getDetail(data)));
 		} catch (error) {

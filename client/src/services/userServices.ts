@@ -1,9 +1,11 @@
 import axios from "axios";
-import { NewUser, UserData} from "../utils/interfaces";
+import { NewUser} from "../utils/interfaces";
+import { URL_API } from "../utils/URLS";
+import { UserData } from "../utils/interfaces";
 
 export const postUser = async (userData: NewUser) => {
 	try {
-		const { data } = await axios.post("http://localhost:3001/user", userData);
+		const { data } = await axios.post(`${URL_API}/user`, userData);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
@@ -15,7 +17,7 @@ export const postUser = async (userData: NewUser) => {
 
 export const getAllUsers = async () => {
 	try {
-		const { data } = await axios("http://localhost:3001/user");
+		const { data } = await axios(`${URL_API}/user`);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
@@ -25,10 +27,9 @@ export const getAllUsers = async () => {
 	}
 };
 
-
 export const updateUser = async (userId: string, userData: UserData) => {
 	try {
-	  const { data } = await axios.put(`http://localhost:3001/user/${userId}`, userData);
+	  const { data } = await axios.put(`${URL_API}/${userId}`, userData);
 	  return data;
 	} catch (error: any) {
 	  const errorMessage = error.response

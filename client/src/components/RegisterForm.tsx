@@ -6,9 +6,11 @@ import { addUser } from "../redux/features/userSlice";
 // import axios from "axios";
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [inputs, setInputs] = useState<NewUser>({
 		name: "",
@@ -46,8 +48,9 @@ const RegisterForm = () => {
 				// El registro se creó exitosamente en la base de datos
 				// Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
 				dispatch(addUser(response.data));
-				console.log("Registro exitoso");
 			}
+			alert("Registro exitoso");
+			navigate("/login");
 		} catch (error) {
 			// Ocurrió un error al procesar la solicitud
 			// Puedes manejar aquí la lógica de manejo de errores

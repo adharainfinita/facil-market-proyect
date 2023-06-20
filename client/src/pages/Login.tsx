@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, setUserValidator } from "../redux/features/userSlice";
-
+import { getAllUsers } from "../services/userServices";
+import { getUsers } from "../redux/features/userSlice";
 import { RootState } from "../redux/store";
 import {  UserData } from "../utils/interfaces";
 
@@ -18,6 +19,24 @@ const Login: React.FC = () => {
 	const [localController, setLocalController] = useState(false);
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
+	
+
+
+	useEffect(() => {
+        const fetchUsers = async() =>{
+            try {
+                const response = await getAllUsers()
+                    if(response) {
+                        dispatch(getUsers(response));
+                    }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchUsers();
+    },[dispatch])
+
+
 	useEffect(() => {
 		
 		if (access) {
@@ -26,12 +45,12 @@ const Login: React.FC = () => {
 	}, [dispatch, access, navigate, localController]);
 
 	const [formData, setFormData] = useState<UserData>({
-		name:"",
+		name: "",
 		lastName:"",
 		password: "",
 		email: "",
 		id: "",
-		image: "",
+		image: ""
 	});
 
 	const [message, setMessage] = useState("No has escrito nada");
@@ -51,44 +70,39 @@ const Login: React.FC = () => {
 	};
 	
 
-	console.log('local', localController);
+/* 	console.log('local', localController);
 console.log('global' ,access);
-	
+	 */
 
 	
-	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();
-		// dispatch(addUser(formData));
-			console.log("Datos del formulario:", formData);
-		if(formData.email){
-		const response = await handleAccess()
-		console.log(response);
-		
-		if(!response[0]){
-      setMessage("Usuario no encontrado")
-			setLocalController(false)
-		}
-	else {
-			setMessage('Usuario encontrado')
-			
-			dispatch(addUser(response[0]))
-			dispatch(setUserValidator(true));
-		}
+const handleSubmit = async (event: React.FormEvent): Promise<void> => {
+	event.preventDefault();
+	console.log("Datos del formulario:", formData);
+  
+	if (formData.email) {
+	  const userFound = users.find((match: any) => match.email === formData.email);
+  
+	  if (!userFound) {
+		setMessage("Usuario no encontrado");
+		setLocalController(false);
+	  } else if (userFound.password !== formData.password) {
+		setMessage("Contraseña incorrecta");
+		setLocalController(false);
+	  } else {
+		setMessage("Usuario encontrado");
+		setLocalController(true);
+		setFormData({
+		  ...formData,
+		  id: userFound.id,
+		  image: userFound.image,
+		});
+		dispatch(addUser(userFound));
+		dispatch(setUserValidator(true));
+	  }
 	}
-		
-		console.log("Datos del formulario:", formData);
-	};
-	const  handleAccess = async() =>{
-    const userFound =users.filter((match:any) => match.email === formData.email)
-      setLocalController(true)
-			const {id, image} = userFound[0];
-			setFormData({
-				...formData,
-				id: id,
-				image: image
-			})
-   return  Promise.resolve(userFound) 
-    }
+  
+	console.log("Datos del formulario:", formData);
+  };
 
 
 	return (
@@ -131,4 +145,3 @@ console.log('global' ,access);
 };
 
 export default Login;
-

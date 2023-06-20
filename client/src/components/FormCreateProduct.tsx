@@ -53,6 +53,7 @@ const FormCreateProduct: React.FC = () => {
 
 	
 
+	console.log(formData);
 	//? HandleSubmit
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -65,6 +66,7 @@ const FormCreateProduct: React.FC = () => {
 			formData.categoryID = Number(formData.categoryID);
 
 			//? Creo el producto
+			
 			postProduct(formData);
 			setFormData({
 				userID: Number(idLogin),

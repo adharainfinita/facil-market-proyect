@@ -24,7 +24,7 @@ import { reviewCreate } from "../validators/reviewValidation";
 //! PUTS
 import updatePassword from "../handlers/users/updatePassword";
 router.put("/user/:userId", updatePassword)
-router.get("/user/:userId", getUserById)
+
 
 //* POST
 router.post("/product", productCreate, postProduct);
@@ -39,5 +39,6 @@ router.get("/user", getAllUsers);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
+router.get("/user/:userId", getUserById)
 
 export default router;
