@@ -26,6 +26,7 @@ function Home() {
 	return (
 		<>
 			<Banner />
+			<h3 className="trend-title">Categorias destacadas</h3>
 			<FeaturedCategory />
 			<h3 className="trend-title">Más vendidos</h3>
 			{products ? <ProductCard products={trendProducts} /> : ""}
