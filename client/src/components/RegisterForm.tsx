@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { validate } from "../utils/registerValidation";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
+import axios from "axios";
 import {
   AiOutlineEyeInvisible,
   AiOutlineEye,
@@ -11,6 +12,7 @@ import {
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+// import useImageUploader from "../hooks/useImageUploader";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,28 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errors, setErrors] = useState<Partial<NewUser>>({});
   const [_formSubmitted, setFormSubmitted] = useState(false);
+  const [image, setImage] = useState("");
+  // const { image, uploadImg } = useImageUploader("user_images");
+
+  // const uploadImg = async (event: ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files;
+  //   if (files && files.length > 0) {
+  //     const data = new FormData();
+  //     data.append("file", files[0]);
+  //     data.append("upload_preset", "user_images");
+
+  //     try {
+  //       const res = await axios.post(
+  //         "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+  //         data
+  //       );
+
+  //       }
+  //     } catch (error) {
+  //       console.error("Error al subir la imagen", error);
+  //     }
+  //   }
+  // };
 
   const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -44,9 +68,17 @@ const RegisterForm = () => {
     event.preventDefault();
 
     try {
-      const response = await postUser(inputs);
+      const user = {
+        name: inputs.name,
+        lastName: inputs.lastName,
+        password: inputs.password,
+        email: inputs.email,
+        image,
+      };
+
+      const response = await postUser(user);
       if (response.status === 201) {
-        dispatch(addUser({ ...response.data, image: inputs.image }));
+        dispatch(addUser({ ...response.data }));
       }
       alert("Registro exitoso");
       navigate("/login");
@@ -65,32 +97,6 @@ const RegisterForm = () => {
     setFormSubmitted(true);
   };
 
-
-
-  const uploadImg = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const data = new FormData();
-      data.append("file", files[0]);
-      data.append("upload_preset", "prueba");
-      try {
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/drnp8tbg9/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-        const file = await res.json();
-        setInputs({ ...inputs, image: file.secure_url });
-      } catch (error) {
-        console.error("Error al subir la imagen", error);
-      }
-    }
-  };
-
-
-  
   return (
     <div className="form login">
       <span className="form-title">Registrarte</span>
@@ -166,7 +172,8 @@ const RegisterForm = () => {
             type="file"
             accept="image/*"
             name="image"
-            onChange={uploadImg}
+            // onChange={uploadImg}
+            // value={Image}
           />
           <BiImage className="icon" />
         </div>

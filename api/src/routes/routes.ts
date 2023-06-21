@@ -22,8 +22,8 @@ import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 
 //! PUTS
-import updatePassword from "../handlers/users/updatePassword";
-router.put("/user/:userId", updatePassword)
+import updateUser from "../handlers/users/updateUser";
+router.put("/user/:userId", updateUser)
 
 
 //* POST

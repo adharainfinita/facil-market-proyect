@@ -18,6 +18,8 @@ server.use((_req: Request, res: Response, next: NextFunction) => {
 	next();
 });
 
+
+
 server.use("/", router);
 
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {

@@ -33,9 +33,12 @@ const userSlice = createSlice({
 			state.userLogin = action.payload;
 		},
 		resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
-		/* changeEmail: (state, action: PayloadAction<string>) => {
+		 changeEmail: (state, action: PayloadAction<string>) => {
 			state.userLogin.email = action.payload;
-		}, */
+		}, 
+		changeName: (state, action: PayloadAction<string>) => {
+			state.userLogin.name = action.payload;
+		}, 
 		changePassword: (state, action: PayloadAction<string>) => {
 			state.userLogin.password = action.payload;
 		}, 
@@ -64,6 +67,8 @@ export const {
 	resetUsers,
 	setUserValidator,
 	changePassword,
+	changeEmail,
+	changeName,
 	setLoggedInUserId,
 } = userSlice.actions;
 export default userSlice.reducer;
