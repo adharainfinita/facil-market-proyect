@@ -6,13 +6,16 @@ import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+import useImageUploader from "../hooks/useImageUploader";
 
 const FormCreateProduct: React.FC = () => {
   const categories = useSelector((state: RootState) => state.category.value);
   const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
+  const { image, uploadImg } = useImageUploader("facilmarket");
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
+
   const [formData, setFormData] = useState<FormCreateProduct>({
     userID: Number(idLogin),
     categoryID: 1,
@@ -49,15 +52,20 @@ const FormCreateProduct: React.FC = () => {
     event.preventDefault();
 
     if (!Object.keys(errors).length) {
-      formData.name = capitalizeFirstLetter(formData.name);
-      formData.location = capitalizeFirstLetter(formData.location);
-      formData.description = capitalizeFirstLetter(formData.description);
-      formData.stock = Number(formData.stock);
-      formData.price = Number(formData.price);
-      formData.categoryID = Number(formData.categoryID);
-
       try {
-        postProduct(formData);
+        const product = {
+          userID: Number(idLogin),
+          categoryID: Number(formData.categoryID),
+          name: capitalizeFirstLetter(formData.name),
+          location: capitalizeFirstLetter(formData.location),
+          description: capitalizeFirstLetter(formData.description),
+          stock: Number(formData.stock),
+          image,
+          price: Number(formData.price),
+          rating: 0,
+        };
+
+        postProduct(product);
       } catch (error: any) {
         console.log(error.message);
       }
@@ -78,31 +86,6 @@ const FormCreateProduct: React.FC = () => {
       navigate("/products");
     } else {
       alert("Datos incompletos");
-    }
-  };
-
-  const uploadImg = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const data = new FormData();
-      data.append("file", files[0]);
-      data.append("upload_preset", "prueba");
-      try {
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/drnp8tbg9/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-        const file = await res.json();
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          image: file.secure_url,
-        }));
-      } catch (error) {
-        console.error("Error al subir la imagen", error);
-      }
     }
   };
 
@@ -147,12 +130,7 @@ const FormCreateProduct: React.FC = () => {
 
       <label htmlFor="form__input-image">
         Imagen:
-        <input
-          name="image"
-          type="file"
-          accept="image/*"
-          onChange={uploadImg}
-        />
+        <input name="image" type="file" accept="image/*" onChange={uploadImg} />
         {errors.image && <p className="error">{errors.image}</p>}
       </label>
 

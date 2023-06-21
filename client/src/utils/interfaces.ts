@@ -95,10 +95,5 @@ export interface ErrorsFormProduct {
 	rating?: string;
 	image: string;
 	location: string;
-<<<<<<< HEAD
 	price: number;
 }
-=======
-	price: string;
-}
->>>>>>> f5861fd8804ccc9741a2953c59f89adb48050acc
