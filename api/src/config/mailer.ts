@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
-const ownerEmail = ''// ingresas mail 
-const appPasword = ''//ingresar clave de aplicacion del gmail
+const ownerEmail = 'benjaminszodo@gmail.com'// ingresas mail 
+const appPasword = 'wqiryrqyuyhrtyto'//ingresar clave de aplicacion de gmail
 
 
 export const transporter = nodemailer.createTransport({

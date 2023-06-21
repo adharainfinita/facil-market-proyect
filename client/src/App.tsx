@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
+import VerificationPage from "./pages/VerificationPage";
 /* import { getUsers } from "./redux/features/userSlice";
 import { getAllUsers, postUser } from "./services/userServices"; */
 import { useEffect } from "react";
@@ -88,6 +89,8 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
+				<Route path="/verification" element={<VerificationPage />} />
+				
 			</Routes>
 			<Footer />
 		</>
