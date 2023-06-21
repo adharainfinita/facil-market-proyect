@@ -7,6 +7,12 @@ export interface userProps {
 	image: string;
 }
 
+export interface loginData {
+	email: string
+	password: string | number
+}
+
+
 export interface productProps {
 	id: number;
 	name: string;

@@ -20,11 +20,13 @@ import categoryCreate from "../validators/categoryValidation";
 import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
+import logUser from "../handlers/users/logUser";
 
 
 //* POST
 router.post("/product", productCreate, postProduct);
 router.post("/user", validateCreate, postUser);
+router.post("/login", logUser);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
 
