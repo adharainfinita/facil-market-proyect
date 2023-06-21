@@ -25,7 +25,7 @@ export interface Product {
   description: string;
   stock: number;
   rating: number;
-  image: string;
+  image: Array<string>;
   location: string;
   price: number;
   categoryID: number;
@@ -81,7 +81,7 @@ export interface FormCreateProduct {
   description: string;
   stock: number;
   rating?: number;
-  image: string;
+  image: string[];
   location: string;
   price: number;
 }
@@ -95,5 +95,5 @@ export interface ErrorsFormProduct {
 	rating?: string;
 	image: string;
 	location: string;
-	price: number;
+	price: string;
 }
