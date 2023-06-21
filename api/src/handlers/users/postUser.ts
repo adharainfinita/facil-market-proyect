@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { createUser } from "../../controllers/userControllers";
+import { createUser , sendEmailToUser } from "../../controllers/userControllers";
 import { userProps } from "../../utils/propsModel";
+
 
 const postUser = async (req: Request, res: Response) => {
 	const { name, lastName, password, email, image } = req.body;
@@ -18,6 +19,7 @@ const postUser = async (req: Request, res: Response) => {
 		const newUser = await createUser(data);
 
 		if (newUser) {
+			sendEmailToUser(newUser.email)
 			return res.status(201).json(newUser);
 		}
 	} catch (error: any) {

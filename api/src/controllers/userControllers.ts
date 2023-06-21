@@ -1,5 +1,7 @@
 import { userProps } from "../utils/propsModel";
 import User from "../models/User";
+import { transporter } from '../config/mailer';
+
 
 interface localProps {
 	param: number | string;
@@ -44,3 +46,15 @@ export const findUser = async ({ param }: localProps) => {
 };
 
 export const findAllUsers = async () => await User.findAll();
+
+export const sendEmailToUser = async(email:string) => {
+	await transporter.sendMail({
+		from: '"Mensaje de prueba" <benjaminszodo@gmail.com>', // sender address
+		to: email, // list of receivers
+		subject: "Hello ✔", // Subject line
+		text: "Hello world?", // plain text body
+		html: "<b>Hello world?</b>", // html body
+	  });
+}
+
+
