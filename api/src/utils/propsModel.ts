@@ -17,8 +17,9 @@ export interface productProps {
 	location: string;
 	price: number;
 	categoryID: number;
-	nameCategory: string;
+	categoryName: string;
 	userID: number;
+	userName: string;
 }
 
 export interface reviewProps {
