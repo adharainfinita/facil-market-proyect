@@ -65,10 +65,15 @@ export interface NewUser {
 
 export interface UserData {
 	name: string;
-	password: string | number;
+	password?: string | number;
 	email: string | number;
 	id: string;
 	image: string;
+}
+
+export interface LoginData{
+  email: string
+  password: string | number
 }
 
 //? Interfaces de componentes

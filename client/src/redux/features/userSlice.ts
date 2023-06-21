@@ -1,19 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserData, UXDataLogin } from "../../utils/interfaces";
+import { UserData, UXDataLogin } from "../../utils/interfaces";
 
 export interface UserState {
-	users: User[];
 	userLogin: UserData;
 	userValidation: boolean;
 }
 
 const initialState: UserState = {
-	users: [],
 	userLogin: {
+		id: "",
 		name: "",
 		email: "",
-		password: "",
-		id: "",
 		image:
 			"https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
 	},
@@ -25,10 +22,7 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		//* Acciones para traer usuarios y leerlos
-		getUsers: (state, action: PayloadAction<User[]>) => {
-			state.users = action.payload;
-		},
-		addUser: (state, action: PayloadAction<UserData>) => {
+		loggedUser: (state, action: PayloadAction<UserData>) => {
 			state.userLogin = action.payload;
 		},
 		resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
@@ -58,8 +52,7 @@ const userSlice = createSlice({
 });
 
 export const {
-	getUsers,
-	addUser,
+	loggedUser,
 	resetUsers,
 	setUserValidator,
 	setLoggedInUserId,

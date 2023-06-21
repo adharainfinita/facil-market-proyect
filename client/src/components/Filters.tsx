@@ -15,7 +15,7 @@ const Filters = () => {
 	const products = useSelector(
 		(state: RootState) => state.product.originalCopy
 	);
-	const users = useSelector((state: RootState) => state.user.users);
+	//const users = useSelector((state: RootState) => state.user.users);
 
 	const handleProductFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = event.target;
@@ -73,11 +73,11 @@ const Filters = () => {
 					defaultValue={"All"}
 				>
 					<option value="All">Default</option>
-					{users.map((user: any, index: number) => (
+					{/*users.map((user: any, index: number) => (
 						<option key={index} value={user.name} >
 							{user.name}
 						</option>
-					))}
+					))*/}
 				</select>
 				<label htmlFor="forLocation">Por locación:</label>
 				<select

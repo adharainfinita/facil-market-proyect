@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { validate } from "../utils/registerValidation";
 import { useDispatch } from "react-redux";
-import { addUser } from "../redux/features/userSlice";
+//import { addUser } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
 import {
   AiOutlineEyeInvisible,
@@ -48,12 +48,7 @@ const RegisterForm = () => {
       // Realizar la solicitud POST al back-end
       // const response = await axios.post("http://localhost:3001/user", inputs);
       const response = await postUser(inputs);
-      // Verificar la respuesta del servidor
-      if (response.status === 201) {
-        // El registro se creó exitosamente en la base de datos
-        // Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
-        dispatch(addUser(response.data));
-      }
+      
       alert("Registro exitoso");
       navigate("/login");
     } catch (error) {
