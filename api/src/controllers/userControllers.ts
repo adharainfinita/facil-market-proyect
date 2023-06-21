@@ -47,14 +47,25 @@ export const findUser = async ({ param }: localProps) => {
 
 export const findAllUsers = async () => await User.findAll();
 
-export const sendEmailToUser = async(email:string) => {
+export const sendEmailToUser = async (email:string, name:string) => {
 	await transporter.sendMail({
-		from: '"Mensaje de prueba" <benjaminszodo@gmail.com>', // sender address
-		to: email, // list of receivers
-		subject: "Hello ✔", // Subject line
-		text: "Hello world?", // plain text body
-		html: "<b>Hello world?</b>", // html body
-	  });
-}
+	  from: '"Soporte de Facil Market" <benjaminszodo@gmail.com>',
+	  to: email,
+	  subject: "Bienvenido a Facil Market",
+	  html: `
+		<div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;">
+		  <img src="https://cspmarketplaceprd.s3.us-west-2.amazonaws.com/media-files/marketplace_logo_large.png" alt="Logo de Facil Market" style="max-width: 200px; margin-bottom: 10px;">
+		  <p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 20px; margin-top: 0;">Facil-Market</p>
+		  <h1 style="color: #333333;">¡Hola, ${name}!</h1>
+		  <p style="color: #333333;">¡Bienvenido a Facil Market! 😎</p>
+		  <p style="color: #333333;">Estamos encantados de tenerte como parte de nuestra comunidad. Queremos asegurarnos de que tu experiencia sea lo más placentera posible, por lo que estamos aquí para ayudarte en todo lo que necesites.</p>
+		  <p style="color: #333333;">Si tienes alguna pregunta, inquietud o sugerencia, no dudes en ponerte en contacto con nosotros. Estamos disponibles para ayudarte en cualquier momento.</p>
+		  <p style="color: #333333;">Una vez más, ¡bienvenido a Facil Market! Esperamos que disfrutes de todas las ventajas y beneficios que nuestra plataforma tiene para ofrecerte.</p>
+		  <p style="color: #333333;">¡Saludos cordiales!</p>
+		  <p style="color: #333333;">El equipo de Facil Market</p>
+		</div>
+	  `,
+	});
+  };
 
 

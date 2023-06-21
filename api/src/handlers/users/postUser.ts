@@ -19,7 +19,7 @@ const postUser = async (req: Request, res: Response) => {
 		const newUser = await createUser(data);
 
 		if (newUser) {
-			sendEmailToUser(newUser.email)
+			sendEmailToUser(newUser.email,newUser.name)
 			return res.status(201).json(newUser);
 		}
 	} catch (error: any) {
