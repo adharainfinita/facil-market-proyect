@@ -1,8 +1,23 @@
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import router from "./routes/routes";
+//! auth
+const { auth } = require('express-openid-connect');
 
 const server = express();
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  baseURL: 'http://localhost:3001',
+  clientID: 'DHp16u9qBVg542oPqMgwXI2qyN0GfLvb',
+  issuerBaseURL: 'https://dev-1mf725cpsacebu4r.us.auth0.com',
+  secret: 'a long, randomly-generated string stored in env',
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+server.use(auth(config));
+
 
 server.use(express.json());
 server.use(morgan("dev"));
@@ -19,6 +34,7 @@ server.use((_req: Request, res: Response, next: NextFunction) => {
 });
 
 server.use("/", router);
+
 
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {
 	const status = err.status || 500;

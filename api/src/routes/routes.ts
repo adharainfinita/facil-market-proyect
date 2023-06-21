@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { login } from "../controllers/login";
+import { logout } from "../controllers/logout";
+import { requiresAuth } from "express-openid-connect";
 const router = Router();
 
 //! Handlers POST
@@ -27,13 +30,20 @@ router.post("/product", productCreate, postProduct);
 router.post("/user", validateCreate, postUser);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
+router.post("/login", login);
 
 //* GET
 router.get("/product", getAllProducts);
 router.get("/review", getAllReviews);
-router.get("/user", getAllUsers);
+router.get("/user", requiresAuth, getAllUsers);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
+router.get("/logout", logout);
+
+/* router.get("/protected", jwtCheck, (req: Request, res: Response) => {
+  // Acceso permitido solo si el token es válido
+  // Realiza las acciones necesarias para la ruta protegida
+}); */
 
 export default router;

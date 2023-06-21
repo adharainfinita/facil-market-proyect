@@ -30,6 +30,7 @@ class User extends Model {
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
+		
 		unique: true,
 	})
 	email!: string;
@@ -39,6 +40,7 @@ class User extends Model {
 		allowNull: true,
 	})
 	image!: string;
+
 }
 
 export default User;

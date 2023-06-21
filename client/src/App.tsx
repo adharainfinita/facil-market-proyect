@@ -17,6 +17,7 @@ import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
+import { AuthProvider } from "./context/AuthContext"
 
 function App() {
 	const dispatch = useDispatch();
@@ -78,6 +79,7 @@ function App() {
 
 	return (
 		<>
+		<AuthProvider>
 			<Navbar />
 
 			<Routes>
@@ -90,6 +92,7 @@ function App() {
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 			</Routes>
 			<Footer />
+			</AuthProvider>
 		</>
 	);
 }

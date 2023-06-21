@@ -12,8 +12,19 @@ import {
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterForm = () => {
+  const auth = useAuth()
+  const [emailRegister, setEmailRegister] = useState("");
+  const [passwordRegister, setPasswordRegister] = useState("");
+
+  console.log(emailRegister, passwordRegister)
+  const handleRegister = async (event: React.FormEvent): Promise<void> => {
+		event.preventDefault();
+		auth.register(emailRegister, passwordRegister);
+	}
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -114,9 +125,9 @@ const RegisterForm = () => {
             id="email"
             placeholder="Ingresa tu correo"
             autoComplete="current-email"
-            value={inputs.email}
+            value={emailRegister}
             required
-            onChange={(e) => handleInputs(e)}
+            onChange={(event) => setEmailRegister(event.target.value)}
           />
           <BiEnvelope className="icon" />
         </div>
@@ -127,10 +138,10 @@ const RegisterForm = () => {
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Ingresa tu contraseña"
-            value={inputs.password}
+            value={passwordRegister}
             required
             autoComplete="current-password"
-            onChange={(e) => handleInputs(e)}
+            onChange={(event) => setPasswordRegister(event.target.value)}
           />
           <BiLockAlt className="icon" />
 
@@ -159,7 +170,7 @@ const RegisterForm = () => {
         {errors.image && <p className="error">{errors.image}</p>}
 
         <div className="input-field button">
-          <input type="submit" value="Registrarte" />
+          <input type="submit" value="Registrarte" onClick={(event) => handleRegister(event)} />
         </div>
       </form>
       <div className="login-signup">

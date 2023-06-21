@@ -3,6 +3,7 @@ import { Product, FiltersCaché } from "../../utils/interfaces";
 import axios from "axios";
 import { RootState } from "../store";
 //import { URL_API } from "../../utils/URLS";
+const URL_HOST = import.meta.env.VITE_HOST;
 
 export interface ProductState {
 	products: Product[];
@@ -37,7 +38,7 @@ const initialState: ProductState = {
 ///
 export const getAllProducts = async () => {
 	try {
-		const { data } = await axios(`http://localhost:3001/product`);
+		const { data } = await axios(`${URL_HOST}/product`);
 		return data;
 	} catch (error: any) {
 		throw new Error(error.message);
