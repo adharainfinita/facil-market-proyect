@@ -20,7 +20,7 @@ const initialState: ProductState = {
     description: "",
     stock: 0,
     rating: 0.0,
-    image: [""],
+    images: [""],
     location: "",
     price: 0.0,
     categoryID: 0,

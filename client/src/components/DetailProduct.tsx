@@ -44,7 +44,7 @@ const DetailProduct = () => {
     <div className="detail-product-container">
       <div className="detail-product">
         <div className="conteiner-pre-image">
-          {product.image.map((img:string, index:number) => {
+          {product.images.map((img:string, index:number) => {
             return (
               <div key={index} className="pre-image">
                 {img[index] ? (
@@ -59,7 +59,7 @@ const DetailProduct = () => {
 
         {/*//? Imagenes principal del producto */}
         <div className="detail-product-image">
-          <img src={product?.image[0]} alt={product.name} />
+          <img src={product?.images[0]} alt={product.name} />
         </div>
 
         {/*//? Informacion general del producto */}
