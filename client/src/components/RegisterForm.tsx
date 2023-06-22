@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { validate } from "../utils/registerValidation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
 import axios from "axios";
@@ -12,11 +12,14 @@ import {
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
+	const defaultImage = useSelector((state: RootState) => state.user.userLogin.user.image)
+	console.log(defaultImage);
+	
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
 		password: "",
@@ -79,8 +82,8 @@ const RegisterForm = () => {
 			const user = {
 				fullName: inputs.fullName,
 				password: inputs.password,
-				email: inputs.email,
-				image: inputs.image,
+				email:  inputs.email,
+				image: inputs.image ? inputs.image : defaultImage ,
 			};
 
 			const response = await postUser(user);

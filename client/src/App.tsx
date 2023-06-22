@@ -4,7 +4,7 @@ import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
-// import Login from "./pages/Login";
+import VerificationPage from "./pages/VerificationPage";
 import Login from "./pages/Login2";
 import Home from "./pages/Home";
 import RegisterForm from "./components/RegisterForm";
@@ -87,7 +87,7 @@ function App() {
 				<Route path="/vender" element={<Form />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/profile" element={<UserProfile />} />
-				{/* <Route path="/login" element={<Login />} /> */}
+				<Route path="/verification" element={<VerificationPage />} />
 				<Route path="/login" element={<Login/>} />
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
