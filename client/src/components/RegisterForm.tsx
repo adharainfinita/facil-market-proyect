@@ -105,7 +105,6 @@ const RegisterForm = () => {
 		setFormSubmitted(true);
 	};
 
-	console.log(inputs);
 	return (
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
