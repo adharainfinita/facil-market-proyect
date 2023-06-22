@@ -1,6 +1,6 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
-import useImageUploader from "../hooks/useImageUploader";
+import useImageUploader from "../hooks/useCloudinaryUploader";
 
 //? Imagenes de prueba
 const productImage = [
