@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 
 //! Handlers POST
-import postUser from "../handlers/users/postUser";
+import registerUser from "../handlers/auth/registerUser";
 import postCategory from "../handlers/categories/postCategory";
 import postReview from "../handlers/reviews/postReview";
 import postProduct from "../handlers/products/postProduct";
@@ -10,7 +10,7 @@ import postProduct from "../handlers/products/postProduct";
 //! Handlers GET
 import getAllProducts from "../handlers/products/getAllProducts";
 import getAllCategories from "../handlers/categories/getCategories";
-import getAllUsers from "../handlers/users/getUsers";
+import getAllUsers from "../handlers/auth/getUsers";
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
@@ -20,13 +20,14 @@ import categoryCreate from "../validators/categoryValidation";
 import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
-import logUser from "../handlers/users/logUser";
+import loginUser from "../handlers/auth/loginUser";
 
+//! rutas auth
+router.post("/register", validateCreate, registerUser);
+router.post("/login", loginUser);
 
 //* POST
 router.post("/product", productCreate, postProduct);
-router.post("/user", validateCreate, postUser);
-router.post("/login", logUser);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
 

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { userCredentials } from "../../controllers/userControllers";
 import { loginData } from "../../utils/propsModel";
 
-const logUser = async (req: Request, res: Response) => {
+const loginUser = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
 	try {
@@ -19,4 +19,4 @@ const logUser = async (req: Request, res: Response) => {
 		res.status(400).json({ error: error.message });
 	}
 };
-export default logUser;
+export default loginUser;
