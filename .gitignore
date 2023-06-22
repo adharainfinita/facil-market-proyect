@@ -1,3 +1,5 @@
+./ngrok.exe
+
 # Logs
 logs
 *.log
