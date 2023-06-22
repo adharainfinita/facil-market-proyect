@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const ownerEmail = ''// ingresas mail 
+const ownerEmail = 'dether2011@gmail.com'
 const appPasword = 'xngolqeykxbrysnu'//ingresar clave de aplicacion de gmail
 
 
