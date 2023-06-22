@@ -54,7 +54,7 @@ export const postProduct = async (product: FormCreateProduct) => {
 //? Obtener todos los productos
 export const getAllProducts = async () => {
   try {
-    const { data } = await axios(`http://localhost:3001/product`);
+    const { data } = await axios(`${URL_HOST}/product`);
     return data;
   } catch (error) {
     let errorMessage = "An error occurred";

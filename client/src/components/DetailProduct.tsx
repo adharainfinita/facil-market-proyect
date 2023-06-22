@@ -1,29 +1,8 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
-import useImageUploader from "../hooks/useImageUploader";
+
 
 //? Imagenes de prueba
-const productImage = [
-  {
-    name: "perrito programador",
-    url: "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-  },
-
-  {
-    name: "notebook-code",
-    url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29tcHV0YWRvcmF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
-  },
-
-  {
-    name: "Estudiando",
-    url: "https://images.unsplash.com/photo-1485988412941-77a35537dae4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=896&q=80",
-  },
-
-  {
-    name: "img4",
-    url: "",
-  },
-];
 
 const DetailProduct = () => {
   const product = useProduct();

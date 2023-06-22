@@ -11,7 +11,6 @@ import {
 const Filters = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.category.value);
-  // estoy usando la copia
   const products = useSelector(
     (state: RootState) => state.product.originalCopy
   );
@@ -29,6 +28,7 @@ const Filters = () => {
       dispatch(filterProductsByLocation(value));
     }
   };
+
   const resetAllFilters = () => {
     dispatch(resetFilters());
 
@@ -47,6 +47,9 @@ const Filters = () => {
   const handleOrderProduct = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(orderProducts(event.target.value));
   };
+
+  // Obtener locaciones únicas
+  const uniqueLocations = Array.from(new Set(products.map((product: any) => product.location)));
 
   return (
     <div className="filters-container">
@@ -88,9 +91,9 @@ const Filters = () => {
           defaultValue={"All"}
         >
           <option value="All">Default</option>
-          {products.map((product: any, index: number) => (
-            <option key={index} value={product.location}>
-              {product.location}
+          {uniqueLocations.map((location: string, index: number) => (
+            <option key={index} value={location}>
+              {location}
             </option>
           ))}
         </select>

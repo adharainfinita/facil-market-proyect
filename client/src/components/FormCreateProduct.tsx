@@ -7,20 +7,16 @@ import Dropzone from "react-dropzone";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
-
 import { postProduct } from "../services/productServices";
 import axios from "axios";
-// import useImageUploader from "../hooks/useImageUploader";
 
 const FormCreateProduct: React.FC = () => {
   const categories = useSelector((state: RootState) => state.category.value);
   const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
-  // const { images, loading, uploadImg } = useImageUploader("facilmarket");
   const navigate = useNavigate();
 
-  const [image, setImage] = useState(Array<string>);
-  const [loading, setLoading] = useState("");
-
+  const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 
   const [formData, setFormData] = useState<FormCreateProduct>({
@@ -55,49 +51,51 @@ const FormCreateProduct: React.FC = () => {
     );
   };
 
-  const handleDrop = (files: any) => {
-    const uploaders = files.map(async (file: any) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("tags", `codeinfuse, medium, gist`);
-      formData.append("upload_preset", "facilmarket");
-      formData.append("api_key", "711728988333761");
-      setLoading("true");
-
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
-        formData,
-        {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        }
-      );
-      const data = res.data;
-      const fileURL = data.secure_url;
-      console.log(fileURL);
-      const specificArrayInObject = [];
-      specificArrayInObject.push(fileURL);
-      console.log("specificArrayInObject",specificArrayInObject)
-      const newObj = { ...image, specificArrayInObject };
-      setImage([...image, fileURL]);
-      console.log({"imagenes": image});
-    });
-    axios.all(uploaders).then(() => {
-      setLoading("false");
-    });
+  const uploadImages = async (files: File[]): Promise<void> => {
+    setLoading(true);
+  
+    try {
+      const uploadPromises = files.map(async (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("tags", "codeinfuse, medium, gist");
+        formData.append("upload_preset", "facilmarket");
+        formData.append("api_key", "711728988333761");
+  
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+          }
+        );
+  
+        return res.data.secure_url;
+      });
+  
+      const uploadedImages = await Promise.all(uploadPromises);
+      setImages((prevImages) => [...prevImages, ...uploadedImages]);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   const imagePreview = () => {
-    if (loading === "true") {
+    if (loading === true) {
       return <h3>Cargando Imagenes...</h3>;
     }
-    if (loading === "false") {
+    if (loading === false) {
       return (
         <div>
-          {image.length <= 0
-            ? "No hay imagenes"
-            : image.map((item, index:number) => (
-                <img key={index} alt="image preview" width={50} height={50} src={item} />
-              ))}
+          {images.length <= 0 ? (
+            <p>No hay imágenes</p>
+          ) : (
+            images.map((item, index) => (
+              <img key={index} alt="image preview" width={60} height={60} src={item} />
+            ))
+          )}
         </div>
       );
     }
@@ -115,7 +113,7 @@ const FormCreateProduct: React.FC = () => {
           location: capitalizeFirstLetter(formData.location),
           description: capitalizeFirstLetter(formData.description),
           stock: Number(formData.stock),
-          image,
+          image: images,
           price: Number(formData.price),
           rating: 0,
         };
@@ -185,12 +183,8 @@ const FormCreateProduct: React.FC = () => {
 
       <label htmlFor="form__input-image">
         Imagen:
-        {/* <input name="image" type="file" accept="image/*" onChange={uploadImg} /> */}
         <Dropzone
-          className="dropzone"
-          onDrop={handleDrop}
-          onChange={(e: any) => setImage(e.target.value)}
-          value={image}
+          onDrop={uploadImages}
         >
           {({ getRootProps, getInputProps }) => (
             <section>

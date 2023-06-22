@@ -42,9 +42,9 @@ const userSlice = createSlice({
 		changePassword: (state, action: PayloadAction<string>) => {
 			state.userLogin.password = action.payload;
 		}, 
-		/* changeImage: (state, action: PayloadAction<string>) => {
+		 changeImage: (state, action: PayloadAction<string>) => {
 			state.userLogin.image = action.payload;
-		}, */
+		}, 
 		/* setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
 		}, */
@@ -70,5 +70,6 @@ export const {
 	changeEmail,
 	changeName,
 	setLoggedInUserId,
+	changeImage
 } = userSlice.actions;
 export default userSlice.reducer;

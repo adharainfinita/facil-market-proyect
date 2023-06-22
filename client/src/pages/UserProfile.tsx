@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateUser } from "../services/userServices";
-import { changeEmail, changePassword, changeName } from "../redux/features/userSlice";
+import { changeEmail, changePassword, changeName, changeImage } from "../redux/features/userSlice";
 import { UserData } from "../utils/interfaces";
 
 const UserProfile: React.FC = () => {
@@ -11,6 +11,7 @@ const UserProfile: React.FC = () => {
   const [newPassword, setNewPassword] = useState("");
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [newImage, setNewImage] = useState("");
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
@@ -21,7 +22,7 @@ const UserProfile: React.FC = () => {
         lastName: userLogin.lastName,
         email: newEmail !== "" ? newEmail : userLogin.email,
         id: userLogin.id,
-        image: userLogin.image,
+        image: newImage !== "" ? newImage : userLogin.image,
         password: newPassword !== "" ? newPassword : userLogin.password,
       };
 
@@ -38,6 +39,10 @@ const UserProfile: React.FC = () => {
 
       if (newName !== "") {
         dispatch(changeName(newName));
+      }
+
+      if (newImage !== "") {
+        dispatch(changeImage(newImage));
       }
 
       // Realiza las acciones necesarias después de actualizar los campos
@@ -95,6 +100,15 @@ const UserProfile: React.FC = () => {
           onChange={(e) => setNewEmail(e.target.value)}
         />
         <button onClick={handleFieldChange}>Guardar email</button>
+      </div>
+      <div>
+        <h2>Cambiar imagen</h2>
+        <input
+          type="text"
+          value={newImage}
+          onChange={(e) => setNewImage(e.target.value)}
+        />
+        <button onClick={handleFieldChange}>Guardar imagen</button>
       </div>
     </div>
   );
