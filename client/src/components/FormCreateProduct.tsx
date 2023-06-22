@@ -20,7 +20,7 @@ const FormCreateProduct: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: Number(userLogin.id),
+		userID: Number(userLogin.user.id),
 		categoryID: 0,
 		name: "",
 		location: "",
@@ -109,13 +109,13 @@ const FormCreateProduct: React.FC = () => {
         Authorization: `Bearer ${token}`,
       };
       const product = {
-        userID: Number(userLogin.id),
+        userID: Number(userLogin.user.id),
         categoryID: Number(formData.categoryID),
         name: capitalizeFirstLetter(formData.name),
         location: capitalizeFirstLetter(formData.location),
         description: capitalizeFirstLetter(formData.description),
         stock: Number(formData.stock),
-        image: images,
+        images: images,
         price: Number(formData.price),
         rating: 0,
       };
@@ -123,6 +123,7 @@ const FormCreateProduct: React.FC = () => {
       setErrors({});
       alert("Producto creado correctamente");
       navigate("/products");
+      console.log(product)
     }catch(error:any){
       console.log(error.message);
       alert("Datos incompletos");
