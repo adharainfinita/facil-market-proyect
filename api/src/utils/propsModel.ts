@@ -9,7 +9,7 @@ export interface userProps {
 
 export interface loginData {
 	email: string
-	password: string | number
+	password: string | Buffer 
 }
 
 

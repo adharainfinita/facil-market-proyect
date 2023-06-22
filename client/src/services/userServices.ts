@@ -37,6 +37,6 @@ export const logUser = async (logData: LoginData) => {
 		const errorMessage = error.response
 			? error.response.data.error
 			: error.message;
-		alert(errorMessage);
+		alert(errorMessage)
 	}
 };

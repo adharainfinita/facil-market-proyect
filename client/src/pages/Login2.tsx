@@ -99,6 +99,7 @@ const Login: React.FC = () => {
 									className="showHidePw"
 								/>
 							)}
+							{_message.length > 0 && <p>{_message}</p>}
 						</div>
 
 						<div className="checkbox-text">

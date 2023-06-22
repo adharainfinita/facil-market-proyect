@@ -12,9 +12,8 @@ const logUser = async (req: Request, res: Response) => {
 
 		const logUser = await userCredentials(data);
 
-		if (logUser) {
-			return res.status(201).json(logUser);
-		}
+		if(logUser) return res.status(201).json(logUser);
+		
 	} catch (error: any) {
 		res.status(400).json({ error: error.message });
 	}

@@ -1,6 +1,9 @@
 import { userProps, loginData } from "../utils/propsModel";
 import User from "../models/User";
 
+import bcrypt from "bcrypt";
+import { promisify } from "util";
+
 interface localProps {
 	param: number | string;
 }
@@ -46,25 +49,30 @@ export const findUser = async ({ param }: localProps) => {
 
 export const userCredentials = async (body: loginData) => {
 	const userExist = await User.findOne({
-		where: {
-			email: body.email,
-		},
+	  where: {
+		email: body.email,
+	  },
 	});
-
-	const userInfo = {
+  
+	if (userExist) {
+	  const userInfo = {
 		id: userExist?.id,
 		name: userExist?.name,
 		email: userExist?.email,
-		image: userExist?.image
-	}
-
-	if(userExist && userExist.password === body.password){
-		return userInfo
-	}else if(userExist && userExist.password !== body.password){
+		image: userExist?.image,
+	  };
+  
+	  const compare = promisify(bcrypt.compare);
+	  const result = await compare(body.password, userExist.password);
+  
+	  if (result) {
+		return userInfo;
+	  } else {
 		throw new Error("Contraseña incorrecta");
-	}else{
-		throw new Error("Email incorrecto");
+	  }
+	} else {
+	  throw new Error("Email incorrecto");
 	}
-};
+  };
 
 export const findAllUsers = async () => await User.findAll();
