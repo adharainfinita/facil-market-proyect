@@ -3,21 +3,17 @@ const regPass = /^(?=\S*?[0-9]).{6,10}\S$/;
 const regEmail = /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}).{0,35}$/i;
 
 interface newUser {
-	name: string;
-	lastName: string;
+	fullName: string;
 	password: string;
 	email: string;
-	image: string;
+	images?: any;
 	confirm?: string;
 }
 
 export function validate(inputs: newUser) {
 	const errors: Partial<newUser> = {};
-	if (!inputs.name) errors.name = "Agrega un nombre";
-	if (inputs.name.length > 35) errors.name = "(Max: 35 caracteres)";
-
-	if (!inputs.lastName) errors.lastName = "Agrega un apellido";
-	if (inputs.lastName.length > 35) errors.lastName = "(Max: 35 caracteres)";
+	if (!inputs.fullName) errors.fullName = "Agrega un nombre";
+	if (inputs.fullName.length > 35) errors.fullName = "(Max: 35 caracteres)";
 
 	if (!regEmail.test(inputs.email))
 		errors.email = "Ingresa un correo válido (Max: 35 caracteres)";
@@ -29,7 +25,11 @@ export function validate(inputs: newUser) {
 		// Compara la contraseña y la confirmación
 		errors.confirm = "Las contraseñas no coinciden";
 
-	if (!urlRegex.test(inputs.image)) errors.image = "Ingresa una URL válida";
+	if (inputs.images.length > 0) {
+		if (!urlRegex.test(inputs.images[0])) {
+			errors.images = ["Ingresa una URL válida"];
+		}
+	}
 
 	return errors;
 }

@@ -29,7 +29,7 @@ const Login: React.FC = () => {
 	}, [dispatch, access, navigate, localController]);
 
 	const [formData, setFormData] = useState<UserData>({
-		name: "",
+		fullName: "",
 		password: "",
 		email: "",
 		id: "",

@@ -31,10 +31,10 @@ export const validate = (data: FormCreateProduct) => {
 	if (!data.location) errors.location = "Este campo es requerido";
 
 	//? validar image URL
-	if (!data.image.length) {
-		errors.image = "Este campo es obligatorio";
-	} else if (!imageUrlRegex.test(data.image)) {
-		errors.image = "Ingresar una URL valida";
+	if (!data.images.length) {
+		errors.images = "Este campo es obligatorio";
+	} else if (!imageUrlRegex.test(data.images)) {
+		errors.images = ["Ingresar una URL valida"];
 	}
 
 	//? validar descrption

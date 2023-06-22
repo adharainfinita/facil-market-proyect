@@ -8,6 +8,7 @@ export interface UserState {
 
 const initialState: UserState = {
 	userLogin: {
+		token: "",
 		id: "",
 		name: "",
 		email: "",
@@ -45,16 +46,13 @@ const userSlice = createSlice({
 			}
 		},
 		setLoggedInUserId: (state, action: PayloadAction<UXDataLogin>) => {
+			state.userLogin.token = action.payload.token;
 			state.userLogin.id = action.payload.id;
 			state.userLogin.image = action.payload.image; // Actualiza el campo "id" en el estado userLogin
 		},
 	},
 });
 
-export const {
-	loggedUser,
-	resetUsers,
-	setUserValidator,
-	setLoggedInUserId,
-} = userSlice.actions;
+export const { loggedUser, resetUsers, setUserValidator, setLoggedInUserId } =
+	userSlice.actions;
 export default userSlice.reducer;

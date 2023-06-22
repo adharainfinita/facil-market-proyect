@@ -5,7 +5,7 @@ const URL_HOST = import.meta.env.VITE_HOST;
 
 export const postUser = async (userData: NewUser) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/user`, userData);
+		const { data } = await axios.post(`${URL_HOST}/register`, userData);
 		return data;
 	} catch (error: any) {
 		const errorMessage = error.response
@@ -30,7 +30,6 @@ export const getAllUsers = async () => {
 export const logUser = async (logData: LoginData) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/login`, logData);
-		console.log(data);
 		
 		return data;
 	} catch (error: any) {

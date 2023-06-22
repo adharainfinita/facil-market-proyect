@@ -3,20 +3,19 @@ import morgan from "morgan";
 import router from "./routes/routes";
 
 //? midleware
-import cors from "./Middleware/cors";
+/* import cors from "./Middleware/cors"; //Manual */
 import log from "./Middleware/log";
-
+import cors from "cors";
 
 const server = express();
 
 server.use(express.json());
 server.use(morgan("dev"));
+server.use(cors());
 
-// ESTE MIDLEWALRE ES UN CORS MANUAL (TAMBIEN EXISTE UNA LIBRERIA LLAMADA CORS)
-server.use(cors);
+server;
 // Este lo creo adha
 server.use(log);
-
 
 server.use("/", router);
 

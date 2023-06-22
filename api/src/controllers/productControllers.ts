@@ -28,6 +28,7 @@ export const createProduct = async ({
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
+	console.log(createProduct);
 	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
@@ -40,7 +41,6 @@ export const createProduct = async ({
 	if (!categoryFound) {
 		throw new Error("Category not found");
 	}
-
 
 	//? Crear el producto
 	return await Product.create({

@@ -2,15 +2,16 @@
 export interface UXDataLogin {
 	id: string;
 	image: string;
+	token: string;
 }
 // Interfaces de de estados global
 export interface User {
-  id: string;
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  image: string;
+	id: string;
+	name: string;
+	lastName: string;
+	email: string;
+	password: string;
+	image: string;
 }
 
 export interface FiltersCaché {
@@ -20,47 +21,46 @@ export interface FiltersCaché {
 }
 
 export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating: number;
-  image: string;
-  location: string;
-  price: number;
-  categoryID: number;
-  categoryName: string;
-  userID: number;
-  userName: string;
+	id: number;
+	name: string;
+	description: string;
+	stock: number;
+	rating: number;
+	image: string;
+	location: string;
+	price: number;
+	categoryID: number;
+	categoryName: string;
+	userID: number;
+	userName: string;
 }
 
 export interface Category {
-  id: number;
-  name: string;
-  image: string;
-  highlight: boolean;
+	id: number;
+	name: string;
+	image: string;
+	highlight: boolean;
 }
 
 // Interfaces de servicios
 export interface productData {
-  id: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating: number;
-  image: string;
-  location: string;
-  price: number;
+	id: number;
+	name: string;
+	description: string;
+	stock: number;
+	rating: number;
+	image: string;
+	location: string;
+	price: number;
 }
 
-// Interfaces para formularios
+// Interfaces para formularios de registro
 export interface NewUser {
-  name: string;
-  lastName: string;
-  password: string;
-  email: string;
-  image: string;
-  confirm?: string;
+	fullName: string;
+	password: string;
+	email: string;
+	image: string;
+	confirm?: string;
 }
 
 export interface UserData {
@@ -69,25 +69,26 @@ export interface UserData {
 	email: string | number;
 	id: string;
 	image: string;
+	token: string;
 }
 
-export interface LoginData{
-  email: string
-  password: string | number
+export interface LoginData {
+	email: string;
+	password: string | number;
 }
 
 //? Interfaces de componentes
 
 export interface FormCreateProduct {
-  userID: number;
-  categoryID: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating?: number;
-  image: string;
-  location: string;
-  price: number;
+	userID: number;
+	categoryID: number;
+	name: string;
+	description: string;
+	stock: number;
+	rating?: number;
+	images?: any;
+	location: string;
+	price: number;
 }
 
 export interface ErrorsFormProduct {
@@ -97,7 +98,7 @@ export interface ErrorsFormProduct {
 	description: string;
 	stock: string;
 	rating?: string;
-	image: string;
+	images?: string[];
 	location: string;
 	price: string;
 }

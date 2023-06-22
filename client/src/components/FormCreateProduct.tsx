@@ -6,11 +6,12 @@ import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+import { AxiosHeaderValue } from "axios";
 
 const FormCreateProduct: React.FC = () => {
 	//? Estado Global
 	const categories = useSelector((state: RootState) => state.category.value);
-	const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
+	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
 	//? hooks
 	const navigate = useNavigate();
@@ -18,13 +19,13 @@ const FormCreateProduct: React.FC = () => {
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: Number(idLogin),
+		userID: 2,
 		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
 		stock: 1,
-		image: "",
+		images: [],
 		price: 1,
 		rating: 0,
 	});
@@ -64,21 +65,31 @@ const FormCreateProduct: React.FC = () => {
 			formData.price = Number(formData.price);
 			formData.categoryID = Number(formData.categoryID);
 
+			const str = formData.images;
+			formData.images = [str];
+
+			const token = userLogin.token;
+
+			console.log(formData);
 			//? Creo el producto
 			try {
-				postProduct(formData);
+				const Headers: Partial<AxiosHeaderValue> = {
+					Authorization: `Bearer ${token}`,
+				};
+
+				postProduct(formData, Headers);
 			} catch (error: any) {
 				console.log(error.message);
 			}
 
 			setFormData({
-				userID: Number(idLogin),
+				userID: 2,
 				categoryID: 1,
 				name: "",
 				location: "",
 				description: "",
 				stock: 1,
-				image: "",
+				images: [],
 				price: 1,
 				rating: 0,
 			});
@@ -132,13 +143,13 @@ const FormCreateProduct: React.FC = () => {
 			<label htmlFor="form__input-location">
 				imagen:
 				<input
-					name="image"
+					name="images"
 					type="text"
 					placeholder="URL de tu imagen"
 					onChange={handleChange}
-					value={formData.image}
+					value={formData.images}
 				/>
-				{errors.image && <p className="error">{errors.image}</p>}
+				{errors.images && <p className="error">{errors.images}</p>}
 			</label>
 
 			<label htmlFor="form__category">Categoría:</label>

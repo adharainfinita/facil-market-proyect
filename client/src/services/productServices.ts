@@ -1,5 +1,5 @@
-import axios from "axios";
-import { FormCreateProduct } from "../utils/interfaces";
+import axios, { AxiosHeaders } from "axios";
+//import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 //const URL_API = import.meta.env.VITE_API;
 
@@ -33,15 +33,18 @@ export const getProductsById = async (id: number) => {
 };
 
 //? Create product
-export const postProduct = async (product: FormCreateProduct) => {
+export const postProduct = async (
+	data: any,
+	headers: Partial<AxiosHeaders["headers"]>
+) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/product`, product);
-		return data;
+		const response = await axios.post(`${URL_HOST}/product`, data, { headers });
+		console.log(response.data);
+		return response.data;
 	} catch (error: any) {
-		return error.message;
+		console.error(error.message);
 	}
 };
-
 
 //? Obtener todos los productos
 export const getAllProducts = async () => {
