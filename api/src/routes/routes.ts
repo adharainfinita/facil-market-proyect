@@ -17,13 +17,13 @@ import getProductById from "../handlers/products/getProductById";
 
 //! UTILS
 import categoryCreate from "../validators/categoryValidation";
-import { validateCreate } from "../validators/userValidation";
+//import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 import loginUser from "../handlers/auth/loginUser";
 
 //! rutas auth
-router.post("/register", validateCreate, registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 //* POST

@@ -1,8 +1,8 @@
 import Product from "../models/Product";
-import { findCategoryByID } from "./categoryControllers";
-import { findUser } from "./authControllers";
+/* import { findCategoryByID } from "./categoryControllers"; */
+/* import { findUser } from "./authControllers"; */
 import { Op } from "sequelize";
-
+/* 
 interface localProps {
 	name: string;
 	description: string;
@@ -13,9 +13,9 @@ interface localProps {
 	price: number;
 	userID: number;
 	categoryID: number;
-}
+} */
 
-export const createProduct = async ({
+/* export const createProduct = async ({
 	name,
 	description,
 	location,
@@ -51,11 +51,11 @@ export const createProduct = async ({
 		location,
 		price,
 		userID: userFound.id,
-		userName: userFound?.name,
+		userName: userFound?.fullName,
 		categoryID: categoryFound?.id,
 		categoryName: categoryFound?.name,
 	});
-};
+}; */
 
 export const findAllProducts = async () => await Product.findAll();
 

@@ -13,7 +13,7 @@
 
 export interface loginData {
 	email: string;
-	password: string | number;
+	password: string;
 }
 
 export interface userInterface extends loginData {
