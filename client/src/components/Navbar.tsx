@@ -37,8 +37,8 @@ function Navbar() {
 			<SearchBar />
 			<div className="nav__user">
 				<div>
-        <Link to="/profile"><img src={userLogin.image} alt="user" className="nav__userLogo" /></Link>
-					<h5 className="nav___userName">{userLogin.name}</h5>
+        <Link to="/profile"><img src={userLogin.user.image} alt="user" className="nav__userLogo" /></Link>
+					<h5 className="nav___userName">{userLogin.user.fullName}</h5>
 				</div>
 				<Link to="/login">
 					{userValidation === false ? (
