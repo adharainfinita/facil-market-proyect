@@ -13,7 +13,6 @@ server.use(express.json());
 server.use(morgan("dev"));
 server.use(cors());
 
-server;
 // Este lo creo adha
 server.use(log);
 

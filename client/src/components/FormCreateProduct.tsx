@@ -16,6 +16,8 @@ const FormCreateProduct: React.FC = () => {
 	//? hooks
 	const navigate = useNavigate();
 
+	console.log(userLogin.id)
+
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
