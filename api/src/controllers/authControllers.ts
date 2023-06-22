@@ -1,6 +1,7 @@
 import { userInterface, loginData } from "../interfaces/auth";
 import User from "../models/User";
 import { encrypt, verified } from "../utils/bcryptHandle";
+import { generateToken } from "../utils/jwtHandle";
 
 export const createUser = async (authUser: userInterface) => {
 	const userFound = await User.findOne({ where: { email: authUser.email } });
@@ -78,7 +79,15 @@ export const userCredentials = async (authLogin: loginData) => {
 	if (!isCorrect) throw new Error("CONTRASEÑA INCORRECTA");
 
 	//? si todo sale bien retorno el usuario
-	return userExist;
+
+	const token = await generateToken(userExist.email);
+
+	const data = {
+		token,
+		user: userExist,
+	};
+
+	return data;
 
 	/* const userInfo = {
 		id: userExist?.id,

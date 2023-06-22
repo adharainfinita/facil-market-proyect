@@ -18,16 +18,17 @@ import getProductById from "../handlers/products/getProductById";
 //! UTILS
 import categoryCreate from "../validators/categoryValidation";
 //import { validateCreate } from "../validators/userValidation";
-import { productCreate } from "../validators/productValidation";
+//import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
 import loginUser from "../handlers/auth/loginUser";
+import checkSession from "../Middleware/session";
 
 //! rutas auth
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 //* POST
-router.post("/product", productCreate, postProduct);
+router.post("/product", checkSession, postProduct);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
 

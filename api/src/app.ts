@@ -5,7 +5,7 @@ import router from "./routes/routes";
 //? midleware
 import cors from "./Middleware/cors";
 import log from "./Middleware/log";
-import session from "./Middleware/session";
+
 
 const server = express();
 
@@ -16,8 +16,7 @@ server.use(morgan("dev"));
 server.use(cors);
 // Este lo creo adha
 server.use(log);
-//Seccion
-server.use(session);
+
 
 server.use("/", router);
 
