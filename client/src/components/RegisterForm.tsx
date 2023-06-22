@@ -5,64 +5,71 @@ import {
 	AiOutlineEye, */
 	AiOutlineUser,
 } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { updateProfile } from "firebase/auth";
 
 const RegisterForm = () => {
-	const auth = useAuth();
-
+  const {user} = useAuth();
+	const { register } = useAuth();
 	const [emailRegister, setEmailRegister] = useState<string>("");
 	const [passwordRegister, setPasswordRegister] = useState<string>("");
 	const [name, setName] = useState<string>("");
-  const [image, setImage] = useState<string>("");
-	const navigate = useNavigate();
+	const [image, setImage] = useState<string>("");
+	const [error, setError] = useState<string>("");
 
-	const handleRegister = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-    try {
-      event.preventDefault();
-      await auth.register(emailRegister, passwordRegister);
-      const user = auth.user;
-  
-      if (user) {
-        await updateProfile(user, {
-          displayName: name,
-          photoURL: image,
-        });
-  
-        alert("Registro exitoso");
-        navigate("/login");
-      } else {
-        // El usuario no está definido, muestra un mensaje de error
-        throw new Error("Usuario no encontrado");
+	const handleSubmit = async (
+		event: FormEvent<HTMLFormElement>
+	): Promise<void> => {
+		event.preventDefault();
+		setError("");
+		try {
+      await register(emailRegister, passwordRegister);
+          if (user) {
+          await updateProfile(user, {
+            displayName: name,
+            photoURL: image,
+          });
+        }
+      let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      if(!name) {
+        return setError("El campo nombre no puede estar vacio.")
+      }else if (!regexName.test(name)) {
+        return setError("El campo nombre solo acepta letras.");
       }
-      console.log(user)
-    } catch (error: any) {
-      alert("Error al registrar: " + error.message);
-    }
-  };
+      if (!emailRegister) {
+        return setError("El campo Email no puede estar vacio.")
+      }
+      if (!passwordRegister) {
+        return setError("El campo Password no puede estar vacio.")
+      }
 
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
+			alert("Cuenta creada con exito!");
+		} catch (error: any) {
+			alert("Error al registrar: " + error.message);
+		}
+	};
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmailRegister(event.target.value);
-  };
+	const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setName(event.target.value);
+	};
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPasswordRegister(event.target.value);
-  };
+	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setEmailRegister(event.target.value);
+	};
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setImage(event.target.value);
-  };
+	const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setPasswordRegister(event.target.value);
+	};
+
+	const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setImage(event.target.value);
+	};
 
 	return (
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
 
-			<form onSubmit={handleRegister}>
+			<form onSubmit={handleSubmit}>
 				<div className="input-field">
 					<input
 						type="text"
@@ -70,12 +77,12 @@ const RegisterForm = () => {
 						placeholder="Ingresa tu nombre completo"
 						autoComplete="username"
 						value={name}
-            required
-            onChange={handleNameChange}
+						required
+						onChange={handleNameChange}
 					/>
 					<AiOutlineUser className="icon" />
 				</div>
-
+        {error && <p className="error">{error}</p>}
 				<div className="input-field">
 					<input
 						type="text"
@@ -84,42 +91,39 @@ const RegisterForm = () => {
 						placeholder="Ingresa tu correo"
 						autoComplete="current-email"
 						value={emailRegister}
-            required
-            onChange={handleEmailChange}
+						required
+						onChange={handleEmailChange}
 					/>
 					<BiEnvelope className="icon" />
 				</div>
-
+        {error && <p className="error">{error}</p>}
 				<div className="input-field">
 					<input
 						type="text"
 						name="password"
 						placeholder="Ingresa tu contraseña"
 						value={passwordRegister}
-            required
-            autoComplete="current-password"
-            onChange={handlePasswordChange}
+						required
+						autoComplete="current-password"
+						onChange={handlePasswordChange}
 					/>
 					<BiLockAlt className="icon" />
 				</div>
-
+        {error && <p className="error">{error}</p>}
 				<div className="input-field">
 					<input
 						type="text"
 						name="image"
 						placeholder="Ingresa una URL de tu imagen"
 						required
-            value={image}
-            onChange={handleImageChange}
+						value={image}
+						onChange={handleImageChange}
 					/>
 					<BiImage className="icon" />
 				</div>
-
+        {error && <p className="error">{error}</p>}
 				<div className="input-field button">
-					<input
-						type="submit"
-						value="Registrarte"
-					/>
+					<input type="submit" value="Registrarte" />
 				</div>
 			</form>
 			<div className="login-signup">

@@ -11,7 +11,7 @@ import { useAuth } from "../context/AuthContext";
 const FormCreateProduct: React.FC = () => {
 	//? Estado Global
 	const categories = useSelector((state: RootState) => state.category.value);
-	const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
+/* 	const idLogin = useSelector((state: RootState) => state.user.userLogin.id); */
 	const auth = useAuth();
 	const {uid} = auth.user
 

@@ -1,39 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser, setUserValidator } from "../redux/features/userSlice";
+import { useState, FormEvent } from "react";
+import { useAuth } from "../context/AuthContext";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { RootState } from "../redux/store";
-import { UserData } from "../utils/interfaces";
-import { useAuth } from "../context/AuthContext";
-import {useNavigate, Link} from "react-router-dom"
-// import { setLoggedInUserId } from "../redux/features/userSlice";
+import {useNavigate} from "react-router-dom"
 
-const Login: React.FC = () => {
-	const auth = useAuth()
-	const navigate = useNavigate();
+const Login = () => {
+  const { login, loginWithGoogle, resetPassword, user } = useAuth();
+  const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [error, setError] = useState<string>("");
 
-
-	const handleLogin = async (event: React.FormEvent): Promise<void> => {
+	const handleSubmit = async (
+		event: FormEvent<HTMLFormElement>
+	): Promise<void> => {
 		event.preventDefault();
-		const accesss = auth.login(email, password);
-		console.log(accesss)
-		if(!accesss){
-			alert("Usuario o contraseña incorrecta")
-		}else{
-			navigate("/")
-		}
-	}
+		setError("");
+		try {
+      if (!email) {
+        return setError("El campo Email no puede estar vacio.")
+      }
+      if (!password) {
+        return setError("El campo Password no puede estar vacio.")
+      }
 
+			await login(email, password)
+			
+		} catch (error: any) {
+			return setError(error.message);
+    }
+	};
+	
+	const handleGoogleSignIn = async () => {
+    try {
+      await loginWithGoogle();
+			if(user){
+				navigate("/products");
+				alert(`El usuario está autenticado: ${email}`);
+			}else{
+				navigate("/login")
+				alert("El usuario no está autenticado");
+			}
+    } catch (error:any) {
+      return error.message;
+    }
+  };
+
+	const handleResetPassword = async () => {
+    if (email) return setError("Por favor introduzca su correo electrónico.")
+    
+    try {
+      await resetPassword(email)
+      setError("Le enviamos un correo electrónico con un enlace para restablecer su contraseña.")
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+	const handleShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
 	/* const dispatch = useDispatch(); */
 	/* const { users, userValidation: access } = useSelector(
 		(state: RootState) => state.user
 	); */
 
-	const [localController, setLocalController] = useState(false);
-	const [showPassword, setShowPassword] = useState(false);
+/* 	const [localController, setLocalController] = useState(false); */
 
 	/* useEffect(() => {
 		if (access) {
@@ -63,7 +96,7 @@ const Login: React.FC = () => {
 		fetchUsers();
 	}, [dispatch, getAllUsers]); */
 
-	const [_message, setMessage] = useState("No has escrito nada");
+	/* const [_message, setMessage] = useState("No has escrito nada"); */
 
 /* 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -74,10 +107,6 @@ const Login: React.FC = () => {
 			[name]: value,
 		}));
 	}; */
-
-	const handleShowPassword = () => {
-		setShowPassword(!showPassword);
-	};
 
 	/* 	console.log('local', localController);
 console.log('global' ,access);
@@ -125,7 +154,7 @@ console.log('global' ,access);
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
 
-					<form >
+					<form onSubmit={handleSubmit}>
 						<div className="input-field">
 							<input
 								type="text"
@@ -139,6 +168,7 @@ console.log('global' ,access);
 							/>
 							<BiEnvelope className="icon" />
 						</div>
+						{error && <p className="error">{error}</p>}
 
 						<div className="input-field">
 							<input
@@ -165,6 +195,7 @@ console.log('global' ,access);
 								/>
 							)}
 						</div>
+						{error && <p className="error">{error}</p>}
 
 						<div className="checkbox-text">
 							<div className="checkbox-content">
@@ -173,14 +204,18 @@ console.log('global' ,access);
 									Recordarme
 								</label>
 							</div>
-							<a href="#" className="text">
+							{/* <a href="#" className="text">
 								¿Olvidaste tu contraseña?
-							</a>
+							</a> */}
 						</div>
+							<button onClick={handleResetPassword} >¿Olvidaste tu contraseña?</button>
 
 						<div className="input-field button">
-							<input type="submit" value="Iniciar Sesión" onClick={(event) => handleLogin(event)}/>
+							<input type="submit" value="Iniciar Sesión" />
 						</div>
+						<button onClick={handleGoogleSignIn}>
+							Google
+						</button>
 					</form>
 					<div className="login-signup">
 						<span className="text">

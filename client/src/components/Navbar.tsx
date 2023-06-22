@@ -2,11 +2,12 @@ import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useAuth } from "../context/AuthContext";
-import { AuthProvider } from "../context/AuthContext";
+
 function Navbar() {
   const auth = useAuth();
-  const {displayName, photoURL} = auth.user
-
+  const user = auth.user;
+  const displayName = user?.displayName || "";
+  const photoURL = user?.photoURL || "";
   const handleLogout = () => {
 		auth.logout();
 	}

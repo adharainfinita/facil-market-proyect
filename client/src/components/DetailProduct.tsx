@@ -1,5 +1,6 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
+import { useAuth } from "../context/AuthContext";
 
 //? Imagenes de prueba
 const productImage = [
@@ -26,7 +27,6 @@ const productImage = [
 
 const DetailProduct = () => {
 	const product = useProduct();
-
 	return (
 		<div className="detail-product-container">
 			<div className="detail-product">

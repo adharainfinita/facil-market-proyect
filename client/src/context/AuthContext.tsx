@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
+  User,
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase.config";
@@ -19,41 +21,49 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
 }
 
-interface User {
+/* interface User {
   email: string,
   password: string,
   displayName: string;
   photoURL: string;
   // Otras propiedades del usuario
-}
+} */
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-/* export const useAuth = (): AuthContextType => {
-  const context = useContext(authContext);
-  if (!context) {
-    throw new Error("Error creating auth context");
-  }
-  return context;
-}; */
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if(user){
+        setUser(user);
+        console.log("ingreso", user)
+      }else{
+        setUser(null);
+        console.log("ingreso", null)
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+ /*  useEffect(() => {
     const suscribed = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) {
-        console.log("no ingreso");
+        console.log("no ingreso", currentUser);
         setUser("");
       } else {
         setUser(currentUser);
-        console.log("ingreso");
+        console.log("ingreso", currentUser);
       }
     });
     return () => suscribed();
-  }, []);
+  }, []);  */
 
   const register = async (
     email: string,
@@ -78,11 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      if (!response) {
-        throw Error("Usuario o contraseña incorrecta");
-      }
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       return error.message;
     }
@@ -97,12 +103,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signOut(auth);
   };
 
+  const resetPassword = async (email: string) => sendPasswordResetEmail(auth, email)
+
   const authContextValue: AuthContextType = {
     user,
     register,
     login,
     loginWithGoogle,
     logout,
+    resetPassword
   };
   return (
     <AuthContext.Provider value={authContextValue}>
