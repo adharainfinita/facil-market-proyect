@@ -1,12 +1,3 @@
-export interface userProps {
-	id: number;
-	name: string;
-	lastName: string;
-	password: string;
-	email: string;
-	image: string;
-}
-
 export interface productProps {
 	id: number;
 	name: string;
@@ -18,12 +9,12 @@ export interface productProps {
 	price: number;
 	categoryID: number;
 	nameCategory: string;
-	userID: number;
+	userID: string;
 }
 
 export interface reviewProps {
 	id: number;
-	userID: number;
+	userID: string;
 	productID: number;
 	text: string;
 	rating: number;

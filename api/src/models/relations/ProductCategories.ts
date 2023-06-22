@@ -1,4 +1,4 @@
-import { Model, Table, Column, ForeignKey } from "sequelize-typescript";
+/* import { Model, Table, Column, ForeignKey } from "sequelize-typescript";
 import Product from "../Product";
 import Categories from "../Category";
 
@@ -15,4 +15,4 @@ class ProductCategories extends Model {
 	productId!: number;
 }
 
-export default ProductCategories;
+export default ProductCategories; */

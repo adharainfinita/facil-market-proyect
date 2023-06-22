@@ -1,4 +1,4 @@
-import axios from "axios";
+/* import axios from "axios";
 import { NewUser } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 //const URL_API = import.meta.env.VITE_API;
@@ -26,3 +26,4 @@ export const getAllUsers = async () => {
 		alert(errorMessage);
 	}
 };
+ */

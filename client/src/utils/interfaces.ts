@@ -74,7 +74,7 @@ export interface UserData {
 //? Interfaces de componentes
 
 export interface FormCreateProduct {
-  userID: number;
+  userID: string;
   categoryID: number;
   name: string;
   description: string;

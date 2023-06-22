@@ -6,7 +6,6 @@ import {
 	ForeignKey,
 	BelongsTo,
 } from "sequelize-typescript";
-import User from "./User";
 import Product from "./Product"; // Importa el modelo Producto
 
 @Table({ tableName: "reviews" })
@@ -18,15 +17,12 @@ class Review extends Model {
 	})
 	id!: number;
 
-	@ForeignKey(() => User)
 	@Column({
-		type: DataType.INTEGER,
+		type: DataType.STRING,
 		allowNull: false,
 	})
-	userID!: number;
+	userID!: string;
 
-	@BelongsTo(() => User)
-	user!: User;
 
 	@ForeignKey(() => Product) // Agrega esta línea para establecer la clave externa
 	@Column({

@@ -41,8 +41,8 @@ export const productCreate = [
 		.withMessage("El ID de Categoria debe ser números y enteros."),
 
 	check("userID")
-		.isInt()
-		.withMessage("El ID de usuario debe ser números y enteros."),
+	.isString()
+		.withMessage("El ID de usuario debe ser un string."), 
 	(req: Request, res: Response, next: NextFunction) => {
 		validateResult(req, res, next);
 	},

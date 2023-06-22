@@ -7,7 +7,6 @@ import {
 	BelongsTo,
 } from "sequelize-typescript";
 import Category from "./Category";
-import User from "./User";
 
 @Table({ tableName: "products" })
 class Product extends Model {
@@ -61,6 +60,12 @@ class Product extends Model {
 	})
 	price!: number;
 
+	@Column({
+		type: DataType.STRING,
+		allowNull: false,
+	})
+	userID!: string;
+
 	//...... Relaciones
 
 	@ForeignKey(() => Category)
@@ -79,21 +84,6 @@ class Product extends Model {
 	@BelongsTo(() => Category)
 	category!: Category;
 
-	@ForeignKey(() => User)
-	@Column({
-		type: DataType.INTEGER,
-		allowNull: false,
-	})
-	userID!: number;
-
-	@Column({
-		type: DataType.STRING,
-		allowNull: true,
-	})
-	userName!: string;
-
-	@BelongsTo(() => User)
-	user!: User;
 }
 /* public static async loadDefaultProducts() {
 	const defaultProducts = [

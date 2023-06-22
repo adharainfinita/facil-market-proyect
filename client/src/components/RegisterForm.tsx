@@ -1,4 +1,142 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
+import {
+	/* AiOutlineEyeInvisible,
+	AiOutlineEye, */
+	AiOutlineUser,
+} from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { updateProfile } from "firebase/auth";
+
+const RegisterForm = () => {
+	const auth = useAuth();
+
+	const [emailRegister, setEmailRegister] = useState<string>("");
+	const [passwordRegister, setPasswordRegister] = useState<string>("");
+	const [name, setName] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+	const navigate = useNavigate();
+
+	const handleRegister = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    try {
+      event.preventDefault();
+      await auth.register(emailRegister, passwordRegister);
+      const user = auth.user;
+  
+      if (user) {
+        await updateProfile(user, {
+          displayName: name,
+          photoURL: image,
+        });
+  
+        alert("Registro exitoso");
+        navigate("/login");
+      } else {
+        // El usuario no está definido, muestra un mensaje de error
+        throw new Error("Usuario no encontrado");
+      }
+      console.log(user)
+    } catch (error: any) {
+      alert("Error al registrar: " + error.message);
+    }
+  };
+
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmailRegister(event.target.value);
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPasswordRegister(event.target.value);
+  };
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setImage(event.target.value);
+  };
+
+	return (
+		<div className="form login">
+			<span className="form-title">Registrarte</span>
+
+			<form onSubmit={handleRegister}>
+				<div className="input-field">
+					<input
+						type="text"
+						name="name"
+						placeholder="Ingresa tu nombre completo"
+						autoComplete="username"
+						value={name}
+            required
+            onChange={handleNameChange}
+					/>
+					<AiOutlineUser className="icon" />
+				</div>
+
+				<div className="input-field">
+					<input
+						type="text"
+						name="email"
+						id="email"
+						placeholder="Ingresa tu correo"
+						autoComplete="current-email"
+						value={emailRegister}
+            required
+            onChange={handleEmailChange}
+					/>
+					<BiEnvelope className="icon" />
+				</div>
+
+				<div className="input-field">
+					<input
+						type="text"
+						name="password"
+						placeholder="Ingresa tu contraseña"
+						value={passwordRegister}
+            required
+            autoComplete="current-password"
+            onChange={handlePasswordChange}
+					/>
+					<BiLockAlt className="icon" />
+				</div>
+
+				<div className="input-field">
+					<input
+						type="text"
+						name="image"
+						placeholder="Ingresa una URL de tu imagen"
+						required
+            value={image}
+            onChange={handleImageChange}
+					/>
+					<BiImage className="icon" />
+				</div>
+
+				<div className="input-field button">
+					<input
+						type="submit"
+						value="Registrarte"
+					/>
+				</div>
+			</form>
+			<div className="login-signup">
+				<span className="text">
+					¿tienes una cuenta?
+					<a href="/login" className="text signup-text">
+						Inicia sesión aqui
+					</a>
+				</span>
+			</div>
+		</div>
+	);
+};
+
+export default RegisterForm;
+
+/* import { useState } from "react";
 import { validate } from "../utils/registerValidation";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
@@ -9,7 +147,7 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 // import axios from "axios";
-import { postUser } from "../services/userServices";
+
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -18,8 +156,9 @@ const RegisterForm = () => {
   const auth = useAuth()
   const [emailRegister, setEmailRegister] = useState("");
   const [passwordRegister, setPasswordRegister] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
 
-  console.log(emailRegister, passwordRegister)
   const handleRegister = async (event: React.FormEvent): Promise<void> => {
 		event.preventDefault();
 		auth.register(emailRegister, passwordRegister);
@@ -95,11 +234,11 @@ const RegisterForm = () => {
           <input
             type="text"
             name="name"
-            value={inputs.name}
+            value={displayName}
             placeholder="Ingresa tu nombre"
             autoComplete="username"
             required
-            onChange={(e) => handleInputs(e)}
+            onChange={(event) => setDisplayName(event.target.value)}
           />
           <AiOutlineUser className="icon" />
         </div>
@@ -160,10 +299,10 @@ const RegisterForm = () => {
           <input
             type="text"
             name="image"
-            value={inputs.image}
+            value={photoURL}
             placeholder="Ingresa una URL de tu imagen"
             required
-            onChange={(e) => handleInputs(e)}
+            onChange={(event) => setPhotoURL(event.target.value)}
           />
           <BiImage className="icon" />
         </div>
@@ -186,3 +325,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+ */

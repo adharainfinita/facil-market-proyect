@@ -1,4 +1,4 @@
-import User from "./models/User";
+
 import Review from "./models/Review";
 import Category from "./models/Category";
 import Product from "./models/Product";
@@ -20,7 +20,7 @@ const database = new Sequelize({
 	host: DB_HOST,
 	port: Number(DB_PORT),
 	dialect: "postgres",
-	models: [User, Review, Category, Product],
+	models: [Review, Category, Product],
 	logging: false,
 	native: false,
 });

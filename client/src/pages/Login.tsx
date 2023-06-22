@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, setUserValidator } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { getAllUsers } from "../services/userServices";
-import { getUsers } from "../redux/features/userSlice";
 import { RootState } from "../redux/store";
 import { UserData } from "../utils/interfaces";
 import { useAuth } from "../context/AuthContext";
-
+import {useNavigate, Link} from "react-router-dom"
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
 const Login: React.FC = () => {
 	const auth = useAuth()
-	
+	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 
 	const handleLogin = async (event: React.FormEvent): Promise<void> => {
 		event.preventDefault();
-		auth.login(email, password);
+		const accesss = auth.login(email, password);
+		console.log(accesss)
+		if(!accesss){
+			alert("Usuario o contraseña incorrecta")
+		}else{
+			navigate("/")
+		}
 	}
 
-	const navigate = useNavigate();
 	/* const dispatch = useDispatch(); */
 	/* const { users, userValidation: access } = useSelector(
 		(state: RootState) => state.user
@@ -33,7 +35,6 @@ const Login: React.FC = () => {
 	const [localController, setLocalController] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 
-	console.log(email, password)
 	/* useEffect(() => {
 		if (access) {
 			localController && navigate("/");

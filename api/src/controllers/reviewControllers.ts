@@ -1,6 +1,6 @@
 import { reviewProps } from "../utils/propsModel";
 import Review from "../models/Review";
-import User from "../models/User";
+/* import User from "../models/User"; */
 import Product from "../models/Product";
 
 export const createReview = async ({
@@ -10,10 +10,10 @@ export const createReview = async ({
 	rating,
 }: reviewProps) => {
 	// Verificar si el usuario y el producto existen en la base de datos
-	const userExists = await User.findByPk(userID);
+	/* const userExists = await User.findByPk(userID); */
 	const productExists = await Product.findByPk(productID);
 
-	if (!userExists || !productExists) {
+	if (!productExists) {
 		throw new Error("User or product not found, please check it they status");
 	}
 	// Crear el nuevo review

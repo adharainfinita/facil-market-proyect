@@ -6,11 +6,14 @@ import { RootState } from "../redux/store";
 import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+import { useAuth } from "../context/AuthContext";
 
 const FormCreateProduct: React.FC = () => {
 	//? Estado Global
 	const categories = useSelector((state: RootState) => state.category.value);
 	const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
+	const auth = useAuth();
+	const {uid} = auth.user
 
 	//? hooks
 	const navigate = useNavigate();
@@ -18,7 +21,7 @@ const FormCreateProduct: React.FC = () => {
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: Number(idLogin),
+		userID: uid,
 		categoryID: 1,
 		name: "",
 		location: "",
@@ -67,12 +70,13 @@ const FormCreateProduct: React.FC = () => {
 			//? Creo el producto
 			try {
 				postProduct(formData);
+				console.log(formData)
 			} catch (error: any) {
 				console.log(error.message);
 			}
 
 			setFormData({
-				userID: Number(idLogin),
+				userID: uid,
 				categoryID: 1,
 				name: "",
 				location: "",

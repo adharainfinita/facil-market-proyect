@@ -19,7 +19,7 @@ export const reviewCreate = [
 		})
 		.withMessage("El texto debe contener entre 4 y 2000 caracteres"),
 
-	check("userID").isInt().withMessage("El UserID debe ser números y enteros."),
+	/* check("userID").isInt().withMessage("El UserID debe ser números y enteros."), */
 
 	check("productID")
 		.isInt()
