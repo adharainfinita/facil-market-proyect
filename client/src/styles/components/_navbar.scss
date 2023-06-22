@@ -40,17 +40,20 @@
   }
 
   &__user {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 2rem;
+    position: relative;
   }
 
   &__icon-person {
     font-size: 1.8rem;
     border: 2px solid #1D428A;
     border-radius: 50%;
-    color: #79BE21;
+    color: #79BE21;  
   }
+
   &__button-login {
     box-shadow: 1px 1px 2px 0px #8a2a21;
     background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
@@ -74,6 +77,26 @@
       position:relative;
       top:1px;
     }
+  }
+
+  
+  &__button-out{
+    cursor: pointer;
+    position: absolute;
+    padding: 10px 15px;
+    border: none;
+    right: 0;
+    top: 115%;
+    z-index: 10;
+    border-radius: .5rem;
+    background-color: #fff;
+    box-shadow:  0px 1px 0px 1px #000000;
+    font-size: 1rem;
+  }
+
+  &__button-out:hover{
+    background-color: #f24437;
+    color: #fff;
   }
 
   &__button-sell {
@@ -100,5 +123,8 @@
       position:relative;
       top:1px;
     }
+
+
+    
   }
 }

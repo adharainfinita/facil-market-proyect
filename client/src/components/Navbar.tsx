@@ -4,11 +4,19 @@ import SearchBar from "./SearchBar";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { setUserValidator } from "../redux/features/userSlice";
+import { useState } from "react";
 
 function Navbar() {
   const dispatch = useDispatch();
-
 	const {userValidation, userLogin} = useSelector((state: RootState) => state.user)
+  const [openUser, setOpenUser] = useState<boolean>(false)
+
+
+  const handleOpen = () => {setOpenUser(!openUser)}
+  const handleLogOut = () => {
+    dispatch(setUserValidator(false))
+    setOpenUser(false)
+  }
 
   return (
     <nav className="nav">
@@ -29,29 +37,36 @@ function Navbar() {
         </Link>
 
         <li>Nosotros</li>
-        <Link to="/vender">
-          <button className="nav__button-sell">Vender</button>
-        </Link>
       </ul>
 
-      <SearchBar />
       <div className="nav__user">
-        <div>
-          <img src={userLogin.image} alt="user" className="nav__userLogo" />
-          <h5 className="nav___userName">{userLogin.name}</h5>
-        </div>
-        <Link to="/login">
-          {userValidation === false ? (
-            <button className="nav__button-login">Iniciar Sesión</button>
-          ) : (
-            <button
-              className="nav__button-login"
-              onClick={() => dispatch(setUserValidator(false))}
-            >
-              Cerrar Sesión
-            </button>
-          )}
-        </Link>
+
+          <SearchBar />
+
+          <Link to="/vender">
+              <button className="nav__button-sell">Vender</button>
+          </Link>
+        
+          {userValidation === false ?
+           <Link to="/login">
+            <button className="nav__button-login">Iniciar Sesión</button> 
+          </Link>
+          :(
+            <div className="profile-img">
+              <img src={userLogin.image} alt="user" className="nav__userLogo" onClick={handleOpen} />
+              <h5 className="nav___userName">{userLogin.name}</h5>
+
+              {openUser && 
+              <div className="nav__user-dropdown">
+                <button onClick={handleLogOut} className="nav__button-out">Cerrar Sesión</button>
+              </div>
+              }
+            </div>
+           )}
+
+
+          
+        
       </div>
     </nav>
   );
