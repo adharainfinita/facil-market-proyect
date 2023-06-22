@@ -10,6 +10,7 @@ export interface UserState {
 const initialState: UserState = {
 	users: [],
 	userLogin: {
+		lastName:"",
 		name: "",
 		email: "",
 		password: "",
@@ -32,15 +33,18 @@ const userSlice = createSlice({
 			state.userLogin = action.payload;
 		},
 		resetUsers: () => initialState, // Agregar esta acción para reiniciar el estado del usuario
-		/* changeEmail: (state, action: PayloadAction<string>) => {
+		 changeEmail: (state, action: PayloadAction<string>) => {
 			state.userLogin.email = action.payload;
-		}, */
-		/* changePassword: (state, action: PayloadAction<string>) => {
+		}, 
+		changeName: (state, action: PayloadAction<string>) => {
+			state.userLogin.name = action.payload;
+		}, 
+		changePassword: (state, action: PayloadAction<string>) => {
 			state.userLogin.password = action.payload;
-		}, */
-		/* changeImage: (state, action: PayloadAction<string>) => {
+		}, 
+		 changeImage: (state, action: PayloadAction<string>) => {
 			state.userLogin.image = action.payload;
-		}, */
+		}, 
 		/* setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
 		}, */
@@ -62,6 +66,10 @@ export const {
 	addUser,
 	resetUsers,
 	setUserValidator,
+	changePassword,
+	changeEmail,
+	changeName,
 	setLoggedInUserId,
+	changeImage
 } = userSlice.actions;
 export default userSlice.reducer;

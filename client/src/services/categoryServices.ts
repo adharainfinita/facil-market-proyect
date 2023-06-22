@@ -26,10 +26,12 @@ export const getCategory = async () => {
 	try {
 		const response = await axios(`${URL_HOST}/category`);
 		return response.data;
-	} catch (error: any) {
-		const errorMessage = error.response
-			? error.response.data.error
-			: error.message;
+	} catch (error) {
+		let errorMessage = 'An error occurred';
+		if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data?.error || errorMessage;
+    }
 		alert(errorMessage);
+		throw(error)
 	}
 };

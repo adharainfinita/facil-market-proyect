@@ -10,7 +10,7 @@ import postProduct from "../handlers/products/postProduct";
 //! Handlers GET
 import getAllProducts from "../handlers/products/getAllProducts";
 import getAllCategories from "../handlers/categories/getCategories";
-import getAllUsers from "../handlers/users/getUsers";
+import {getAllUsers, getUserById} from "../handlers/users/getUsers";
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
@@ -20,8 +20,11 @@ import categoryCreate from "../validators/categoryValidation";
 import { validateCreate } from "../validators/userValidation";
 import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
-import postOrder from "../handlers/payments/postOrder";
-import receivedWebhook from "../handlers/payments/webhook";
+
+//! PUTS
+import updateUser from "../handlers/users/updateUser";
+import { paymentRouter } from "./payments.routes";
+router.put("/user/:userId", updateUser)
 
 
 //* POST
@@ -30,14 +33,8 @@ router.post("/user", validateCreate, postUser);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
 
-//* POST - Compras
-router.post("/product/payment", postOrder)
-router.post("/product/payment/webhook", receivedWebhook);
-router.get("/product/payment/success", (req, res)=>res.send('success'));
-router.get("/product/payment/failure", (req, res)=>res.send('failure'));
-router.get("/product/payment/pending", (req, res)=>res.send('pending'));
-
-
+//* Rutas de Compras
+router.use("/product", paymentRouter);
 
 
 //* GET
@@ -47,5 +44,6 @@ router.get("/user", getAllUsers);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
+router.get("/user/:userId", getUserById)
 
 export default router;
