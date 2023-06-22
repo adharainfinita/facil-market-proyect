@@ -14,7 +14,7 @@ function ProductCard(props: productList) {
 					return (
 						<Link key={index} to={`/product/detail/${product.id}`}>
 							<div className="product-card">
-								<img src={product.image[0]} alt={product.name} />
+								<img src={product.images[0]} alt={product.name} />
 								<div className="text">
 									<p>{product.categoryName}</p>
 									<h3>{product.name}</h3>
