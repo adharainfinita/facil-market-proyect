@@ -1,4 +1,4 @@
-import { productProps } from "../utils/propsModel";
+import { productProps } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 dotenv.config();

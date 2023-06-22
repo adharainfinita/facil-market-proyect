@@ -8,7 +8,6 @@ import { NotificationType } from "../utils/interfaces";
 
 
 const DetailProduct = () => {
-<<<<<<< HEAD
 
 	const product = useProduct();
 	const [notificacion, setNotification] = useState<NotificationType>({
@@ -40,10 +39,6 @@ const DetailProduct = () => {
 
 	}, [])
 	
-=======
-  const product = useProduct();
-  // const { images } = useImageUploader("facilmarket");
->>>>>>> 576768ccdab47be20d213c2e819c53869460e4e5
 
   return (
     <div className="detail-product-container">
@@ -114,7 +109,6 @@ const DetailProduct = () => {
             <h3>{product.location}</h3>
           </section>
 
-<<<<<<< HEAD
 					<section className="detail-product-section">
 						<h2>Unidades:</h2>
 						<h3>{product.stock}</h3>
@@ -129,18 +123,6 @@ const DetailProduct = () => {
 			</div>
 		</div>
 	);
-=======
-          <section className="detail-product-section">
-            <h2>Unidades:</h2>
-            <h3>{product.stock}</h3>
-          </section>
-
-          <button className="detail-product-btn">Comprar ahora!</button>
-        </div>
-      </div>
-    </div>
-  );
->>>>>>> 576768ccdab47be20d213c2e819c53869460e4e5
 };
 
 export default DetailProduct;

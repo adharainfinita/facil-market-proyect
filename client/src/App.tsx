@@ -4,18 +4,15 @@ import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
-import Login from "./pages/Login";
+// import Login from "./pages/Login";
+import Login from "./pages/Login2";
 import Home from "./pages/Home";
-import Register from "./components/RegisterForm";
+import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
 import { getUsers } from "./redux/features/userSlice";
-<<<<<<< HEAD
-import { getAllUsers} from "./services/userServices";
-=======
-import { getAllUsers, postUser } from "./services/userServices";
+import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
->>>>>>> 576768ccdab47be20d213c2e819c53869460e4e5
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
@@ -90,8 +87,9 @@ function App() {
 				<Route path="/vender" element={<Form />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/profile" element={<UserProfile />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
+				{/* <Route path="/login" element={<Login />} /> */}
+				<Route path="/login" element={<Login/>} />
+				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 			</Routes>

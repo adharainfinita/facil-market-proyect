@@ -3,33 +3,33 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-
+import { postProduct } from "../services/productServices";
+import axios, {AxiosHeaderValue} from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
-import { postProduct } from "../services/productServices";
-import axios from "axios";
 
 const FormCreateProduct: React.FC = () => {
   const categories = useSelector((state: RootState) => state.category.value);
-  const idLogin = useSelector((state: RootState) => state.user.userLogin.id);
+  const userLogin = useSelector((state: RootState) => state.user.userLogin);
   const navigate = useNavigate();
 
+	//? Estado Local
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
   const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 
-  const [formData, setFormData] = useState<FormCreateProduct>({
-    userID: Number(idLogin),
-    categoryID: 1,
-    name: "",
-    location: "",
-    description: "",
-    stock: 1,
-    image: [],
-    price: 0,
-    rating: 0,
-  });
+	const [formData, setFormData] = useState<FormCreateProduct>({
+		userID: Number(userLogin.id),
+		categoryID: 0,
+		name: "",
+		location: "",
+		description: "",
+		stock: 0,
+		image: [],
+		price: 0,
+		rating: 0,
+	});
 
   const handleChange = (
     event: ChangeEvent<
@@ -100,47 +100,34 @@ const FormCreateProduct: React.FC = () => {
       );
     }
   };
-
+  
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-
-    if (!Object.keys(errors).length) {
-      try {
-        const product = {
-          userID: Number(idLogin),
-          categoryID: Number(formData.categoryID),
-          name: capitalizeFirstLetter(formData.name),
-          location: capitalizeFirstLetter(formData.location),
-          description: capitalizeFirstLetter(formData.description),
-          stock: Number(formData.stock),
-          image: images,
-          price: Number(formData.price),
-          rating: 0,
-        };
-
-        postProduct(product);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-
-      setFormData({
-        userID: Number(idLogin),
-        categoryID: 1,
-        name: "",
-        location: "",
-        description: "",
-        stock: 1,
-        image: [],
-        price: 1,
+    try{
+      const token = userLogin.token;
+      const Headers: Partial<AxiosHeaderValue> = {
+        Authorization: `Bearer ${token}`,
+      };
+      const product = {
+        userID: Number(userLogin.id),
+        categoryID: Number(formData.categoryID),
+        name: capitalizeFirstLetter(formData.name),
+        location: capitalizeFirstLetter(formData.location),
+        description: capitalizeFirstLetter(formData.description),
+        stock: Number(formData.stock),
+        image: images,
+        price: Number(formData.price),
         rating: 0,
-      });
+      };
+      postProduct(product, Headers);
       setErrors({});
       alert("Producto creado correctamente");
       navigate("/products");
-    } else {
+    }catch(error:any){
+      console.log(error.message);
       alert("Datos incompletos");
     }
-  };
+	};
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -195,7 +182,7 @@ const FormCreateProduct: React.FC = () => {
             </section>
           )}
         </Dropzone>
-        {errors.image && <p className="error">{errors.image}</p>}
+        {errors.images && <p className="error">{errors.images}</p>}
       </label>
       {imagePreview()}
 
@@ -232,7 +219,11 @@ const FormCreateProduct: React.FC = () => {
         onChange={handleChange}
       />
       {errors.description && <p className="error">{errors.description}</p>}
-      <button type="submit">Publicar</button>
+     {  Object.values(formData).every(value => Boolean(value) ===null || undefined ) ? 
+     <button disabled>Publicar</button> :
+  <button type="submit" 
+        >Publicar</button>
+     }
     </form>
   );
 };

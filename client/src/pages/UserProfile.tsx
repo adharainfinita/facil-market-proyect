@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateUser } from "../services/userServices";
 import { changeEmail, changePassword, changeName, changeImage } from "../redux/features/userSlice";
-import { UserData } from "../utils/interfaces";
+import { user } from "../utils/interfaces";
 import axios from "axios";
 
 const UserProfile: React.FC = () => {
@@ -14,13 +14,12 @@ const UserProfile: React.FC = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newImage, setNewImage] = useState("");
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
-  const userLogin = useSelector((state: RootState) => state.user.userLogin);
+  const userLogin = useSelector((state: RootState) => state.user.userLogin.user);
 
   const handleFieldChange = async (): Promise<void> => {
     try {
-      const updatedData: UserData = {
-        name: newName !== "" ? newName : userLogin.name,
-        lastName: userLogin.lastName,
+      const updatedData: user = {
+        fullName: newName !== "" ? newName : userLogin.fullName,
         email: newEmail !== "" ? newEmail : userLogin.email,
         id: userLogin.id,
         image: newImage !== "" ? newImage : userLogin.image,
@@ -83,8 +82,8 @@ const UserProfile: React.FC = () => {
     <div className="Profile__conteiner">
       <div className="Profile__data">
         <img src={userLogin.image} alt="user" className="nav__userLogo" />
-        <h2>Nombre: {userLogin.name}</h2>
-        <h2>Apellido: {userLogin.lastName}</h2>
+        <h2>Nombre: {userLogin.fullName}</h2>
+  
         <h2>Email: {userLogin.email}</h2>
         <h2>Contraseña: {showPassword ? userLogin.password : "********"}</h2>
         <button onClick={() => setShowPassword(!showPassword)}>

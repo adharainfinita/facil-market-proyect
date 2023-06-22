@@ -1,5 +1,6 @@
-import axios from "axios";
 import { FormCreateProduct, Product } from "../utils/interfaces";
+import axios, { AxiosHeaders } from "axios";
+//import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
 
@@ -37,18 +38,22 @@ export const getProductsById = async (id: number) => {
 };
 
 //? Create product
-export const postProduct = async (product: FormCreateProduct) => {
-  try {
-    const { data } = await axios.post(`${URL_HOST}/product`, product);
-    return data;
-  } catch (error) {
+export const postProduct = async (
+	data: FormCreateProduct,
+	headers: Partial<AxiosHeaders["headers"]>
+) => {
+	try {
+		const response = await axios.post(`${URL_HOST}/product`, data, { headers });
+		console.log(response.data);
+		return response.data;
+	}catch (error) {
     let errorMessage = "An error occurred";
     if (axios.isAxiosError(error)) {
       errorMessage = error.response?.data?.error || errorMessage;
     }
     alert(errorMessage);
     throw error;
-  }
+	}
 };
 
 //? Obtener todos los productos

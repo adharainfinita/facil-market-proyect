@@ -1,5 +1,5 @@
 //? Regex
-const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
+// const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
 
 import { ErrorsFormProduct, FormCreateProduct } from "./interfaces";
 

@@ -1,12 +1,3 @@
-export interface userProps {
-	id: number;
-	name: string;
-	lastName: string;
-	password: string;
-	email: string;
-	image: string;
-}
-
 export interface productProps {
 	id: number;
 	name: string;
