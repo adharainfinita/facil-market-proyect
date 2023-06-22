@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NewUser } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
-//const URL_API = import.meta.env.VITE_API;
+// const URL_HOST = import.meta.env.VITE_API;
 
 export const postUser = async (userData: NewUser) => {
 	try {

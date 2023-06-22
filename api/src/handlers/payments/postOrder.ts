@@ -10,7 +10,7 @@ const postOrder = async(req: Request, res: Response) =>{
   const response = await createOrder(product);
  console.log(response);
  
-    return res.status(200).send({url: response.body.init_point})
+    return res.status(200).send(response.body)
   
 }
 

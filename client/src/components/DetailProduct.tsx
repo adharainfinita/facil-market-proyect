@@ -1,5 +1,8 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
+import PaymentButton from "./PaymentButton";
+import {useEffect, useState} from 'react';
+import { NotificationType } from "../utils/interfaces";
 
 //? Imagenes de prueba
 const productImage = [
@@ -24,8 +27,40 @@ const productImage = [
 	},
 ];
 
+
+
 const DetailProduct = () => {
+
 	const product = useProduct();
+	const [notificacion, setNotification] = useState<NotificationType>({
+		isOpen: false,
+		type: null,
+		content: ""
+	})
+
+	useEffect(()=>{
+		const urlParams = new URLSearchParams(window.location.search);
+		const status = urlParams.get("status");
+
+		if(status === 'approved'){
+			setNotification({
+				content: "Pago aprobado😎",
+				isOpen: true,
+				type: 'approved'
+			})}
+
+		if(status === 'failure'){
+				setNotification({
+					content: "Pago rechazado😢",
+					isOpen: true,
+					type: 'failure'
+				})
+		}
+
+		;
+
+	}, [])
+	
 
 	return (
 		<div className="detail-product-container">
@@ -100,8 +135,12 @@ const DetailProduct = () => {
 						<h2>Unidades:</h2>
 						<h3>{product.stock}</h3>
 					</section>
-
-					<button className="detail-product-btn">Comprar ahora!</button>
+							<PaymentButton product={product} />
+						{notificacion.isOpen && (
+							<div>
+								{notificacion.content}
+							</div>
+						)}
 				</div>
 			</div>
 		</div>

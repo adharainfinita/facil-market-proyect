@@ -9,8 +9,8 @@ import Home from "./pages/Home";
 import Register from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-/* import { getUsers } from "./redux/features/userSlice";
-import { getAllUsers, postUser } from "./services/userServices"; */
+import { getUsers } from "./redux/features/userSlice";
+import { getAllUsers} from "./services/userServices";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
@@ -21,19 +21,19 @@ import { getProducts } from "./redux/features/productSlice"; */
 function App() {
 	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	const fetchUsers = async() =>{
-	// 		try {
-	// 			const response = await getAllUsers()
-	// 				if(response) {
-	// 					dispatch(getUsers(response));
-	// 				}
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	}
-	// 	fetchUsers();
-	// }, [dispatch]);
+	useEffect(() => {
+		const fetchUsers = async() =>{
+			try {
+				const response = await getAllUsers()
+					if(response) {
+						dispatch(getUsers(response));
+					}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchUsers();
+	}, [dispatch]);
 
 	useEffect(() => {
 		/* const fetchUsers = async() =>{

@@ -73,6 +73,12 @@ export interface UserData {
 
 //? Interfaces de componentes
 
+export interface NotificationType {
+  isOpen: boolean,
+  type: 'approved' | 'failure' | null,
+  content: string
+}
+
 export interface FormCreateProduct {
   userID: number;
   categoryID: number;

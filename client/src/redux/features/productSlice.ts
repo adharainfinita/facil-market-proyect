@@ -86,7 +86,7 @@ const productSlice = createSlice({
 						if(state.requireFilters.location){
 						productsFound=	productsFound.filter(match =>match.location === state.requireFilters.location)
 						}
-						console.log(productsFound);
+
 			
 			state.products = productsFound;
 		},
@@ -108,7 +108,7 @@ const productSlice = createSlice({
 						(match) => match.location === state.requireFilters.location
 					);
 				}
-				console.log(productsFound);
+		
 			
 			state.products = productsFound;
 		},
@@ -134,7 +134,7 @@ const productSlice = createSlice({
 						(match) => match.userName === state.requireFilters.userName
 					);
 				}
-				console.log(productsFound);
+			
 			
 			state.products = productsFound;
 		},

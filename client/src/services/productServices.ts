@@ -1,7 +1,7 @@
 import axios from "axios";
-import { FormCreateProduct } from "../utils/interfaces";
+import { FormCreateProduct, Product } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
-//const URL_API = import.meta.env.VITE_API;
+// const URL_HOST = import.meta.env.VITE_API;
 
 export const getProductsByName = async (name: string) => {
 	try {
@@ -55,3 +55,16 @@ export const getAllProducts = async () => {
 		alert(errorMessage);
 	}
 };
+
+
+export const buyProduct = async (product: Product) => {
+	try {
+		const {data} = await axios.post(`${URL_HOST}/product/payment`, product);
+		console.log( data);
+		
+		return data;
+	} catch (error: any) {
+		console.log(error.message);
+		
+	}
+}

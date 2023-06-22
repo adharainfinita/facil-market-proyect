@@ -2,12 +2,12 @@ import { productProps } from "../utils/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 dotenv.config()
-const {URL_HOST, PORT } = process.env
+const {URL_HOST, PORT_CLIENT, TOKEN } = process.env
 
 export const createOrder = async (product: productProps) => {
 	mercadopago.configure({
 		access_token:
-			"TEST-823447841070958-062104-d5ff3077b69593507bde79ad998aced7-1404496042",
+			TOKEN!,
 	});
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
@@ -24,13 +24,13 @@ export const createOrder = async (product: productProps) => {
 			},
 		],
     back_urls: {
-      success: `${URL_HOST}:${PORT}/product/payment/success`,
-      failure: `${URL_HOST}:${PORT}/product/payment/failure`,
-      pending: `${URL_HOST}:${PORT}/product/payment/pending`
+      success: `${URL_HOST}:${PORT_CLIENT}/product/detail/${product.id}`,
+      failure: `${URL_HOST}:${PORT_CLIENT}/product/payment/failure`,
+      pending: `${URL_HOST}:${PORT_CLIENT}/product/payment/pending`
     },
-    notification_url: `https://8ab3-200-115-26-133.sa.ngrok.io/product/payment/webhook`
+    notification_url: `https://72db-200-115-26-133.ngrok-free.app/product/payment/webhook`
 	});
-  console.log(result);
+
   return result;
 };
 
