@@ -115,7 +115,7 @@ const FormCreateProduct: React.FC = () => {
         location: capitalizeFirstLetter(formData.location),
         description: capitalizeFirstLetter(formData.description),
         stock: Number(formData.stock),
-        image: images,
+        images: images,
         price: Number(formData.price),
         rating: 0,
       };
@@ -123,6 +123,7 @@ const FormCreateProduct: React.FC = () => {
       setErrors({});
       alert("Producto creado correctamente");
       navigate("/products");
+      console.log(product)
     }catch(error:any){
       console.log(error.message);
       alert("Datos incompletos");

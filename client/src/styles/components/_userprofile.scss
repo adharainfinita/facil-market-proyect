@@ -67,5 +67,29 @@
 
       }
     }
+    .change_img_label {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .change_img_label span {
+      display: inline-block;
+      padding: 5px 10px;
+      border: 1px dashed #030303;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .change_img_label span:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .change_img_label input[type="file"] {
+      position: absolute;
+      left: -9999px;
+    }
+    
   }
   
