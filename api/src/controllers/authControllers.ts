@@ -1,32 +1,33 @@
-import { userProps, loginData } from "../utils/propsModel";
+import { userInterface, loginData } from "../interfaces/auth";
 import User from "../models/User";
 
-interface localProps {
-	param: number | string;
+
+export const createUser = async (authUser: userInterface) => {
+/* 	const userFound = await User.findOne()
+ */
 }
 
 
-export const createUser = async ({
+
+/* export const createUser = async ({
 	id,
-	name,
-	lastName,
+	fullName,
 	password,
 	email,
 	image,
-}: userProps) => {
+}: userInterface) => {
 	const userFound = await findUser({ param: email });
 	if (!userFound) {
 		return await User.create({
-			name,
-			lastName,
+			fullName,
 			password,
 			email,
 			image,
 		});
 	}
 };
-
-export const findUser = async ({ param }: localProps) => {
+ */
+/* export const findUser = async ({ param }: localProps) => {
 	if (typeof param === "number") {
 		return await User.findOne({
 			where: {
@@ -42,7 +43,7 @@ export const findUser = async ({ param }: localProps) => {
 	if (emailExist) {
 		throw new Error("This email already exists");
 	}
-};
+}; */
 
 export const userCredentials = async (body: loginData) => {
 	const userExist = await User.findOne({
@@ -53,7 +54,7 @@ export const userCredentials = async (body: loginData) => {
 
 	const userInfo = {
 		id: userExist?.id,
-		name: userExist?.name,
+		fullName: userExist?.fullName,
 		email: userExist?.email,
 		image: userExist?.image
 	}

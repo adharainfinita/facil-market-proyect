@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
-import { createUser } from "../../controllers/userControllers";
-import { userProps } from "../../utils/propsModel";
+import { createUser } from "../../controllers/authControllers";
+import { userInterface } from "../../interfaces/auth";
 
 const registerUser = async (req: Request, res: Response) => {
-	const { name, lastName, password, email, image } = req.body;
+	const { fullName, password, email, image } = req.body;
 
 	try {
-		const data: userProps = {
+		const data: userInterface = {
 			id: 0,
-			name,
-			lastName,
+			fullName,
 			password,
 			email,
 			image,
@@ -17,9 +16,9 @@ const registerUser = async (req: Request, res: Response) => {
 
 		const newUser = await createUser(data);
 
-		if (newUser) {
-			return res.status(201).json(newUser);
-		}
+		return res.status(201).json(newUser);
+		/* if (newUser) {
+		} */
 	} catch (error: any) {
 		res.status(400).json({ error: error.message });
 	}

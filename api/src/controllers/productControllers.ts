@@ -1,6 +1,6 @@
 import Product from "../models/Product";
 import { findCategoryByID } from "./categoryControllers";
-import { findUser } from "./userControllers";
+import { findUser } from "./authControllers";
 import { Op } from "sequelize";
 
 interface localProps {

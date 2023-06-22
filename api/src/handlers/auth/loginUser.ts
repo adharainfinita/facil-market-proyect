@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { userCredentials } from "../../controllers/userControllers";
-import { loginData } from "../../utils/propsModel";
+import { userCredentials } from "../../controllers/authControllers";
+import { loginData } from "../../interfaces/auth";
 
 const loginUser = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
