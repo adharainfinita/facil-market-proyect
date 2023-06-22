@@ -15,13 +15,13 @@ const RegisterForm = () => {
 	const [passwordRegister, setPasswordRegister] = useState<string>("");
 	const [name, setName] = useState<string>("");
 	const [image, setImage] = useState<string>("");
-	const [error, setError] = useState<string>("");
+	/* const [error, setError] = useState<string>(""); */
 
 	const handleSubmit = async (
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> => {
 		event.preventDefault();
-		setError("");
+		/* setError(""); */
 		try {
       await register(emailRegister, passwordRegister);
           if (user) {
@@ -30,7 +30,7 @@ const RegisterForm = () => {
             photoURL: image,
           });
         }
-      let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+      /* let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
       if(!name) {
         return setError("El campo nombre no puede estar vacio.")
       }else if (!regexName.test(name)) {
@@ -41,7 +41,7 @@ const RegisterForm = () => {
       }
       if (!passwordRegister) {
         return setError("El campo Password no puede estar vacio.")
-      }
+      } */
 
 			alert("Cuenta creada con exito!");
 		} catch (error: any) {
@@ -82,7 +82,7 @@ const RegisterForm = () => {
 					/>
 					<AiOutlineUser className="icon" />
 				</div>
-        {error && <p className="error">{error}</p>}
+        {/* {error && <p className="error">{error}</p>} */}
 				<div className="input-field">
 					<input
 						type="text"
@@ -96,7 +96,7 @@ const RegisterForm = () => {
 					/>
 					<BiEnvelope className="icon" />
 				</div>
-        {error && <p className="error">{error}</p>}
+       {/*  {error && <p className="error">{error}</p>} */}
 				<div className="input-field">
 					<input
 						type="text"
@@ -109,7 +109,7 @@ const RegisterForm = () => {
 					/>
 					<BiLockAlt className="icon" />
 				</div>
-        {error && <p className="error">{error}</p>}
+        {/* {error && <p className="error">{error}</p>} */}
 				<div className="input-field">
 					<input
 						type="text"
@@ -121,7 +121,7 @@ const RegisterForm = () => {
 					/>
 					<BiImage className="icon" />
 				</div>
-        {error && <p className="error">{error}</p>}
+        {/* {error && <p className="error">{error}</p>} */}
 				<div className="input-field button">
 					<input type="submit" value="Registrarte" />
 				</div>

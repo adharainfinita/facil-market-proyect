@@ -13,7 +13,7 @@ const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 /* 	const idLogin = useSelector((state: RootState) => state.user.userLogin.id); */
 	const auth = useAuth();
-	const {uid} = auth.user
+	const {uid} = auth.user;
 
 	//? hooks
 	const navigate = useNavigate();

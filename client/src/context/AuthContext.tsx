@@ -70,17 +70,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
   ) => {
     try {
-      const response = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         email,
         password,
       );
 
-      if (!response) {
+     /*  if (!response) {
         throw new Error("Ocurrio un error al registrarse");
       } else {
         return response;
-      }
+      } */
     } catch (error: any) {
       return error.message;
     }

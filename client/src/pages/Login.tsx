@@ -10,25 +10,25 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState<string>("");
+	/* const [error, setError] = useState<string>(""); */
 
 	const handleSubmit = async (
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> => {
 		event.preventDefault();
-		setError("");
+/* 		setError(""); */
 		try {
-      if (!email) {
+      /* if (!email) {
         return setError("El campo Email no puede estar vacio.")
       }
       if (!password) {
         return setError("El campo Password no puede estar vacio.")
-      }
+      } */
 
 			await login(email, password)
 			
 		} catch (error: any) {
-			return setError(error.message);
+			return error.message;
     }
 	};
 	
@@ -48,105 +48,19 @@ const Login = () => {
   };
 
 	const handleResetPassword = async () => {
-    if (email) return setError("Por favor introduzca su correo electrónico.")
+    /* if (email) return setError("Por favor introduzca su correo electrónico.") */
     
     try {
       await resetPassword(email)
-      setError("Le enviamos un correo electrónico con un enlace para restablecer su contraseña.")
-    } catch (error) {
-      console.error(error)
+      /* setError("Le enviamos un correo electrónico con un enlace para restablecer su contraseña.") */
+    } catch (error:any) {
+      return error.message
     }
   }
 
 	const handleShowPassword = () => {
 		setShowPassword(!showPassword);
 	};
-	/* const dispatch = useDispatch(); */
-	/* const { users, userValidation: access } = useSelector(
-		(state: RootState) => state.user
-	); */
-
-/* 	const [localController, setLocalController] = useState(false); */
-
-	/* useEffect(() => {
-		if (access) {
-			localController && navigate("/");
-		}
-	}, [dispatch, access, navigate, localController]);
-
-	const [formData, setFormData] = useState<UserData>({
-		name: "",
-		password: "",
-		email: "",
-		id: "",
-		image: "",
-	}); */
-
-	/* useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const response = await getAllUsers();
-				if (response) {
-					dispatch(getUsers(response));
-				}
-			} catch (error: any) {
-				console.log(error);
-			}
-		};
-		fetchUsers();
-	}, [dispatch, getAllUsers]); */
-
-	/* const [_message, setMessage] = useState("No has escrito nada"); */
-
-/* 	const handleChange = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) => {
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
-	}; */
-
-	/* 	console.log('local', localController);
-console.log('global' ,access);
-	 */
-
-	/* const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();
-		//dispatch(addUser(formData));
-		if (formData.email) {
-			const response = await handleAccess(); 
-
-			if (!response[0]) {
-				setMessage("Usuario no encontrado");
-				setLocalController(false);
-			} else {
-				setMessage("Usuario encontrado");
-
-				dispatch(addUser(response[0]));
-				dispatch(setUserValidator(true));
-			}
-		}
-	}; */
-	/* const handleAccess = async () => {
-		const userFound = users.filter(
-			(match: any) => match.email === formData.email
-		);
-		setLocalController(true);
-
-		if (userFound.length > 0) {
-			const { id, image } = userFound[0];
-			setFormData({
-				...formData,
-				id: id,
-				image: image,
-			});
-			return Promise.resolve(userFound);
-		}else{
-			return Promise.resolve([]);
-		}
-	}; */
 
 	return (
 		<div className="container-form">
@@ -168,7 +82,7 @@ console.log('global' ,access);
 							/>
 							<BiEnvelope className="icon" />
 						</div>
-						{error && <p className="error">{error}</p>}
+						{/* {error && <p className="error">{error}</p>} */}
 
 						<div className="input-field">
 							<input
@@ -195,7 +109,7 @@ console.log('global' ,access);
 								/>
 							)}
 						</div>
-						{error && <p className="error">{error}</p>}
+						{/* {error && <p className="error">{error}</p>} */}
 
 						<div className="checkbox-text">
 							<div className="checkbox-content">
