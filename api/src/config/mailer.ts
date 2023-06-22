@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const {CREDENTIAL_MAIL} = process.env;
+const {CREDENTIAL_MAIL, MAIL} = process.env;
 
 const nodemailer = require("nodemailer");
-const ownerEmail = 'adharanosalevich@gmail.com'// ingresas mail 
+const ownerEmail = MAIL// ingresas mail 
 const appPasword = `${CREDENTIAL_MAIL}`//ingresar clave de aplicacion de gmail
 console.log(CREDENTIAL_MAIL);
 
