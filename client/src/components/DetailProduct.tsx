@@ -2,8 +2,6 @@ import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
 
 
-//? Imagenes de prueba
-
 const DetailProduct = () => {
   const product = useProduct();
   // const { images } = useImageUploader("facilmarket");

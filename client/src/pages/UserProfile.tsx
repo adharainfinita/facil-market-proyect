@@ -4,6 +4,7 @@ import { RootState } from "../redux/store";
 import { updateUser } from "../services/userServices";
 import { changeEmail, changePassword, changeName, changeImage } from "../redux/features/userSlice";
 import { UserData } from "../utils/interfaces";
+import axios from "axios";
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,17 +45,37 @@ const UserProfile: React.FC = () => {
       if (newImage !== "") {
         dispatch(changeImage(newImage));
       }
-
-      // Realiza las acciones necesarias después de actualizar los campos
     } catch (error) {
       console.log("Error al actualizar los campos:", error);
+    }
+  };
+
+  const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = event.target.files;
+      if (file && file.length > 0) {
+        const data = new FormData();
+        data.append("file", file[0]);
+        data.append("upload_preset", "user_images");
+        try {
+          const res = await axios.post(
+            "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+            data
+          );
+          const uploadedFile = res.data;
+          setNewImage(uploadedFile.secure_url);
+        } catch (error) {
+          console.error("Error al subir la imagen", error);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     if (isPasswordChanged) {
       console.log("Contraseña actualizada exitosamente");
-      // Realiza las acciones necesarias después de actualizar la contraseña
     }
   }, [isPasswordChanged]);
 
@@ -104,9 +125,9 @@ const UserProfile: React.FC = () => {
       <div>
         <h2>Cambiar imagen</h2>
         <input
-          type="text"
-          value={newImage}
-          onChange={(e) => setNewImage(e.target.value)}
+          type="file"
+          accept="image/*"
+          onChange={uploadImage}
         />
         <button onClick={handleFieldChange}>Guardar imagen</button>
       </div>
