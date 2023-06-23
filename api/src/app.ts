@@ -16,8 +16,6 @@ server.use(cors());
 // Este lo creo adha
 server.use(log);
 
-
-
 server.use("/", router);
 
 export default server;

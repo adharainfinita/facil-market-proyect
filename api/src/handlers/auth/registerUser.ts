@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { createUser, sendEmailToUser } from "../../controllers/authControllers";
 import { userInterface } from "../../interfaces/auth";
 
-
 const registerUser = async (req: Request, res: Response) => {
 	const { fullName, password, email, image } = req.body;
 

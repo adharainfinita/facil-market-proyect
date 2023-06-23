@@ -1,9 +1,9 @@
 import Category from "../models/Category";
 
 interface localPropsCreate {
-	name: string,
-	image: string,
-	highlight : false,
+	name: string;
+	image: string;
+	highlight: false;
 }
 interface localPropsFinder {
 	id: number;
@@ -11,16 +11,20 @@ interface localPropsFinder {
 
 //-----------------------
 
-export const createCategory = async ({ name, image, highlight = false }: localPropsCreate) => {
-  // Verificar si la categoría ya existe
-  const existingCategory = await Category.findOne({
-    where: { name },
-  });
-  if (existingCategory) {
-    throw Error("The category already exists");
-  }
+export const createCategory = async ({
+	name,
+	image,
+	highlight = false,
+}: localPropsCreate) => {
+	// Verificar si la categoría ya existe
+	const existingCategory = await Category.findOne({
+		where: { name },
+	});
+	if (existingCategory) {
+		throw Error("The category already exists");
+	}
 
-  return await Category.create({ name, image, highlight });
+	return await Category.create({ name, image, highlight });
 };
 //-----------------------
 
