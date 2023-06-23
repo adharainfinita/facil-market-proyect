@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { updateUser } from "../services/userServices";
 import { changeEmail, changePassword, changeName, changeImage } from "../redux/features/userSlice";
-import { user  } from "../utils/interfaces";
+import { user } from "../utils/interfaces";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,9 +17,13 @@ const UserProfile: React.FC = () => {
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
+  const products = useSelector((state: RootState) => state.product.products);
+
+  const userProducts = products.filter((product: Product) => product.userID === userLogin.user.id);
+
   const handleFieldChange = async (): Promise<void> => {
     try {
-      const updatedData: user  = {
+      const updatedData: user = {
         fullName: newName !== "" ? newName : userLogin.user.fullName,
         email: newEmail !== "" ? newEmail : userLogin.user.email,
         id: userLogin.user.id,
@@ -78,21 +83,17 @@ const UserProfile: React.FC = () => {
     }
   }, [isPasswordChanged]);
 
-    return (
-      <div className="Profile__conteiner">
-        <div className="Profile__data">
-          <img src={userLogin.user.image} alt="user" className="nav__userLogo" />
-          <h2>Nombre: {userLogin.user.fullName}</h2>
-          <h2>Email: {userLogin.user.email}</h2>
-          <h2>Contraseña: {showPassword ? userLogin.user.password : "********"}</h2>
-          <button onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-          </button>
-          <p>Deseas cambiar tu contraseña?</p>
-        </div>
-        <div className="Profile__buys">
-          <h2>Mis Productos</h2>
-        </div>
+  return (
+    <div className="Profile__conteiner">
+      <div className="Profile__data">
+        <img src={userLogin.user.image} alt="user" className="nav__userLogo" />
+        <h2>Nombre: {userLogin.user.fullName}</h2>
+        <h2>Email: {userLogin.user.email}</h2>
+        <h2>Contraseña: {showPassword ? userLogin.user.password : "********"}</h2>
+        <button onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+        </button>
+        <p>Deseas cambiar tu contraseña?</p>
         <div className="Profile__fields">
           <div>
             <h2>Cambiar contraseña</h2>
@@ -139,8 +140,25 @@ const UserProfile: React.FC = () => {
           </div>
         </div>
       </div>
-    );
-    
+      <div className="Profile__buys">
+        <h2>Mis Productos</h2>
+        <div className="cards-cont">
+          {userProducts.map((product, index) => {
+            return (
+              <Link key={index} to={`/product/detail/${product.id}`}>
+                <div className="product-card">
+                  <img src={product.images[0]} alt={product.name} />
+                  <div className="text">
+                    <h3>{product.name}</h3>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default UserProfile;
