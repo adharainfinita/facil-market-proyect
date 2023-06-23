@@ -11,6 +11,7 @@ export interface productProps {
 	categoryName: string;
 	userID: number;
 	userName: string;
+	status: boolean;
 }
 
 export interface reviewProps {

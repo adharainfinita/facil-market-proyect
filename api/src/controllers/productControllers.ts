@@ -7,7 +7,9 @@ interface localProps {
 	name: string;
 	description: string;
 	location: string;
-	stock: number;
+	stock: string;
+	unities: number;
+	status: string;
 	rating: number;
 	images: string[];
 	price: number;
@@ -20,6 +22,8 @@ export const createProduct = async ({
 	description,
 	location,
 	stock,
+	status,
+	unities,
 	rating,
 	images,
 	price,
@@ -50,6 +54,8 @@ export const createProduct = async ({
 		rating,
 		images,
 		location,
+		status,
+		unities,
 		price,
 		userID: userFound.id,
 		userName: userFound?.fullName,

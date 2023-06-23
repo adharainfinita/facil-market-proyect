@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-
+const URL_HOST = import.meta.env.VITE_HOST;
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./components/FormCreateProduct";
@@ -10,30 +10,66 @@ import Home from "./pages/Home";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-import { getUsers } from "./redux/features/userSlice";
+import {
+	getUsers,
+	setUserValidator,
+	userLogin,
+} from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import axios from "axios";
+
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
 
 function App() {
 	const dispatch = useDispatch();
 
+	const isLogin = window.localStorage.getItem("isLogin");
+	const token = window.localStorage.getItem("token");
+
+	const headers = {
+		Authorization: `Bearer ${token}`,
+	};
+
 	useEffect(() => {
-		const fetchUsers = async() =>{
+		if (token && isLogin === "true") {
+			axios
+				.get(`${URL_HOST}/token`, { headers })
+				.then((response) => {
+					const data = {
+						id: response.data.user.id,
+						fullName: response.data.user.fullName,
+						email: response.data.user.email,
+						image: response.data.user.image,
+					};
+
+					dispatch(userLogin(data));
+					dispatch(setUserValidator(true));
+				})
+				.catch((error) => {
+					//? mejorar este error
+					dispatch(setUserValidator(false));
+					console.log(error);
+				});
+		}
+	}, []);
+
+	useEffect(() => {
+		const fetchUsers = async () => {
 			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
+				const response = await getAllUsers();
+				if (response) {
+					dispatch(getUsers(response));
+				}
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 		fetchUsers();
 	}, [dispatch]);
 
@@ -88,7 +124,7 @@ function App() {
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/profile" element={<UserProfile />} />
 				<Route path="/verification" element={<VerificationPage />} />
-				<Route path="/login" element={<Login/>} />
+				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
