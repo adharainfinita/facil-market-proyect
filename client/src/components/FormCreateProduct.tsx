@@ -123,7 +123,7 @@ const FormCreateProduct: React.FC = () => {
       setErrors({});
       alert("Producto creado correctamente");
       navigate("/products");
-      console.log(product)
+
     }catch(error:any){
       console.log(error.message);
       alert("Datos incompletos");

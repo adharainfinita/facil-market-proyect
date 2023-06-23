@@ -18,7 +18,6 @@ const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const defaultImage = useSelector((state: RootState) => state.user.userLogin.user.image)
-	console.log(defaultImage);
 	
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
