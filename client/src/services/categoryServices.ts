@@ -3,7 +3,6 @@ const URL_HOST = import.meta.env.VITE_HOST;
 // import { URL_API } from "../utils/URLS";
 // const URL_HOST = import.meta.env.VITE_API;
 
-
 export interface Category {
 	name: string;
 }
@@ -27,11 +26,11 @@ export const getCategory = async () => {
 		const response = await axios(`${URL_HOST}/category`);
 		return response.data;
 	} catch (error) {
-		let errorMessage = 'An error occurred';
+		let errorMessage = "An error occurred";
 		if (axios.isAxiosError(error)) {
-      errorMessage = error.response?.data?.error || errorMessage;
-    }
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
 		alert(errorMessage);
-		throw(error)
+		throw error;
 	}
 };

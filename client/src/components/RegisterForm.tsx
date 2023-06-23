@@ -17,8 +17,10 @@ import { RootState } from "../redux/store";
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const defaultImage = useSelector((state: RootState) => state.user.userLogin.user.image)
-	
+	const defaultImage = useSelector(
+		(state: RootState) => state.user.userLogin.user.image
+	);
+
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
 		password: "",
@@ -48,7 +50,7 @@ const RegisterForm = () => {
 					);
 					const uploadedFile = res.data;
 					// setImage(uploadedFile.secure_url);
-					setInputs({...inputs, image: uploadedFile.secure_url})
+					setInputs({ ...inputs, image: uploadedFile.secure_url });
 				} catch (error) {
 					console.error("Error al subir la imagen", error);
 				}
@@ -81,8 +83,8 @@ const RegisterForm = () => {
 			const user = {
 				fullName: inputs.fullName,
 				password: inputs.password,
-				email:  inputs.email,
-				image: inputs.image ? inputs.image : defaultImage ,
+				email: inputs.email,
+				image: inputs.image ? inputs.image : defaultImage,
 			};
 
 			const response = await postUser(user);
