@@ -41,9 +41,6 @@ function App() {
 			axios
 				.get("http://localhost:3001/token", { headers })
 				.then((response) => {
-					// Manejar la respuesta exitosa aquí
-					console.log(response.data.user);
-
 					const data = {
 						id: response.data.user.id,
 						fullName: response.data.user.fullName,
@@ -55,7 +52,7 @@ function App() {
 					dispatch(setUserValidator(true));
 				})
 				.catch((error) => {
-					// Manejar el error aquí
+					//? mejorar este error
 					dispatch(setUserValidator(false));
 					console.log(error);
 				});

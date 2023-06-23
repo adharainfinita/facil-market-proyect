@@ -13,7 +13,6 @@ export const postCategory = async (data: string) => {
 			name: data,
 		});
 		console.log(`Post successful for category: ${data}`);
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error(`Error posting category: ${data}`);

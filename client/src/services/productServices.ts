@@ -44,7 +44,6 @@ export const postProduct = async (
 ) => {
 	try {
 		const response = await axios.post(`${URL_HOST}/product`, data, { headers });
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
@@ -74,7 +73,6 @@ export const getAllProducts = async () => {
 export const buyProduct = async (product: Product) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/product/payment`, product);
-		console.log(data);
 
 		return data;
 	} catch (error: any) {
