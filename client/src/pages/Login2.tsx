@@ -42,10 +42,10 @@ const Login: React.FC = () => {
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
 		event.preventDefault();
 		try {
-
 			const response = await logUser(formData);
 			const token = response.token;
 			window.localStorage.setItem("token", token);
+			window.localStorage.setItem("isLogin", "true");
 
 			if (response) {
 				dispatch(loggedUser(response));
