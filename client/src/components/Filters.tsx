@@ -21,9 +21,9 @@ const Filters = () => {
 		if (name === "forCategory") {
 			dispatch(filterProductsByCategory(value));
 		}
-		if (name === "forUser") {
-			dispatch(filterProductsByUser(value));
-		}
+		// if (name === "forUser") {
+		// 	dispatch(filterProductsByUser(value));
+		// }
 		if (name === "forLocation") {
 			dispatch(filterProductsByLocation(value));
 		}
@@ -71,7 +71,7 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
-				<label htmlFor="forUser">Por usuario:</label>
+				{/* <label htmlFor="forUser">Por usuario:</label>
 				<select
 					name="forUser"
 					className="filter-select"
@@ -84,7 +84,7 @@ const Filters = () => {
 							{user.name}
 						</option>
 					))}
-				</select>
+				</select> */}
 				<label htmlFor="forLocation">Por locación:</label>
 				<select
 					name="forLocation"

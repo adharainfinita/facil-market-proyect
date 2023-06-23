@@ -13,6 +13,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Product } from "../utils/interfaces";
 
+
 const UserProfile: React.FC = () => {
 	const dispatch = useDispatch();
 	const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +22,8 @@ const UserProfile: React.FC = () => {
 	const [newEmail, setNewEmail] = useState("");
 	const [newImage, setNewImage] = useState("");
 	const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
+	
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
 	const products = useSelector((state: RootState) => state.product.products);
@@ -28,6 +31,11 @@ const UserProfile: React.FC = () => {
 	const userProducts = products.filter(
 		(product: Product) => product.userID === userLogin.user.id
 	);
+
+
+
+
+
 
 	const handleFieldChange = async (): Promise<void> => {
 		try {

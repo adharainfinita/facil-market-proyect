@@ -59,3 +59,14 @@ export const logUser = async (logData: LoginData) => {
 		alert(errorMessage);
 	}
 };
+
+
+export const getUserById = async (userId: string): Promise<user | null> => {
+	try {
+	  const response = await axios.get(`http://localhost:3001/user/${userId}`);
+	  return response.data;
+	} catch (error) {
+	  console.log("Error al obtener los datos del usuario:", error);
+	  return null;
+	}
+  };
