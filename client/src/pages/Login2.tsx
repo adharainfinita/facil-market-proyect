@@ -41,19 +41,14 @@ const Login: React.FC = () => {
 
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
 		event.preventDefault();
-
 		try {
+
 			const response = await logUser(formData);
+			const token = response.token;
+			window.localStorage.setItem("token", token);
+
 
 			if (response) {
-				
-				const info = {
-					token: response.token,
-					email: formData.email,
-					password: formData.password,
-				};
-				window.localStorage.setItem("token", JSON.stringify(info));
-
 				dispatch(loggedUser(response));
 				dispatch(setUserValidator(true));
 				navigate("/");

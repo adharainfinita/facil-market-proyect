@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import axios, { AxiosHeaderValue } from "axios";
 
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
@@ -30,21 +31,27 @@ function App() {
 		password: string;
 	}
 
-	useEffect(() => {
-		return () => {
-			// Obtiene el valor del token almacenado en el local storage
-			const response = localStorage.getItem("token");
+	const token = window.localStorage.getItem("token");
 
-			// Parsea el valor del token en un objeto JavaScript
-			if (response) {
-				const info: Token = JSON.parse(response);
-				
-				if(info.token && info.email && info.password){
-					
-				}
-			}
-		};
+	const headers = {
+		Authorization: `Bearer ${token}`,
+	};
+
+	useEffect(() => {
+		if (token) {
+			axios
+				.get("http://localhost:3001/token", { headers })
+				.then((response) => {
+					// Manejar la respuesta exitosa aquí
+					console.log(response.data);
+				})
+				.catch((error) => {
+					// Manejar el error aquí
+					console.error(error);
+				});
+		}
 	}, []);
+	
 
 	useEffect(() => {
 		const fetchUsers = async () => {
