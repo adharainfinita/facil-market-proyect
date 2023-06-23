@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Product } from "../utils/interfaces";
 type productList = {
-  products: Array<Product>;
+	products: Array<Product>;
 };
 
 function ProductCard(props: productList) {
@@ -10,7 +10,6 @@ function ProductCard(props: productList) {
 		<>
 			<div className="cards-container">
 				{products.map((product, index) => {
-		
 					return (
 						<Link key={index} to={`/product/detail/${product.id}`}>
 							<div className="product-card">

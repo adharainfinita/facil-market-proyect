@@ -5,43 +5,43 @@ import { RootState } from "../store";
 //import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
-  products: Product[];
-  originalCopy: Product[];
-  detail: Product;
-  requireFilters: FiltersCaché;
+	products: Product[];
+	originalCopy: Product[];
+	detail: Product;
+	requireFilters: FiltersCaché;
 }
 
 const initialState: ProductState = {
-  products: [],
-  originalCopy: [],
-  detail: {
-    id: 0,
-    name: "",
-    description: "",
-    stock: 0,
-    rating: 0.0,
-    images: [""],
-    location: "",
-    price: 0.0,
-    categoryID: 0,
-    categoryName: "",
-    userID: 0,
-    userName: "",
-  },
-  requireFilters: {
-    userName: "",
-    categoryName: "",
-    location: "",
-  },
+	products: [],
+	originalCopy: [],
+	detail: {
+		id: 0,
+		name: "",
+		description: "",
+		stock: 0,
+		rating: 0.0,
+		images: [""],
+		location: "",
+		price: 0.0,
+		categoryID: 0,
+		categoryName: "",
+		userID: "",
+		userName: "",
+	},
+	requireFilters: {
+		userName: "",
+		categoryName: "",
+		location: "",
+	},
 };
 ///
 export const getAllProducts = async () => {
-  try {
-    const { data } = await axios(`http://localhost:3001/product`);
-    return data;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+	try {
+		const { data } = await axios(`http://localhost:3001/product`);
+		return data;
+	} catch (error: any) {
+		throw new Error(error.message);
+	}
 };
 
 const productSlice = createSlice({
@@ -55,25 +55,28 @@ const productSlice = createSlice({
 			state.products = action.payload;
 			state.originalCopy = action.payload;
 		},
-	
+
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.categoryName = action.payload;
-			
+
 			if (action.payload === "All") state.requireFilters.categoryName = "";
 			else {
 				productsFound = state.originalCopy.filter(
-						(match) => 
-						match.categoryName === action.payload)
-						}
-						if(state.requireFilters.userName){
-					productsFound= productsFound.filter(match => match.userName === state.requireFilters.userName)	
-						}
-						if(state.requireFilters.location){
-						productsFound=	productsFound.filter(match =>match.location === state.requireFilters.location)
-						}
+					(match) => match.categoryName === action.payload
+				);
+			}
+			if (state.requireFilters.userName) {
+				productsFound = productsFound.filter(
+					(match) => match.userName === state.requireFilters.userName
+				);
+			}
+			if (state.requireFilters.location) {
+				productsFound = productsFound.filter(
+					(match) => match.location === state.requireFilters.location
+				);
+			}
 
-			
 			state.products = productsFound;
 		},
 		filterProductsByUser: (state, action: PayloadAction<string>) => {
@@ -83,19 +86,19 @@ const productSlice = createSlice({
 			else {
 				productsFound = state.originalCopy.filter(
 					(match) => match.userName === action.payload
-				);}
-				if (state.requireFilters.categoryName) {
-					productsFound = productsFound.filter(
-						(match) => match.categoryName === state.requireFilters.categoryName
-					);
-				}
-				if (state.requireFilters.location) {
-					productsFound = productsFound.filter(
-						(match) => match.location === state.requireFilters.location
-					);
-				}
-		
-			
+				);
+			}
+			if (state.requireFilters.categoryName) {
+				productsFound = productsFound.filter(
+					(match) => match.categoryName === state.requireFilters.categoryName
+				);
+			}
+			if (state.requireFilters.location) {
+				productsFound = productsFound.filter(
+					(match) => match.location === state.requireFilters.location
+				);
+			}
+
 			state.products = productsFound;
 		},
 
@@ -104,24 +107,22 @@ const productSlice = createSlice({
 			state.requireFilters.location = action.payload;
 			if (action.payload === "All") {
 				state.requireFilters.location = "";
-				
-			}
-			else {
+			} else {
 				productsFound = state.originalCopy.filter(
 					(match) => match.location === action.payload
-				);}
-				if (state.requireFilters.categoryName) {
-					productsFound = productsFound.filter(
-						(match) => match.categoryName === state.requireFilters.categoryName
-					);
-				}
-				if (state.requireFilters.userName) {
-					productsFound = productsFound.filter(
-						(match) => match.userName === state.requireFilters.userName
-					);
-				}
-			
-			
+				);
+			}
+			if (state.requireFilters.categoryName) {
+				productsFound = productsFound.filter(
+					(match) => match.categoryName === state.requireFilters.categoryName
+				);
+			}
+			if (state.requireFilters.userName) {
+				productsFound = productsFound.filter(
+					(match) => match.userName === state.requireFilters.userName
+				);
+			}
+
 			state.products = productsFound;
 		},
 		resetFilters: (state, _action: PayloadAction<void>) => {
@@ -171,16 +172,16 @@ const productSlice = createSlice({
 });
 
 export const {
-  getProducts,
-  getDetail,
-  filterProductsByCategory,
-  filterProductsByUser,
-  filterProductsByLocation,
-  orderProducts,
-  cleanDetail,
-  getSearchedProducts,
-  resetFilters,
+	getProducts,
+	getDetail,
+	filterProductsByCategory,
+	filterProductsByUser,
+	filterProductsByLocation,
+	orderProducts,
+	cleanDetail,
+	getSearchedProducts,
+	resetFilters,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) =>
-  state.product.products;
+	state.product.products;

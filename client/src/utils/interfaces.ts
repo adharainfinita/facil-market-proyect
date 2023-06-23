@@ -21,18 +21,18 @@ export interface FiltersCaché {
 }
 
 export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating: number;
-  images: string[];
-  location: string;
-  price: number;
-  categoryID: number;
-  categoryName: string;
-  userID: number;
-  userName: string;
+	id: number;
+	name: string;
+	description: string;
+	stock: number;
+	rating: number;
+	images: string[];
+	location: string;
+	price: number;
+	categoryID: number;
+	categoryName: string;
+	userID: string;
+	userName: string;
 }
 
 export interface Category {
@@ -83,21 +83,21 @@ export interface LoginData {
 //? Interfaces de componentes
 
 export interface NotificationType {
-  isOpen: boolean,
-  type: 'approved' | 'failure' | null,
-  content: string
+	isOpen: boolean;
+	type: "approved" | "failure" | null;
+	content: string;
 }
 
 export interface FormCreateProduct {
-  userID: number;
-  categoryID: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating?: number;
-  image?: string[];
-  location: string;
-  price: number;
+	userID: number;
+	categoryID: number;
+	name: string;
+	description: string;
+	stock: number;
+	rating?: number;
+	image?: string[];
+	location: string;
+	price: number;
 }
 
 export interface ErrorsFormProduct {
@@ -110,4 +110,11 @@ export interface ErrorsFormProduct {
 	images?: string[];
 	location: string;
 	price: string;
+}
+
+export interface isLogin {
+	fullName: string;
+	id: string;
+	email: string;
+	image: string;
 }

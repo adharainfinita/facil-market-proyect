@@ -1,95 +1,123 @@
-.Profile__conteiner {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: 20px;
-  
-    .Profile__data {
-      display: flex;
-      flex-direction: column;
-      padding: 50px;
-      border: 1px black solid;
-      height: 700px;
-      width: 450px;
-      border-radius: 5px;
-      margin: 10px;
-  
-      .nav__userLogo {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin-bottom: 20px;
-        object-fit: cover;
-        border: 4px solid #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-  
-      h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        color: #333333;
-        font-weight: bold;
-      }
-  
-      p {
-        font-size: 16px;
-        color: #666666;
-        margin-top: 20px;
-      }
-  
-      button {
-        margin-top: 10px;
-        background-color: #ffffff;
-        border: none;
-        padding: 5px 10px;
-        color: #333333;
-        font-size: 14px;
-        cursor: pointer;
-      }
-    }
-  
-    .Profile__buys {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px black solid;
-      border-radius: 5px;
-      height: 700px;
-      margin: 10px;
-      
-  
-      h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        color: #333333;
-        font-weight: bold;
+$main-font: Arial, sans-serif;
+$gray-color: #808080;
 
-      }
-    }
-    .change_img_label {
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    
-    .change_img_label span {
-      display: inline-block;
-      padding: 5px 10px;
-      border: 1px dashed #030303;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .change_img_label span:hover {
-      background-color: #e0e0e0;
-    }
-    
-    .change_img_label input[type="file"] {
-      position: absolute;
-      left: -9999px;
-    }
-    
-  }
-  
+.Profile__conteiner {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	margin: 20px;
+	font-family: $main-font;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+	.Profile__data {
+		display: flex;
+		flex-direction: column;
+		justify-content: center; /* Centra verticalmente */
+		align-items: center; /* Centra horizontalmente */
+		padding: 50px;
+		border: 4px solid #ffffff;
+		height: 700px;
+		width: 450px;
+		border-radius: 5px;
+		margin: 10px;
+
+		.nav__userLogo {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			margin-bottom: 20px;
+			object-fit: cover;
+			border: 4px solid #ffffff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		h2 {
+			font-size: 24px;
+			margin-bottom: 10px;
+			color: #333333;
+			font-weight: bold;
+			text-align: center; /* Centra el texto horizontalmente */
+		}
+
+		p {
+			font-size: 16px;
+			color: #666666;
+			margin-top: 20px;
+			text-align: center; /* Centra el texto horizontalmente */
+		}
+
+		button {
+			background-color: #1d428a;
+			color: #ffffff;
+			padding: 5px 5px;
+			border: none;
+			border-radius: 4px;
+			text-decoration: none;
+			transition: background-color 0.3s; /* Transición suave */
+
+			&:hover {
+				background-color: #0c2c5a; /* Color al pasar el cursor */
+			}
+
+			&:active {
+				background-color: #08203f; /* Color al pulsar el botón */
+			}
+		}
+	}
+
+	.Profile__buys {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		border: 1px solid #94949466;
+		border-radius: 5px;
+		height: 700px;
+		margin: 10px;
+		overflow: auto; /* Agrega esta línea para crear una barra de desplazamiento si es necesario */
+
+		h2 {
+			font-size: 24px;
+			margin-bottom: 10px;
+			color: #333333;
+			font-weight: bold;
+		}
+	}
+
+	.cards-cont {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: flex-start;
+		max-height: 100%; /* Asegura que el contenido no exceda la altura del contenedor */
+		overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+	}
+	.change_img_label {
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		cursor: pointer;
+	}
+
+	.change_img_label span {
+		display: inline-block;
+		padding: 20px 200px;
+		border: 1px dashed #030303;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.change_img_label span:hover {
+		background-color: #e0e0e0;
+	}
+
+	.change_img_label input[type="file"] {
+		position: absolute;
+		left: -9999px;
+	}
+
+	/* Estilo adicional para los textos más pequeños */
+	.Profile__fields h2 {
+		font-size: 18px;
+	}
+}

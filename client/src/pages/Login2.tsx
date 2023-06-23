@@ -20,8 +20,8 @@ const Login: React.FC = () => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
 	const [formData, setFormData] = useState<LoginData>({
-		email: '',
-		password: ''
+		email: "",
+		password: "",
 	});
 
 	const [_message, setMessage] = useState("");
@@ -41,18 +41,21 @@ const Login: React.FC = () => {
 	};
 
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();		
+		event.preventDefault();
 		try {
 			const response = await logUser(formData);
-			if(response){
-				dispatch(loggedUser(response))
-				dispatch(setUserValidator(true))
+			const token = response.token;
+			window.localStorage.setItem("token", token);
+			window.localStorage.setItem("isLogin", "true");
+
+			if (response) {
+				dispatch(loggedUser(response));
+				dispatch(setUserValidator(true));
 				navigate("/");
 			}
-		  } catch (error) {
-			setMessage(`${error}`)
-		  }
-		
+		} catch (error) {
+			setMessage(`${error}`);
+		}
 	};
 
 	return (
