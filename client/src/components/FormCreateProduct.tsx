@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
@@ -8,16 +8,19 @@ import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
+	const logged = useSelector((state: RootState) => state.user.userValidation);
 	const navigate = useNavigate();
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const isLogin = window.localStorage.getItem("isLogin");
 
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
@@ -31,6 +34,13 @@ const FormCreateProduct: React.FC = () => {
 		rating: 0,
 	});
 
+	//?probando
+	const [storage, setStorage] = useLocalStorage("items", formData);
+
+	useEffect(() => {
+		isLogin === "false" ? setStorage({}) : null;
+	}, [logged]);
+
 	const handleChange = (
 		event: ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -42,6 +52,10 @@ const FormCreateProduct: React.FC = () => {
 			...prevFormData,
 			[name]: value,
 		}));
+
+		isLogin === "true"
+			? setStorage({ ...storage, [name]: value })
+			: setStorage({});
 
 		setErrors(
 			validate({
@@ -127,6 +141,7 @@ const FormCreateProduct: React.FC = () => {
 			};
 			postProduct(product, Headers);
 			setErrors({});
+			setStorage({});
 			alert("Producto creado correctamente");
 			navigate("/products");
 		} catch (error: any) {
@@ -145,7 +160,7 @@ const FormCreateProduct: React.FC = () => {
 					type="text"
 					name="name"
 					placeholder="Ingresar un nombre"
-					value={formData.name}
+					value={storage.name ? storage.name : formData.name}
 					onChange={handleChange}
 				/>
 				{errors.name && <p className="error">{errors.name}</p>}
@@ -158,7 +173,7 @@ const FormCreateProduct: React.FC = () => {
 					name="location"
 					placeholder="Ingresa tu ubicación"
 					onChange={handleChange}
-					value={formData.location}
+					value={storage.location ? storage.location : formData.location}
 				/>
 				{errors.location && <p className="error">{errors.location}</p>}
 			</label>
@@ -167,7 +182,7 @@ const FormCreateProduct: React.FC = () => {
 				Unidades:
 				<input
 					name="stock"
-					value={formData.stock}
+					value={storage.stock ? storage.stock : formData.stock}
 					onChange={handleChange}
 					type="number"
 				/>
@@ -193,7 +208,7 @@ const FormCreateProduct: React.FC = () => {
 			<label htmlFor="form__category">Categoría:</label>
 			<select
 				name="categoryID"
-				value={formData.categoryID}
+				value={storage.categoryID ? storage.categoryID : formData.categoryID}
 				onChange={handleChange}
 			>
 				{categories.map((category: any, index: number) => (
@@ -209,7 +224,7 @@ const FormCreateProduct: React.FC = () => {
 					type="number"
 					id="price"
 					name="price"
-					value={formData.price}
+					value={storage.price ? storage.price : formData.price}
 					onChange={handleChange}
 				/>
 				{errors.price && <p className="error">{errors.price}</p>}
@@ -219,7 +234,7 @@ const FormCreateProduct: React.FC = () => {
 			<textarea
 				name="description"
 				placeholder="Ingresa una descripción para tu producto"
-				value={formData.description}
+				value={storage.description ? storage.description : formData.description}
 				onChange={handleChange}
 			/>
 			{errors.description && <p className="error">{errors.description}</p>}

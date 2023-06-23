@@ -13,6 +13,7 @@ function Navbar() {
 		event.preventDefault();
 
 		window.localStorage.setItem("isLogin", "false");
+
 		dispatch(setUserValidator(false));
 	};
 

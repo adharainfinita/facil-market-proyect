@@ -4,6 +4,7 @@ export interface UXDataLogin {
 	image: string;
 	token: string;
 }
+
 // Interfaces de de estados global
 export interface User {
 	id: string;
