@@ -20,9 +20,8 @@ const registerUser = async (req: Request, res: Response) => {
 		if (!newUser) {
 			throw new Error("NO TENGO USER");
 		}
-		if (newUser) {
-			sendEmailToUser(newUser.email, newUser.fullName)
-		}
+		sendEmailToUser(newUser.email, newUser.fullName);
+
 		return res.status(201).json(newUser);
 	} catch (error: any) {
 		res.status(400).json({ error: error.message });

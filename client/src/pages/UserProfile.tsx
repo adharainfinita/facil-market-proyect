@@ -5,6 +5,9 @@ import { updateUser } from "../services/userServices";
 import { changeEmail, changePassword, changeName, changeImage } from "../redux/features/userSlice";
 import { user  } from "../utils/interfaces";
 import axios from "axios";
+import { Link } from "react-router-dom";
+/* import { getAllProducts } from "../redux/features/productSlice"; */
+/* import { getAllProducts } from "../services/productServices"; */
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,6 +18,9 @@ const UserProfile: React.FC = () => {
   const [newImage, setNewImage] = useState("");
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
+  const products = useSelector((state: RootState) => state.product.originalCopy);
+  
+  const productsUser = products.filter(producto => producto.userID === userLogin.user.id);
 
   const handleFieldChange = async (): Promise<void> => {
     try {
@@ -26,7 +32,15 @@ const UserProfile: React.FC = () => {
         password: newPassword !== "" ? newPassword : userLogin.user.password,
       };
 
+      
+      /* console.log(products);
+        if(products){ */
+          /* console.log(productsUser)
+      }   */
+
+      
       await updateUser(userLogin.user.id, updatedData);
+
 
       if (newPassword !== "") {
         dispatch(changePassword(newPassword));
@@ -91,8 +105,20 @@ const UserProfile: React.FC = () => {
           <p>Deseas cambiar tu contraseña?</p>
         </div>
         <div className="Profile__buys">
-          <h2>Mis Productos</h2>
-        </div>
+  <h2>Mis Productos</h2>
+  {productsUser && productsUser.map((product, index) => {
+    const id = product.id;
+    return (
+      <ul>
+      <Link key={index} to={`/product/detail/${id}`} >
+        <li>
+          {product.name}
+        </li>
+      </Link>
+      </ul>
+    );
+  })}
+</div>
         <div className="Profile__fields">
           <div>
             <h2>Cambiar contraseña</h2>

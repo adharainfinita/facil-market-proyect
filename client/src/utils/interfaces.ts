@@ -31,7 +31,7 @@ export interface Product {
   price: number;
   categoryID: number;
   categoryName: string;
-  userID: number;
+  userID: string;
   userName: string;
 }
 
@@ -67,7 +67,7 @@ export interface user {
 	fullName: string;
 	password?: string | number;
 	email: string | number;
-	id: string;
+	id: string ;
 	image: string;
 }
 export interface UserData {

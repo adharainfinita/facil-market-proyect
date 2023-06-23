@@ -3,6 +3,7 @@ import logo from "../assets/marketplace_logo.png";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 
 const Footer: React.FC = () => {
+
   return (
     <footer className="footer">
       <div className="footer-content">
