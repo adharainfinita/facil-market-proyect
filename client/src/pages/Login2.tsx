@@ -7,6 +7,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { LoginData } from "../utils/interfaces";
 import { logUser } from "../services/userServices";
 import { loggedUser, setUserValidator } from "../redux/features/userSlice";
+import GoogleAuth from "../components/GoogleLogin";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
@@ -59,6 +60,9 @@ const Login: React.FC = () => {
 			<div className="forms">
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
+
+					<div className="google-login"><GoogleAuth/></div>
+					<hr />
 
 					<form onSubmit={handleSubmit}>
 						<div className="input-field">

@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import GoogleAuth from "./components/GoogleLogin";
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
 
@@ -92,6 +93,7 @@ function App() {
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
+				<Route path="/google" element={<GoogleAuth />} />
 			</Routes>
 			<Footer />
 		</>
