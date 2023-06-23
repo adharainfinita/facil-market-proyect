@@ -76,10 +76,18 @@ export const buyProduct = async (product: Product) => {
 	try {
 		const {data} = await axios.post(`${URL_HOST}/product/payment`, product);
 		console.log( data);
-		
+
 		return data;
 	} catch (error: any) {
 		console.log(error.message);
-		
+
 	}
 }
+
+// export const updateRating =async (rating:number) => {
+//   try {
+//     const {data} = await axios.put(`${URL_HOST}`)
+//   } catch (error) {
+
+//   }
+// }

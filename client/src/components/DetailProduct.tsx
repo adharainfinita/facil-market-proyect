@@ -3,10 +3,16 @@ import { BsCardImage } from "react-icons/bs";
 import PaymentButton from "./PaymentButton";
 import { useEffect, useState } from 'react';
 import { NotificationType } from "../utils/interfaces";
+import RatingStars from "./ReviewStar";
+import { useDispatch } from "react-redux";
+import { updateRating } from "../redux/features/productSlice";
+
 
 const DetailProduct = () => {
   const product = useProduct();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const dispatch = useDispatch()
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);  
+  const [rating, setRating] = useState(product.rating)
   const [notification, setNotification] = useState<NotificationType>({
     isOpen: false,
     type: null,
@@ -42,6 +48,17 @@ const DetailProduct = () => {
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
+  };
+  
+
+  
+  const handleRatingChange = (newRating: number) => {
+    dispatch(updateRating(newRating))
+    setRating(newRating);
+    // Actualizar el objeto `product` si es necesario
+    const updatedProduct = { ...product, rating: newRating };
+    // Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
+    console.log('Nueva calificación:', newRating);
   };
 
   return (
@@ -114,6 +131,13 @@ const DetailProduct = () => {
           </section>
           <div className=".detail-product-button">
            <PaymentButton product={product} /> 
+          </div>
+
+          <div>
+          <section className="detail-product-section">
+        <h2>Reseñas:</h2>
+        <RatingStars rating={rating} onRatingChange={handleRatingChange} />
+      </section>
           </div>
           
 
