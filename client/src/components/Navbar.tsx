@@ -34,27 +34,27 @@ function Navbar() {
         </Link>
       </ul>
 
-      <SearchBar />
-      <div className="nav__user">
-        <div>
-          <img src={userLogin.image} alt="user" className="nav__userLogo" />
-          <h5 className="nav___userName">{userLogin.name}</h5>
-        </div>
-        <Link to="/login">
-          {userValidation === false ? (
-            <button className="nav__button-login">Iniciar Sesión</button>
-          ) : (
-            <button
-              className="nav__button-login"
-              onClick={() => dispatch(setUserValidator(false))}
-            >
-              Cerrar Sesión
-            </button>
-          )}
-        </Link>
-      </div>
-    </nav>
-  );
+			<SearchBar />
+			<div className="nav__user">
+				<div>
+        <Link to="/profile"><img src={userLogin.user.image} alt="user" className="nav__userLogo" /></Link>
+					<h5 className="nav___userName">{userLogin.user.fullName}</h5>
+				</div>
+				<Link to="/login">
+					{userValidation === false ? (
+						<button className="nav__button-login">Iniciar Sesión</button>
+					) : (
+						<button
+							className="nav__button-login"
+							onClick={() => dispatch(setUserValidator(false))}
+						>
+							Cerrar Sesión
+						</button>
+					)}
+				</Link>
+			</div>
+		</nav>
+	);
 }
 
 export default Navbar;

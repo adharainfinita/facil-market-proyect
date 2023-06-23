@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser, setUserValidator } from "../redux/features/userSlice";
+import { useDispatch } from "react-redux";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { getAllUsers } from "../services/userServices";
-import { getUsers } from "../redux/features/userSlice";
-import { RootState } from "../redux/store";
-import { UserData } from "../utils/interfaces";
+//import { RootState } from "../redux/store";
+import { LoginData } from "../utils/interfaces";
+import { logUser } from "../services/userServices";
+import { loggedUser, setUserValidator } from "../redux/features/userSlice";
 
 // import { setLoggedInUserId } from "../redux/features/userSlice";
 
@@ -15,42 +14,16 @@ const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { users, userValidation: access } = useSelector(
-		(state: RootState) => state.user
-	);
+	//const { userValidation: access } = useSelector((state: RootState) => state.user);
 
-	const [localController, setLocalController] = useState(false);
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (access) {
-			localController && navigate("/");
-		}
-	}, [dispatch, access, navigate, localController]);
-
-	const [formData, setFormData] = useState<UserData>({
-		name: "",
-		password: "",
-		email: "",
-		id: "",
-		image: "",
+	const [formData, setFormData] = useState<LoginData>({
+		email: '',
+		password: ''
 	});
 
-	useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const response = await getAllUsers();
-				if (response) {
-					dispatch(getUsers(response));
-				}
-			} catch (error: any) {
-				console.log(error);
-			}
-		};
-		fetchUsers();
-	}, [dispatch, getAllUsers]);
-
-	const [_message, setMessage] = useState("No has escrito nada");
+	const [_message, setMessage] = useState("");
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -66,40 +39,19 @@ const Login: React.FC = () => {
 		setShowPassword(!showPassword);
 	};
 
-	/* 	console.log('local', localController);
-console.log('global' ,access);
-	 */
-
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();
-		// dispatch(addUser(formData));
-		if (formData.email) {
-			const response = await handleAccess();
-			/* console.log(response); */
-
-			if (!response[0]) {
-				setMessage("Usuario no encontrado");
-				setLocalController(false);
-			} else {
-				setMessage("Usuario encontrado");
-
-				dispatch(addUser(response[0]));
-				dispatch(setUserValidator(true));
+		event.preventDefault();		
+		try {
+			const response = await logUser(formData);
+			if(response){
+				dispatch(loggedUser(response))
+				dispatch(setUserValidator(true))
+				navigate("/");
 			}
-		}
-	};
-	const handleAccess = async () => {
-		const userFound = users.filter(
-			(match: any) => match.email === formData.email
-		);
-		setLocalController(true);
-		const { id, image } = userFound[0];
-		setFormData({
-			...formData,
-			id: id,
-			image: image,
-		});
-		return Promise.resolve(userFound);
+		  } catch (error) {
+			setMessage(`${error}`)
+		  }
+		
 	};
 
 	return (

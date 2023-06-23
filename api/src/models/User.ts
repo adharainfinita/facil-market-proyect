@@ -13,13 +13,14 @@ class User extends Model {
 		type: DataType.STRING,
 		allowNull: false,
 	})
-	name!: string;
+	fullName!: string;
 
-	@Column({
+/* 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
 	})
 	lastName!: string;
+ */
 
 	@Column({
 		type: DataType.STRING,

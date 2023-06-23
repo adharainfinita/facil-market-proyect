@@ -1,177 +1,197 @@
 import { useState } from "react";
-import { validate } from "../utils/registerValidation";
-import { useDispatch } from "react-redux";
+// import { validate } from "../utils/registerValidation";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
+import axios from "axios";
 import {
-  AiOutlineEyeInvisible,
-  AiOutlineEye,
-  AiOutlineUser,
+	AiOutlineEyeInvisible,
+	AiOutlineEye,
+	AiOutlineUser,
 } from "react-icons/ai";
-// import axios from "axios";
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const defaultImage = useSelector((state: RootState) => state.user.userLogin.user.image)
+	console.log(defaultImage);
+	
+	const [inputs, setInputs] = useState<NewUser>({
+		fullName: "",
+		password: "",
+		email: "",
+		image: "",
+	});
+	const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [errors, setErrors] = useState<Partial<NewUser>>({});
+	const [_formSubmitted, setFormSubmitted] = useState(false);
+	// const [image, setImage] = useState("");
 
-  const [inputs, setInputs] = useState<NewUser>({
-    name: "",
-    lastName: "",
-    password: "",
-    email: "",
-    image: "",
-  });
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [errors, setErrors] = useState<Partial<NewUser>>({});
-  const [_formSubmitted, setFormSubmitted] = useState(false);
+	const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = event.target;
+		setInputs({ ...inputs, [name]: value });
+	};
+	const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		try {
+			const file = event.target.files;
+			if (file && file.length > 0) {
+				const data = new FormData();
+				data.append("file", file[0]);
+				data.append("upload_preset", "user_images");
+				try {
+					const res = await axios.post(
+						"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+						data
+					);
+					const uploadedFile = res.data;
+					// setImage(uploadedFile.secure_url);
+					setInputs({...inputs, image: uploadedFile.secure_url})
+				} catch (error) {
+					console.error("Error al subir la imagen", error);
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setInputs({ ...inputs, [name]: value });
-    setErrors(validate({ ...inputs, [name]: value }));
-  };
+	// const handleShowPassword = (
+	//   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	// ) => {
+	//   event.preventDefault();
+	//   setShowPassword(!showPassword);
+	// };
+	// 	setErrors(validate({ ...inputs, [name]: value }));
+	// };
 
-  const handleShowPassword = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    setShowPassword(!showPassword);
-  };
+	const handleShowPassword = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		event.preventDefault();
+		setShowPassword(!showPassword);
+	};
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
-    try {
-      // Realizar la solicitud POST al back-end
-      // const response = await axios.post("http://localhost:3001/user", inputs);
-      const response = await postUser(inputs);
-      // Verificar la respuesta del servidor
-      if (response.status === 201) {
-        // El registro se creó exitosamente en la base de datos
-        // Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
-        dispatch(addUser(response.data));
-      }
-      alert("Registro exitoso");
-      navigate("/login");
-    } catch (error) {
-      // Ocurrió un error al procesar la solicitud
-      // Puedes manejar aquí la lógica de manejo de errores
+		try {
+			const user = {
+				fullName: inputs.fullName,
+				password: inputs.password,
+				email:  inputs.email,
+				image: inputs.image ? inputs.image : defaultImage ,
+			};
 
-      console.error("Error al registrar el usuario", error);
-    }
+			const response = await postUser(user);
+			console.log(response.data);
 
-    // Restablecer los valores de los inputs y otros estados relevantes
-    setInputs({
-      name: "",
-      lastName: "",
-      password: "",
-      email: "",
-      image: "",
-    });
-    setErrors({});
-    setFormSubmitted(true);
-  };
+			if (response.status === 201) {
+				dispatch(addUser(response.data));
+			}
+			alert("Registro exitoso");
+			navigate("/login");
+		} catch (error) {
+			console.error("Error al registrar el usuario", error);
+		}
 
-  return (
-    <div className="form login">
-      <span className="form-title">Registrarte</span>
+		setInputs({
+			fullName: "",
+			password: "",
+			email: "",
+			image: "",
+		});
+		setErrors({});
+		setFormSubmitted(true);
+	};
 
-      <form onSubmit={handleSubmit}>
-        <div className="input-field">
-          <input
-            type="text"
-            name="name"
-            value={inputs.name}
-            placeholder="Ingresa tu nombre"
-            autoComplete="username"
-            required
-            onChange={(e) => handleInputs(e)}
-          />
-          <AiOutlineUser className="icon" />
-        </div>
-        {errors.name && <p className="error">{errors.name}</p>}
-        <div className="input-field">
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Ingresa tu Apellido"
-            autoComplete="lastName"
-            value={inputs.lastName}
-            required
-            onChange={(e) => handleInputs(e)}
-          />
-          <AiOutlineUser className="icon" />
-        </div>
-        {errors.lastName && <p className="error">{errors.lastName}</p>}
+	console.log(inputs);
+	return (
+		<div className="form login">
+			<span className="form-title">Registrarte</span>
 
-        <div className="input-field">
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Ingresa tu correo"
-            autoComplete="current-email"
-            value={inputs.email}
-            required
-            onChange={(e) => handleInputs(e)}
-          />
-          <BiEnvelope className="icon" />
-        </div>
-        {errors.email && <p className="error">{errors.email}</p>}
+			<form onSubmit={handleSubmit}>
+				<div className="input-field">
+					<input
+						type="text"
+						name="fullName"
+						value={inputs.fullName}
+						placeholder="Ingresa tu nombre completo"
+						autoComplete="fullName"
+						required
+						onChange={handleInputs}
+					/>
+					<AiOutlineUser className="icon" />
+				</div>
+				{errors.fullName && <p className="error">{errors.fullName}</p>}
 
-        <div className="input-field">
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Ingresa tu contraseña"
-            value={inputs.password}
-            required
-            autoComplete="current-password"
-            onChange={(e) => handleInputs(e)}
-          />
-          <BiLockAlt className="icon" />
+				<div className="input-field">
+					<input
+						type="text"
+						name="email"
+						id="email"
+						placeholder="Ingresa tu correo"
+						autoComplete="current-email"
+						value={inputs.email}
+						required
+						onChange={handleInputs}
+					/>
+					<BiEnvelope className="icon" />
+				</div>
+				{errors.email && <p className="error">{errors.email}</p>}
 
-          {showPassword ? (
-            <AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
-          ) : (
-            <AiOutlineEyeInvisible
-              onClick={handleShowPassword}
-              className="showHidePw"
-            />
-          )}
-        </div>
-        {errors.password && <p className="error">{errors.password}</p>}
+				<div className="input-field">
+					<input
+						type={showPassword ? "text" : "password"}
+						name="password"
+						placeholder="Ingresa tu contraseña"
+						value={inputs.password}
+						required
+						autoComplete="current-password"
+						onChange={handleInputs}
+					/>
+					<BiLockAlt className="icon" />
 
-        <div className="input-field">
-          <input
-            type="text"
-            name="image"
-            value={inputs.image}
-            placeholder="Ingresa una URL de tu imagen"
-            required
-            onChange={(e) => handleInputs(e)}
-          />
-          <BiImage className="icon" />
-        </div>
-        {errors.image && <p className="error">{errors.image}</p>}
+					{showPassword ? (
+						<AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
+					) : (
+						<AiOutlineEyeInvisible
+							onClick={handleShowPassword}
+							className="showHidePw"
+						/>
+					)}
+				</div>
+				{errors.password && <p className="error">{errors.password}</p>}
 
-        <div className="input-field button">
-          <input type="submit" value="Registrarte" />
-        </div>
-      </form>
-      <div className="login-signup">
-        <span className="text">
-          ¿tienes una cuenta?
-          <a href="/login" className="text signup-text">
-            Inicia sesión aqui
-          </a>
-        </span>
-      </div>
-    </div>
-  );
+				<div className="input-field">
+					<input
+						type="file"
+						accept="image/*"
+						name="image"
+						onChange={uploadImage}
+						defaultValue={inputs.image}
+					/>
+					<BiImage className="icon" />
+				</div>
+				{errors.image && <p className="error">{errors.image}</p>}
+
+				<div className="input-field button">
+					<input type="submit" value="Registrarte" />
+				</div>
+			</form>
+			<div className="login-signup">
+				<span className="text">
+					¿tienes una cuenta?
+					<a href="/login" className="text signup-text">
+						Inicia sesión aqui
+					</a>
+				</span>
+			</div>
+		</div>
+	);
 };
 
 export default RegisterForm;
