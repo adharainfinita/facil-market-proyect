@@ -9,6 +9,7 @@ import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 
+
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
@@ -98,6 +99,26 @@ const FormCreateProduct: React.FC = () => {
 			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		const savedDescription = localStorage.getItem("productDescription");
+		if (savedDescription) {
+		  setFormData((prevFormData) => ({
+			...prevFormData,
+			description: savedDescription,
+			
+		  }));
+		}
+	  }, []);
+	
+	  useEffect(() => {
+		localStorage.setItem("productDescription", formData.description);
+	  }, [formData.description]);
+	
+
+
+
+
 
 	const imagePreview = () => {
 		if (loading === true) {
