@@ -3,7 +3,6 @@ import { createProduct } from "../../controllers/productControllers";
 
 const postProduct = async (req: Request, res: Response) => {
 	try {
-		//? Verificar si el usuario está registrado
 		const {
 			userID,
 			categoryID,
@@ -11,7 +10,7 @@ const postProduct = async (req: Request, res: Response) => {
 			description,
 			stock,
 			rating,
-			image,
+			images,
 			location,
 			price,
 		} = req.body;
@@ -21,7 +20,7 @@ const postProduct = async (req: Request, res: Response) => {
 			description,
 			stock,
 			rating,
-			image,
+			images,
 			location,
 			price,
 			userID,

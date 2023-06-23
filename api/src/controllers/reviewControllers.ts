@@ -1,4 +1,4 @@
-import { reviewProps } from "../utils/propsModel";
+import { reviewProps } from "../interfaces/propsModel";
 import Review from "../models/Review";
 import User from "../models/User";
 import Product from "../models/Product";

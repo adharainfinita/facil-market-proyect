@@ -43,10 +43,10 @@ class Product extends Model {
 	rating?: number;
 
 	@Column({
-		type: DataType.STRING,
-		allowNull: true,
+		type: DataType.ARRAY(DataType.STRING),
+		allowNull: false,
 	})
-	image?: string;
+	images?: string[];
 
 	//Cambié la condición de nulo de ubicación. Necesitamos saber donde se encuentra el produto.
 	@Column({

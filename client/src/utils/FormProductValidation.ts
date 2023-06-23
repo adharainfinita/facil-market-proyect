@@ -1,10 +1,10 @@
 //? Regex
-const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
+// const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
 
 import { ErrorsFormProduct, FormCreateProduct } from "./interfaces";
 
 export const validate = (data: FormCreateProduct) => {
-	let errors: Partial<ErrorsFormProduct> = {};
+	const errors: Partial<ErrorsFormProduct> = {};
 
 	//? validar name
 	if (!data.name) {
@@ -31,11 +31,11 @@ export const validate = (data: FormCreateProduct) => {
 	if (!data.location) errors.location = "Este campo es requerido";
 
 	//? validar image URL
-	if (!data.image.length) {
-		errors.image = "Este campo es obligatorio";
-	} else if (!imageUrlRegex.test(data.image)) {
-		errors.image = "Ingresar una URL valida";
-	}
+	// if (!data.image.length) {
+	// 	errors.image = "Este campo es obligatorio";
+	// } else if (!imageUrlRegex.test(data.image)) {
+	// 	errors.image = "Ingresar una URL valida";
+	// }
 
 	//? validar descrption
 	if (!data.description.length) {

@@ -5,58 +5,44 @@ import { RootState } from "../store";
 //import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
-	products: Product[];
-	originalCopy: Product[];
-	detail: Product;
-	requireFilters: FiltersCaché;
+  products: Product[];
+  originalCopy: Product[];
+  detail: Product;
+  requireFilters: FiltersCaché;
 }
 
 const initialState: ProductState = {
-	products: [],
-	originalCopy: [],
-	detail: {
-		id: 0,
-		name: "",
-		description: "",
-		stock: 0,
-		rating: 0.0,
-		image: "",
-		location: "",
-		price: 0.0,
-		categoryID: 0,
-		categoryName: "",
-		userID: 0,
-		userName: "",
-	},
-	requireFilters: {
-		userName: "",
-		categoryName: "",
-		location: "",
-	},
+  products: [],
+  originalCopy: [],
+  detail: {
+    id: 0,
+    name: "",
+    description: "",
+    stock: 0,
+    rating: 0.0,
+    images: [""],
+    location: "",
+    price: 0.0,
+    categoryID: 0,
+    categoryName: "",
+    userID: 0,
+    userName: "",
+  },
+  requireFilters: {
+    userName: "",
+    categoryName: "",
+    location: "",
+  },
 };
 ///
 export const getAllProducts = async () => {
-	try {
-		const { data } = await axios(`http://localhost:3001/product`);
-		return data;
-	} catch (error: any) {
-		throw new Error(error.message);
-	}
+  try {
+    const { data } = await axios(`http://localhost:3001/product`);
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 };
-
-/* export const getAllProducts = createAsyncThunk(
-	"products/getAllProducts",
-	async () => {
-		try {
-			const { data } = await axios("http://localhost:3001/product");
-			console.log(data);
-			return data;
-		} catch (error: any) {
-			throw new Error(error.message);
-		}
-	}
-); */
-///
 
 const productSlice = createSlice({
 	name: "products",
@@ -86,7 +72,7 @@ const productSlice = createSlice({
 						if(state.requireFilters.location){
 						productsFound=	productsFound.filter(match =>match.location === state.requireFilters.location)
 						}
-						console.log(productsFound);
+
 			
 			state.products = productsFound;
 		},
@@ -108,7 +94,7 @@ const productSlice = createSlice({
 						(match) => match.location === state.requireFilters.location
 					);
 				}
-				console.log(productsFound);
+		
 			
 			state.products = productsFound;
 		},
@@ -134,7 +120,7 @@ const productSlice = createSlice({
 						(match) => match.userName === state.requireFilters.userName
 					);
 				}
-				console.log(productsFound);
+			
 			
 			state.products = productsFound;
 		},
@@ -185,16 +171,16 @@ const productSlice = createSlice({
 });
 
 export const {
-	getProducts,
-	getDetail,
-	filterProductsByCategory,
-	filterProductsByUser,
-	filterProductsByLocation,
-	orderProducts,
-	cleanDetail,
-	getSearchedProducts,
-	resetFilters,
+  getProducts,
+  getDetail,
+  filterProductsByCategory,
+  filterProductsByUser,
+  filterProductsByLocation,
+  orderProducts,
+  cleanDetail,
+  getSearchedProducts,
+  resetFilters,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) =>
-	state.product.products;
+  state.product.products;

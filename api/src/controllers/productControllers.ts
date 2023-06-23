@@ -1,6 +1,6 @@
 import Product from "../models/Product";
+import User from "../models/User";
 import { findCategoryByID } from "./categoryControllers";
-import { findUser } from "./userControllers";
 import { Op } from "sequelize";
 
 interface localProps {
@@ -9,7 +9,7 @@ interface localProps {
 	location: string;
 	stock: number;
 	rating: number;
-	image: string;
+	images: string[];
 	price: number;
 	userID: number;
 	categoryID: number;
@@ -21,14 +21,15 @@ export const createProduct = async ({
 	location,
 	stock,
 	rating,
-	image,
+	images,
 	price,
 	userID,
 	categoryID,
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
-	const userFound = await findUser({ param });
+	console.log(createProduct);
+	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
 	}
@@ -47,11 +48,11 @@ export const createProduct = async ({
 		description,
 		stock,
 		rating,
-		image,
+		images,
 		location,
 		price,
 		userID: userFound.id,
-		userName: userFound?.name,
+		userName: userFound?.fullName,
 		categoryID: categoryFound?.id,
 		categoryName: categoryFound?.name,
 	});

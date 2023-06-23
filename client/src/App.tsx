@@ -4,14 +4,15 @@ import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Form from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
-import Login from "./pages/Login";
-import Login2 from "./pages/Login2";
+import VerificationPage from "./pages/VerificationPage";
+import Login from "./pages/Login2";
 import Home from "./pages/Home";
-import Register from "./components/RegisterForm";
+import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-/* import { getUsers } from "./redux/features/userSlice";
-import { getAllUsers, postUser } from "./services/userServices"; */
+import { getUsers } from "./redux/features/userSlice";
+import { getAllUsers } from "./services/userServices";
+import UserProfile from "./pages/UserProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
@@ -22,19 +23,19 @@ import { getProducts } from "./redux/features/productSlice"; */
 function App() {
 	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	const fetchUsers = async() =>{
-	// 		try {
-	// 			const response = await getAllUsers()
-	// 				if(response) {
-	// 					dispatch(getUsers(response));
-	// 				}
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	}
-	// 	fetchUsers();
-	// }, [dispatch]);
+	useEffect(() => {
+		const fetchUsers = async() =>{
+			try {
+				const response = await getAllUsers()
+					if(response) {
+						dispatch(getUsers(response));
+					}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchUsers();
+	}, [dispatch]);
 
 	useEffect(() => {
 		/* const fetchUsers = async() =>{
@@ -85,8 +86,10 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/vender" element={<Form />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
-				<Route path="/login" element={<Login2 />} />
-				<Route path="/register" element={<Register />} />
+				<Route path="/profile" element={<UserProfile />} />
+				<Route path="/verification" element={<VerificationPage />} />
+				<Route path="/login" element={<Login/>} />
+				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 			</Routes>
