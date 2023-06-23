@@ -10,7 +10,7 @@ import postProduct from "../handlers/products/postProduct";
 //! Handlers GET
 import getAllProducts from "../handlers/products/getAllProducts";
 import getAllCategories from "../handlers/categories/getCategories";
-import {getAllUsers,getUserById} from "../handlers/auth/getUsers";
+import {/* getAllUsers, */getUserById} from "../handlers/auth/getUsers";
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
@@ -44,10 +44,10 @@ router.use("/product", paymentRouter);
 //* GET
 router.get("/product", getAllProducts);
 router.get("/review", getAllReviews);
-router.get("/user", getAllUsers);
+//router.get("/user", getAllUsers);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
-router.get("/user/:userId", getUserById)
+router.get("/user",checkSession, getUserById)
 
 export default router;
