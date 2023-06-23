@@ -134,3 +134,21 @@ export const sendEmailToUser = async (email: string, name: string) => {
       </div>`,
 	});
 };
+
+
+
+export const changeUser = async (userId: string, updates: object) => {
+	
+	const user = await User.findByPk(userId);
+
+	// Encuentra y actualiza el usuario por su ID
+		if (!user) {
+		throw Error( "Usuario no encontrado" );
+		}
+		
+		// Actualiza los campos proporcionados en el objeto de actualización
+		await user.update(updates);
+		return true;
+		// Object.assign(user, updates);
+		// await user.save();
+}

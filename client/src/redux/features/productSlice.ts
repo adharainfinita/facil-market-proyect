@@ -58,6 +58,10 @@ const productSlice = createSlice({
 			state.originalCopy = action.payload;
 		},
 
+		updateRating: (state, action: PayloadAction<number>) => {
+			state.detail.rating = action.payload;
+		},
+
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.categoryName = action.payload;
@@ -78,6 +82,7 @@ const productSlice = createSlice({
 					(match) => match.location === state.requireFilters.location
 				);
 			}
+
 
 			state.products = productsFound;
 		},
@@ -184,6 +189,7 @@ export const {
 	cleanDetail,
 	getSearchedProducts,
 	resetFilters,
+  updateRating,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const selectSearchedProducts = (state: RootState) =>

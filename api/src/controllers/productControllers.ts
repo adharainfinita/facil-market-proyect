@@ -97,3 +97,15 @@ export const findProductById = async (id: number) => {
 
 	return product;
 };
+
+// import { productProps } from "../interfaces/propsModel";
+
+export const changeProductProperties = async (
+	product: localProps,
+	id: number
+) => {
+	const productFound = await Product.findByPk(id);
+
+	await productFound?.update(product);
+	return productFound;
+};

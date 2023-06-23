@@ -30,7 +30,9 @@ import checkSession from "../Middleware/session";
 //! PUTS
 import updateUser from "../handlers/auth/updateUser";
 import { paymentRouter } from "./payments.routes";
+import putProduct from "../handlers/products/updateProduct";
 router.put("/user/:userId", updateUser);
+router.put('/product/:id', putProduct);
 
 //! rutas auth
 router.post("/register", registerUser);
