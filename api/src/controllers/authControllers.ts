@@ -117,7 +117,7 @@ export const sendEmailToUser = async (email:string, name:string) => {
 	// Reemplaza con la URL correcta de tu página de verificación
 
   await transporter.sendMail({
-    from: '"Soporte de Facil Market" <benjaminszodo@gmail.com>',
+    from: '"Soporte de Facil Market" <projecto.final.market@gmail.com>',
     to: email,
     subject: "Te damos la bienvenida a Facil Market",
     html: 
