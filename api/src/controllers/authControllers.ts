@@ -84,7 +84,7 @@ export const userCredentials = async (authLogin: loginData) => {
 
 	//? si todo sale bien retorno el usuario
 
-	const token = await generateToken(userExist.email);
+	const token = await generateToken(userExist);
 
 	const data = {
 		token,

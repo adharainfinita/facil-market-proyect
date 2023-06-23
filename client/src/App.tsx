@@ -17,23 +17,53 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import axios, { AxiosHeaderValue } from "axios";
+
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
 
 function App() {
 	const dispatch = useDispatch();
 
+	interface Token {
+		token: string;
+		email: string;
+		password: string;
+	}
+
+	const token = window.localStorage.getItem("token");
+
+	const headers = {
+		Authorization: `Bearer ${token}`,
+	};
+
 	useEffect(() => {
-		const fetchUsers = async() =>{
+		if (token) {
+			axios
+				.get("http://localhost:3001/token", { headers })
+				.then((response) => {
+					// Manejar la respuesta exitosa aquí
+					console.log(response.data);
+				})
+				.catch((error) => {
+					// Manejar el error aquí
+					console.error(error);
+				});
+		}
+	}, []);
+	
+
+	useEffect(() => {
+		const fetchUsers = async () => {
 			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
+				const response = await getAllUsers();
+				if (response) {
+					dispatch(getUsers(response));
+				}
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 		fetchUsers();
 	}, [dispatch]);
 
@@ -88,7 +118,7 @@ function App() {
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/profile" element={<UserProfile />} />
 				<Route path="/verification" element={<VerificationPage />} />
-				<Route path="/login" element={<Login/>} />
+				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />

@@ -39,19 +39,23 @@ const Login: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-    event.preventDefault();
-    try {
-      const response = await logUser(formData);
-      if (response) {
-        dispatch(loggedUser(response));
-        dispatch(setUserValidator(true));
-        navigate("/");
-      }
-    } catch (error) {
-      setMessage(`${error}`);
-    }
-  };
+	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
+		event.preventDefault();
+		try {
+
+			const response = await logUser(formData);
+			const token = response.token;
+			window.localStorage.setItem("token", token);
+
+			if (response) {
+				dispatch(loggedUser(response));
+				dispatch(setUserValidator(true));
+				navigate("/");
+			}
+		} catch (error) {
+			setMessage(`${error}`);
+		}
+	};
 
   return (
     <div className="container-form">
