@@ -8,9 +8,11 @@ import { useState } from "react";
 
 function Navbar() {
   const dispatch = useDispatch();
-	const {userValidation, userLogin} = useSelector((state: RootState) => state.user)
+	const user = useSelector((state: RootState) => state.user.userLogin.user)
+	const userValidation = useSelector((state: RootState) => state.user.userValidation)
   const [openUser, setOpenUser] = useState<boolean>(false)
 
+  const firstName =  user.fullName.split(' ')[0]
 
   const handleOpen = () => {setOpenUser(!openUser)}
   const handleLogOut = () => {
@@ -53,12 +55,15 @@ function Navbar() {
           </Link>
           :(
             <div className="profile-img">
-              <img src={userLogin.image} alt="user" className="nav__userLogo" onClick={handleOpen} />
-              <h5 className="nav___userName">{userLogin.name}</h5>
+              <img src={user.image} alt="user" className="nav__userLogo" onClick={handleOpen} />
+              <h5 className="nav___userName">{firstName}</h5>
 
               {openUser && 
               <div className="nav__user-dropdown">
-                <button onClick={handleLogOut} className="nav__button-out">Cerrar Sesión</button>
+                <Link to='/profile'><button className="nav__dropdown-user-option">Mi perfil</button></Link> 
+                <Link to='/products'><button className="nav__dropdown-user-option">Mis productos</button></Link> 
+                <hr />
+                <button onClick={handleLogOut} className="nav__dropdown-user-option">Cerrar Sesión</button>
               </div>
               }
             </div>
