@@ -10,14 +10,18 @@ import Home from "./pages/Home";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-import { getUsers } from "./redux/features/userSlice";
+import {
+	getUsers,
+	setUserValidator,
+	userLogin,
+} from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import axios, { AxiosHeaderValue } from "axios";
+import axios from "axios";
 
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
@@ -25,12 +29,7 @@ import { getProducts } from "./redux/features/productSlice"; */
 function App() {
 	const dispatch = useDispatch();
 
-	interface Token {
-		token: string;
-		email: string;
-		password: string;
-	}
-
+	const isLogin = window.localStorage.getItem("isLogin");
 	const token = window.localStorage.getItem("token");
 
 	const headers = {
@@ -38,20 +37,30 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (token) {
+		if (token && isLogin === "true") {
 			axios
 				.get("http://localhost:3001/token", { headers })
 				.then((response) => {
 					// Manejar la respuesta exitosa aquí
-					console.log(response.data);
+					console.log(response.data.user);
+
+					const data = {
+						id: response.data.user.id,
+						fullName: response.data.user.fullName,
+						email: response.data.user.email,
+						image: response.data.user.image,
+					};
+
+					dispatch(userLogin(data));
+					dispatch(setUserValidator(true));
 				})
 				.catch((error) => {
 					// Manejar el error aquí
-					console.error(error);
+					dispatch(setUserValidator(false));
+					console.log(error);
 				});
 		}
 	}, []);
-	
 
 	useEffect(() => {
 		const fetchUsers = async () => {

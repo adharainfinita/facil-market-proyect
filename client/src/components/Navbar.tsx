@@ -1,16 +1,22 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
-	const dispatch = useDispatch();
-
 	const { userValidation, userLogin } = useSelector(
 		(state: RootState) => state.user
 	);
+
+	const handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+
+		window.localStorage.setItem("isLogin", "false");
+	};
+
+	const isLogin = localStorage.getItem("isLogin");
+
 
 	return (
 		<nav className="nav">
@@ -49,12 +55,12 @@ function Navbar() {
 					<h5 className="nav___userName">{userLogin.user.fullName}</h5>
 				</div>
 				<Link to="/login">
-					{userValidation === false ? (
+					{isLogin === "false" ? (
 						<button className="nav__button-login">Iniciar Sesión</button>
 					) : (
 						<button
 							className="nav__button-login"
-							onClick={() => dispatch(setUserValidator(false))}
+							onClick={(event) => handleLogOut(event)}
 						>
 							Cerrar Sesión
 						</button>
