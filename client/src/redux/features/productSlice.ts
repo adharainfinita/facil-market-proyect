@@ -150,7 +150,6 @@ const productSlice = createSlice({
 					  });
 			}
 			state.products = productsCopy;
-			state.originalCopy = productsCopy;
 		},
 		getDetail: (state, action: PayloadAction<Product>) => {
 			state.detail = action.payload;

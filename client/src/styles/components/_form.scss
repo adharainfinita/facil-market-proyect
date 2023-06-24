@@ -47,6 +47,11 @@
 		margin-top: 1rem;
 	}
 
+	button[type="submit"]:disabled{
+		background-color: #ccc;
+		cursor: no-drop;
+	}
+
 	p {
 		font-size: 14px;
 		color: #da1616;

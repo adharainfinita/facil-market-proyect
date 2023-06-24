@@ -8,6 +8,7 @@ import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+//import { getAllProducts } from "../services/productServices";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -15,7 +16,7 @@ const FormCreateProduct: React.FC = () => {
 	const navigate = useNavigate();
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -223,13 +224,10 @@ const FormCreateProduct: React.FC = () => {
 				onChange={handleChange}
 			/>
 			{errors.description && <p className="error">{errors.description}</p>}
-			{Object.values(formData).every(
-				(value) => Boolean(value) === null || undefined
-			) ? (
-				<button disabled>Publicar</button>
-			) : (
-				<button type="submit">Publicar</button>
-			)}
+
+			<button
+				disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
+			>Publicar</button>
 		</form>
 	);
 };

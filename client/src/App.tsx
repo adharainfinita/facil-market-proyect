@@ -24,6 +24,8 @@ import { getCategory } from "./services/categoryServices";
 /* import { getAllProducts, postProduct } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice"; */
 
+import axios from "axios";
+
 function App() {
 	const dispatch = useDispatch();
 
@@ -126,7 +128,6 @@ function App() {
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
-				<Route path="/google" element={<GoogleAuth />} />
 			</Routes>
 			<Footer />
 		</>

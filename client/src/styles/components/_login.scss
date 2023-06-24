@@ -10,6 +10,12 @@
 .form {
 	padding: 30px;
 
+	.google-login{
+		display: flex;
+		justify-content: center;
+		margin: 10px 0px;
+	  }
+
   &-title {
     position: relative;
     font-size: 27px;
