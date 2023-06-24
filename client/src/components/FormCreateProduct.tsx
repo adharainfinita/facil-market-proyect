@@ -14,15 +14,13 @@ import { Link } from "react-router-dom";
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
-	const logged = useSelector((state: RootState) => state.user.userValidation);
 	const navigate = useNavigate();
+	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	const session = window.localStorage.getItem("token");
-
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
 		categoryID: 0,
@@ -39,23 +37,23 @@ const FormCreateProduct: React.FC = () => {
 	const [storage, setStorage] = useLocalStorage("items", formData);
 
 	useEffect(() => {
-		!session ? setStorage({}) : null;
-	}, [logged]);
+		session ? setFormData({ ...storage }) : null;
+	}, []);
 
+	console.log(formData);
 	const handleChange = (
 		event: ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 		>
 	) => {
 		const { name, value } = event.target;
-		console.log(name, value);
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
 			[name]: value,
 		}));
 
-		session ? setStorage({ ...storage, [name]: value }) : setStorage({});
+		setStorage({ ...formData, [name]: value });
 
 		setErrors(
 			validate({
@@ -124,10 +122,11 @@ const FormCreateProduct: React.FC = () => {
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
 		try {
-			const token = window.localStorage.getItem("token");
 			const Headers: Partial<AxiosHeaderValue> = {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session}`,
 			};
+
+			//? Set info
 			const product = {
 				userID: Number(userLogin.user.id),
 				categoryID: Number(formData.categoryID),
@@ -139,10 +138,13 @@ const FormCreateProduct: React.FC = () => {
 				price: Number(formData.price),
 				rating: 0,
 			};
+
+			console.log(product);
+
 			postProduct(product, Headers);
 			setErrors({});
-			setStorage({});
 			alert("Producto creado correctamente");
+			window.localStorage.removeItem("items");
 			navigate("/products");
 		} catch (error: any) {
 			console.log(error.message);
