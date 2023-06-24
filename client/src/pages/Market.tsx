@@ -9,12 +9,10 @@ import { RootState } from "../redux/store";
 import Pagination from "../components/Pagination";
 import Filters from "../components/Filters";
 
-
 function Market() {
 	const products = useSelector((state: RootState) => state.product.products);
 	const dispatch = useDispatch();
 
-	
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {

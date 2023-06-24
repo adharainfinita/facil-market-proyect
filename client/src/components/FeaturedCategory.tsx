@@ -4,7 +4,7 @@ import { Category } from "../utils/interfaces";
 
 const FeaturedCategory = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
-	const featured = categories.slice(0,5)
+	const featured = categories.slice(0, 5);
 	return (
 		<div className="container-featured">
 			{featured.map(

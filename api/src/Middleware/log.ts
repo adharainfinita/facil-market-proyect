@@ -5,6 +5,6 @@ const log = (err: any, req: Request, res: Response, next: NextFunction) => {
 	const message = err.message || "Internal Server Error";
 	console.error(err);
 	res.status(status).send(message);
-	next()
+	next();
 };
 export default log;

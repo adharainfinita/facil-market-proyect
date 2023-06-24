@@ -31,7 +31,7 @@ export interface Product {
 	price: number;
 	categoryID: number;
 	categoryName: string;
-	userID: number;
+	userID: string;
 	userName: string;
 }
 

@@ -30,7 +30,7 @@ const useProduct = () => {
 					price: 0.0,
 					categoryID: 0,
 					categoryName: "",
-					userID: 0,
+					userID: "",
 					userName: "",
 				})
 			);

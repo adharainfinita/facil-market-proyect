@@ -43,4 +43,4 @@ const getUserById = async (req: Request, res: Response) => {
 	}
 };
 
-export { getAllUsers, getUserById, getByToken};
+export { getAllUsers, getUserById, getByToken };
