@@ -11,9 +11,13 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
 import {
+  changePassword,
   getUsers,
   setUserValidator,
   userLogin,
+  changeEmail,
+  changeName,
+  changeImage,
 } from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
@@ -22,9 +26,12 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import axios from "axios";
-
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
+import { RootState } from "./redux/store";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { getUserById } from "./services/userServices";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -34,6 +41,36 @@ function App() {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
+  const userLogin2 = useSelector((state: RootState) => state.user.userLogin);
+  const userId = userLogin2.user.id;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId2 = userId; // Reemplaza con el ID del usuario deseado
+      const fetchedUser = await getUserById(userId2);
+
+      if (fetchedUser) {
+        if (fetchedUser.image !== undefined) {
+          const newImg = fetchedUser.image;
+          dispatch(changeImage(newImg));
+        }
+        if (fetchedUser.fullName !== undefined) {
+          const newName = fetchedUser.fullName;
+          dispatch(changeName(newName));
+        }
+        if (fetchedUser.email !== undefined) {
+          const newEmail = fetchedUser.email.toString(); // Convertir a cadena
+          dispatch(changeEmail(newEmail));
+        }
+        if (fetchedUser.password !== undefined) {
+          const newPassword = fetchedUser.password.toString(); // Convertir a cadena
+          dispatch(changePassword(newPassword));
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [dispatch, userId]);
 
   useEffect(() => {
     if (token && isLogin === "true") {
@@ -83,8 +120,8 @@ function App() {
 				console.log(error);
 			}
 		}
-		fetchUsers(); */
-
+		fetchUsers(); 
+    */
     const fetchProducts = async () => {
       try {
         const response = await getAllProducts();

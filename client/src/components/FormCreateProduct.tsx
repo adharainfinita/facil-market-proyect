@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+
 
 const FormCreateProduct: React.FC = () => {
   const categories = useSelector((state: RootState) => state.category.value);
@@ -83,31 +84,50 @@ const FormCreateProduct: React.FC = () => {
     }
   };
 
-  const imagePreview = () => {
-    if (loading === true) {
-      return <h3>Cargando Imagenes...</h3>;
-    }
-    if (loading === false) {
-      return (
-        <div>
-          {images.length <= 0 ? (
-            <p>No hay imágenes</p>
-          ) : (
-            images.map((item, index) => (
-              <img
-                className="image-preview"
-                key={index}
-                alt="image preview"
-                width={70}
-                height={70}
-                src={item}
-              />
-            ))
-          )}
-        </div>
-      );
-    }
-  };
+	useEffect(() => {
+		const savedDescription = localStorage.getItem("productDescription");
+		if (savedDescription) {
+		  setFormData((prevFormData) => ({
+			...prevFormData,
+			description: savedDescription,
+			
+		  }));
+		}
+	  }, []);
+	
+	  useEffect(() => {
+		localStorage.setItem("productDescription", formData.description);
+	  }, [formData.description]);
+	
+
+
+
+
+
+	const imagePreview = () => {
+		if (loading === true) {
+			return <h3>Cargando Imagenes...</h3>;
+		}
+		if (loading === false) {
+			return (
+				<div>
+					{images.length <= 0 ? (
+						<p>No hay imágenes</p>
+					) : (
+						images.map((item, index) => (
+							<img
+								key={index}
+								alt="image preview"
+								width={60}
+								height={60}
+								src={item}
+							/>
+						))
+					)}
+				</div>
+			);
+		}
+	};
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();

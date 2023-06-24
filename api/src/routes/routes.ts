@@ -48,7 +48,7 @@ router.use("/product", paymentRouter);
 router.get("/product", getAllProducts);
 router.get("/review", getAllReviews);
 router.get("/user", getAllUsers);
-router.get("/user", getUserById);
+router.get("/user/:userId", getUserById)
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);

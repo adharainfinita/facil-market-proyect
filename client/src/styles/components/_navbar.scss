@@ -1,6 +1,15 @@
+.header {
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	background-color: #e2e4e9;
+}
+
 .nav {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	padding: 10px 15px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #111;

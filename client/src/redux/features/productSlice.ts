@@ -123,41 +123,51 @@ const productSlice = createSlice({
         );
       }
 
-      state.products = productsFound;
-    },
-    resetFilters: (state, _action: PayloadAction<void>) => {
-      state.requireFilters = initialState.requireFilters;
-      state.products = state.originalCopy;
-    },
-    orderProducts: (state, action: PayloadAction<string>) => {
-      const productsCopy = [...state.products];
-      state.requireFilters.location = action.payload;
-      if (action.payload.length === 3) {
-        action.payload === "MAX"
-          ? productsCopy.sort((a, b) => b.price - a.price)
-          : productsCopy.sort((a, b) => a.price - b.price);
-      } else {
-        action.payload === "A"
-          ? productsCopy.sort((a, b) => {
-              if (a.name < b.name) return -1;
-              if (a.name > b.name) return 1;
-              return 0;
-            })
-          : productsCopy.sort((a, b) => {
-              if (a.name > b.name) return -1;
-              if (a.name < b.name) return 1;
-              return 0;
-            });
-      }
-      state.products = productsCopy;
-    },
-    getDetail: (state, action: PayloadAction<Product>) => {
-      state.detail = action.payload;
-    },
-    cleanDetail: (state, action: PayloadAction<Product>) => {
-      state.detail = action.payload;
-    },
-  },
+			state.products = productsFound;
+		},
+		resetFilters: (state, _action: PayloadAction<void>) => {
+			state.requireFilters = initialState.requireFilters;
+			state.products = state.originalCopy;
+		},
+		orderProducts: (state, action: PayloadAction<string>) => {
+			const productsCopy = [...state.products];
+			state.requireFilters.location = action.payload;
+			if (action.payload.length === 3) {
+				action.payload === "MAX"
+					? productsCopy.sort((a, b) => b.price - a.price)
+					: productsCopy.sort((a, b) => a.price - b.price);
+			} else {
+				action.payload === "A"
+					? productsCopy.sort((a, b) => {
+							if (a.name < b.name) return -1;
+							if (a.name > b.name) return 1;
+							return 0;
+					  })
+					: productsCopy.sort((a, b) => {
+							if (a.name > b.name) return -1;
+							if (a.name < b.name) return 1;
+							return 0;
+					  });
+			}
+			state.products = productsCopy;
+		},
+		getDetail: (state, action: PayloadAction<Product>) => {
+			state.detail = action.payload;
+		},
+		cleanDetail: (state, action: PayloadAction<Product>) => {
+			state.detail = action.payload;
+		},
+	},
+	/* extraReducers: (builder) => {
+		builder.addCase(getAllProducts.fulfilled, (state, action) => {
+			state.products = action.payload;
+			state.originalCopy = action.payload;
+		});
+		builder.addCase(getAllProducts.rejected, (state, action) => {
+			state.products = [];
+			console.log(action);
+		});
+	}, */
 });
 
 export const {

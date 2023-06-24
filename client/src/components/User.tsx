@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Link } from "react-router-dom";
@@ -6,23 +5,25 @@ import { BiLogOut } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 
-const User = ({ handleLogOut }: any) => {
-  const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
+interface UserProps {
+  handleLogOut: (event: React.MouseEvent<HTMLDivElement>) => void;
+  profileOpen: boolean | null
+  handleMouseLeave: () => void
+}
+
+const User = ({ handleLogOut, profileOpen, handleMouseLeave }: UserProps) => {
+
   const { userLogin } = useSelector((state: RootState) => state.user);
-
-  const close = () => {
-    setProfileOpen(null);
-  };
-
+  
   return (
     <>
       <div className="profile">
-        <div onClick={() => setProfileOpen(!profileOpen)}>
+        <div>
           <img src={userLogin.user.image} alt="user image" />
         </div>
 
         {profileOpen && (
-          <div className="openProfile boxItems" onClick={close}>
+          <div className="openProfile boxItems" onMouseLeave={handleMouseLeave}>
             <div className="image">
               <div>
                 <img src={userLogin.user.image} alt="user image" />
