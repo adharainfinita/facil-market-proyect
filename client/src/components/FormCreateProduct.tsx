@@ -27,7 +27,9 @@ const FormCreateProduct: React.FC = () => {
 		name: "",
 		location: "",
 		description: "",
-		stock: 0,
+		stock: "Disponible",
+		unities: 0,
+		status: "",
 		image: [],
 		price: 0,
 		rating: 0,
@@ -132,7 +134,9 @@ const FormCreateProduct: React.FC = () => {
 				name: capitalizeFirstLetter(formData.name),
 				location: capitalizeFirstLetter(formData.location),
 				description: capitalizeFirstLetter(formData.description),
-				stock: Number(formData.stock),
+				unities: Number(formData.unities),
+				stock: formData.stock,
+				status: formData.status,
 				images: images,
 				price: Number(formData.price),
 				rating: 0,
@@ -154,7 +158,6 @@ const FormCreateProduct: React.FC = () => {
 			{session ? (
 				<form className="form" onSubmit={handleSubmit}>
 					<h2>Publica tu Producto</h2>
-
 					<label className="from__input-name">
 						Nombre del producto:
 						<input
@@ -166,7 +169,6 @@ const FormCreateProduct: React.FC = () => {
 						/>
 						{errors.name && <p className="error">{errors.name}</p>}
 					</label>
-
 					<label htmlFor="form__input-location">
 						Ubicacion:
 						<input
@@ -178,18 +180,37 @@ const FormCreateProduct: React.FC = () => {
 						/>
 						{errors.location && <p className="error">{errors.location}</p>}
 					</label>
-
 					<label htmlFor="form__input-stock">
 						Unidades:
 						<input
-							name="stock"
-							value={storage.stock ? storage.stock : formData.stock}
+							name="unities"
+							value={storage.unities ? storage.unities : formData.unities}
 							onChange={handleChange}
 							type="number"
 						/>
-						{errors.stock && <p className="error">{errors.stock}</p>}
+						{errors.unities && <p className="error">{errors.unities}</p>}
 					</label>
-
+					//* Stylesssss for this
+					<label htmlFor="form__input-status">
+						Estado:
+						<input
+							type="radio"
+							name="status"
+							id="new"
+							onChange={handleChange}
+							value={"Nuevo"}
+						/>
+						<label htmlFor="new">Nuevo</label>
+						<input
+							type="radio"
+							name="status"
+							id="usage"
+							onChange={handleChange}
+							value="Usado"
+						/>
+						<label htmlFor="usage">Usado</label>
+						{errors.status && <p className="error">{errors.status}</p>}
+					</label>
 					<label htmlFor="form__input-image">
 						Imagen:
 						<Dropzone onDrop={uploadImages}>
@@ -205,7 +226,6 @@ const FormCreateProduct: React.FC = () => {
 						{errors.images && <p className="error">{errors.images}</p>}
 					</label>
 					{imagePreview()}
-
 					<label htmlFor="form__category">Categoría:</label>
 					<select
 						name="categoryID"
@@ -220,7 +240,6 @@ const FormCreateProduct: React.FC = () => {
 							</option>
 						))}
 					</select>
-
 					<label htmlFor="price">
 						Precio:
 						<input
@@ -232,7 +251,6 @@ const FormCreateProduct: React.FC = () => {
 						/>
 						{errors.price && <p className="error">{errors.price}</p>}
 					</label>
-
 					<label htmlFor="form__description">Descripción:</label>
 					<textarea
 						name="description"

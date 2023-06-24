@@ -72,7 +72,9 @@ export const userCredentials = async (authLogin: loginData) => {
 
 	//? Validacion user
 	if (!userExist?.email) {
-		throw new Error("El correo electrónico que ingresaste no se encuentra registrado.");
+		throw new Error(
+			"El correo electrónico que ingresaste no se encuentra registrado."
+		);
 	}
 
 	//? traigo la password encryptada de la db y comparo con el recibido por body
@@ -133,4 +135,19 @@ export const sendEmailToUser = async (email: string, name: string) => {
         <p style="color: #333333;">El equipo de Facil Market</p>
       </div>`,
 	});
+};
+
+export const changeUser = async (userId: string, updates: object) => {
+	const user = await User.findByPk(userId);
+
+	// Encuentra y actualiza el usuario por su ID
+	if (!user) {
+		throw Error("Usuario no encontrado");
+	}
+
+	// Actualiza los campos proporcionados en el objeto de actualización
+	await user.update(updates);
+	return true;
+	// Object.assign(user, updates);
+	// await user.save();
 };

@@ -21,6 +21,7 @@ const UserProfile: React.FC = () => {
 	const [newEmail, setNewEmail] = useState("");
 	const [newImage, setNewImage] = useState("");
 	const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
 	const products = useSelector((state: RootState) => state.product.products);

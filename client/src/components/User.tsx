@@ -7,50 +7,50 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 
 const User = ({ handleLogOut }: any) => {
-  const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
-  const { userLogin } = useSelector((state: RootState) => state.user);
+	const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
+	const { userLogin } = useSelector((state: RootState) => state.user);
 
-  const close = () => {
-    setProfileOpen(null);
-  };
+	const close = () => {
+		setProfileOpen(null);
+	};
 
-  return (
-    <>
-      <div className="profile">
-        <div onClick={() => setProfileOpen(!profileOpen)}>
-          <img src={userLogin.user.image} alt="user image" />
-        </div>
+	return (
+		<>
+			<div className="profile">
+				<div onClick={() => setProfileOpen(!profileOpen)}>
+					<img src={userLogin.user.image} alt="user image" />
+				</div>
 
-        {profileOpen && (
-          <div className="openProfile boxItems" onClick={close}>
-            <div className="image">
-              <div>
-                <img src={userLogin.user.image} alt="user image" />
-              </div>
+				{profileOpen && (
+					<div className="openProfile boxItems" onClick={close}>
+						<div className="image">
+							<div>
+								<img src={userLogin.user.image} alt="user image" />
+							</div>
 
-              <div className="openProfile-name">
-                <h4>{userLogin.user.fullName}</h4>
-              </div>
-            </div>
-            <Link to="/profile">
-              <div className="box">
-                <IoSettingsOutline className="icon" />
-                <h4>Mi Perfil</h4>
-              </div>
-            </Link>
-            <div className="box">
-              <BsBagCheck className="icon" />
-              <h4>Mis Productos</h4>
-            </div>
-            <div onClick={(event) => handleLogOut(event)} className="box">
-              <BiLogOut className="icon" />
-              <h4>Cerrar Sesión</h4>
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
+							<div className="openProfile-name">
+								<h4>{userLogin.user.fullName}</h4>
+							</div>
+						</div>
+						<Link to="/profile">
+							<div className="box">
+								<IoSettingsOutline className="icon" />
+								<h4>Mi Perfil</h4>
+							</div>
+						</Link>
+						<div className="box">
+							<BsBagCheck className="icon" />
+							<h4>Mis Productos</h4>
+						</div>
+						<div onClick={(event) => handleLogOut(event)} className="box">
+							<BiLogOut className="icon" />
+							<h4>Cerrar Sesión</h4>
+						</div>
+					</div>
+				)}
+			</div>
+		</>
+	);
 };
 
 export default User;
