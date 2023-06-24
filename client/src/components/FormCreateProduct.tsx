@@ -20,7 +20,7 @@ const FormCreateProduct: React.FC = () => {
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	const isLogin = window.localStorage.getItem("isLogin");
+	const isLogin = window.localStorage.getItem("token");
 
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
@@ -38,7 +38,7 @@ const FormCreateProduct: React.FC = () => {
 	const [storage, setStorage] = useLocalStorage("items", formData);
 
 	useEffect(() => {
-		isLogin === "false" ? setStorage({}) : null;
+		!isLogin ? setStorage({}) : null;
 	}, [logged]);
 
 	const handleChange = (
@@ -53,9 +53,7 @@ const FormCreateProduct: React.FC = () => {
 			[name]: value,
 		}));
 
-		isLogin === "true"
-			? setStorage({ ...storage, [name]: value })
-			: setStorage({});
+		isLogin ? setStorage({ ...storage, [name]: value }) : setStorage({});
 
 		setErrors(
 			validate({

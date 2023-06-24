@@ -28,8 +28,6 @@ import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
-
-	const isLogin = window.localStorage.getItem("isLogin");
 	const token = window.localStorage.getItem("token");
 
 	const headers = {
@@ -37,7 +35,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (token && isLogin === "true") {
+		if (token) {
 			axios
 				.get("http://localhost:3001/token", { headers })
 				.then((response) => {
@@ -49,7 +47,6 @@ function App() {
 					};
 
 					dispatch(userLogin(data));
-					dispatch(setUserValidator(true));
 				})
 				.catch((error) => {
 					//? mejorar este error
@@ -74,16 +71,16 @@ function App() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		const fetchUsers = async() =>{
+		const fetchUsers = async () => {
 			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
+				const response = await getAllUsers();
+				if (response) {
+					dispatch(getUsers(response));
+				}
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 		fetchUsers();
 
 		const fetchProducts = async () => {

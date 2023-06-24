@@ -1,26 +1,20 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setUserValidator } from "../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-	const dispatch = useDispatch();
 	const { userLogin } = useSelector((state: RootState) => state.user);
+	const navigate = useNavigate();
+	const session = window.localStorage.getItem("token");
 
 	const handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-
-		window.localStorage.setItem("isLogin", "false");
-
-		dispatch(setUserValidator(false));
+		window.localStorage.removeItem("token");
+		navigate("/");
 	};
-
-	const isLogin = localStorage.getItem("isLogin");
-	if (isLogin === "true") {
-		dispatch(setUserValidator(true));
-	}
 
 	return (
 		<nav className="nav">
@@ -47,19 +41,24 @@ function Navbar() {
 			</ul>
 
 			<SearchBar />
+
 			<div className="nav__user">
-				<div>
-					<Link to="/profile">
-						<img
-							src={userLogin.user.image}
-							alt="user"
-							className="nav__userLogo"
-						/>
-					</Link>
-					<h5 className="nav___userName">{userLogin.user.fullName}</h5>
-				</div>
+				{session && (
+					<div>
+						<Link to="/profile">
+							<img
+								src={userLogin.user.image}
+								alt="user"
+								className="nav__userLogo"
+							/>
+							)
+						</Link>
+						<h5 className="nav___userName">{userLogin.user.fullName}</h5>
+					</div>
+				)}
+
 				<Link to="/login">
-					{isLogin === "false" ? (
+					{!session ? (
 						<button className="nav__button-login">Iniciar Sesión</button>
 					) : (
 						<button
