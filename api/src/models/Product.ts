@@ -34,7 +34,7 @@ class Product extends Model {
 		type: DataType.INTEGER,
 		allowNull: false,
 	})
-	stock!: number;
+	unities!: number;
 
 	@Column({
 		type: DataType.FLOAT,
@@ -46,7 +46,20 @@ class Product extends Model {
 		type: DataType.ARRAY(DataType.STRING),
 		allowNull: false,
 	})
-	images?: string[];
+	images!: string[];
+
+	@Column({
+		type: DataType.STRING,
+		allowNull: false,
+	})
+	status!: string;
+
+	@Column({
+		type: DataType.ENUM("Disponible", "Agotado", "En proceso"),
+		allowNull: false,
+		defaultValue: "Disponible",
+	})
+	stock!: string;
 
 	//Cambié la condición de nulo de ubicación. Necesitamos saber donde se encuentra el produto.
 	@Column({

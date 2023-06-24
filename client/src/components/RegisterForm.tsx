@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { validate } from "../utils/registerValidation";
+import { validate } from "../utils/registerValidation";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
 import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
@@ -9,6 +9,7 @@ import {
 	AiOutlineEye,
 	AiOutlineUser,
 } from "react-icons/ai";
+import { RiErrorWarningLine } from "react-icons/ri";
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
@@ -20,22 +21,23 @@ const RegisterForm = () => {
 	const defaultImage = useSelector(
 		(state: RootState) => state.user.userLogin.user.image
 	);
-	console.log(defaultImage);
 
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
 		password: "",
+		confirm: "",
 		email: "",
 		image: "",
 	});
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [errors, setErrors] = useState<Partial<NewUser>>({});
 	const [_formSubmitted, setFormSubmitted] = useState(false);
-	// const [image, setImage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 		setInputs({ ...inputs, [name]: value });
+		setErrors(validate({ ...inputs, [name]: value }));
 	};
 	const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		try {
@@ -61,15 +63,6 @@ const RegisterForm = () => {
 		}
 	};
 
-	// const handleShowPassword = (
-	//   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	// ) => {
-	//   event.preventDefault();
-	//   setShowPassword(!showPassword);
-	// };
-	// 	setErrors(validate({ ...inputs, [name]: value }));
-	// };
-
 	const handleShowPassword = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
@@ -89,7 +82,6 @@ const RegisterForm = () => {
 			};
 
 			const response = await postUser(user);
-			console.log(response.data);
 
 			if (response.status === 201) {
 				dispatch(addUser(response.data));
@@ -97,7 +89,8 @@ const RegisterForm = () => {
 			alert("Registro exitoso");
 			navigate("/login");
 		} catch (error) {
-			console.error("Error al registrar el usuario", error);
+			console.error(error);
+			setErrorMessage(`${error}`);
 		}
 
 		setInputs({
@@ -110,7 +103,6 @@ const RegisterForm = () => {
 		setFormSubmitted(true);
 	};
 
-	console.log(inputs);
 	return (
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
@@ -128,7 +120,11 @@ const RegisterForm = () => {
 					/>
 					<AiOutlineUser className="icon" />
 				</div>
-				{errors.fullName && <p className="error">{errors.fullName}</p>}
+				{errors.fullName && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.fullName}
+					</p>
+				)}
 
 				<div className="input-field">
 					<input
@@ -143,7 +139,11 @@ const RegisterForm = () => {
 					/>
 					<BiEnvelope className="icon" />
 				</div>
-				{errors.email && <p className="error">{errors.email}</p>}
+				{errors.email && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.email}
+					</p>
+				)}
 
 				<div className="input-field">
 					<input
@@ -157,6 +157,33 @@ const RegisterForm = () => {
 					/>
 					<BiLockAlt className="icon" />
 
+					{/* {showPassword ? (
+            <AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
+          ) : (
+            <AiOutlineEyeInvisible
+              onClick={handleShowPassword}
+              className="showHidePw"
+            />
+          )} */}
+				</div>
+				{errors.password && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.password}
+					</p>
+				)}
+
+				<div className="input-field">
+					<input
+						type={showPassword ? "text" : "password"}
+						name="confirm"
+						placeholder="Confirma tu contraseña"
+						value={inputs.confirm}
+						required
+						autoComplete="confirm-password"
+						onChange={handleInputs}
+					/>
+					<BiLockAlt className="icon" />
+
 					{showPassword ? (
 						<AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
 					) : (
@@ -166,7 +193,11 @@ const RegisterForm = () => {
 						/>
 					)}
 				</div>
-				{errors.password && <p className="error">{errors.password}</p>}
+				{errors.confirm && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.confirm}
+					</p>
+				)}
 
 				<div className="input-field">
 					<input
@@ -178,8 +209,12 @@ const RegisterForm = () => {
 					/>
 					<BiImage className="icon" />
 				</div>
-				{errors.image && <p className="error">{errors.image}</p>}
-
+				{/* {errors.image && <p className="error">{errors.image}</p>} */}
+				{errorMessage && (
+					<p className="error-message">
+						<RiErrorWarningLine className="error-icon" /> {errorMessage}
+					</p>
+				)}
 				<div className="input-field button">
 					<input type="submit" value="Registrarte" />
 				</div>
