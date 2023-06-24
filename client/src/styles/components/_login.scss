@@ -127,8 +127,21 @@
 		}
 	}
 	.error {
-		margin-top: 5px;
+		margin-top: 6px;
 		text-align: left;
 		font-size: 13px;
+		display: flex;
+		align-items: center;
+	}
+	.error-message {
+		color: #f30a0a;
+		margin-top: 15px;
+		text-align: left;
+		display: flex;
+		gap: 5px;
+		font-size: 15px;
+	}
+	.error-icon {
+		width: 20px;
 	}
 }

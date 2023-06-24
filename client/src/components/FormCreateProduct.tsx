@@ -9,6 +9,7 @@ import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -20,7 +21,7 @@ const FormCreateProduct: React.FC = () => {
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	const isLogin = window.localStorage.getItem("token");
+	const session = window.localStorage.getItem("token");
 
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
@@ -38,7 +39,7 @@ const FormCreateProduct: React.FC = () => {
 	const [storage, setStorage] = useLocalStorage("items", formData);
 
 	useEffect(() => {
-		!isLogin ? setStorage({}) : null;
+		!session ? setStorage({}) : null;
 	}, [logged]);
 
 	const handleChange = (
@@ -47,13 +48,14 @@ const FormCreateProduct: React.FC = () => {
 		>
 	) => {
 		const { name, value } = event.target;
+		console.log(name, value);
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
 			[name]: value,
 		}));
 
-		isLogin ? setStorage({ ...storage, [name]: value }) : setStorage({});
+		session ? setStorage({ ...storage, [name]: value }) : setStorage({});
 
 		setErrors(
 			validate({
@@ -149,101 +151,125 @@ const FormCreateProduct: React.FC = () => {
 	};
 
 	return (
-		<form className="form" onSubmit={handleSubmit}>
-			<h2>Publica tu Producto</h2>
+		<>
+			{session ? (
+				<form className="form" onSubmit={handleSubmit}>
+					<h2>Publica tu Producto</h2>
 
-			<label className="from__input-name">
-				Nombre del producto:
-				<input
-					type="text"
-					name="name"
-					placeholder="Ingresar un nombre"
-					value={storage.name ? storage.name : formData.name}
-					onChange={handleChange}
-				/>
-				{errors.name && <p className="error">{errors.name}</p>}
-			</label>
+					<label className="from__input-name">
+						Nombre del producto:
+						<input
+							type="text"
+							name="name"
+							placeholder="Ingresar un nombre"
+							value={storage.name ? storage.name : formData.name}
+							onChange={handleChange}
+						/>
+						{errors.name && <p className="error">{errors.name}</p>}
+					</label>
 
-			<label htmlFor="form__input-location">
-				Ubicacion:
-				<input
-					type="text"
-					name="location"
-					placeholder="Ingresa tu ubicación"
-					onChange={handleChange}
-					value={storage.location ? storage.location : formData.location}
-				/>
-				{errors.location && <p className="error">{errors.location}</p>}
-			</label>
+					<label htmlFor="form__input-location">
+						Ubicacion:
+						<input
+							type="text"
+							name="location"
+							placeholder="Ingresa tu ubicación"
+							onChange={handleChange}
+							value={storage.location ? storage.location : formData.location}
+						/>
+						{errors.location && <p className="error">{errors.location}</p>}
+					</label>
 
-			<label htmlFor="form__input-stock">
-				Unidades:
-				<input
-					name="stock"
-					value={storage.stock ? storage.stock : formData.stock}
-					onChange={handleChange}
-					type="number"
-				/>
-				{errors.stock && <p className="error">{errors.stock}</p>}
-			</label>
+					<label htmlFor="form__input-stock">
+						Unidades:
+						<input
+							name="stock"
+							value={storage.stock ? storage.stock : formData.stock}
+							onChange={handleChange}
+							type="number"
+						/>
+						{errors.stock && <p className="error">{errors.stock}</p>}
+					</label>
 
-			<label htmlFor="form__input-image">
-				Imagen:
-				<Dropzone onDrop={uploadImages}>
-					{({ getRootProps, getInputProps }) => (
-						<section>
-							<div {...getRootProps({ className: "dropzone" })}>
-								<input {...getInputProps()} />
-								<span>📂</span>
-							</div>
-						</section>
+					<label htmlFor="form__input-image">
+						Imagen:
+						<Dropzone onDrop={uploadImages}>
+							{({ getRootProps, getInputProps }) => (
+								<section>
+									<div {...getRootProps({ className: "dropzone" })}>
+										<input {...getInputProps()} />
+										<span>📂</span>
+									</div>
+								</section>
+							)}
+						</Dropzone>
+						{errors.images && <p className="error">{errors.images}</p>}
+					</label>
+					{imagePreview()}
+
+					<label htmlFor="form__category">Categoría:</label>
+					<select
+						name="categoryID"
+						value={
+							storage.categoryID ? storage.categoryID : formData.categoryID
+						}
+						onChange={handleChange}
+					>
+						{categories.map((category: any, index: number) => (
+							<option key={index} value={category.id}>
+								{category.name}
+							</option>
+						))}
+					</select>
+
+					<label htmlFor="price">
+						Precio:
+						<input
+							type="number"
+							id="price"
+							name="price"
+							value={storage.price ? storage.price : formData.price}
+							onChange={handleChange}
+						/>
+						{errors.price && <p className="error">{errors.price}</p>}
+					</label>
+
+					<label htmlFor="form__description">Descripción:</label>
+					<textarea
+						name="description"
+						placeholder="Ingresa una descripción para tu producto"
+						value={
+							storage.description ? storage.description : formData.description
+						}
+						onChange={handleChange}
+					/>
+					{errors.description && <p className="error">{errors.description}</p>}
+					{Object.values(formData).every(
+						(value) => Boolean(value) === null || undefined
+					) ? (
+						<button disabled>Publicar</button>
+					) : (
+						<button type="submit">Publicar</button>
 					)}
-				</Dropzone>
-				{errors.images && <p className="error">{errors.images}</p>}
-			</label>
-			{imagePreview()}
-
-			<label htmlFor="form__category">Categoría:</label>
-			<select
-				name="categoryID"
-				value={storage.categoryID ? storage.categoryID : formData.categoryID}
-				onChange={handleChange}
-			>
-				{categories.map((category: any, index: number) => (
-					<option key={index} value={category.id}>
-						{category.name}
-					</option>
-				))}
-			</select>
-
-			<label htmlFor="price">
-				Precio:
-				<input
-					type="number"
-					id="price"
-					name="price"
-					value={storage.price ? storage.price : formData.price}
-					onChange={handleChange}
-				/>
-				{errors.price && <p className="error">{errors.price}</p>}
-			</label>
-
-			<label htmlFor="form__description">Descripción:</label>
-			<textarea
-				name="description"
-				placeholder="Ingresa una descripción para tu producto"
-				value={storage.description ? storage.description : formData.description}
-				onChange={handleChange}
-			/>
-			{errors.description && <p className="error">{errors.description}</p>}
-			{Object.values(formData).every(
-				(value) => Boolean(value) === null || undefined
-			) ? (
-				<button disabled>Publicar</button>
+				</form>
 			) : (
-				<button type="submit">Publicar</button>
+				<div className="form-verification container">
+					<div className="form-verification-card">
+						<h1 className="form-verification-title">
+							¡Hola! Para vender, ingresá a tu cuenta
+						</h1>
+
+						<Link to="/register">
+							<button className="form-verification-button">Crear cuenta</button>
+						</Link>
+
+						<Link to="/login">
+							<h2 className="form-verification-text">Ingresar</h2>
+						</Link>
+					</div>
+				</div>
 			)}
-		</form>
+		</>
 	);
 };
 

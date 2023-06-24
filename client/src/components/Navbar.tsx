@@ -1,12 +1,10 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
+import User from "./User";
 
 function Navbar() {
-	const { userLogin } = useSelector((state: RootState) => state.user);
 	const navigate = useNavigate();
 	const session = window.localStorage.getItem("token");
 
@@ -16,31 +14,45 @@ function Navbar() {
 		navigate("/");
 	};
 
-	return (
-		<nav className="nav">
-			<Link to="/">
-				<div className="nav__logo">
-					<img width={70} src={logo} alt="marketplace logo" />
-					<h1>Facil Market</h1>
-				</div>
-			</Link>
 
-			<ul className="nav__items">
-				<Link to="/">
-					<li>Inicio</li>
-				</Link>
+  return (
+    <nav className="nav">
+      <Link to="/">
+        <div className="nav__logo">
+          <img width={70} src={logo} alt="marketplace logo" />
+          <h1>Facil Market</h1>
+        </div>
+      </Link>
 
-				<Link to="/products">
-					<li>Market</li>
-				</Link>
+      <ul className="nav__items">
+        <Link to="/">
+          <li>Inicio</li>
+        </Link>
 
-				<li>Nosotros</li>
-				<Link to="/vender">
-					<button className="nav__button-sell">Vender</button>
-				</Link>
-			</ul>
+        <Link to="/products">
+          <li>Market</li>
+        </Link>
 
-			<SearchBar />
+        <li>Nosotros</li>
+
+        <Link to="/vender">
+          <button className="nav__button-sell">Vender</button>
+        </Link>
+      </ul>
+
+      <SearchBar />
+      <div className="nav__user">
+        {session && <User handleLogOut={handleLogOut} />}
+
+        {!session && (
+          <Link to="/login">
+            <button className="nav__button-login">Iniciar Sesión</button>
+          </Link>
+        )}
+      </div>
+    </nav>
+  );
+		/* 	<SearchBar />
 
 			<div className="nav__user">
 				{session && (
@@ -71,7 +83,7 @@ function Navbar() {
 				</Link>
 			</div>
 		</nav>
-	);
+	); */
 }
 
 export default Navbar;

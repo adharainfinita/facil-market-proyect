@@ -14,8 +14,7 @@ export const postUser = async (userData: NewUser) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
-		throw error;
+		throw errorMessage;
 	}
 };
 
@@ -50,12 +49,13 @@ export const updateUser = async (userId: string, userData: user) => {
 export const logUser = async (logData: LoginData) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/login`, logData);
-
 		return data;
-	} catch (error: any) {
-		const errorMessage = error.response
-			? error.response.data.error
-			: error.message;
-		alert(errorMessage);
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+
+		throw errorMessage;
 	}
 };

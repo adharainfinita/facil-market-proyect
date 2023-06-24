@@ -1,20 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
-import Form from "./components/FormCreateProduct";
+import FormCreateProduct from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
 import VerificationPage from "./pages/VerificationPage";
-import Login from "./pages/Login2";
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-import {
-	getUsers,
-	setUserValidator,
-	userLogin,
-} from "./redux/features/userSlice";
+import { getUsers, userLogin } from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
 import { useEffect } from "react";
@@ -22,20 +17,19 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import axios from "axios";
-
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
-	const token = window.localStorage.getItem("token");
+	const session = window.localStorage.getItem("token");
 
 	const headers = {
-		Authorization: `Bearer ${token}`,
+		Authorization: `Bearer ${session}`,
 	};
 
 	useEffect(() => {
-		if (token) {
+		if (session) {
 			axios
 				.get("http://localhost:3001/token", { headers })
 				.then((response) => {
@@ -50,7 +44,6 @@ function App() {
 				})
 				.catch((error) => {
 					//? mejorar este error
-					dispatch(setUserValidator(false));
 					console.log(error);
 				});
 		}
@@ -71,7 +64,7 @@ function App() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		const fetchUsers = async () => {
+		/* const fetchUsers = async() =>{
 			try {
 				const response = await getAllUsers();
 				if (response) {
@@ -81,7 +74,7 @@ function App() {
 				console.log(error);
 			}
 		};
-		fetchUsers();
+		fetchUsers(); */
 
 		const fetchProducts = async () => {
 			try {
@@ -96,6 +89,7 @@ function App() {
 			}
 		};
 		fetchProducts();
+
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
@@ -117,7 +111,7 @@ function App() {
 
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/vender" element={<Form />} />
+				<Route path="/vender" element={<FormCreateProduct />} />
 				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/profile" element={<UserProfile />} />
 				<Route path="/verification" element={<VerificationPage />} />

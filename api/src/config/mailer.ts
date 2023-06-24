@@ -4,9 +4,8 @@ dotenv.config();
 const { CREDENTIAL_MAIL } = process.env;
 
 const nodemailer = require("nodemailer");
-const ownerEmail = "projecto.final.market@gmail.com"; // ingresas mail
-const appPasword = `${CREDENTIAL_MAIL}`; //ingresar clave de aplicacion de gmail
-console.log(CREDENTIAL_MAIL);
+const ownerEmail = "projecto.final.market@gmail.com";// ingresas mail 
+const appPasword = CREDENTIAL_MAIL //ingresar clave de aplicacion de gmail
 
 export const transporter = nodemailer.createTransport({
 	host: "smtp.gmail.com",
