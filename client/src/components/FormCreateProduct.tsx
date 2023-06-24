@@ -40,7 +40,6 @@ const FormCreateProduct: React.FC = () => {
 		session ? setFormData({ ...storage }) : null;
 	}, []);
 
-	console.log(formData);
 	const handleChange = (
 		event: ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -138,8 +137,6 @@ const FormCreateProduct: React.FC = () => {
 				price: Number(formData.price),
 				rating: 0,
 			};
-
-			console.log(product);
 
 			postProduct(product, Headers);
 			setErrors({});
