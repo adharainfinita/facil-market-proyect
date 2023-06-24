@@ -261,13 +261,8 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					{Object.values(formData).every(
-						(value) => Boolean(value) === null || undefined
-					) ? (
-						<button disabled>Publicar</button>
-					) : (
-						<button type="submit">Publicar</button>
-					)}
+					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
+					>Publicar</button>
 				</form>
 			) : (
 				<div className="form-verification container">
