@@ -21,7 +21,9 @@ const UserProfile: React.FC = () => {
 	const [newEmail, setNewEmail] = useState("");
 	const [newImage, setNewImage] = useState("");
 	const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
+
 	const products = useSelector((state: RootState) => state.product.products);
 
 	const userProducts = products.filter(
@@ -37,11 +39,6 @@ const UserProfile: React.FC = () => {
 				image: newImage !== "" ? newImage : userLogin.user.image,
 				password: newPassword !== "" ? newPassword : userLogin.user.password,
 			};
-
-			/* console.log(products);
-        if(products){ */
-			/* console.log(productsUser)
-      }   */
 
 			await updateUser(userLogin.user.id, updatedData);
 

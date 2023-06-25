@@ -4,27 +4,29 @@ export interface UXDataLogin {
 	image: string;
 	token: string;
 }
+
 // Interfaces de de estados global
 export interface User {
 	id: string;
-	name: string;
-	lastName: string;
+	fullName: string;
 	email: string;
 	password: string;
 	image: string;
 }
 
 export interface FiltersCaché {
-	userName: string | undefined;
+	status:string |  undefined;
 	categoryName: string | undefined;
 	location: string | undefined;
 }
-
+//stock: 'Disponible, agotado, en proceso' Unidades: 1,2,3
 export interface Product {
 	id: number;
 	name: string;
 	description: string;
-	stock: number;
+	status: string;
+	unities: number;
+	stock: string;
 	rating: number;
 	images: string[];
 	location: string;
@@ -47,7 +49,9 @@ export interface productData {
 	id: number;
 	name: string;
 	description: string;
-	stock: number;
+	status: string;
+	stock: string;
+	unities: number;
 	rating: number;
 	image: string[];
 	location: string;
@@ -93,7 +97,9 @@ export interface FormCreateProduct {
 	categoryID: number;
 	name: string;
 	description: string;
-	stock: number;
+	unities: number;
+	status: string,
+	stock: string;
 	rating?: number;
 	image?: string[];
 	location: string;
@@ -105,7 +111,8 @@ export interface ErrorsFormProduct {
 	categoryID: number;
 	name: string;
 	description: string;
-	stock: string;
+	unities: string;
+	status: string;
 	rating?: string;
 	images?: string[];
 	location: string;

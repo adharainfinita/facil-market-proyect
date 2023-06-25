@@ -1,16 +1,18 @@
 export interface productProps {
 	id: number;
 	name: string;
-	description: string;
-	stock: number;
-	rating: number;
-	image: string;
-	location: string;
-	price: number;
-	categoryID: number;
-	categoryName: string;
+	description?: string;
+	unities?: number;
+	stock?: string;
+	rating?: number;
+	image?: string;
+	location?: string;
+	price?: number;
+	categoryID?: number;
+	categoryName?: string;
 	userID: number;
-	userName: string;
+	userName?: string;
+	status?: string;
 }
 
 export interface reviewProps {

@@ -3,18 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-//import { RootState } from "../redux/store";
 import { LoginData } from "../utils/interfaces";
 import { logUser } from "../services/userServices";
-import { loggedUser, setUserValidator } from "../redux/features/userSlice";
-
-// import { setLoggedInUserId } from "../redux/features/userSlice";
+import { loggedUser } from "../redux/features/userSlice";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
-	//const { userValidation: access } = useSelector((state: RootState) => state.user);
 
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -23,7 +19,7 @@ const Login: React.FC = () => {
 		password: "",
 	});
 
-	const [_message, setMessage] = useState("");
+	const [message, setMessage] = useState("");
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -45,15 +41,14 @@ const Login: React.FC = () => {
 			const response = await logUser(formData);
 			const token = response.token;
 			window.localStorage.setItem("token", token);
-			window.localStorage.setItem("isLogin", "true");
 
 			if (response) {
 				dispatch(loggedUser(response));
-				dispatch(setUserValidator(true));
 				navigate("/");
 			}
 		} catch (error) {
 			setMessage(`${error}`);
+			console.error(error);
 		}
 	};
 
@@ -103,6 +98,11 @@ const Login: React.FC = () => {
 								/>
 							)}
 						</div>
+						{message && (
+							<p className="error-message">
+								<RiErrorWarningLine className="error-icon" /> {message}
+							</p>
+						)}
 
 						<div className="checkbox-text">
 							<div className="checkbox-content">

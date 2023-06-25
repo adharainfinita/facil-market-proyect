@@ -6,7 +6,7 @@ interface MercadoPagoButtonProps {
 	product: Product;
 }
 
-const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
+export const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	console.log(product);
@@ -23,19 +23,15 @@ const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
 		setLoading(false);
 	};
 
-	return (
-		<div>
-			{!loading ? (
-				<button className="detail-product-btn" onClick={generateLink}>
-					Comprar ahora!
-				</button>
-			) : (
-				<button className="detail-product-btn" disabled>
-					...
-				</button>
-			)}
-		</div>
-	);
-};
-
-export default PaymentButton;
+  return (
+    <div>
+     {!loading ? 
+     <button 
+     className="detail-product-btn" 
+     onClick={generateLink}>Comprar ahora!</button>
+      : 
+      <button className="detail-product-btn" disabled>...</button> }
+         
+    </div>
+  )
+}

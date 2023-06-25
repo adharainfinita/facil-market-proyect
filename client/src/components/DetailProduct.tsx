@@ -1,12 +1,18 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
-import PaymentButton from "./PaymentButton";
+import {PaymentButton} from "./PaymentButton";
 import { useEffect, useState } from "react";
 import { NotificationType } from "../utils/interfaces";
+/* import RatingStars from "./ReviewStar"; */
+import { useDispatch } from "react-redux";
+import { updateRating } from "../redux/features/productSlice";
+import { updateProduct } from "../services/productServices";
 
 const DetailProduct = () => {
 	const product = useProduct();
+	const dispatch = useDispatch();
 	const [selectedImage, setSelectedImage] = useState<string>("");
+	const [_rating, setRating] = useState(0);
 	const [notification, setNotification] = useState<NotificationType>({
 		isOpen: false,
 		type: null,
@@ -42,6 +48,17 @@ const DetailProduct = () => {
 
 	const handleImageClick = (image: string) => {
 		setSelectedImage(image);
+	};
+
+	const handleRatingChange = async (newRating: number) => {
+		dispatch(updateRating(newRating));
+		setRating(newRating);
+		// Actualizar el objeto `product` si es necesario
+		console.log(product.id, newRating);
+
+		const response = await updateProduct(product);
+		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
+		console.log("Nueva calificación:", response.rating);
 	};
 
 	return (
@@ -111,20 +128,29 @@ const DetailProduct = () => {
 						<h2>Ubicación:</h2>
 						<h3>{product.location}</h3>
 					</section>
-
 					<section className="detail-product-section">
-						<h2>Unidades:</h2>
-						<h3>{product.stock}</h3>
+						<h2>Estado:</h2>
+						<h3>{product.status}</h3>
 					</section>
-					<div className=".detail-product-button">
-						<PaymentButton product={product} />
-					</div>
 
-					{notification.isOpen && <div>{notification.content}</div>}
-				</div>
-			</div>
-		</div>
-	);
+          <section className="detail-product-section">
+            <h2>Unidades:</h2>
+            <h3>{product.stock}</h3>
+          </section>
+          <div className=".detail-product-button">
+           <PaymentButton product={product} /> 
+          </div>
+          
+
+          {notification.isOpen && (
+            <div>
+              {notification.content}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default DetailProduct;

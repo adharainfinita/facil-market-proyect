@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import {
 	filterProductsByCategory,
-	filterProductsByUser,
+	filterProductsByStatus,
 	filterProductsByLocation,
 	orderProducts,
 	resetFilters,
@@ -14,15 +14,14 @@ const Filters = () => {
 	const products = useSelector(
 		(state: RootState) => state.product.originalCopy
 	);
-	const users = useSelector((state: RootState) => state.user.users);
 
 	const handleProductFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = event.target;
 		if (name === "forCategory") {
 			dispatch(filterProductsByCategory(value));
 		}
-		if (name === "forUser") {
-			dispatch(filterProductsByUser(value));
+		if (name === "forStatus") {
+			dispatch(filterProductsByStatus(value));
 		}
 		if (name === "forLocation") {
 			dispatch(filterProductsByLocation(value));
@@ -71,19 +70,16 @@ const Filters = () => {
 						</option>
 					))}
 				</select>
-				<label htmlFor="forUser">Por usuario:</label>
+				<label htmlFor="forStatus">Por Estado:</label>
 				<select
-					name="forUser"
+					name="forStatus"
 					className="filter-select"
 					onChange={handleProductFilter}
 					defaultValue={"All"}
 				>
 					<option value="All">Default</option>
-					{users.map((user: any, index: number) => (
-						<option key={index} value={user.name}>
-							{user.name}
-						</option>
-					))}
+					<option value={"Nuevo"}>Nuevo</option>
+					<option value={"Usado"}>Usado</option>
 				</select>
 				<label htmlFor="forLocation">Por locación:</label>
 				<select

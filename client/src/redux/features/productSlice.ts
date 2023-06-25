@@ -18,7 +18,9 @@ const initialState: ProductState = {
 		id: 0,
 		name: "",
 		description: "",
-		stock: 0,
+		status: "",
+		unities: 0,
+		stock: "",
 		rating: 0.0,
 		images: [""],
 		location: "",
@@ -29,7 +31,7 @@ const initialState: ProductState = {
 		userName: "",
 	},
 	requireFilters: {
-		userName: "",
+		status: "",
 		categoryName: "",
 		location: "",
 	},
@@ -56,6 +58,10 @@ const productSlice = createSlice({
 			state.originalCopy = action.payload;
 		},
 
+		updateRating: (state, action: PayloadAction<number>) => {
+			state.detail.rating = action.payload;
+		},
+
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
 			state.requireFilters.categoryName = action.payload;
@@ -66,9 +72,9 @@ const productSlice = createSlice({
 					(match) => match.categoryName === action.payload
 				);
 			}
-			if (state.requireFilters.userName) {
+			if (state.requireFilters.status) {
 				productsFound = productsFound.filter(
-					(match) => match.userName === state.requireFilters.userName
+					(match) => match.status === state.requireFilters.status
 				);
 			}
 			if (state.requireFilters.location) {
@@ -77,15 +83,17 @@ const productSlice = createSlice({
 				);
 			}
 
+
 			state.products = productsFound;
 		},
-		filterProductsByUser: (state, action: PayloadAction<string>) => {
+		filterProductsByStatus: (state, action: PayloadAction<string>) => {
 			let productsFound: Product[] = [...state.originalCopy];
-			state.requireFilters.userName = action.payload;
-			if (action.payload === "All") state.requireFilters.userName = "";
+			state.requireFilters.status = action.payload;
+
+			if (action.payload === "All") state.requireFilters.status = "";
 			else {
 				productsFound = state.originalCopy.filter(
-					(match) => match.userName === action.payload
+					(match) => match.status === action.payload
 				);
 			}
 			if (state.requireFilters.categoryName) {
@@ -117,9 +125,9 @@ const productSlice = createSlice({
 					(match) => match.categoryName === state.requireFilters.categoryName
 				);
 			}
-			if (state.requireFilters.userName) {
+			if (state.requireFilters.status) {
 				productsFound = productsFound.filter(
-					(match) => match.userName === state.requireFilters.userName
+					(match) => match.status === state.requireFilters.status
 				);
 			}
 
@@ -174,13 +182,13 @@ export const {
 	getProducts,
 	getDetail,
 	filterProductsByCategory,
-	filterProductsByUser,
+	filterProductsByStatus,
 	filterProductsByLocation,
 	orderProducts,
 	cleanDetail,
 	getSearchedProducts,
 	resetFilters,
+	updateRating,
 } = productSlice.actions;
 export default productSlice.reducer;
-export const selectSearchedProducts = (state: RootState) =>
-	state.product.products;
+	/* state.product.products; */

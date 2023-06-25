@@ -11,7 +11,7 @@ export const createUser = async (authUser: userInterface) => {
 	const userFound = await User.findOne({ where: { email: authUser.email } });
 
 	if (userFound) {
-		throw new Error("Ya existe este usuario");
+		throw new Error("Ya existe una cuenta creada con ese e-mail");
 	}
 
 	const passwordHash = await encrypt(authUser.password);
@@ -72,7 +72,9 @@ export const userCredentials = async (authLogin: loginData) => {
 
 	//? Validacion user
 	if (!userExist?.email) {
-		throw new Error("ESTE EMAIL NO SE ENCUENTRA REGISTRADO");
+		throw new Error(
+			"El correo electrónico que ingresaste no se encuentra registrado."
+		);
 	}
 
 	//? traigo la password encryptada de la db y comparo con el recibido por body
@@ -80,7 +82,7 @@ export const userCredentials = async (authLogin: loginData) => {
 	const isCorrect = await verified(authLogin.password, passwordHash);
 
 	//? si no coincide
-	if (!isCorrect) throw new Error("CONTRASEÑA INCORRECTA");
+	if (!isCorrect) throw new Error("Revisá tu contraseña.");
 
 	//? si todo sale bien retorno el usuario
 
@@ -133,4 +135,19 @@ export const sendEmailToUser = async (email: string, name: string) => {
         <p style="color: #333333;">El equipo de Facil Market</p>
       </div>`,
 	});
+};
+
+export const changeUser = async (userId: string, updates: object) => {
+	const user = await User.findByPk(userId);
+
+	// Encuentra y actualiza el usuario por su ID
+	if (!user) {
+		throw Error("Usuario no encontrado");
+	}
+
+	// Actualiza los campos proporcionados en el objeto de actualización
+	await user.update(updates);
+	return true;
+	// Object.assign(user, updates);
+	// await user.save();
 };

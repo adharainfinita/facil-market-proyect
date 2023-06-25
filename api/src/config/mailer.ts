@@ -4,7 +4,7 @@ dotenv.config();
 const { CREDENTIAL_MAIL } = process.env;
 
 const nodemailer = require("nodemailer");
-const ownerEmail = "dether2011@gmail.com"; // ingresas mail
+const ownerEmail = "projecto.final.market@gmail.com"; // ingresas mail
 const appPasword = `${CREDENTIAL_MAIL}`; //ingresar clave de aplicacion de gmail
 console.log(CREDENTIAL_MAIL);
 
