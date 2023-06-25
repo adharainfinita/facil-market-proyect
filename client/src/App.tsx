@@ -24,10 +24,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import axios from "axios";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
+
+import axios from "axios";
 
 function App() {
 	const dispatch = useDispatch();

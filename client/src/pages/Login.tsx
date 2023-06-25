@@ -7,6 +7,7 @@ import { LoginData } from "../utils/interfaces";
 import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
+import GoogleAuth from "../components/GoogleLogin";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -57,6 +58,9 @@ const Login: React.FC = () => {
 			<div className="forms">
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
+
+					<div className="google-login"><GoogleAuth/></div>
+					<hr />
 
 					<form onSubmit={handleSubmit}>
 						<div className="input-field">

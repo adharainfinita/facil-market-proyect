@@ -18,7 +18,7 @@ const FormCreateProduct: React.FC = () => {
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
@@ -261,13 +261,8 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					{Object.values(formData).every(
-						(value) => Boolean(value) === null || undefined
-					) ? (
-						<button disabled>Publicar</button>
-					) : (
-						<button type="submit">Publicar</button>
-					)}
+					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
+					>Publicar</button>
 				</form>
 			) : (
 				<div className="form-verification container">
