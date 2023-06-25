@@ -149,15 +149,14 @@ const productSlice = createSlice({
 							if (a.name < b.name) return -1;
 							if (a.name > b.name) return 1;
 							return 0;
-					  })
+					})
 					: productsCopy.sort((a, b) => {
 							if (a.name > b.name) return -1;
 							if (a.name < b.name) return 1;
 							return 0;
-					  });
+					});
 			}
 			state.products = productsCopy;
-			state.originalCopy = productsCopy;
 		},
 		getDetail: (state, action: PayloadAction<Product>) => {
 			state.detail = action.payload;
@@ -166,16 +165,6 @@ const productSlice = createSlice({
 			state.detail = action.payload;
 		},
 	},
-	/* extraReducers: (builder) => {
-		builder.addCase(getAllProducts.fulfilled, (state, action) => {
-			state.products = action.payload;
-			state.originalCopy = action.payload;
-		});
-		builder.addCase(getAllProducts.rejected, (state, action) => {
-			state.products = [];
-			console.log(action);
-		});
-	}, */
 });
 
 export const {
