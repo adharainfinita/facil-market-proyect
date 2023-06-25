@@ -73,11 +73,11 @@ export const findProductByName = async (name: string) => {
 	});
 
 	if (!name) {
-		throw new Error(`Name was expected`);
+		throw new Error(`Se esperaba un nombre`);
 	}
 
 	if (!Object.keys(responseDB).length) {
-		throw new Error(`No results found for: ${name}`);
+		throw new Error(`No se encuentra resultados para: ${name}`);
 	}
 
 	return responseDB;

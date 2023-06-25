@@ -17,6 +17,7 @@ const SearchBar = () => {
 
 	const handleSearch = async () => {
 		try {
+			navigate("/products");
 			const filteredProducts = await getProductsByName(searchTerm);
 			if (filteredProducts.length === 0) {
 				setError(`No se encontro: ${searchTerm}`);
