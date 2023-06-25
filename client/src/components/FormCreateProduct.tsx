@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -10,15 +10,20 @@ import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
+import { getAllProducts } from "../services/productServices";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
+		name: "",
+	});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
@@ -147,6 +152,20 @@ const FormCreateProduct: React.FC = () => {
 			alert("Producto creado correctamente");
 			window.localStorage.removeItem("items");
 			navigate("/products");
+
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
 			alert("Datos incompletos");
@@ -261,8 +280,12 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
-					>Publicar</button>
+					<button
+						disabled={Object.keys(errors).length > 0 ? true : false}
+						type="submit"
+					>
+						Publicar
+					</button>
 				</form>
 			) : (
 				<div className="form-verification container">

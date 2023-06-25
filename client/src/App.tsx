@@ -27,6 +27,8 @@ import { getCategory } from "./services/categoryServices";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
+import { getAllProducts } from "./services/productServices";
+import { getProducts } from "./redux/features/productSlice";
 
 import axios from "axios";
 
@@ -102,7 +104,7 @@ function App() {
 		};
 		fetchUsers();
 
-		/* const fetchProducts = async () => {
+		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
 				if (response) {
@@ -114,7 +116,8 @@ function App() {
 				console.error("Error al obtener los productos:", error);
 			}
 		};
-		fetchProducts(); */
+		fetchProducts();
+
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
