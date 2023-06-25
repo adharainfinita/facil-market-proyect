@@ -29,6 +29,8 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
 
 import axios from "axios";
+import { getAllProducts } from "./services/productServices";
+import { getProducts } from "./redux/features/productSlice";
 
 function App() {
 	const dispatch = useDispatch();
@@ -102,7 +104,7 @@ function App() {
 		};
 		fetchUsers();
 
-		/* const fetchProducts = async () => {
+		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
 				if (response) {
@@ -114,7 +116,7 @@ function App() {
 				console.error("Error al obtener los productos:", error);
 			}
 		};
-		fetchProducts(); */
+		fetchProducts(); 
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();

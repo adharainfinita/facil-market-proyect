@@ -1,21 +1,23 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { postProduct } from "../services/productServices";
+import { getAllProducts, postProduct } from "../services/productServices";
 import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
 	const session = window.localStorage.getItem("token");
+	const dispatch = useDispatch()
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
@@ -147,6 +149,19 @@ const FormCreateProduct: React.FC = () => {
 			alert("Producto creado correctamente");
 			window.localStorage.removeItem("items");
 			navigate("/products");
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
 			alert("Datos incompletos");
