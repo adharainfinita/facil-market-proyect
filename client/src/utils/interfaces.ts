@@ -101,7 +101,7 @@ export interface FormCreateProduct {
 	status: string,
 	stock: string;
 	rating?: number;
-	image?: string[];
+	images: string[];
 	location: string;
 	price: number;
 }
@@ -111,12 +111,12 @@ export interface ErrorsFormProduct {
 	categoryID: number;
 	name: string;
 	description: string;
-	unities: string;
-	status: string;
 	rating?: string;
-	images?: string[];
 	location: string;
 	price: string;
+	status: string;
+	unities: string;
+	images: string;
 }
 
 export interface isLogin {
