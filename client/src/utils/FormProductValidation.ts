@@ -14,10 +14,13 @@ export const validate = (data: FormCreateProduct) => {
 	}
 
 	//? validar stock
-	if (!data.stock) {
-		errors.stock = "Este campo es obligatorio.";
-	} else if (data.stock < 0) {
-		errors.stock = "El valor ingresado no es válido";
+	if (!data.unities) {
+		errors.unities = "Este campo es obligatorio.";
+	} else if (data.unities < 0) {
+		errors.unities = "El valor ingresado no es válido";
+	}
+	if(!data.status){
+		errors.status= 'Este campo es es obligatorio.';
 	}
 
 	//? validar price

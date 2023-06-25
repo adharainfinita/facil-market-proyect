@@ -14,17 +14,16 @@ import { Link } from "react-router-dom";
 import { Product } from "../utils/interfaces";
 
 const UserProfile: React.FC = () => {
-  const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newImage, setNewImage] = useState("");
-  const [isPasswordChanged, setIsPasswordChanged] = useState(false);
-  // const [selectedImage, setSelectedImage] = useState("");
-	console.log(newImage);
-	
-  const userLogin = useSelector((state: RootState) => state.user.userLogin);
+	const dispatch = useDispatch();
+	const [showPassword, setShowPassword] = useState(false);
+	const [newPassword, setNewPassword] = useState("");
+	const [newName, setNewName] = useState("");
+	const [newEmail, setNewEmail] = useState("");
+	const [newImage, setNewImage] = useState("");
+	const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
+
+	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 
   const products = useSelector((state: RootState) => state.product.products);
 
@@ -32,15 +31,15 @@ const UserProfile: React.FC = () => {
     (product: Product) => product.userID === userLogin.user.id
   );
 
-  const handleFieldChange = async (): Promise<void> => {
-    try {
-      const updatedData: user = {
-        fullName: newName !== "" ? newName : userLogin.user.fullName,
-        email: newEmail !== "" ? newEmail : userLogin.user.email,
-        id: userLogin.user.id,
-        image: newImage !== "" ? newImage : userLogin.user.image,
-        password: newPassword !== "" ? newPassword : userLogin.user.password,
-      };
+	const handleFieldChange = async (): Promise<void> => {
+		try {
+			const updatedData: user = {
+				fullName: newName !== "" ? newName : userLogin.user.fullName,
+				email: newEmail !== "" ? newEmail : userLogin.user.email,
+				id: userLogin.user.id,
+				image: newImage !== "" ? newImage : userLogin.user.image,
+				password: newPassword !== "" ? newPassword : userLogin.user.password,
+			};
 
       await updateUser(userLogin.user.id, updatedData);
 

@@ -5,7 +5,7 @@ export function useLocalStorage(key: string, initialValue: any) {
 	const parseValue = () => {
 		try {
 			//? Obtengo la informacion segun la key del local storage
-			const item = localStorage.getItem(key);
+			const item = window.localStorage.getItem(key);
 
 			//? Si existe la key parseo la info si no devuelvo el estado inicial
 			return item ? JSON.parse(item) : initialValue;

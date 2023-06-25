@@ -1,82 +1,90 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { RootState } from "../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserValidator } from "../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
 import User from "./User";
 import { useState } from "react";
 
 function Navbar() {
-  const dispatch = useDispatch();
-  const { userValidation } = useSelector((state: RootState) => state.user);
-  const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
+	const navigate = useNavigate();
+	const session = window.localStorage.getItem("token");
 
-  const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    window.localStorage.setItem("isLogin", "false");
-    dispatch(setUserValidator(false));
-  };
+	const handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		window.localStorage.removeItem("token");
+		window.localStorage.removeItem("items");
+		navigate("/");
+	};
 
-  const handleMouseEnter = () => {
-    setProfileOpen(true);
-  };
+	return (
+		<nav className="nav">
+			<Link to="/">
+				<div className="nav__logo">
+					<img width={70} src={logo} alt="marketplace logo" />
+					<h1>Facil Market</h1>
+				</div>
+			</Link>
 
-  const handleMouseLeave = () => {
-    setProfileOpen(false);
-  };
+			<ul className="nav__items">
+				<Link to="/">
+					<li>Inicio</li>
+				</Link>
 
-  const isLogin = localStorage.getItem("isLogin");
+				<Link to="/products">
+					<li>Market</li>
+				</Link>
 
-  if (isLogin === "true") {
-    dispatch(setUserValidator(true));
-  }
+				<li>Nosotros</li>
 
-  return (
-    <header className="header">
-      <nav className="nav">
-        <Link to="/">
-          <div className="nav__logo">
-            <img width={70} src={logo} alt="marketplace logo" />
-            <h1>Facil Market</h1>
-          </div>
-        </Link>
+				<Link to="/vender">
+					<button className="nav__button-sell">Vender</button>
+				</Link>
+			</ul>
 
-        <ul className="nav__items">
-          <Link to="/">
-            <li>Inicio</li>
-          </Link>
+			<SearchBar />
+			<div className="nav__user">
+				{session && <User handleLogOut={handleLogOut} />}
 
-          <Link to="/products">
-            <li>Market</li>
-          </Link>
+				{!session && (
+					<Link to="/login">
+						<button className="nav__button-login">Iniciar Sesión</button>
+					</Link>
+				)}
+			</div>
+		</nav>
+	);
+	/* 	<SearchBar />
 
-          <li>Nosotros</li>
+			<div className="nav__user">
+				{session && (
+					<div>
+						<Link to="/profile">
+							<img
+								src={userLogin.user.image}
+								alt="user"
+								className="nav__userLogo"
+							/>
+							)
+						</Link>
+						<h5 className="nav___userName">{userLogin.user.fullName}</h5>
+					</div>
+				)}
 
-          <Link to="/vender">
-            <button className="nav__button-sell">Vender</button>
-          </Link>
-        </ul>
-
-        <SearchBar />
-        <div className="nav__user" onMouseEnter={handleMouseEnter}>
-          {userValidation && (
-            <User
-              handleLogOut={handleLogOut}
-              profileOpen={profileOpen}
-              handleMouseLeave={handleMouseLeave}
-            />
-          )}
-
-          {!userValidation && (
-            <Link to="/login">
-              <button className="nav__button-login">Iniciar Sesión</button>
-            </Link>
-          )}
-        </div>
-      </nav>
-    </header>
-  );
+				<Link to="/login">
+					{!session ? (
+						<button className="nav__button-login">Iniciar Sesión</button>
+					) : (
+						<button
+							className="nav__button-login"
+							onClick={(event) => handleLogOut(event)}
+						>
+							Cerrar Sesión
+						</button>
+					)}
+				</Link>
+			</div>
+		</nav>
+	); */
 }
 
 export default Navbar;

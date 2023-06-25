@@ -1,5 +1,5 @@
+const URL_HOST = import.meta.env.VITE_HOST;
 import { Route, Routes } from "react-router-dom";
-
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import FormCreateProduct from "./components/FormCreateProduct";
@@ -13,7 +13,6 @@ import Market from "./pages/Market";
 import {
   changePassword,
   getUsers,
-  setUserValidator,
   userLogin,
   changeEmail,
   changeName,
@@ -26,20 +25,16 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import axios from "axios";
-import { getAllProducts } from "./services/productServices";
-import { getProducts } from "./redux/features/productSlice";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
 
 function App() {
   const dispatch = useDispatch();
-
-  const isLogin = window.localStorage.getItem("isLogin");
-  const token = window.localStorage.getItem("token");
+  const session = window.localStorage.getItem("token");
 
   const headers = {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${session}`,
   };
 
   const userLogin2 = useSelector((state: RootState) => state.user.userLogin);
@@ -70,12 +65,12 @@ function App() {
     };
 
     fetchUserData();
-  }, [dispatch, userId]);
+  }, [userId, dispatch]);
 
   useEffect(() => {
-    if (token && isLogin === "true") {
+    if (session) {
       axios
-        .get("http://localhost:3001/token", { headers })
+        .get(`${URL_HOST}/token`, { headers })
         .then((response) => {
           const data = {
             id: response.data.user.id,
@@ -85,15 +80,13 @@ function App() {
           };
 
           dispatch(userLogin(data));
-          dispatch(setUserValidator(true));
         })
         .catch((error) => {
           //? mejorar este error
-          dispatch(setUserValidator(false));
           console.log(error);
         });
     }
-  }, [dispatch, isLogin, token]);
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -107,34 +100,20 @@ function App() {
       }
     };
     fetchUsers();
-  }, [dispatch]);
 
-  useEffect(() => {
-    /* const fetchUsers = async() =>{
+    /* const fetchProducts = async () => {
 			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
+				const response = await getAllProducts();
+				if (response) {
+					dispatch(getProducts(response));
+				} else {
+					console.error("No existen productos");
+				}
 			} catch (error) {
-				console.log(error);
+				console.error("Error al obtener los productos:", error);
 			}
-		}
-		fetchUsers(); 
-    */
-    const fetchProducts = async () => {
-      try {
-        const response = await getAllProducts();
-        if (response) {
-          dispatch(getProducts(response));
-        } else {
-          console.error("No existen productos");
-        }
-      } catch (error) {
-        console.error("Error al obtener los productos:", error);
-      }
-    };
-    fetchProducts();
+		};
+		fetchProducts(); */
     const fetchCategories = async () => {
       try {
         const response = await getCategory();

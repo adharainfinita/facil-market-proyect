@@ -8,6 +8,8 @@ const postProduct = async (req: Request, res: Response) => {
 			categoryID,
 			name,
 			description,
+			status,
+			unities,
 			stock,
 			rating,
 			images,
@@ -18,6 +20,8 @@ const postProduct = async (req: Request, res: Response) => {
 		const data = {
 			name,
 			description,
+			status,
+			unities,
 			stock,
 			rating,
 			images,
@@ -26,6 +30,7 @@ const postProduct = async (req: Request, res: Response) => {
 			userID,
 			categoryID,
 		};
+		console.log(typeof data.status);
 
 		const newProduct = await createProduct(data);
 		return res.status(201).json(newProduct);

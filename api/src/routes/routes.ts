@@ -27,12 +27,14 @@ import { reviewCreate } from "../validators/reviewValidation";
 import loginUser from "../handlers/auth/loginUser";
 import checkSession from "../Middleware/session";
 
-//! PUTS
+//* PUTS
 import updateUser from "../handlers/auth/updateUser";
 import { paymentRouter } from "./payments.routes";
+import putProduct from "../handlers/products/updateProduct";
 router.put("/user/:userId", updateUser);
+router.put("/product/:id", putProduct);
 
-//! rutas auth
+//* rutas auth
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
@@ -48,7 +50,7 @@ router.use("/product", paymentRouter);
 router.get("/product", getAllProducts);
 router.get("/review", getAllReviews);
 router.get("/user", getAllUsers);
-router.get("/user/:userId", getUserById)
+router.get("/user/:userId", getUserById);
 router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
