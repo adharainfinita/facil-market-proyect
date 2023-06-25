@@ -10,20 +10,24 @@ import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAllProducts } from "../services/productServices";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
 	const session = window.localStorage.getItem("token");
+	const dispatch = useDispatch();
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
-		categoryID: 0,
+		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
@@ -147,6 +151,20 @@ const FormCreateProduct: React.FC = () => {
 			alert("Producto creado correctamente");
 			window.localStorage.removeItem("items");
 			navigate("/products");
+
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
 			alert("Datos incompletos");
@@ -261,13 +279,8 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					{Object.values(formData).every(
-						(value) => Boolean(value) === null || undefined
-					) ? (
-						<button disabled>Publicar</button>
-					) : (
-						<button type="submit">Publicar</button>
-					)}
+					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
+					>Publicar</button>
 				</form>
 			) : (
 				<div className="form-verification container">

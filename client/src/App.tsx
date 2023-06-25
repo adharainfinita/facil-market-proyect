@@ -21,15 +21,16 @@ import {
 import { getAllUsers } from "./services/userServices";
 import UserProfile from "./pages/UserProfile";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import axios from "axios";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
+import { useDispatch } from "react-redux";
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
+
+import axios from "axios";
 
 function App() {
 	const dispatch = useDispatch();
@@ -105,17 +106,6 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		/* const fetchUsers = async() =>{
-			try {
-				const response = await getAllUsers()
-					if(response) {
-						dispatch(getUsers(response));
-					}
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		fetchUsers(); */
 
 		const fetchProducts = async () => {
 			try {
@@ -143,7 +133,7 @@ function App() {
 			}
 		};
 		fetchCategories();
-	}, [dispatch]);
+	}, [dispatch, getAllProducts]);
 
 	return (
 		<>

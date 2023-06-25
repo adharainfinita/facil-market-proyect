@@ -35,13 +35,19 @@ function Navbar() {
 
 				<li>Nosotros</li>
 
-				<Link to="/vender">
-					<button className="nav__button-sell">Vender</button>
-				</Link>
+				
 			</ul>
 
-			<SearchBar />
+			
+
 			<div className="nav__user">
+			<SearchBar />
+
+			<Link to="/vender">
+					<button className="nav__button-sell">Vender</button>
+			</Link>
+
+
 				{session && <User handleLogOut={handleLogOut} />}
 
 				{!session && (

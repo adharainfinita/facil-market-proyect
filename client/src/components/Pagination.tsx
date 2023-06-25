@@ -40,6 +40,7 @@ function Pagination(props: productList) {
 
 	return (
 		<>
+			{currentProducts.length === 0 && <p>No se encontraron productos con estas características</p>}
 			<ProductCard products={currentProducts} />
 			<div className="page-controls">
 				<button
