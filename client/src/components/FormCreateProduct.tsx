@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -18,24 +18,25 @@ const FormCreateProduct: React.FC = () => {
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
 		name: "",
 	});
-	const [images, setimages] = useState<string[]>([]);
+	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
-		categoryID: 0,
+		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
 		stock: "Disponible",
 		unities: 0,
 		status: "",
-		images: [],
+		image: [],
 		price: 0,
 		rating: 0,
 	});
@@ -69,7 +70,7 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
-	const uploadimages = async (files: File[]): Promise<void> => {
+	const uploadImages = async (files: File[]): Promise<void> => {
 		setLoading(true);
 
 		try {
@@ -81,7 +82,7 @@ const FormCreateProduct: React.FC = () => {
 				formData.append("api_key", "711728988333761");
 
 				const res = await axios.post(
-					"https://api.cloudinary.com/v1_1/facilmarket/images/upload",
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
 					formData,
 					{
 						headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -91,8 +92,8 @@ const FormCreateProduct: React.FC = () => {
 				return res.data.secure_url;
 			});
 
-			const uploadedimages = await Promise.all(uploadPromises);
-			setimages((previmages) => [...previmages, ...uploadedimages]);
+			const uploadedImages = await Promise.all(uploadPromises);
+			setImages((prevImages) => [...prevImages, ...uploadedImages]);
 			setLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -100,9 +101,9 @@ const FormCreateProduct: React.FC = () => {
 		}
 	};
 
-	const imagesPreview = () => {
+	const imagePreview = () => {
 		if (loading === true) {
-			return <h3>Cargando imagesnes...</h3>;
+			return <h3>Cargando Imagenes...</h3>;
 		}
 		if (loading === false) {
 			return (
@@ -113,7 +114,7 @@ const FormCreateProduct: React.FC = () => {
 						images.map((item, index) => (
 							<img
 								key={index}
-								alt="images preview"
+								alt="image preview"
 								width={60}
 								height={60}
 								src={item}
@@ -230,9 +231,9 @@ const FormCreateProduct: React.FC = () => {
 						<label htmlFor="usage">Usado</label>
 						{errors.status && <p className="error">{errors.status}</p>}
 					</label>
-					<label htmlFor="form__input-images">
-						imagenes:
-						<Dropzone onDrop={uploadimages}>
+					<label htmlFor="form__input-image">
+						Imagen:
+						<Dropzone onDrop={uploadImages}>
 							{({ getRootProps, getInputProps }) => (
 								<section>
 									<div {...getRootProps({ className: "dropzone" })}>
@@ -244,7 +245,7 @@ const FormCreateProduct: React.FC = () => {
 						</Dropzone>
 						{errors.images && <p className="error">{errors.images}</p>}
 					</label>
-					{imagesPreview()}
+					{imagePreview()}
 					<label htmlFor="form__category">Categoría:</label>
 					<select
 						name="categoryID"

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product, FiltersCaché } from "../../utils/interfaces";
-import axios from "axios";
 import { RootState } from "../store";
 //import { URL_API } from "../../utils/URLS";
 
@@ -35,15 +34,6 @@ const initialState: ProductState = {
 		categoryName: "",
 		location: "",
 	},
-};
-///
-export const getAllProducts = async () => {
-	try {
-		const { data } = await axios(`http://localhost:3001/product`);
-		return data;
-	} catch (error: any) {
-		throw new Error(error.message);
-	}
 };
 
 const productSlice = createSlice({

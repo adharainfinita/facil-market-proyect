@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface FiltersCaché {
-	status:string |  undefined;
+	status: string | undefined;
 	categoryName: string | undefined;
 	location: string | undefined;
 }
@@ -98,10 +98,10 @@ export interface FormCreateProduct {
 	name: string;
 	description: string;
 	unities: number;
-	status: string,
+	status: string;
 	stock: string;
 	rating?: number;
-	images: string[];
+	image?: string[];
 	location: string;
 	price: number;
 }
@@ -111,12 +111,12 @@ export interface ErrorsFormProduct {
 	categoryID: number;
 	name: string;
 	description: string;
+	unities: string;
+	status: string;
 	rating?: string;
+	images?: string[];
 	location: string;
 	price: string;
-	status: string;
-	unities: string;
-	images: string;
 }
 
 export interface isLogin {
