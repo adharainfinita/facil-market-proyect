@@ -9,7 +9,7 @@ const updateProduct = async (req: Request, res: Response) => {
 
 	try {
 		const response = await changeProductProperties(product, id);
-		console.log(response);
+	
 
 		return res.status(200).json(response);
 	} catch (error: any) {
