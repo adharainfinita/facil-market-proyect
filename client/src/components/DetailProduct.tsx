@@ -54,7 +54,6 @@ const DetailProduct = () => {
 		dispatch(updateRating(newRating));
 		setRating(newRating);
 		// Actualizar el objeto `product` si es necesario
-		console.log(product.id, newRating);
 
 		const response = await updateProduct(product);
 		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
