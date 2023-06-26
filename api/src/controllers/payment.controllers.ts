@@ -2,7 +2,7 @@ import { productProps } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 dotenv.config();
-const { URL_HOST, PORT_CLIENT, TOKEN } = process.env;
+const { URL_HOST, TOKEN } = process.env;
 
 export const createOrder = async (product: productProps) => {
 	mercadopago.configure({
@@ -22,11 +22,11 @@ export const createOrder = async (product: productProps) => {
 			},
 		],
 		back_urls: {
-			success: `${URL_HOST}:${PORT_CLIENT}/product/detail/${product.id}`,
-			failure: `${URL_HOST}:${PORT_CLIENT}/product/payment/failure`,
-			pending: `${URL_HOST}:${PORT_CLIENT}/product/payment/pending`,
+			success: `${URL_HOST}product/detail/${product.id}`,
+			failure: `${URL_HOST}product/payment/failure`,
+			pending: `${URL_HOST}product/payment/pending`,
 		},
-		notification_url: `https://72db-200-115-26-133.ngrok-free.app/product/payment/webhook`,
+		notification_url: `${URL_HOST}/product/payment/webhook`,
 	});
 
 	return result;
