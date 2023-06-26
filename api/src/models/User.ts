@@ -15,7 +15,7 @@ class User extends Model {
 	})
 	fullName!: string;
 
-/* 	@Column({
+	/* 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
 	})

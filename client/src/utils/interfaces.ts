@@ -4,35 +4,37 @@ export interface UXDataLogin {
 	image: string;
 	token: string;
 }
+
 // Interfaces de de estados global
 export interface User {
 	id: string;
-	name: string;
-	lastName: string;
+	fullName: string;
 	email: string;
 	password: string;
 	image: string;
 }
 
 export interface FiltersCaché {
-	userName: string | undefined;
+	status: string | undefined;
 	categoryName: string | undefined;
 	location: string | undefined;
 }
-
+//stock: 'Disponible, agotado, en proceso' Unidades: 1,2,3
 export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating: number;
-  images: string[];
-  location: string;
-  price: number;
-  categoryID: number;
-  categoryName: string;
-  userID: number;
-  userName: string;
+	id: number;
+	name: string;
+	description: string;
+	status: string;
+	unities: number;
+	stock: string;
+	rating: number;
+	images: string[];
+	location: string;
+	price: number;
+	categoryID: number;
+	categoryName: string;
+	userID: string;
+	userName: string;
 }
 
 export interface Category {
@@ -47,7 +49,9 @@ export interface productData {
 	id: number;
 	name: string;
 	description: string;
-	stock: number;
+	status: string;
+	stock: string;
+	unities: number;
 	rating: number;
 	image: string[];
 	location: string;
@@ -83,21 +87,23 @@ export interface LoginData {
 //? Interfaces de componentes
 
 export interface NotificationType {
-  isOpen: boolean,
-  type: 'approved' | 'failure' | null,
-  content: string
+	isOpen: boolean;
+	type: "approved" | "failure" | null;
+	content: string;
 }
 
 export interface FormCreateProduct {
-  userID: number;
-  categoryID: number;
-  name: string;
-  description: string;
-  stock: number;
-  rating?: number;
-  image?: string[];
-  location: string;
-  price: number;
+	userID: number;
+	categoryID: number;
+	name: string;
+	description: string;
+	unities: number;
+	status: string;
+	stock: string;
+	rating?: number;
+	image?: string[];
+	location: string;
+	price: number;
 }
 
 export interface ErrorsFormProduct {
@@ -105,9 +111,17 @@ export interface ErrorsFormProduct {
 	categoryID: number;
 	name: string;
 	description: string;
-	stock: string;
+	unities: string;
+	status: string;
 	rating?: string;
-	images?: string[];
+	images?: string;
 	location: string;
 	price: string;
+}
+
+export interface isLogin {
+	fullName: string;
+	id: string;
+	email: string;
+	image: string;
 }

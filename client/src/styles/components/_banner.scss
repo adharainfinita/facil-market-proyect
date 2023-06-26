@@ -1,57 +1,56 @@
 .container-banner {
-    position: relative; /* Agrega posición relativa al contenedor */
-    background-color: rgb(199, 175, 175);
-    padding: 20px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 300px; /* Ajusta la altura según tus necesidades */
-    width: 100%;
-    overflow: hidden; /* Oculta el contenido que sobresale del contenedor */
-  }
-  
-  .slogan-banner {
-    font-size: 24px;
-    color: white;
-    margin: auto; /* Centra verticalmente y horizontalmente */
-  }
-  
-  .image1-banner,
-  .image2-banner,
-  .image3-banner,
-  .image4-banner {
-    margin-right: 10px;
-    position: absolute; /* Agrega posición absoluta a las imágenes */
-  }
-  
-  .image1-banner {
-    top: 0; /* Posición en la esquina superior izquierda */
-    left: 200px;
-    transform: rotate(-15deg); /* Rotación de -15 grados */
-    width: 250px; /* Ajusta el tamaño de la imagen1 */
-  }
-  
-  .image2-banner {
-    top: 0; /* Posición en la esquina superior derecha */
-    right: 100px;
-    transform: rotate(5deg); /* Rotación de 5 grados */
-    width: 250px; /* Ajusta el tamaño de la imagen2 */
-  }
-  
-  .image3-banner {
-    bottom: 0; /* Posición en la esquina inferior izquierda */
-    left: 0;
-    transform: rotate(30deg); /* Rotación de 30 grados */
-    width: 350px; /* Ajusta el tamaño de la imagen3 */
-  }
-  
-  .image4-banner {
-    bottom: 0; /* Posición en la esquina inferior derecha */
-    right: 300px;
-    transform: rotate(30deg); /* Rotación de 30 grados */
-    width: 200px; /* Ajusta el tamaño de la imagen4 */
-  }
-  
+	position: relative; /* Agrega posición relativa al contenedor */
+	background-color: rgb(199, 175, 175);
+	padding: 20px;
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 300px; /* Ajusta la altura según tus necesidades */
+	width: 100%;
+	overflow: hidden; /* Oculta el contenido que sobresale del contenedor */
+}
+
+.slogan-banner {
+	font-size: 24px;
+	color: white;
+	margin: auto; /* Centra verticalmente y horizontalmente */
+}
+
+.image1-banner,
+.image2-banner,
+.image3-banner,
+.image4-banner {
+	margin-right: 10px;
+	position: absolute; /* Agrega posición absoluta a las imágenes */
+}
+
+.image1-banner {
+	top: 0; /* Posición en la esquina superior izquierda */
+	left: 200px;
+	transform: rotate(-15deg); /* Rotación de -15 grados */
+	width: 250px; /* Ajusta el tamaño de la imagen1 */
+}
+
+.image2-banner {
+	top: 0; /* Posición en la esquina superior derecha */
+	right: 100px;
+	transform: rotate(5deg); /* Rotación de 5 grados */
+	width: 250px; /* Ajusta el tamaño de la imagen2 */
+}
+
+.image3-banner {
+	bottom: 0; /* Posición en la esquina inferior izquierda */
+	left: 0;
+	transform: rotate(30deg); /* Rotación de 30 grados */
+	width: 350px; /* Ajusta el tamaño de la imagen3 */
+}
+
+.image4-banner {
+	bottom: 0; /* Posición en la esquina inferior derecha */
+	right: 300px;
+	transform: rotate(30deg); /* Rotación de 30 grados */
+	width: 200px; /* Ajusta el tamaño de la imagen4 */
+}

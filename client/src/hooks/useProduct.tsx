@@ -23,15 +23,17 @@ const useProduct = () => {
 					id: 0,
 					name: "",
 					description: "",
-					stock: 0,
+					stock: "",
 					rating: 0.0,
 					images: [""],
 					location: "",
 					price: 0.0,
 					categoryID: 0,
 					categoryName: "",
-					userID: 0,
+					userID: "",
 					userName: "",
+					unities: 0,
+					status: "",
 				})
 			);
 		};

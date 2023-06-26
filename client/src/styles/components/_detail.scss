@@ -33,12 +33,14 @@
 				font-size: 1.1rem;
 				letter-spacing: 0.1rem;
 				font-weight: bold;
+				font-family: Arial, sans-serif;
 			}
 
 			h3 {
 				font-size: 1rem;
 				letter-spacing: 0.1rem;
 				text-align: start;
+				font-family: Arial, sans-serif;
 			}
 		}
 
@@ -47,12 +49,11 @@
 			height: 3rem;
 		}
 
-		/* Conteiner de imagenes previas */
+		/* Container de imágenes previas */
 		.conteiner-pre-image {
 			display: flex;
-			width: 5rem;
-			height: 50%;
 			flex-direction: column;
+			align-items: center;
 			gap: 1rem;
 			margin-top: 1rem;
 			margin-left: 1rem;
@@ -61,8 +62,8 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				width: 100%;
-				height: 100%;
+				width: 5rem;
+				height: 5rem;
 				border-radius: 0.4rem;
 				cursor: pointer;
 				border: 3px solid #dadada;
@@ -75,37 +76,44 @@
 			.preview-image {
 				width: 80%;
 				height: 80%;
+				border-radius: 0.4rem;
 			}
 		}
 
-		/* Conteiner de imagen */
+		/* Container de imagen principal */
 		.detail-product-image {
-			width: 25rem;
-			height: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			max-width: 370px;
+			flex-grow: 1;
 			margin-top: 1rem;
 			border: 3px solid #dadada;
 			border-radius: 1rem;
 			cursor: pointer;
 
 			img {
-				width: 100%;
-				height: 100%;
+				max-width: 100%;
+				max-height: 100%;
 				border-radius: 1rem;
 			}
 		}
+
 		.detail-product-image:hover {
 			border-color: blue;
 		}
 
-		/* conteiner de informacion del producto*/
+		/* Container de información del producto */
 		.conteiner-info {
 			display: flex;
 			flex-direction: column;
+			border: 3px solid #dadada;
+			border-radius: 0.5rem;
 			gap: 1rem;
+			width: 30rem;
+			padding: 1rem;
 			margin-top: 1rem;
-			width: 27rem;
-			height: 90%;
-			overflow-wrap: break-word;
+			height: fit-content;
 
 			/* nombre y precio */
 			.conteiner-name-price {
@@ -116,14 +124,16 @@
 					font-weight: 600;
 					letter-spacing: 0.1rem;
 					line-height: 1.18;
+					font-family: Arial, sans-serif;
 				}
 
 				.detail-product-price {
 					font-size: 2.5rem;
+					font-family: Arial, sans-serif;
 				}
 			}
 
-			/* descripcion general */
+			/* descripción general */
 			.detail-product-info {
 				flex-direction: column;
 				display: flex;
@@ -136,7 +146,7 @@
 					overflow: auto;
 					width: 100%;
 					height: 16rem;
-					gap: .5rem;
+					gap: 0.5rem;
 
 					.detail-product-description {
 						font-size: 1rem;
@@ -166,7 +176,6 @@
 				width: 80%;
 				height: 3rem;
 				margin: 0 auto;
-
 				box-shadow: inset 0px 1px 0px 0px #caefab;
 				background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
 				background-color: #77d42a;
@@ -192,6 +201,7 @@
 				}
 			}
 		}
+
 		.detail-product-sales:hover {
 			border-color: blue;
 		}

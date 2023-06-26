@@ -13,11 +13,14 @@ export const validate = (data: FormCreateProduct) => {
 		errors.name = "Max: 35 caráracteres";
 	}
 
-	//? validar stock
-	if (!data.stock) {
-		errors.stock = "Este campo es obligatorio.";
-	} else if (data.stock < 0) {
-		errors.stock = "El valor ingresado no es válido";
+	//? validar unities
+	if (!data.unities) {
+		errors.unities = "Este campo es obligatorio.";
+	} else if (data.unities < 0) {
+		errors.unities = "El valor ingresado no es válido";
+	}
+	if (!data.status) {
+		errors.status = "Este campo es es obligatorio.";
 	}
 
 	//? validar price
@@ -30,12 +33,10 @@ export const validate = (data: FormCreateProduct) => {
 	//? validar location
 	if (!data.location) errors.location = "Este campo es requerido";
 
-	//? validar image URL
-	// if (!data.image.length) {
-	// 	errors.image = "Este campo es obligatorio";
-	// } else if (!imageUrlRegex.test(data.image)) {
-	// 	errors.image = "Ingresar una URL valida";
-	// }
+	/* 	//? validar image URL
+	if (!data.image?.length) {
+		errors.images = " ";
+	} */
 
 	//? validar descrption
 	if (!data.description.length) {
@@ -44,6 +45,11 @@ export const validate = (data: FormCreateProduct) => {
 		errors.description = "Debe contener almenos 10 caracteres";
 	} else if (data.description.length >= 5000) {
 		errors.description = "Max: 5000 caracteres";
+	}
+
+	//? validar status
+	if (!data.status) {
+		errors.status = "Este campo es obligatario";
 	}
 
 	return errors;

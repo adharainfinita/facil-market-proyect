@@ -3,27 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-//import { RootState } from "../redux/store";
 import { LoginData } from "../utils/interfaces";
 import { logUser } from "../services/userServices";
-import { loggedUser, setUserValidator } from "../redux/features/userSlice";
-
-// import { setLoggedInUserId } from "../redux/features/userSlice";
+import { loggedUser } from "../redux/features/userSlice";
+import { RiErrorWarningLine } from "react-icons/ri";
+import GoogleAuth from "../components/GoogleLogin";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	//const { userValidation: access } = useSelector((state: RootState) => state.user);
-
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
 	const [formData, setFormData] = useState<LoginData>({
-		email: '',
-		password: ''
+		email: "",
+		password: "",
 	});
 
-	const [_message, setMessage] = useState("");
+	const [message, setMessage] = useState("");
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -40,18 +37,20 @@ const Login: React.FC = () => {
 	};
 
 	const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-		event.preventDefault();		
+		event.preventDefault();
 		try {
 			const response = await logUser(formData);
-			if(response){
-				dispatch(loggedUser(response))
-				dispatch(setUserValidator(true))
+			const token = response.token;
+			window.localStorage.setItem("token", token);
+
+			if (response) {
+				dispatch(loggedUser(response));
 				navigate("/");
 			}
-		  } catch (error) {
-			setMessage(`${error}`)
-		  }
-		
+		} catch (error) {
+			setMessage(`${error}`);
+			console.error(error);
+		}
 	};
 
 	return (
@@ -59,6 +58,11 @@ const Login: React.FC = () => {
 			<div className="forms">
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
+
+					<div className="google-login">
+						<GoogleAuth />
+					</div>
+					<hr />
 
 					<form onSubmit={handleSubmit}>
 						<div className="input-field">
@@ -100,6 +104,11 @@ const Login: React.FC = () => {
 								/>
 							)}
 						</div>
+						{message && (
+							<p className="error-message">
+								<RiErrorWarningLine className="error-icon" /> {message}
+							</p>
+						)}
 
 						<div className="checkbox-text">
 							<div className="checkbox-content">

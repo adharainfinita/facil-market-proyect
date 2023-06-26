@@ -2,18 +2,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../redux/features/productSlice";
 import { getAllProducts } from "../services/productServices";
+import banner1 from '../assets/1.jpg'
+import banner2 from '../assets/2.jpg'
+import banner3 from '../assets/3.png'
 
 /*Components*/
 import ProductCard from "../components/ProductCard";
-import Banner from "../components/Banner";
+//import Banner from "../components/Banner";
 import FeaturedCategory from "../components/FeaturedCategory";
 import { RootState } from "../redux/store";
+import Slider from "../components/Slider";
 
 function Home() {
 	const dispatch = useDispatch();
 	const products = useSelector(
 		(state: RootState) => state.product.originalCopy
 	);
+
+	const images = [
+		banner1,
+		banner2,
+		banner3
+	];
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -45,7 +55,8 @@ function Home() {
 
 	return (
 		<>
-			<Banner />
+			{/* <Banner /> */}
+			<Slider images={images}/>
 			<h3 className="trend-title">Categorias destacadas</h3>
 			<FeaturedCategory />
 			<h3 className="trend-title">Más vendidos</h3>

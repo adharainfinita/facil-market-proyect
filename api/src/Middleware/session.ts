@@ -20,11 +20,9 @@ const checkSession = (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const isValidToken = verifyToken(token);
 			if (!isValidToken) {
-				return res
-					.status(401)
-					.json({
-						error: "El token de autenticación es inválido o ha expirado",
-					});
+				return res.status(401).json({
+					error: "El token de autenticación es inválido o ha expirado",
+				});
 			}
 		} catch (error) {
 			return res
@@ -34,11 +32,9 @@ const checkSession = (req: Request, res: Response, next: NextFunction) => {
 
 		next();
 	} catch (error: any) {
-		return res
-			.status(500)
-			.json({
-				error: "Se produjo un error al verificar el token de autenticación",
-			});
+		return res.status(500).json({
+			error: "Se produjo un error al verificar el token de autenticación",
+		});
 	}
 };
 
