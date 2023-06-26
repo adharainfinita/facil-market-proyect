@@ -26,7 +26,7 @@ export interface Product {
 	description: string;
 	status: string;
 	unities: number;
-	stock: string;
+	stock: number;
 	rating: number;
 	images: string[];
 	location: string;

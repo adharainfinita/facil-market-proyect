@@ -32,6 +32,8 @@ const useProduct = () => {
 					categoryName: "",
 					userID: "",
 					userName: "",
+					unities: 0,
+					status: "",
 				})
 			);
 		};
