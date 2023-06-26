@@ -20,7 +20,9 @@ const FormCreateProduct: React.FC = () => {
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
+		name: "",
+	});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
@@ -50,8 +52,6 @@ const FormCreateProduct: React.FC = () => {
 		>
 	) => {
 		const { name, value } = event.target;
-
-		console.log(name, value);
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
@@ -286,10 +286,8 @@ const FormCreateProduct: React.FC = () => {
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
 					<button
-						disabled={
-							Object.values(errors).every((item) => item === "") ? false : true
-						}
 						type="submit"
+						disabled={Object.keys(errors).length > 0 || images.length === 0}
 					>
 						Publicar
 					</button>
