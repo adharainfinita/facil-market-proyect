@@ -6,23 +6,37 @@ import { BiLogOut } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 
-const User = ({ handleLogOut }: any) => {
+interface UserProps {
+	handleLogOut: (event: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+const User = ({ handleLogOut }: UserProps) => {
 	const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
 	const { userLogin } = useSelector((state: RootState) => state.user);
 
-	const close = () => {
-		setProfileOpen(null);
+	const handleMouseEnter = () => {
+		setProfileOpen(true);
+	};
+
+	const handleMouseLeave = () => {
+		setProfileOpen(false);
 	};
 
 	return (
 		<>
 			<div className="profile">
-				<div onClick={() => setProfileOpen(!profileOpen)}>
+				<div
+					onMouseEnter={handleMouseEnter} /* onMouseLeave={handleMouseLeave} */
+				>
 					<img src={userLogin.user.image} alt="user image" />
 				</div>
 
 				{profileOpen && (
-					<div className="openProfile boxItems" onClick={close}>
+					<div
+						className="openProfile boxItems"
+						onMouseEnter={handleMouseEnter}
+						onMouseLeave={handleMouseLeave}
+					>
 						<div className="image">
 							<div>
 								<img src={userLogin.user.image} alt="user image" />

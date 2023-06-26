@@ -33,10 +33,10 @@ export const validate = (data: FormCreateProduct) => {
 	//? validar location
 	if (!data.location) errors.location = "Este campo es requerido";
 
-	//? validar image URL
+	/* 	//? validar image URL
 	if (!data.image?.length) {
-		errors.images = "";
-	}
+		errors.images = " ";
+	} */
 
 	//? validar descrption
 	if (!data.description.length) {

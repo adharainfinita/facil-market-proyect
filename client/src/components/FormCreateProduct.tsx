@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { getAllProducts, postProduct } from "../services/productServices";
+import { getAllProducts, getAllProducts, postProduct } from "../services/productServices";
 import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
@@ -11,29 +11,25 @@ import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 import { getProducts } from "../redux/features/productSlice";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
-	name: "",
-	description: "",
-	unities: "",
-	status: "",
-	rating: "",
-	images: "",
-	location: "",
-	price: ""
+		name: "",
 	});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
+		categoryID: 1,
 		categoryID: 1,
 		name: "",
 		location: "",
@@ -51,7 +47,7 @@ const FormCreateProduct: React.FC = () => {
 
 	useEffect(() => {
 		session ? setFormData({ ...storage }) : null;
-	}, [session, storage]);
+	}, [session, storagesession, storage]);
 
 	const handleChange = (
 		event: ChangeEvent<
@@ -181,6 +177,20 @@ console.log(errors);
 				}
 			};
 			fetchProducts();
+
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
 			alert("Datos incompletos");
@@ -226,6 +236,29 @@ console.log(errors);
 					</label>
 					<label htmlFor="form__input-status">
 						Estado:
+						<div className="form-input-status">
+							<div className="content">
+								<label htmlFor="new">Nuevo</label>
+								<input
+									type="radio"
+									name="status"
+									id="new"
+									onChange={handleChange}
+									value={"Nuevo"}
+								/>
+							</div>
+
+							<div className="content">
+								<label htmlFor="usage">Usado</label>
+								<input
+									type="radio"
+									name="status"
+									id="usage"
+									onChange={handleChange}
+									value="Usado"
+								/>
+							</div>
+						</div>
 						<div className="form-input-status">
 							<div className="content">
 								<label htmlFor="new">Nuevo</label>
@@ -302,10 +335,8 @@ console.log(errors);
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
 					<button
-						disabled={
-							Object.values(errors).every((item) => item === "") ? false : true
-						}
 						type="submit"
+						disabled={Object.keys(errors).length > 0 || images.length === 0}
 					>
 						Publicar
 					</button>
