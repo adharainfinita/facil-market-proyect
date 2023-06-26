@@ -78,6 +78,7 @@ export const findProductByName = async (name: string) => {
 
 	if (!Object.keys(responseDB).length) {
 		throw new Error(`No hay resultados para: ${name}`);
+		throw new Error(`No hay resultados para: ${name}`);
 	}
 
 	return responseDB;

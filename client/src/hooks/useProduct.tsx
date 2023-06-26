@@ -23,7 +23,7 @@ const useProduct = () => {
 					id: 0,
 					name: "",
 					description: "",
-					stock: 0,
+					stock: "",
 					rating: 0.0,
 					images: [""],
 					location: "",
@@ -32,6 +32,8 @@ const useProduct = () => {
 					categoryName: "",
 					userID: "",
 					userName: "",
+					unities: 0,
+					status: "",
 				})
 			);
 		};

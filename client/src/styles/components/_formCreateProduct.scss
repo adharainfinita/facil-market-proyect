@@ -39,7 +39,7 @@
     color: #ffffff;
     font-family: Arial;
     font-size: 17px;
-		font-weight: 600;
+    font-weight: 600;
     padding: 9px 23px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #263666;
@@ -52,11 +52,11 @@
       top: 1px;
     }
   }
-	&-text {
-		text-align: center;
-		color: #3483fa;
-		font-size: 22px;
-	}
+  &-text {
+    text-align: center;
+    color: #3483fa;
+    font-size: 22px;
+  }
 }
 
 .form {
@@ -107,7 +107,7 @@
     margin-top: 1rem;
   }
 
-  button[type="submit"]:disabled{
+  button[type="submit"]:disabled {
     background-color: #ccc;
     cursor: no-drop;
   }
@@ -125,4 +125,24 @@
       transition: 0.5s ease all;
     }
   }
+  &-input-status {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .content {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    label {
+      margin: 0;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  }
+
 }

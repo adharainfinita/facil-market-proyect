@@ -1,29 +1,40 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { postProduct } from "../services/productServices";
+import { getAllProducts, postProduct } from "../services/productServices";
 import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
+	name: "",
+	description: "",
+	unities: "",
+	status: "",
+	rating: "",
+	images: "",
+	location: "",
+	price: ""
+	});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
 		userID: Number(userLogin.user.id),
-		categoryID: 0,
+		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
@@ -40,7 +51,7 @@ const FormCreateProduct: React.FC = () => {
 
 	useEffect(() => {
 		session ? setFormData({ ...storage }) : null;
-	}, []);
+	}, [session, storage]);
 
 	const handleChange = (
 		event: ChangeEvent<
@@ -48,6 +59,8 @@ const FormCreateProduct: React.FC = () => {
 		>
 	) => {
 		const { name, value } = event.target;
+
+		console.log(name, value);
 
 		setFormData((prevFormData) => ({
 			...prevFormData,
@@ -58,7 +71,7 @@ const FormCreateProduct: React.FC = () => {
 
 		setErrors(
 			validate({
-				...formData,
+				...errors,
 				[name]: value,
 			})
 		);
@@ -88,12 +101,19 @@ const FormCreateProduct: React.FC = () => {
 
 			const uploadedImages = await Promise.all(uploadPromises);
 			setImages((prevImages) => [...prevImages, ...uploadedImages]);
+			setFormData({
+				...formData,
+				image: images
+			})
 			setLoading(false);
 		} catch (error) {
 			console.log(error);
 			setLoading(false);
 		}
 	};
+console.log(formData);
+console.log(errors);
+
 
 	const imagePreview = () => {
 		if (loading === true) {
@@ -147,6 +167,20 @@ const FormCreateProduct: React.FC = () => {
 			alert("Producto creado correctamente");
 			window.localStorage.removeItem("items");
 			navigate("/products");
+
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
 			alert("Datos incompletos");
@@ -190,25 +224,31 @@ const FormCreateProduct: React.FC = () => {
 						/>
 						{errors.unities && <p className="error">{errors.unities}</p>}
 					</label>
-					//* Stylesssss for this
 					<label htmlFor="form__input-status">
 						Estado:
-						<input
-							type="radio"
-							name="status"
-							id="new"
-							onChange={handleChange}
-							value={"Nuevo"}
-						/>
-						<label htmlFor="new">Nuevo</label>
-						<input
-							type="radio"
-							name="status"
-							id="usage"
-							onChange={handleChange}
-							value="Usado"
-						/>
-						<label htmlFor="usage">Usado</label>
+						<div className="form-input-status">
+							<div className="content">
+								<label htmlFor="new">Nuevo</label>
+								<input
+									type="radio"
+									name="status"
+									id="new"
+									onChange={handleChange}
+									value={"Nuevo"}
+								/>
+							</div>
+
+							<div className="content">
+								<label htmlFor="usage">Usado</label>
+								<input
+									type="radio"
+									name="status"
+									id="usage"
+									onChange={handleChange}
+									value="Usado"
+								/>
+							</div>
+						</div>
 						{errors.status && <p className="error">{errors.status}</p>}
 					</label>
 					<label htmlFor="form__input-image">
@@ -261,8 +301,14 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
-					>Publicar</button>
+					<button
+						disabled={
+							Object.values(errors).every((item) => item === "") ? false : true
+						}
+						type="submit"
+					>
+						Publicar
+					</button>
 				</form>
 			) : (
 				<div className="form-verification container">
