@@ -114,7 +114,7 @@ export interface ErrorsFormProduct {
 	unities: string;
 	status: string;
 	rating?: string;
-	images?: string[];
+	images?: string;
 	location: string;
 	price: string;
 }
