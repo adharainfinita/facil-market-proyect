@@ -11,9 +11,9 @@ import Filters from "../components/Filters";
 
 function Market() {
 	const products = useSelector((state: RootState) => state.product.products);
-	//const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-	/*useEffect(() => {
+	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
@@ -27,7 +27,7 @@ function Market() {
 			}
 		};
 		fetchProducts();
-	}, [dispatch]);*/
+	}, [dispatch]);
 	return (
 		<>
 			<Filters />
