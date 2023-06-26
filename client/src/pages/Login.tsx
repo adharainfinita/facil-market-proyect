@@ -8,6 +8,7 @@ import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -117,9 +118,9 @@ const Login: React.FC = () => {
 									Recordarme
 								</label>
 							</div>
-							<a href="#" className="text">
+							<Link to="#" className="text">
 								¿Olvidaste tu contraseña?
-							</a>
+							</Link>
 						</div>
 
 						<div className="input-field button">
@@ -129,9 +130,9 @@ const Login: React.FC = () => {
 					<div className="login-signup">
 						<span className="text">
 							¿Aún no tienes una cuenta?
-							<a href="/register" className="text signup-text">
+							<Link to="/register" className="text signup-text">
 								Regístrate aquí
-							</a>
+							</Link>
 						</span>
 					</div>
 				</div>
