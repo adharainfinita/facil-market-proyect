@@ -2,7 +2,7 @@ import { getDetail, cleanDetail } from "../redux/features/productSlice";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-// import { getProductsById } from "../services/productServices";
+import { getProductsById } from "../services/productServices";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
@@ -13,9 +13,7 @@ const useProduct = () => {
 
 	useEffect(() => {
 		try {
-			fetch(`http://localhost:3001/product/${id}`)
-				.then((response) => response.json())
-				.then((data) => dispatch(getDetail(data)));
+			getProductsById(Number(id)).then((data) => dispatch(getDetail(data)));
 		} catch (error) {
 			console.log(error);
 		}
@@ -25,15 +23,17 @@ const useProduct = () => {
 					id: 0,
 					name: "",
 					description: "",
-					stock: 0,
+					stock: "",
 					rating: 0.0,
-					image: "",
+					images: [""],
 					location: "",
 					price: 0.0,
 					categoryID: 0,
 					categoryName: "",
-					userID: 0,
+					userID: "",
 					userName: "",
+					unities: 0,
+					status: "",
 				})
 			);
 		};

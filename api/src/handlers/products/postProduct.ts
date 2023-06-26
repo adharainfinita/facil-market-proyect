@@ -3,15 +3,16 @@ import { createProduct } from "../../controllers/productControllers";
 
 const postProduct = async (req: Request, res: Response) => {
 	try {
-		//? Verificar si el usuario está registrado
 		const {
 			userID,
 			categoryID,
 			name,
 			description,
+			status,
+			unities,
 			stock,
 			rating,
-			image,
+			images,
 			location,
 			price,
 		} = req.body;
@@ -19,14 +20,17 @@ const postProduct = async (req: Request, res: Response) => {
 		const data = {
 			name,
 			description,
+			status,
+			unities,
 			stock,
 			rating,
-			image,
+			images,
 			location,
 			price,
 			userID,
 			categoryID,
 		};
+		console.log(typeof data.status);
 
 		const newProduct = await createProduct(data);
 		return res.status(201).json(newProduct);

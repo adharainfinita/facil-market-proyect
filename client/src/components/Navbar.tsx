@@ -1,17 +1,19 @@
 import logo from "../assets/marketplace_logo.png";
-//import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { setUserValidator } from "../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import User from "./User";
 
 function Navbar() {
-	const dispatch = useDispatch();
-	const userValidation = useSelector(
-		(state: RootState) => state.user.userValidation
-	);
-	const userLogin = useSelector((state: RootState) => state.user.userLogin);
+	const navigate = useNavigate();
+	const session = window.localStorage.getItem("token");
+
+	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
+		event.preventDefault();
+		window.localStorage.removeItem("token");
+		window.localStorage.removeItem("items");
+		navigate("/");
+	};
 
 	return (
 		<nav className="nav">
@@ -32,24 +34,54 @@ function Navbar() {
 				</Link>
 
 				<li>Nosotros</li>
-				<Link to="/vender">
-					<button className="nav__button-sell">Vender</button>
-				</Link>
+
+				
 			</ul>
 
-			<SearchBar />
+			
+
 			<div className="nav__user">
-				<div>
-					<img src={userLogin.image} alt="user" className="nav__userLogo" />
-					<h5 className="nav___userName">{userLogin.name}</h5>
-				</div>
+			<SearchBar />
+
+			<Link to="/vender">
+					<button className="nav__button-sell">Vender</button>
+			</Link>
+
+
+				{session && <User handleLogOut={handleLogOut} />}
+
+				{!session && (
+					<Link to="/login">
+						<button className="nav__button-login">Iniciar Sesión</button>
+					</Link>
+				)}
+			</div>
+		</nav>
+	);
+	/* 	<SearchBar />
+
+			<div className="nav__user">
+				{session && (
+					<div>
+						<Link to="/profile">
+							<img
+								src={userLogin.user.image}
+								alt="user"
+								className="nav__userLogo"
+							/>
+							)
+						</Link>
+						<h5 className="nav___userName">{userLogin.user.fullName}</h5>
+					</div>
+				)}
+
 				<Link to="/login">
-					{userValidation === false ? (
+					{!session ? (
 						<button className="nav__button-login">Iniciar Sesión</button>
 					) : (
 						<button
 							className="nav__button-login"
-							onClick={() => dispatch(setUserValidator(false))}
+							onClick={(event) => handleLogOut(event)}
 						>
 							Cerrar Sesión
 						</button>
@@ -57,7 +89,7 @@ function Navbar() {
 				</Link>
 			</div>
 		</nav>
-	);
+	); */
 }
 
 export default Navbar;

@@ -1,32 +1,66 @@
 import { useState } from "react";
 import { validate } from "../utils/registerValidation";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
-// import axios from "axios";
+import { BiEnvelope, BiLockAlt, BiImage } from "react-icons/bi";
+import axios from "axios";
+import {
+	AiOutlineEyeInvisible,
+	AiOutlineEye,
+	AiOutlineUser,
+} from "react-icons/ai";
+import { RiErrorWarningLine } from "react-icons/ri";
 import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const defaultImage = useSelector(
+		(state: RootState) => state.user.userLogin.user.image
+	);
 
 	const [inputs, setInputs] = useState<NewUser>({
-		name: "",
-		lastName: "",
+		fullName: "",
 		password: "",
+		confirm: "",
 		email: "",
 		image: "",
 	});
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [errors, setErrors] = useState<Partial<NewUser>>({});
 	const [_formSubmitted, setFormSubmitted] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const handleInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 		setInputs({ ...inputs, [name]: value });
 		setErrors(validate({ ...inputs, [name]: value }));
+	};
+	const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		try {
+			const file = event.target.files;
+			if (file && file.length > 0) {
+				const data = new FormData();
+				data.append("file", file[0]);
+				data.append("upload_preset", "user_images");
+				try {
+					const res = await axios.post(
+						"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+						data
+					);
+					const uploadedFile = res.data;
+					// setImage(uploadedFile.secure_url);
+					setInputs({ ...inputs, image: uploadedFile.secure_url });
+				} catch (error) {
+					console.error("Error al subir la imagen", error);
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleShowPassword = (
@@ -40,28 +74,27 @@ const RegisterForm = () => {
 		event.preventDefault();
 
 		try {
-			// Realizar la solicitud POST al back-end
-			// const response = await axios.post("http://localhost:3001/user", inputs);
-			const response = await postUser(inputs)
-			// Verificar la respuesta del servidor
+			const user = {
+				fullName: inputs.fullName,
+				password: inputs.password,
+				email: inputs.email,
+				image: inputs.image ? inputs.image : defaultImage,
+			};
+
+			const response = await postUser(user);
+
 			if (response.status === 201) {
-				// El registro se creó exitosamente en la base de datos
-				// Puedes manejar aquí la lógica de redirección o mostrar un mensaje de éxito
 				dispatch(addUser(response.data));
 			}
 			alert("Registro exitoso");
 			navigate("/login");
 		} catch (error) {
-			// Ocurrió un error al procesar la solicitud
-			// Puedes manejar aquí la lógica de manejo de errores
-
-			console.error("Error al registrar el usuario", error);
+			console.error(error);
+			setErrorMessage(`${error}`);
 		}
 
-		// Restablecer los valores de los inputs y otros estados relevantes
 		setInputs({
-			name: "",
-			lastName: "",
+			fullName: "",
 			password: "",
 			email: "",
 			image: "",
@@ -71,81 +104,129 @@ const RegisterForm = () => {
 	};
 
 	return (
-		<div className="register-container">
-			<h2>Registro</h2>
-			<button className="google-register">Registrarse con Google</button>
-			<hr />
+		<div className="form login">
+			<span className="form-title">Registrarte</span>
+
 			<form onSubmit={handleSubmit}>
-				<div className="form-group">
-					<label>Nombre:</label>
+				<div className="input-field">
 					<input
 						type="text"
-						name="name"
-						value={inputs.name}
-						onChange={(e) => handleInputs(e)}
+						name="fullName"
+						value={inputs.fullName}
+						placeholder="Ingresa tu nombre completo"
+						autoComplete="fullName"
+						required
+						onChange={handleInputs}
 					/>
-					{errors.name && <p className="error">{errors.name}</p>}
+					<AiOutlineUser className="icon" />
 				</div>
+				{errors.fullName && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.fullName}
+					</p>
+				)}
 
-				<div className="form-group">
-					<label>Apellido:</label>
+				<div className="input-field">
 					<input
 						type="text"
-						name="lastName"
-						value={inputs.lastName}
-						onChange={(e) => handleInputs(e)}
-					/>
-					{errors.lastName && <p className="error">{errors.lastName}</p>}
-				</div>
-
-				<div className="form-group">
-					<label>Contraseña:</label>
-					<div className="password-input">
-						<input
-							type={showPassword ? "text" : "password"}
-							name="password"
-							value={inputs.password}
-							onChange={(e) => handleInputs(e)}
-						/>
-						<button
-							className="password-toggle"
-							onClick={(e) => handleShowPassword(e)}
-						>
-							{!showPassword ? "Mostrar" : "Ocultar"}
-						</button>
-					</div>
-					{errors.password && <p className="error">{errors.password}</p>}
-				</div>
-
-				<div className="form-group">
-					<label>Email:</label>
-					<input
-						type="email"
 						name="email"
+						id="email"
+						placeholder="Ingresa tu correo"
+						autoComplete="current-email"
 						value={inputs.email}
-						onChange={(e) => handleInputs(e)}
+						required
+						onChange={handleInputs}
 					/>
-					{errors.email && <p className="error">{errors.email}</p>}
+					<BiEnvelope className="icon" />
 				</div>
+				{errors.email && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.email}
+					</p>
+				)}
 
-				<div className="form-group">
-					<label>Imagen:</label>
+				<div className="input-field">
 					<input
-						type="text"
-						name="image"
-						value={inputs.image}
-						onChange={(e) => handleInputs(e)}
-						placeholder="Ingresa una URL de tu imagen"
+						type={showPassword ? "text" : "password"}
+						name="password"
+						placeholder="Ingresa tu contraseña"
+						value={inputs.password}
+						required
+						autoComplete="current-password"
+						onChange={handleInputs}
 					/>
-					{errors.image && <p className="error">{errors.image}</p>}
+					<BiLockAlt className="icon" />
+
+					{/* {showPassword ? (
+            <AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
+          ) : (
+            <AiOutlineEyeInvisible
+              onClick={handleShowPassword}
+              className="showHidePw"
+            />
+          )} */}
 				</div>
+				{errors.password && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.password}
+					</p>
+				)}
 
-				<button className="submit-button">Registrarse</button>
+				<div className="input-field">
+					<input
+						type={showPassword ? "text" : "password"}
+						name="confirm"
+						placeholder="Confirma tu contraseña"
+						value={inputs.confirm}
+						required
+						autoComplete="confirm-password"
+						onChange={handleInputs}
+					/>
+					<BiLockAlt className="icon" />
+
+					{showPassword ? (
+						<AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
+					) : (
+						<AiOutlineEyeInvisible
+							onClick={handleShowPassword}
+							className="showHidePw"
+						/>
+					)}
+				</div>
+				{errors.confirm && (
+					<p className="error">
+						<RiErrorWarningLine className="error-icon" /> {errors.confirm}
+					</p>
+				)}
+
+				<div className="input-field">
+					<input
+						type="file"
+						accept="image/*"
+						name="image"
+						onChange={uploadImage}
+						defaultValue={inputs.image}
+					/>
+					<BiImage className="icon" />
+				</div>
+				{/* {errors.image && <p className="error">{errors.image}</p>} */}
+				{errorMessage && (
+					<p className="error-message">
+						<RiErrorWarningLine className="error-icon" /> {errorMessage}
+					</p>
+				)}
+				<div className="input-field button">
+					<input type="submit" value="Registrarte" />
+				</div>
 			</form>
-
-			<Link to="/login" className="login-link">
-				<p>Ya tengo cuenta</p>
-			</Link>
+			<div className="login-signup">
+				<span className="text">
+					¿tienes una cuenta?
+					<a href="/login" className="text signup-text">
+						Inicia sesión aqui
+					</a>
+				</span>
+			</div>
 		</div>
 	);
 };

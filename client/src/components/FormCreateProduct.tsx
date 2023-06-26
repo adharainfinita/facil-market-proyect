@@ -1,38 +1,53 @@
-import React, { useState } from "react";
-import { FormCreateProduct } from "../utils/interfaces";
-import { validate } from "../utils/FormProductValidation";
-import { useSelector } from "react-redux";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { postProduct } from "../services/productServices";
 import { useNavigate } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import { getAllProducts, postProduct } from "../services/productServices";
+import axios, { AxiosHeaderValue } from "axios";
+import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
+import { validate } from "../utils/FormProductValidation";
+import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
+import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
-	//? Estado Global
-	const { categories, idLogin } = useSelector((state: RootState) => ({
-		categories: state.category.value,
-		idLogin: state.user.userLogin.id,
-	}));
-
-	//? hooks
+	const categories = useSelector((state: RootState) => state.category.value);
+	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<FormCreateProduct>>({});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
+		name: "",
+	});
+	const [images, setImages] = useState<string[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
-		userID: Number(idLogin),
-		categoryID: 0,
+		userID: Number(userLogin.user.id),
+		categoryID: 1,
 		name: "",
 		location: "",
 		description: "",
-		stock: 1,
-		image: "",
-		price: 1,
+		stock: "Disponible",
+		unities: 0,
+		status: "",
+		image: [],
+		price: 0,
 		rating: 0,
 	});
 
-	//? HandleChanges
+	//?probando
+	const [storage, setStorage] = useLocalStorage("items", formData);
+
+	useEffect(() => {
+		session ? setFormData({ ...storage }) : null;
+	}, [session, storage]);
+
 	const handleChange = (
-		event: React.ChangeEvent<
+		event: ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 		>
 	) => {
@@ -43,6 +58,8 @@ const FormCreateProduct: React.FC = () => {
 			[name]: value,
 		}));
 
+		setStorage({ ...formData, [name]: value });
+
 		setErrors(
 			validate({
 				...formData,
@@ -51,124 +68,248 @@ const FormCreateProduct: React.FC = () => {
 		);
 	};
 
-	
+	const uploadImages = async (files: File[]): Promise<void> => {
+		setLoading(true);
 
-	console.log(formData);
-	//? HandleSubmit
-	const handleSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
+		try {
+			const uploadPromises = files.map(async (file: File) => {
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("tags", "codeinfuse, medium, gist");
+				formData.append("upload_preset", "facilmarket");
+				formData.append("api_key", "711728988333761");
 
-		//? Si no tengo errores
-		if (!Object.keys(errors).length) {
-			//? Parseo de info
-			formData.stock = Number(formData.stock);
-			formData.price = Number(formData.price);
-			formData.categoryID = Number(formData.categoryID);
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+					}
+				);
 
-			//? Creo el producto
-			
-			postProduct(formData);
-			setFormData({
-				userID: Number(idLogin),
-				categoryID: 0,
-				name: "",
-				location: "",
-				description: "",
-				stock: 1,
-				image: "",
-				price: 1,
-				rating: 0,
+				return res.data.secure_url;
 			});
+
+			const uploadedImages = await Promise.all(uploadPromises);
+			setImages((prevImages) => [...prevImages, ...uploadedImages]);
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
+	};
+
+	const imagePreview = () => {
+		if (loading === true) {
+			return <h3>Cargando Imagenes...</h3>;
+		}
+		if (loading === false) {
+			return (
+				<div>
+					{images.length <= 0 ? (
+						<p>No hay imágenes</p>
+					) : (
+						images.map((item, index) => (
+							<img
+								key={index}
+								alt="image preview"
+								width={60}
+								height={60}
+								src={item}
+							/>
+						))
+					)}
+				</div>
+			);
+		}
+	};
+
+	const handleSubmit = (event: FormEvent) => {
+		event.preventDefault();
+		try {
+			const Headers: Partial<AxiosHeaderValue> = {
+				Authorization: `Bearer ${session}`,
+			};
+
+			//? Set info
+			const product = {
+				userID: Number(userLogin.user.id),
+				categoryID: Number(formData.categoryID),
+				name: capitalizeFirstLetter(formData.name),
+				location: capitalizeFirstLetter(formData.location),
+				description: capitalizeFirstLetter(formData.description),
+				unities: Number(formData.unities),
+				stock: formData.stock,
+				status: formData.status,
+				images: images,
+				price: Number(formData.price),
+				rating: 0,
+			};
+
+			postProduct(product, Headers);
 			setErrors({});
 			alert("Producto creado correctamente");
+			window.localStorage.removeItem("items");
 			navigate("/products");
-		} else {
+
+			const fetchProducts = async () => {
+				try {
+					const response = await getAllProducts();
+					if (response) {
+						dispatch(getProducts(response));
+					} else {
+						console.error("No existen productos");
+					}
+				} catch (error) {
+					console.error("Error al obtener los productos:", error);
+				}
+			};
+			fetchProducts();
+		} catch (error: any) {
+			console.log(error.message);
 			alert("Datos incompletos");
 		}
 	};
 
 	return (
-		<form className="form" onSubmit={handleSubmit}>
-			<h2>Publica tu Producto</h2>
+		<>
+			{session ? (
+				<form className="form" onSubmit={handleSubmit}>
+					<h2>Publica tu Producto</h2>
+					<label className="from__input-name">
+						Nombre del producto:
+						<input
+							type="text"
+							name="name"
+							placeholder="Ingresar un nombre"
+							value={storage.name ? storage.name : formData.name}
+							onChange={handleChange}
+						/>
+						{errors.name && <p className="error">{errors.name}</p>}
+					</label>
+					<label htmlFor="form__input-location">
+						Ubicacion:
+						<input
+							type="text"
+							name="location"
+							placeholder="Ingresa tu ubicación"
+							onChange={handleChange}
+							value={storage.location ? storage.location : formData.location}
+						/>
+						{errors.location && <p className="error">{errors.location}</p>}
+					</label>
+					<label htmlFor="form__input-stock">
+						Unidades:
+						<input
+							name="unities"
+							value={storage.unities ? storage.unities : formData.unities}
+							onChange={handleChange}
+							type="number"
+						/>
+						{errors.unities && <p className="error">{errors.unities}</p>}
+					</label>
+					<label htmlFor="form__input-status">
+						Estado:
+						<div className="form-input-status">
+							<div className="content">
+								<label htmlFor="new">Nuevo</label>
+								<input
+									type="radio"
+									name="status"
+									id="new"
+									onChange={handleChange}
+									value={"Nuevo"}
+								/>
+							</div>
 
-			<label className="from__input-name">
-				Nombre del producto:
-				<input
-					type="text"
-					name="name"
-					placeholder="Ingresar un nombre"
-					value={formData.name}
-					onChange={handleChange}
-				/>
-				{errors.name && <p className="error">{errors.name}</p>}
-			</label>
+							<div className="content">
+								<label htmlFor="usage">Usado</label>
+								<input
+									type="radio"
+									name="status"
+									id="usage"
+									onChange={handleChange}
+									value="Usado"
+								/>
+							</div>
+						</div>
+						{errors.status && <p className="error">{errors.status}</p>}
+					</label>
+					<label htmlFor="form__input-image">
+						Imagen:
+						<Dropzone onDrop={uploadImages}>
+							{({ getRootProps, getInputProps }) => (
+								<section>
+									<div {...getRootProps({ className: "dropzone" })}>
+										<input {...getInputProps()} />
+										<span>📂</span>
+									</div>
+								</section>
+							)}
+						</Dropzone>
+						{errors.images && <p className="error">{errors.images}</p>}
+					</label>
+					{imagePreview()}
+					<label htmlFor="form__category">Categoría:</label>
+					<select
+						name="categoryID"
+						value={
+							storage.categoryID ? storage.categoryID : formData.categoryID
+						}
+						onChange={handleChange}
+					>
+						{categories.map((category: any, index: number) => (
+							<option key={index} value={category.id}>
+								{category.name}
+							</option>
+						))}
+					</select>
+					<label htmlFor="price">
+						Precio:
+						<input
+							type="number"
+							id="price"
+							name="price"
+							value={storage.price ? storage.price : formData.price}
+							onChange={handleChange}
+						/>
+						{errors.price && <p className="error">{errors.price}</p>}
+					</label>
+					<label htmlFor="form__description">Descripción:</label>
+					<textarea
+						name="description"
+						placeholder="Ingresa una descripción para tu producto"
+						value={
+							storage.description ? storage.description : formData.description
+						}
+						onChange={handleChange}
+					/>
+					{errors.description && <p className="error">{errors.description}</p>}
+					<button
+						type="submit"
+						disabled={Object.keys(errors).length > 0 || images.length === 0}
+					>
+						Publicar
+					</button>
+				</form>
+			) : (
+				<div className="form-verification container">
+					<div className="form-verification-card">
+						<h1 className="form-verification-title">
+							¡Hola! Para vender, ingresá a tu cuenta
+						</h1>
 
-			<label htmlFor="form__input-location">
-				Ubicacion:
-				<input
-					type="text"
-					name="location"
-					placeholder="Ingresa tu ubicación"
-					onChange={handleChange}
-					value={formData.location}
-				/>
-				{errors.location && <p className="error">{errors.location}</p>}
-			</label>
+						<Link to="/register">
+							<button className="form-verification-button">Crear cuenta</button>
+						</Link>
 
-			<label htmlFor="form__input-stock">
-				Stock:
-				<input
-					name="stock"
-					value={formData.stock}
-					onChange={handleChange}
-					type="number"
-				/>
-			</label>
-
-			<label htmlFor="form__input-location">
-				imagen:
-				<input
-					name="image"
-					type="text"
-					placeholder="URL de tu imagen"
-					onChange={handleChange}
-					value={formData.image}
-				/>
-				{errors.image && <p className="error">{errors.image}</p>}
-			</label>
-
-			<label htmlFor="form__category">Categoría:</label>
-			<select
-				name="categoryID"
-				value={formData.categoryID}
-				onChange={handleChange}
-			>
-				{categories.map((category: any, index: number) => (
-					<option key={index} value={category.id}>
-						{category.name}
-					</option>
-				))}
-			</select>
-
-			<label htmlFor="price">Price:</label>
-			<input
-				type="number"
-				id="price"
-				name="price"
-				value={formData.price}
-				onChange={handleChange}
-			/>
-
-			<label htmlFor="form__description">Descripción:</label>
-			<textarea
-				name="description"
-				placeholder="Ingresa una descripción para tu producto"
-				value={formData.description}
-				onChange={handleChange}
-			/>
-			{errors.description && <p className="error">{errors.description}</p>}
-			<button type="submit">Enviar</button>
-		</form>
+						<Link to="/login">
+							<h2 className="form-verification-text">Ingresar</h2>
+						</Link>
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 

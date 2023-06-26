@@ -1,31 +1,61 @@
 .filters-container {
-  margin-bottom: 20px;
-  margin-left: 20px;
+	display: flex;
+	margin: 20px 2%;
 
-  .filter-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+	.filter-title {
+		font-size: 23px;
+		font-weight: bold;
+		color: #77d42a;
+	}
 
-  .filter-select {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #333;
-  }
+	.filter-group {
+		width: 70%;
 
-  .search-by-location {
-    margin-top: 10px;
+		label {
+			font-size: 16px;
+		}
 
-    label {
-      font-size: 14px;
-      font-weight: bold;
-      margin-right: 5px;
-    }
+		.filter-select {
+			padding: 5px;
+			font-size: 14px;
+			border: 1px solid #ccc;
+			border-radius: 0.5rem;
+			background-color: #fff;
+			color: #333;
+			width: 15%;
+			margin: 10px 15px 10px 5px;
+		}
 
-    
-  }
+		.reset-filters {
+			height: 30px;
+			padding: 5px 10px;
+			background-color: #77d42a;
+			border: none;
+			color: #fff;
+			font-weight: 550;
+			border-radius: 0.5rem;
+			cursor: pointer;
+		}
+
+		.reset-filters:hover {
+			background-color: #fff;
+			color: #77d42a;
+			border: 1px solid #77d42a;
+		}
+	}
+
+	.order-group {
+		width: 30%;
+
+		select {
+			padding: 5px;
+			font-size: 14px;
+			border: 1px solid #ccc;
+			border-radius: 0.5rem;
+			background-color: #fff;
+			color: #333;
+			width: 20%;
+			margin: 10px 15px 10px 5px;
+		}
+	}
 }

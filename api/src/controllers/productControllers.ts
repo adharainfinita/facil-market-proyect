@@ -1,15 +1,17 @@
 import Product from "../models/Product";
+import User from "../models/User";
 import { findCategoryByID } from "./categoryControllers";
-import { findUser } from "./userControllers";
 import { Op } from "sequelize";
 
 interface localProps {
 	name: string;
 	description: string;
 	location: string;
-	stock: number;
+	stock: string;
+	unities: number;
+	status: string;
 	rating: number;
-	image: string;
+	images: string[];
 	price: number;
 	userID: number;
 	categoryID: number;
@@ -20,15 +22,18 @@ export const createProduct = async ({
 	description,
 	location,
 	stock,
+	status,
+	unities,
 	rating,
-	image,
+	images,
 	price,
 	userID,
 	categoryID,
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
-	const userFound = await findUser({ param });
+	console.log(createProduct);
+	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
 	}
@@ -47,11 +52,13 @@ export const createProduct = async ({
 		description,
 		stock,
 		rating,
-		image,
+		images,
 		location,
+		status,
+		unities,
 		price,
 		userID: userFound.id,
-		userName: userFound?.name,
+		userName: userFound?.fullName,
 		categoryID: categoryFound?.id,
 		categoryName: categoryFound?.name,
 	});
@@ -66,11 +73,11 @@ export const findProductByName = async (name: string) => {
 	});
 
 	if (!name) {
-		throw new Error(`Name was expected`);
+		throw new Error(`No se proporcionó un nombre`);
 	}
 
 	if (!Object.keys(responseDB).length) {
-		throw new Error(`No results found for: ${name}`);
+		throw new Error(`No hay resultados para: ${name}`);
 	}
 
 	return responseDB;
@@ -89,4 +96,16 @@ export const findProductById = async (id: number) => {
 	}
 
 	return product;
+};
+
+// import { productProps } from "../interfaces/propsModel";
+
+export const changeProductProperties = async (
+	product: localProps,
+	id: number
+) => {
+	const productFound = await Product.findByPk(id);
+
+	await productFound?.update(product);
+	return productFound;
 };
