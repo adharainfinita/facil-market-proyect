@@ -72,7 +72,7 @@ export const getAllProducts = async () => {
 
 export const buyProduct = async (product: Product) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/product/payment`, product);
+		const { data } = await axios.post(`${URL_HOST}/payment/order`, product);
 
 		return data;
 	} catch (error: any) {
