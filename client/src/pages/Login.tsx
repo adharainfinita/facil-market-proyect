@@ -59,7 +59,9 @@ const Login: React.FC = () => {
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
 
-					<div className="google-login"><GoogleAuth/></div>
+					<div className="google-login">
+						<GoogleAuth />
+					</div>
 					<hr />
 
 					<form onSubmit={handleSubmit}>

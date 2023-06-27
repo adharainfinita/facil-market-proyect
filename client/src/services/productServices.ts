@@ -80,7 +80,6 @@ export const buyProduct = async (product: Product) => {
 	}
 };
 export const updateProduct = async (product: Product) => {
-	
 	try {
 		const { data } = await axios.put(
 			`${URL_HOST}/product/${product.id}`,

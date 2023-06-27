@@ -53,38 +53,6 @@ function Navbar() {
       </div>
     </nav>
   );
-  /* 	<SearchBar />
-
-			<div className="nav__user">
-				{session && (
-					<div>
-						<Link to="/profile">
-							<img
-								src={userLogin.user.image}
-								alt="user"
-								className="nav__userLogo"
-							/>
-							)
-						</Link>
-						<h5 className="nav___userName">{userLogin.user.fullName}</h5>
-					</div>
-				)}
-
-				<Link to="/login">
-					{!session ? (
-						<button className="nav__button-login">Iniciar Sesión</button>
-					) : (
-						<button
-							className="nav__button-login"
-							onClick={(event) => handleLogOut(event)}
-						>
-							Cerrar Sesión
-						</button>
-					)}
-				</Link>
-			</div>
-		</nav>
-	); */
 }
 
 export default Navbar;
