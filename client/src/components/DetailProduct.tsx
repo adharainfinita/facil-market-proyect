@@ -1,6 +1,6 @@
 import useProduct from "../hooks/useProduct";
 import { BsCardImage } from "react-icons/bs";
-import PaymentButton from "./PaymentButton";
+import { PaymentButton } from "./PaymentButton";
 import { useEffect, useState } from "react";
 import { NotificationType } from "../utils/interfaces";
 import RatingStars from "./ReviewStar";
@@ -54,11 +54,11 @@ const DetailProduct = () => {
 		dispatch(updateRating(newRating));
 		setRating(newRating);
 		// Actualizar el objeto `product` si es necesario
-		console.log(product.id, newRating);
+		/* 	console.log(product.id, newRating); */
 
-		const response = await updateProduct(product);
+		/* const response =  */ await updateProduct(product);
 		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
-		console.log("Nueva calificación:", response.rating);
+		/* 	console.log("Nueva calificación:", response.rating); */
 	};
 
 	return (
@@ -134,7 +134,7 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<h2>Stock:</h2>
+						<h2>Unidades:</h2>
 						<h3>{product.stock}</h3>
 					</section>
 					<div className=".detail-product-button">

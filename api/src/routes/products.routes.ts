@@ -7,6 +7,7 @@ import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
 import putProduct from "../handlers/products/updateProduct";
 import checkSession from "../Middleware/session";
+import deleteProduct from "../handlers/products/deleteProduct";
 
 //! routes Create
 product.post("/", checkSession, postProduct);
@@ -20,5 +21,5 @@ product.get("/search", getProductByName);
 product.put("/:id", putProduct);
 
 //! routes Delete
-
+product.put("/delete/:id", deleteProduct)
 export default product;

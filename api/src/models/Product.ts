@@ -74,6 +74,13 @@ class Product extends Model {
 	})
 	price!: number;
 
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: string;
+
 	//...... Relaciones
 
 	@ForeignKey(() => Category)

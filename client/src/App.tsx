@@ -26,13 +26,13 @@ import {
 } from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 function App() {
 	const dispatch = useDispatch();
@@ -103,9 +103,11 @@ function App() {
 			} catch (error) {
 				console.log(error);
 			}
+			fetchUsers();
 		};
-		fetchUsers();
+	}, []);
 
+	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
@@ -132,7 +134,7 @@ function App() {
 			}
 		};
 		fetchCategories();
-	}, [dispatch]);
+	}, [dispatch, getAllProducts]);
 
 	const isLogin = session != null;
 

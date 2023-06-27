@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product, FiltersCaché } from "../../utils/interfaces";
-import { RootState } from "../store";
+//import { RootState } from "../store";
 //import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
@@ -170,5 +170,4 @@ export const {
 	updateRating,
 } = productSlice.actions;
 export default productSlice.reducer;
-export const selectSearchedProducts = (state: RootState) =>
-	state.product.products;
+/* state.product.products; */
