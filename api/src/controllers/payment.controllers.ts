@@ -18,7 +18,6 @@ export const createOrder = async (product: productProps) => {
 				currency_id: "ARS",
 				picture_url: product.image,
 				quantity: 1,
-				description: product.description,
 			},
 		],
 		back_urls: {
