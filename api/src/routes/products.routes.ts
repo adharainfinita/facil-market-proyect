@@ -13,8 +13,8 @@ product.post("/", checkSession, postProduct);
 
 //! routes Read
 product.get("/", getAllProducts);
-product.get("/search", getProductByName);
 product.get("/:id", getProductById);
+product.get("/search", getProductByName);
 
 //! routes Update
 product.put("/:id", putProduct);

@@ -54,7 +54,9 @@ const User = ({ handleLogOut }: UserProps) => {
 						</Link>
 						<div className="box">
 							<BsBagCheck className="icon" />
-							<h4>Mis Productos</h4>
+							<h4>
+								<Link to="/ventas">Mis Productos</Link>
+							</h4>
 						</div>
 						<div onClick={(event) => handleLogOut(event)} className="box">
 							<BiLogOut className="icon" />

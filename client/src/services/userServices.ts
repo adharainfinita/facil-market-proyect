@@ -7,7 +7,7 @@ import { user } from "../utils/interfaces";
 
 export const postUser = async (userData: NewUser) => {
 	try {
-		const response = await axios.post(`${URL_HOST}/register`, userData);
+		const response = await axios.post(`${URL_HOST}/auth/register`, userData);
 		return response.data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
@@ -48,7 +48,7 @@ export const updateUser = async (userId: string, userData: user) => {
 
 export const logUser = async (logData: LoginData) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/login`, logData);
+		const { data } = await axios.post(`${URL_HOST}/auth/login`, logData);
 		return data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
@@ -62,7 +62,7 @@ export const logUser = async (logData: LoginData) => {
 
 export const getUserById = async (userId: string): Promise<user | null> => {
 	try {
-		const response = await axios.get(`http://localhost:3001/user/${userId}`);
+		const response = await axios.get(`${URL_HOST}/user/${userId}`);
 		return response.data;
 	} catch (error) {
 		console.log("Error al obtener los datos del usuario:", error);
