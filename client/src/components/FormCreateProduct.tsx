@@ -1,28 +1,28 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { postProduct } from "../services/productServices";
+import { getAllProducts, postProduct } from "../services/productServices";
 import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getAllProducts } from "../services/productServices";
 import { getProducts } from "../redux/features/productSlice";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
-	const session = window.localStorage.getItem("token");
 	const dispatch = useDispatch();
+	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
-	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({name: ''});
+	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
+		name: "",
+	});
 	const [images, setImages] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<FormCreateProduct>({
@@ -44,7 +44,7 @@ const FormCreateProduct: React.FC = () => {
 
 	useEffect(() => {
 		session ? setFormData({ ...storage }) : null;
-	}, []);
+	}, [session, storage]);
 
 	const handleChange = (
 		event: ChangeEvent<
@@ -208,25 +208,31 @@ const FormCreateProduct: React.FC = () => {
 						/>
 						{errors.unities && <p className="error">{errors.unities}</p>}
 					</label>
-					//* Stylesssss for this
 					<label htmlFor="form__input-status">
 						Estado:
-						<input
-							type="radio"
-							name="status"
-							id="new"
-							onChange={handleChange}
-							value={"Nuevo"}
-						/>
-						<label htmlFor="new">Nuevo</label>
-						<input
-							type="radio"
-							name="status"
-							id="usage"
-							onChange={handleChange}
-							value="Usado"
-						/>
-						<label htmlFor="usage">Usado</label>
+						<div className="form-input-status">
+							<div className="content">
+								<label htmlFor="new">Nuevo</label>
+								<input
+									type="radio"
+									name="status"
+									id="new"
+									onChange={handleChange}
+									value={"Nuevo"}
+								/>
+							</div>
+
+							<div className="content">
+								<label htmlFor="usage">Usado</label>
+								<input
+									type="radio"
+									name="status"
+									id="usage"
+									onChange={handleChange}
+									value="Usado"
+								/>
+							</div>
+						</div>
 						{errors.status && <p className="error">{errors.status}</p>}
 					</label>
 					<label htmlFor="form__input-image">
@@ -279,8 +285,12 @@ const FormCreateProduct: React.FC = () => {
 						onChange={handleChange}
 					/>
 					{errors.description && <p className="error">{errors.description}</p>}
-					<button disabled={Object.keys(errors).length > 0 ? true : false} type="submit"
-					>Publicar</button>
+					<button
+						type="submit"
+						disabled={Object.keys(errors).length > 0 || images.length === 0}
+					>
+						Publicar
+					</button>
 				</form>
 			) : (
 				<div className="form-verification container">

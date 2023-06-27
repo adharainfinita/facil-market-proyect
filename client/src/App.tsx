@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import VerificationPage from "./pages/VerificationPage";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import { getAllProducts } from "./services/productServices";
+import { getProducts } from "./redux/features/productSlice";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
@@ -26,11 +28,8 @@ import { getCategory } from "./services/categoryServices";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
-import { useDispatch } from "react-redux";
-import { getAllProducts } from "./services/productServices";
-import { getProducts } from "./redux/features/productSlice";
-
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 function App() {
 	const dispatch = useDispatch();
@@ -68,7 +67,7 @@ function App() {
 		};
 
 		fetchUserData();
-	}, [userId]);
+	}, [dispatch, userId]);
 
 	useEffect(() => {
 		if (session) {
@@ -89,7 +88,7 @@ function App() {
 					console.log(error);
 				});
 		}
-	}, []);
+	}, [dispatch, session]);
 
 	useEffect(() => {
 		const fetchUsers = async () => {

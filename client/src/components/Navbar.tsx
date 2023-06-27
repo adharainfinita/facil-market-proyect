@@ -8,7 +8,7 @@ function Navbar() {
 	const navigate = useNavigate();
 	const session = window.localStorage.getItem("token");
 
-	const handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		window.localStorage.removeItem("token");
 		window.localStorage.removeItem("items");
