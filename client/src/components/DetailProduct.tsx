@@ -3,7 +3,7 @@ import { BsCardImage } from "react-icons/bs";
 import {PaymentButton} from "./PaymentButton";
 import { useEffect, useState } from "react";
 import { NotificationType } from "../utils/interfaces";
-/* import RatingStars from "./ReviewStar"; */
+import RatingStars from "./ReviewStar";
 import { useDispatch } from "react-redux";
 import { updateRating } from "../redux/features/productSlice";
 import { updateProduct } from "../services/productServices";
@@ -54,11 +54,11 @@ const DetailProduct = () => {
 		dispatch(updateRating(newRating));
 		setRating(newRating);
 		// Actualizar el objeto `product` si es necesario
-		console.log(product.id, newRating);
+	/* 	console.log(product.id, newRating); */
 
-		const response = await updateProduct(product);
+		/* const response =  */await updateProduct(product);
 		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
-		console.log("Nueva calificación:", response.rating);
+	/* 	console.log("Nueva calificación:", response.rating); */
 	};
 
 	return (
@@ -140,6 +140,16 @@ const DetailProduct = () => {
           <div className=".detail-product-button">
            <PaymentButton product={product} /> 
           </div>
+
+					<div>
+                        <section className="detail-product-section">
+                            <h2>Reseñas:</h2>
+                            <RatingStars
+                                rating={product.rating}
+                                onRatingChange={handleRatingChange}
+                            />
+                        </section>
+                    </div>
           
 
           {notification.isOpen && (

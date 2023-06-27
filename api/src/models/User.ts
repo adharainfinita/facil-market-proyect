@@ -15,13 +15,6 @@ class User extends Model {
 	})
 	fullName!: string;
 
-	/* 	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	lastName!: string;
- */
-
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
@@ -40,6 +33,13 @@ class User extends Model {
 		allowNull: true,
 	})
 	image!: string;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: string;
 }
 
 export default User;
