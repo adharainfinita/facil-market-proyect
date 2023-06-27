@@ -72,7 +72,7 @@ function App() {
 	useEffect(() => {
 		if (session) {
 			axios
-				.get(`${URL_HOST}/token`, { headers })
+				.get(`${URL_HOST}/auth/token`, { headers })
 				.then((response) => {
 					const data = {
 						id: response.data.user.id,

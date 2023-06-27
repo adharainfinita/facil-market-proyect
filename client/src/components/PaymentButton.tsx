@@ -9,7 +9,6 @@ interface MercadoPagoButtonProps {
 const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	console.log(product);
 
 	const generateLink = async () => {
 		setLoading(true);

@@ -17,6 +17,7 @@ export interface productProps {
 
 export interface reviewProps {
 	id: number;
+	fullName: string;
 	userID: number;
 	productID: number;
 	text: string;

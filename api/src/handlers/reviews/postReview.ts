@@ -4,10 +4,11 @@ import { reviewProps } from "../../interfaces/propsModel";
 
 const postReviews = async (req: Request, res: Response) => {
 	try {
-		const { userID, productID, text, rating } = req.body;
+		const { userID, productID, text, rating, fullName } = req.body;
 
 		const data: reviewProps = {
 			id: 0,
+			fullName,
 			userID,
 			productID,
 			text,

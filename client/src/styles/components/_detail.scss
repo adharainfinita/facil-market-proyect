@@ -207,3 +207,33 @@
 		}
 	}
 }
+
+.detail-product-review-container {
+	border: 3px solid #dadada;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	margin-top: 1rem;
+	margin-right: 1rem;
+  }
+  
+  /* Estilos para cada elemento de la reseña */
+  .review-item {
+	margin-bottom: 1rem;
+  }
+  
+  .review-item p {
+	margin: 0;
+  }
+  
+  .review-item p:first-child {
+	font-weight: bold;
+  }
+  
+  .review-item p:nth-child(2) {
+	display: inline-block;
+  }
+  
+  
+  .review-item p:last-child {
+	margin-top: 0.5rem;
+  }
