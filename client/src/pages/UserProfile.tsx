@@ -13,6 +13,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Product } from "../utils/interfaces";
 
+
+
+
+
+
 const UserProfile: React.FC = () => {
 	const dispatch = useDispatch();
 	const [showPassword, setShowPassword] = useState(false);

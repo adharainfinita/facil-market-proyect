@@ -12,6 +12,7 @@ import { getProducts } from "./redux/features/productSlice";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
+import UserProfiles from "./pages/UsersProfiles";
 import {
 	changePassword,
 	getUsers,
@@ -145,6 +146,7 @@ function App() {
 				<Route path="/register" element={<RegisterForm />} />
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
+				<Route path="/profile/:id" element={<UserProfiles />} />
 			</Routes>
 			<Footer />
 		</>
