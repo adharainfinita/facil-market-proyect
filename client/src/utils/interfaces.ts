@@ -125,3 +125,10 @@ export interface isLogin {
 	email: string;
 	image: string;
 }
+
+export interface GoogleUser {
+	name: string
+	sub: string
+	email: string
+	picture: string
+}
