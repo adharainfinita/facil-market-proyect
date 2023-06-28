@@ -19,6 +19,9 @@ const DetailProduct = () => {
     content: "",
   });
 
+
+  
+
   useEffect(() => {
     if (product?.images.length > 0 && !selectedImage) {
       setSelectedImage(product.images[0]);

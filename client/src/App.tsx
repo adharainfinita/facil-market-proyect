@@ -13,6 +13,7 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
 import UserProfiles from "./pages/UsersProfiles";
+import ProductReviews from "./pages/ProductsReviews";
 import {
 	changePassword,
 	getUsers,
@@ -147,6 +148,7 @@ function App() {
 				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 				<Route path="/profile/:id" element={<UserProfiles />} />
+				<Route path="/review/:id" element={<ProductReviews />} />
 			</Routes>
 			<Footer />
 		</>

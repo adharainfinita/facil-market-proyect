@@ -7,8 +7,9 @@ import { updateProduct } from "../services/productServices";
 import { createReview, getAllReviewsProduct } from "../services/reviewService";
 import { RootState } from "../redux/store";
 import { Review } from "../utils/interfaces";
+import { Link } from "react-router-dom";
 
-const Reviews = () => {
+const Reviews: React.FC = () => {
   const product = useProduct();
   const dispatch = useDispatch();
   const [rating, setRating] = useState(0);
@@ -17,15 +18,19 @@ const Reviews = () => {
 
   const [hasReviewed, setHasReviewed] = useState(false);
   const [userProduct, setUserProduct] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
   const fullName = userLogin.user.fullName;
 
+
+  
   useEffect(() => {
-    if (userLogin && product.userID === userLogin.user.id) {
+    if (parseInt(product.userID, 10) === parseInt(userLogin.user.id, 10)) {
       setUserProduct(true);
     }
   }, [userLogin, product.userID]);
+  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -47,15 +52,14 @@ const Reviews = () => {
     fetchReviews();
   }, [product.id, fullName]);
 
-  //maneja los comentarios
+  // Maneja los comentarios
   const handleCommentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setComment(event.target.value);
   };
 
-  // submitea a la base de datos
-
+  // Submitea a la base de datos
   const submitReview = async () => {
     if (hasReviewed) {
       console.log("El usuario ya ha dejado una reseña");
@@ -104,55 +108,67 @@ const Reviews = () => {
     }
   };
 
-  // controlador de las estrellas
+  // Controlador de las estrellas
   const handleRatingChange = async (newRating: number) => {
     setRating(newRating);
   };
 
-  //FIN DEL REVIEW ----------------------------------------------------------------
-
-
 
   return (
-<div>
-        <section className="review-container">
+    <div>
+      <section className="review-container">
         {hasReviewed ? (
-            <div>
-              <p>Ya has dejado una reseña</p>
-            </div>
-          ) : userProduct ? null : (
-            <div>
-              <section className="detail-product-section">
-                <h2>Reseñas:</h2>
-                <RatingStars
-                  rating={rating}
-                  onRatingChange={handleRatingChange}
-                />
-              </section>
-              <textarea
-                value={comment}
-                onChange={handleCommentChange}
-                placeholder="Escribe tu comentario..."
-              ></textarea>
-              <button onClick={submitReview}>Enviar Reseña</button>
-            </div>
-          )}
-
-          <div className="detail-product-review-container">
-            <div className="detail-product-review">
-              <h2>Reseñas:</h2>
-              {reviews.map((review) => (
-                <div key={review.id} className="review-item">
-                  <p>Usuario: {review.fullName}</p>
-                  <p>Estrellas: {review.rating}⭐</p>
-                  <p>Comentario: {review.text}</p>
-                </div>
-              ))}
-            </div>
+          <div>
+            <p>Ya has dejado una reseña</p>
           </div>
-        </section>
-      </div>
+        ) : userProduct ? null : (
+          <div>
+            <section className="detail-product-section">
+              <h2>Reseñas:</h2>
+              <RatingStars
+                rating={rating}
+                onRatingChange={handleRatingChange}
+              />
+            </section>
+            <textarea
+              value={comment}
+              onChange={handleCommentChange}
+              placeholder="Escribe tu comentario..."
+            ></textarea>
+            <button onClick={submitReview}>Enviar Reseña</button>
+          </div>
+        )}
 
+        <div className="detail-product-review-container">
+          <div className="detail-product-review">
+            <h2>Reseñas:</h2>
+            {showAllReviews
+              ? reviews.map((review) => (
+                  <div key={review.id} className="review-item">
+                    <p>Usuario: {review.fullName}</p>
+                    <p>Estrellas: {review.rating}⭐</p>
+                    <p>Comentario: {review.text}</p>
+                  </div>
+                ))
+              : reviews.slice(0, 3).map((review) => (
+                  <div key={review.id} className="review-item">
+                    <p>Usuario: {review.fullName}</p>
+                    <p>Estrellas: {review.rating}⭐</p>
+                    <p>Comentario: {review.text}</p>
+                  </div>
+                ))}
+          </div>
+        </div>
+
+        {reviews.length > 3 && !showAllReviews && (
+            <Link to={`/review/${product.id}`}>
+          <button >
+            Ver todas las reseñas
+          </button></Link>
+        )}
+
+      </section>
+    </div>
   );
 };
 
