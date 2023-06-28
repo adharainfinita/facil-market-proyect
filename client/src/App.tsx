@@ -14,6 +14,7 @@ import UserProfile from "./components/UserProfile";
 import UserProducts from "./components/UserProducts";
 import NotFound from "./errors/NotFound";
 import LoginExists from "./errors/LoginExists";
+import ProductEdit from "./components/ProductEdit";
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
 import {
@@ -151,6 +152,7 @@ function App() {
 						<Route path="/ventas" element={<UserProducts />} />
 						<Route path="/verification" element={<VerificationPage />} />
 						<Route path="/login" element={<LoginExists />} />
+						<Route path="/product/edit/:id" element={<ProductEdit />} />
 						<Route path="*" element={<NotFound />} />
 					</>
 				)}
