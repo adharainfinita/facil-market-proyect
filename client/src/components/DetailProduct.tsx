@@ -18,6 +18,7 @@ const DetailProduct = () => {
 		type: null,
 		content: "",
 	});
+	
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);

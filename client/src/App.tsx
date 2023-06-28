@@ -31,6 +31,7 @@ import { RootState } from "./redux/store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUserById } from "./services/userServices";
 import axios from "axios";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
 	const dispatch = useDispatch();
@@ -146,6 +147,7 @@ function App() {
 					<Route path="/verification" element={<VerificationPage />} />
 					<Route path="/products" element={<Market />} />
 					<Route path="/product/detail/:id" element={<DetailProduct />} />
+					<Route path="/dashboard" element={<Dashboard />} />
 				</Routes>
 			) : (
 				<Routes>
