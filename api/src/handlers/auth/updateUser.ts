@@ -7,10 +7,11 @@ const updateUser = async (req: Request, res: Response) => {
 
 	try {
 		const response = await changeUser(userId, updates);
+
 		if (response) {
 			return res
 				.status(200)
-				.json({ message: "Usuario actualizado exitosamente" });
+				.json({ message: "Usuario actualizado exitosamente", user: response });
 		}
 	} catch (error: any) {
 		console.log(error);

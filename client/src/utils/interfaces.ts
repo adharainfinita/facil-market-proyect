@@ -12,9 +12,10 @@ export interface User {
 	email: string;
 	password: string;
 	image: string;
+	active?: boolean;
 }
 
-export interface FiltersCaché {
+export interface FiltersCache {
 	status: string | undefined;
 	categoryName: string | undefined;
 	location: string | undefined;
@@ -26,7 +27,7 @@ export interface Product {
 	description: string;
 	status: string;
 	unities: number;
-	stock: number;
+	stock: string;
 	rating: number;
 	images: string[];
 	location: string;
@@ -73,6 +74,7 @@ export interface user {
 	email: string | number;
 	id: string;
 	image: string;
+	active?: boolean;
 }
 export interface UserData {
 	token: string;

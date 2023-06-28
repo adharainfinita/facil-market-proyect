@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Link } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 
@@ -25,7 +25,7 @@ const User = ({ handleLogOut }: UserProps) => {
   return (
     <>
       <div className="profile">
-        <div onMouseEnter={handleMouseEnter}>
+        <div onMouseEnter={handleMouseEnter} className="profile-user-image">
           <img src={userLogin.user.image} alt="user image" />
         </div>
 
@@ -40,31 +40,37 @@ const User = ({ handleLogOut }: UserProps) => {
                 <img src={userLogin.user.image} alt="user image" />
               </div>
 
-							<div className="openProfile-name">
-								<h4>{userLogin.user.fullName}</h4>
-							</div>
-						</div>
-						<Link to="/profile">
-							<div className="box">
-								<IoSettingsOutline className="icon" />
-								<h4>Mi Perfil</h4>
-							</div>
-						</Link>
-						<div className="box">
-							<BsBagCheck className="icon" />
-							<h4>
-								<Link to="/ventas">Mis Productos</Link>
-							</h4>
-						</div>
-						<div onClick={(event) => handleLogOut(event)} className="box">
-							<BiLogOut className="icon" />
-							<h4>Cerrar Sesión</h4>
-						</div>
-					</div>
-				)}
-			</div>
-		</>
-	);
+              <div className="openProfile-name">
+                <h4>{userLogin.user.fullName}</h4>
+              </div>
+            </div>
+            <Link to="/profile">
+              <div className="box">
+                <IoSettingsOutline className="icon" />
+                <h4>Mi Perfil</h4>
+              </div>
+            </Link>
+            <div className="box">
+              <BsBagCheck className="icon" />
+              <h4>
+                <Link to="/ventas">Mis Productos</Link>
+              </h4>
+            </div>
+            <div onClick={(event) => handleLogOut(event)} className="box">
+              <BiLogOut className="icon" />
+              <h4>Cerrar Sesión</h4>
+            </div>
+            <div className="box">
+              <BiSolidDashboard className="icon" />
+              <h4>
+                <Link to="/admin">Dashboard</Link>
+              </h4>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default User;
