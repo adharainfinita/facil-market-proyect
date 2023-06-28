@@ -12,7 +12,7 @@ import { getProducts } from "./redux/features/productSlice";
 import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import Market from "./pages/Market";
-import UserProfiles from "./pages/UsersProfiles";
+import UserProfiles from "./components/UsersProfiles";
 import ProductReviews from "./pages/ProductsReviews";
 import {
 	changePassword,
@@ -23,7 +23,7 @@ import {
 	changeImage,
 } from "./redux/features/userSlice";
 import { getAllUsers } from "./services/userServices";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./components/UserProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./redux/features/categorySlice";

@@ -2,7 +2,7 @@ import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import User from "./User";
+import User from "../pages/User";
 
 function Navbar() {
 	const navigate = useNavigate();
