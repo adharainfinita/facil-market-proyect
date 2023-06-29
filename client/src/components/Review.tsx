@@ -4,7 +4,11 @@ import useProduct from "../hooks/useProduct";
 import RatingStars from "./ReviewStar";
 import { updateRating } from "../redux/features/productSlice";
 import { updateProduct } from "../services/productServices";
-import { createReview, getAllReviewsProduct } from "../services/reviewService";
+import {
+  createReview,
+  getAllReviewsProduct,
+  deleteReview,
+} from "../services/reviewService";
 import { RootState } from "../redux/store";
 import { Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
@@ -23,14 +27,11 @@ const Reviews: React.FC = () => {
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
   const fullName = userLogin.user.fullName;
 
-
-  
   useEffect(() => {
     if (parseInt(product.userID, 10) === parseInt(userLogin.user.id, 10)) {
       setUserProduct(true);
     }
   }, [userLogin, product.userID]);
-  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -45,7 +46,6 @@ const Reviews: React.FC = () => {
         setHasReviewed(hasReviewed);
       } catch (error) {
         console.error("Error al obtener las reseñas:", error);
-        // Manejar el error, mostrar una notificación de error, etc.
       }
     };
 
@@ -63,14 +63,13 @@ const Reviews: React.FC = () => {
   const submitReview = async () => {
     if (hasReviewed) {
       console.log("El usuario ya ha dejado una reseña");
-      // Manejar la situación, mostrar una notificación, etc.
       setRating(0);
       setComment("");
       return;
     }
 
     try {
-      const userID = parseInt(product.userID, 10);
+      const userID = parseInt(userLogin.user.id, 10);
       const productID = product.id;
 
       await createReview(userID, fullName, productID, comment, rating);
@@ -82,7 +81,6 @@ const Reviews: React.FC = () => {
 
       const updatedProduct = { ...product, rating: formattedAverage };
       dispatch(updateRating(formattedAverage));
-      // Restablecer los valores de los inputs a su estado inicial
       setRating(0);
       setComment("");
 
@@ -93,7 +91,6 @@ const Reviews: React.FC = () => {
           "Error al actualizar la calificación del producto:",
           error
         );
-        // Manejar el error, mostrar una notificación de error, etc.
       }
 
       // Marcar que el usuario ha dejado una reseña
@@ -104,7 +101,6 @@ const Reviews: React.FC = () => {
       setReviews(reviewsData);
     } catch (error) {
       console.error("Error al enviar la revisión:", error);
-      // Manejar el error, mostrar una notificación de error, etc.
     }
   };
 
@@ -112,6 +108,42 @@ const Reviews: React.FC = () => {
   const handleRatingChange = async (newRating: number) => {
     setRating(newRating);
   };
+
+
+// elimina las reviews
+const handleDeleteReview = async (reviewId: number) => {
+  try {
+    await deleteReview(reviewId);
+    setHasReviewed(false);
+
+    const updatedReviews = reviews.filter((review) => review.id !== reviewId);
+    setReviews(updatedReviews);
+
+
+    const newRatings = updatedReviews.map((review) => review.rating);
+    const newAverage =
+      newRatings.reduce((sum, rating) => sum + rating, 0) / newRatings.length;
+    const formattedAverage = parseFloat(newAverage.toFixed(2));
+
+    try {
+
+      const updatedProduct = { ...product, rating: formattedAverage };
+      await updateProduct(updatedProduct);
+
+
+      dispatch(updateRating(formattedAverage));
+    } catch (error) {
+      console.error(
+        "Error al actualizar la calificación del producto:",
+        error
+      );
+    }
+
+    alert("Se eliminó la reseña");
+  } catch (error) {
+    console.error("Error al eliminar la review:", error);
+  }
+};
 
 
   return (
@@ -148,25 +180,32 @@ const Reviews: React.FC = () => {
                     <p>Usuario: {review.fullName}</p>
                     <p>Estrellas: {review.rating}⭐</p>
                     <p>Comentario: {review.text}</p>
+                    {review.userID === parseInt(userLogin.user.id, 10) && (
+                      <button className="review__detele"onClick={() => handleDeleteReview(review.id)}>X</button>
+                    )}
                   </div>
                 ))
               : reviews.slice(0, 3).map((review) => (
                   <div key={review.id} className="review-item">
+
+                    {review.userID === parseInt(userLogin.user.id, 10) && (
+                      <button className="review__detele"onClick={() => handleDeleteReview(review.id)}>X</button>
+                    )}                    
+                    <div className="review__cont">
                     <p>Usuario: {review.fullName}</p>
                     <p>Estrellas: {review.rating}⭐</p>
                     <p>Comentario: {review.text}</p>
+                  </div>
                   </div>
                 ))}
           </div>
         </div>
 
         {reviews.length > 3 && !showAllReviews && (
-            <Link to={`/review/${product.id}`}>
-          <button >
-            Ver todas las reseñas
-          </button></Link>
+          <Link to={`/review/${product.id}`}>
+            <button>Ver todas las reseñas</button>
+          </Link>
         )}
-
       </section>
     </div>
   );

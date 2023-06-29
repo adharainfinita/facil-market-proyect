@@ -30,3 +30,19 @@ export const createReview = async (userID: number,fullName:string, productID: nu
       }
   };
   
+
+  export const deleteReview = async (reviewId: number): Promise<void> => {
+    try {
+      // Realizar la solicitud DELETE al endpoint correspondiente en el backend
+      await axios.delete(`${URL_HOST}/review`, {
+        data: {
+          reviewId: reviewId,
+        },
+      });
+  
+      console.log("La review ha sido eliminada con éxito");
+    } catch (error) {
+  
+      console.error("Error al eliminar la review:", error);
+    }
+  };

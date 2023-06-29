@@ -129,6 +129,7 @@ export interface isLogin {
 
 export interface Review {
 	id: number;
+	userID: number;
 	fullName:string;
 	rating: number;
 	text: string;
