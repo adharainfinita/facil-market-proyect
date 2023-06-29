@@ -1,4 +1,4 @@
-import { FormCreateProduct, Product } from "../utils/interfaces";
+import { FormCreateProduct, Product, PutProduct, Active } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 //import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
@@ -79,14 +79,29 @@ export const buyProduct = async (product: Product) => {
 		console.log(error.message);
 	}
 };
-export const updateProduct = async (product: Product) => {
+
+export const updateProduct = async (product: PutProduct) => {
+	try {
+    const { data } = await axios.put(`${URL_HOST}/product/${product.id}`, product);
+    return data;
+  } catch (error: any) {
+    let errorMessage = "An error occurred";
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data?.error || errorMessage;
+    }
+    alert(errorMessage);
+    throw error;
+  }
+};
+
+export const deleteProduct = async (product: Active) =>{
 	try {
 		const { data } = await axios.put(
-			`${URL_HOST}/product/${product.id}`,
+			`${URL_HOST}/product/delete/${product.id}`,
 			product
 		);
 		return data;
-	} catch (error: any) {
+	} catch (error) {
 		let errorMessage = "An error occurred";
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
@@ -94,7 +109,7 @@ export const updateProduct = async (product: Product) => {
 		alert(errorMessage);
 		throw error;
 	}
-};
+}
 // export const updateProduct = async (product: Product) => {
 // 	try {
 // 		const { data } = await axios.put(

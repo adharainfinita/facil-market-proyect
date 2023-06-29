@@ -10,6 +10,7 @@ function ProductCard(props: productList) {
 		<>
 			<div className="cards-container">
 				{products.map((product, index) => {
+					if(product.active === true)
 					return (
 						<Link key={index} to={`/product/detail/${product.id}`}>
 							<div className="product-card">

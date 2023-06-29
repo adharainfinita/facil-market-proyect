@@ -35,6 +35,24 @@ export interface Product {
 	categoryName: string;
 	userID: string;
 	userName: string;
+	active: boolean
+}
+
+export interface Active {
+	active: boolean;
+	id: number;
+}
+
+export interface PutProduct {
+	id: number;
+	name: string;
+	description: string;
+	unities: number;
+	images: string[];
+	status: string;
+	price: number;
+	categoryID: number;
+	categoryName: string;
 }
 
 export interface Category {
@@ -56,6 +74,7 @@ export interface productData {
 	image: string[];
 	location: string;
 	price: number;
+	active: boolean
 }
 
 // Interfaces para formularios de registro
