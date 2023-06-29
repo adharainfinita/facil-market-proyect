@@ -128,3 +128,12 @@ export interface isLogin {
 	email: string;
 	image: string;
 }
+
+
+export interface Review {
+	id: number;
+	userID: number;
+	fullName:string;
+	rating: number;
+	text: string;
+  }

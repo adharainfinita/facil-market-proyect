@@ -8,25 +8,25 @@ import Login from "./pages/Login";
 import Terms from "./pages/Terms";
 import VerificationPage from "./pages/VerificationPage";
 import Home from "./pages/Home";
-import Market from "./pages/Market";
-import UserProfile from "./pages/UserProfile";
 import UserProducts from "./pages/UserProducts";
 // Dashboard Admin
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
-import Products from "./pages/admin/Products";
-import EditUser from "./pages/admin/EditUser";
+
 // Components
 import Navbar from "./components/Navbar";
 import FormCreateProduct from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
-import RegisterForm from "./components/RegisterForm";
-import DetailProduct from "./components/DetailProduct";
 import ProtectedRoute from "./components/ProtectedRoute";
 // redux/services
 import { RootState } from "./redux/store";
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
+import RegisterForm from "./components/RegisterForm";
+import DetailProduct from "./components/DetailProduct";
+import Market from "./pages/Market";
+import UserProfiles from "./components/UsersProfiles";
+import ProductReviews from "./pages/ProductsReviews";
 import {
   changePassword,
   getUsers,
@@ -38,6 +38,9 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import UserProfile from "./components/UserProfile";
+import EditUser from "./pages/admin/EditUser";
+import Products from "./pages/admin/Products";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -165,6 +168,8 @@ const App = () => {
         <Route path="/product/detail/:id" element={<DetailProduct />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/profile/:id" element={<UserProfiles />} />
+        <Route path="/review/:id" element={<ProductReviews />} />
 
         <Route
           path="*"
@@ -175,7 +180,6 @@ const App = () => {
           }
         />
       </Routes>
-
       <Footer />
     </>
   );

@@ -3,7 +3,7 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+	height: 1050px;
 	width: 100%;
 	background-color: #f4f4f4;
 	position: relative;
@@ -84,6 +84,8 @@
 			justify-content: center;
 			align-items: center;
 			flex-grow: 1;
+			height: 50%;
+			width: 30%;
 			margin-top: 1rem;
 			border: 3px solid #dadada;
 			border-radius: 0.5rem;
@@ -106,14 +108,10 @@
 		.conteiner-info {
 			display: flex;
 			flex-direction: column;
-			border: 3px solid #dadada;
-			border-radius: 0.5rem;
 			gap: 1rem;
 			width: 30rem;
 			padding: 1rem;
-			margin-top: 1rem;
-			// height: fit-content;
-			height: 470px;
+			height: fit-content;
 
 			/* nombre y precio */
 			.conteiner-name-price {
@@ -133,8 +131,12 @@
 
 			/* descripción general */
 			.detail-product-info {
+				border: 3px solid #dadada;
 				flex-direction: column;
 				display: flex;
+				border-radius: 0.5rem;
+				padding: 1rem;
+				
 				gap: 1rem;
 
 				.container-description {
@@ -202,4 +204,7 @@
 			border-color: blue;
 		}
 	}
+	.review__cont {
+		margin-top: 20px;
+	  }
 }

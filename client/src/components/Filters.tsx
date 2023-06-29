@@ -77,7 +77,7 @@ const Filters = () => {
 					onChange={handleProductFilter}
 					defaultValue={"All"}
 				>
-					<option value="All">Default</option>
+					<option value="All">Por Defecto</option>
 					<option value={"Nuevo"}>Nuevo</option>
 					<option value={"Usado"}>Usado</option>
 				</select>
@@ -88,7 +88,7 @@ const Filters = () => {
 					onChange={handleProductFilter}
 					defaultValue={"All"}
 				>
-					<option value="All">Default</option>
+					<option value="All">Por Defecto</option>
 					{uniqueLocations.map((location: string, index: number) => (
 						<option key={index} value={location}>
 							{location}
@@ -112,7 +112,7 @@ const Filters = () => {
 					className="filter-select"
 					onChange={handleOrderProduct}
 				>
-					<option value="All">Default</option>
+					<option value="All">Por Defecto</option>
 					<option value="MAX">Precio más alto</option>
 					<option value="MIN">Precio más bajo</option>
 				</select>
@@ -122,7 +122,7 @@ const Filters = () => {
 					className="filter-select"
 					onChange={handleOrderProduct}
 				>
-					<option value="All">Default</option>
+					<option value="All">Por Defecto</option>
 					<option value="A">A-Z</option>
 					<option value="D">Z-A</option>
 				</select>
