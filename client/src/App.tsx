@@ -36,6 +36,7 @@ import axios from "axios";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
+import EditUser from "./pages/admin/EditUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ function App() {
     const fetchUsers = async () => {
       try {
         const response = await getAllUsers();
-  
+
         if (response) {
           dispatch(getUsers(response));
         }
@@ -152,10 +153,11 @@ function App() {
           <Route path="/verification" element={<VerificationPage />} />
           <Route path="/products" element={<Market />} />
           <Route path="/product/detail/:id" element={<DetailProduct />} />
+          <Route path="/user/:id" element={<EditUser />} />
 
           <Route path="/admin" element={<Dashboard />}>
-            <Route path="/admin/users" element={<Users />} />
-            <Route path="/admin/products" element={<Products />} />
+            <Route path="users" element={<Users />} />
+            <Route path="products" element={<Products />} />
           </Route>
         </Routes>
       ) : (

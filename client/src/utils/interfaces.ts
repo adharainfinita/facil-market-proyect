@@ -76,6 +76,7 @@ export interface user {
 	image: string;
 	active?: boolean;
 }
+
 export interface UserData {
 	token: string;
 	user: user;
