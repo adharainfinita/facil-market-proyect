@@ -1,28 +1,32 @@
 import useProduct from "../hooks/useProduct";
-import { BsCardImage } from "react-icons/bs";
 import { FormEvent, ChangeEvent, useEffect, useState } from "react";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { updateProduct } from "../services/productServices";
-//import { updateProduct } from "../services/productServices";
+import axios from "axios";
+import Dropzone from "react-dropzone";
 
 const ProductEdit = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const product = useProduct();
 	//const dispatch = useDispatch();
-	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [content, setContent] = useState<any>([]);
 	const [editMode, setEditMode] = useState<boolean>(false);
-	/* const [loading, setLoading] = useState<boolean>(false);
-  const [images, setImages] = useState<string[]>([]); */
+	const [_loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
+		//setea el content con los datos del producto
 		setContent(product);
-		console.log(content);
-		if (product?.images.length > 0 && !selectedImage) {
-			setSelectedImage(product.images[0]);
+	}, [product]);
+
+	const [selectedImage, setSelectedImage] = useState<string>("");
+
+	useEffect(() => {
+		//selecciona la imagen
+		if (content.images?.length > 0 && !selectedImage) {
+			setSelectedImage(content.images[0]);
 		}
-	}, [product, selectedImage]);
+	}, [content]);
 
 	const handleImageClick = (image: string) => {
 		setSelectedImage(image);
@@ -46,48 +50,60 @@ const ProductEdit = () => {
 		});
 	};
 
-
-
-	/* //? proban2
+	//? proban2
 	const uploadImages = async (files: File[]): Promise<void> => {
-    setLoading(true);
+		setLoading(true);
 
-    try {
-      const uploadPromises = files.map(async (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("tags", "codeinfuse, medium, gist");
-        formData.append("upload_preset", "facilmarket");
-        formData.append("api_key", "711728988333761");
+		try {
+			const uploadPromises = files.map(async (file: File) => {
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("tags", "codeinfuse, medium, gist");
+				formData.append("upload_preset", "facilmarket");
+				formData.append("api_key", "711728988333761");
 
-        const res = await axios.post(
-          "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
-          formData,
-          {
-            headers: { "X-Requested-With": "XMLHttpRequest" },
-          }
-        );
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+					}
+				);
 
-        return res.data.secure_url;
-      });
+				return res.data.secure_url;
+			});
 
-      const uploadedImages = await Promise.all(uploadPromises);
-      setImages((prevImages) => [...prevImages, ...uploadedImages]);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
+			const uploadedImages = await Promise.all(uploadPromises);
+			setContent({
+				...content,
+				images: [...content.images, ...uploadedImages],
+			});
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
+	};
 
-  const handleDeleteImage = (index: number) => {
-		const updatedImages = [...images];
-		updatedImages.splice(index, 1);
-		setDeletedImages((prevDeletedImages) => [...prevDeletedImages, images[index]]);
-		setImages(updatedImages);
-	}; */
-
-
+	const contentPrevImages = () => {
+		return (
+			<div className="edit-conteiner-pre-image">
+				{content.images?.map((img: string, index: number) => (
+					<div
+						key={index}
+						className="edit-pre-image"
+						onClick={() => handleImageClick(img)}
+					>
+						<img
+							className="edit-preview-image"
+							src={img}
+							alt="preview images"
+						/>
+					</div>
+				))}
+			</div>
+		);
+	};
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
@@ -109,33 +125,70 @@ const ProductEdit = () => {
 		console.log(content);
 	};
 
+	const editModePrevImages = () => {
+		return (
+			<div className="edit-conteiner-pre-image">
+				{content.images?.map((img: string, index: number) => (
+					<div>
+						<div
+							key={index}
+							className="edit-pre-image"
+							onClick={() => handleImageClick(img)}
+						>
+							<img
+								className="edit-preview-image"
+								src={img}
+								alt="preview images"
+							/>
+						</div>
+						<button
+							onClick={() => handleDeleteImg(index)}
+							disabled={content.images.length === 1}
+						>
+							X
+						</button>
+					</div>
+				))}
+
+				<label htmlFor="form__input-image">
+					<Dropzone onDrop={uploadImages}>
+						{({ getRootProps, getInputProps }) => (
+							<section>
+								<div {...getRootProps({ className: "dropzone" })}>
+									<input {...getInputProps()} />
+									<div className="edit-pre-image">
+										<h2>+</h2>
+									</div>
+								</div>
+							</section>
+						)}
+					</Dropzone>
+				</label>
+			</div>
+		);
+	};
+
+	const handleDeleteImg = (index: number) => {
+		if (selectedImage === content.images[index]) {
+			setSelectedImage(content.images[index + 1]);
+		}
+
+		const updatedImages = [...content.images];
+		updatedImages.splice(index, 1);
+
+		const updatedContent = {
+			...content,
+			images: updatedImages,
+		};
+
+		setContent(updatedContent);
+	};
+
 	return (
 		<div className="edit-detail-product-container">
 			<form onSubmit={handleSubmit}>
 				<div className="edit-detail-product">
-					{editMode ? (
-						<h1>Hola</h1>
-					) : (
-						<div className="edit-conteiner-pre-image">
-							{product.images.map((img: string, index: number) => (
-								<div
-									key={index}
-									className="edit-pre-image"
-									onClick={() => handleImageClick(img)}
-								>
-									{img ? (
-										<img
-											className="edit-preview-image"
-											src={img}
-											alt="preview images"
-										/>
-									) : (
-										<BsCardImage className="react-icon" />
-									)}
-								</div>
-							))}
-						</div>
-					)}
+					{editMode ? editModePrevImages() : contentPrevImages()}
 					<div className="edit-detail-product-image">
 						<img src={selectedImage} alt={product.name} />
 					</div>
