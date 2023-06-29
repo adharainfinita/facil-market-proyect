@@ -38,7 +38,7 @@ const Resume = ( ) => {
             })}
         </div>
       </section>
-      <section style={{backgroundColor:'grey'}}>
+      <section >
         <BarChart />
       </section>
     </main>

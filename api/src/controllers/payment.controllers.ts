@@ -25,7 +25,7 @@ export const createOrder = async (product: productProps) => {
 			failure: `${URL_HOST}product/payment/failure`,
 			pending: `${URL_HOST}product/payment/pending`,
 		},
-		notification_url: `${URL_NGROK}product/payment/webhook`,
+		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
 
 	return result;

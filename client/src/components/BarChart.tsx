@@ -12,6 +12,7 @@ const BarChart: React.FC = () => {
  const dates = dataComplete.productsInfo.map(match => match.createdAt)
 
   const dates2 = dates.map(match => match.dateObject.day);
+console.log(dates2);
 
   
   
