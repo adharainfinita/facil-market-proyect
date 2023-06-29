@@ -41,6 +41,7 @@ import { getCategory } from "./services/categoryServices";
 import UserProfile from "./components/UserProfile";
 import EditUser from "./pages/admin/EditUser";
 import Products from "./pages/admin/Products";
+import Resume from "./pages/admin/Resume";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -159,11 +160,12 @@ const App = () => {
           <Route path="/user/:id" element={<EditUser />} />
 
           <Route path="/admin" element={<Dashboard />}>
+            <Route path="/admin/summary" element={<Resume/>} />
             <Route path="users" element={<Users />} />
             <Route path="products" element={<Products />} />
           </Route>
         </Route>
-
+        <Route path="/admin/summary" element={<Resume/>} />
         <Route path="/products" element={<Market />} />
         <Route path="/product/detail/:id" element={<DetailProduct />} />
         <Route path="/login" element={<Login />} />

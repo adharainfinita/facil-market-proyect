@@ -1,4 +1,5 @@
 import { Table, Column, Model, DataType } from "sequelize-typescript";
+import moment from "moment";
 
 @Table({ tableName: "users" })
 class User extends Model {
@@ -40,6 +41,19 @@ class User extends Model {
 		defaultValue: true,
 	})
 	active!: string;
+
+	@Column({
+		type: DataType.DATE,
+		defaultValue: DataType.NOW,
+		field: 'createdAt',
+		get() {
+			// Formatear la fecha utilizando Moment.js
+			return moment(this.getDataValue('createdAt')).format('DD-MM-YYYY HH:mm:ss');
+		},
+	})
+	createdAt!: Date;
 }
+
+
 
 export default User;
