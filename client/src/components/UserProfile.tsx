@@ -10,8 +10,11 @@ import {
 } from "../redux/features/userSlice";
 import { user } from "../utils/interfaces";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { Product } from "../utils/interfaces";
+
+
+
+
+
 
 const UserProfile: React.FC = () => {
 	const dispatch = useDispatch();
@@ -23,12 +26,6 @@ const UserProfile: React.FC = () => {
 	const [isPasswordChanged, setIsPasswordChanged] = useState(false);
 
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
-
-	const products = useSelector((state: RootState) => state.product.products);
-
-	const userProducts = products.filter(
-		(product: Product) => product.userID === userLogin.user.id
-	);
 
 	const handleFieldChange = async (): Promise<void> => {
 		try {
@@ -149,23 +146,6 @@ const UserProfile: React.FC = () => {
 						/>
 						<button onClick={handleFieldChange}>Guardar imagen</button>
 					</div>
-				</div>
-			</div>
-			<div className="Profile__buys">
-				<h2>Mis Productos</h2>
-				<div className="cards-cont">
-					{userProducts.map((product, index) => {
-						return (
-							<Link key={index} to={`/product/detail/${product.id}`}>
-								<div className="product-card">
-									<img src={product.images[0]} alt={product.name} />
-									<div className="text">
-										<h3>{product.name}</h3>
-									</div>
-								</div>
-							</Link>
-						);
-					})}
 				</div>
 			</div>
 		</div>

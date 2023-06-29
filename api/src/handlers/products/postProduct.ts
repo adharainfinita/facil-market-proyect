@@ -15,6 +15,7 @@ const postProduct = async (req: Request, res: Response) => {
 			images,
 			location,
 			price,
+			active,
 		} = req.body;
 
 		const data = {
@@ -29,6 +30,7 @@ const postProduct = async (req: Request, res: Response) => {
 			price,
 			userID,
 			categoryID,
+			active,
 		};
 		console.log(typeof data.status);
 

@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
 import Purchase from "./Purchase";
+import moment from "moment";
 
 @Table({ tableName: "users" })
 class User extends Model {
@@ -15,13 +16,6 @@ class User extends Model {
 		allowNull: false,
 	})
 	fullName!: string;
-
-	/* 	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	lastName!: string;
- */
 
 	@Column({
 		type: DataType.STRING,
@@ -41,9 +35,8 @@ class User extends Model {
 		allowNull: true,
 	})
 	image!: string;
-
-	@HasMany(() => Purchase)
-  	purchases!: Purchase[];
 }
+
+
 
 export default User;

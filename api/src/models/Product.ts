@@ -10,6 +10,8 @@ import {
 import Category from "./Category";
 import User from "./User";
 import Purchase from "./Purchase";
+import moment from "moment";
+
 
 @Table({ tableName: "products" })
 class Product extends Model {
@@ -75,6 +77,24 @@ class Product extends Model {
 		allowNull: false,
 	})
 	price!: number;
+
+	@Column({
+    type: DataType.DATE,
+    defaultValue: DataType.NOW,
+    field: 'createdAt',
+    get() {
+      // Formatear la fecha utilizando Moment.js
+      return moment(this.getDataValue('createdAt')).format('DD-MM-YYYY HH:mm:ss');
+    },
+  })
+  createdAt!: Date;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: string;
 
 	//...... Relaciones
 

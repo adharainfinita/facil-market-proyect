@@ -2,7 +2,7 @@ import { productProps } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 dotenv.config();
-const { URL_HOST, TOKEN } = process.env;
+const { URL_HOST, TOKEN, URL_NGROK } = process.env;
 
 export const createOrder = async (product: productProps) => {
 	mercadopago.configure({
@@ -18,7 +18,6 @@ export const createOrder = async (product: productProps) => {
 				currency_id: "ARS",
 				picture_url: product.image,
 				quantity: 1,
-				description: product.description,
 			},
 		],
 		back_urls: {
@@ -26,7 +25,7 @@ export const createOrder = async (product: productProps) => {
 			failure: `${URL_HOST}product/payment/failure`,
 			pending: `${URL_HOST}product/payment/pending`,
 		},
-		notification_url: `${URL_HOST}product/payment/webhook`,
+		notification_url: `${URL_NGROK}product/payment/webhook`,
 	});
 
 	return result;

@@ -6,15 +6,54 @@ export interface UXDataLogin {
 }
 
 // Interfaces de de estados global
+export interface BasicData {
+  totalProducts: number,
+  totalUsers: number,
+  totalSales: number,
+  ProductsOnAccesories: object
+}
+
+export interface AnalyticsData {
+  productsInfo: Array<ContentProductData>;
+  allUsers: Array<ContentUserData>;
+}
+export interface ContentProductData{
+	id: number,
+	createdAt: CreatedAt,
+	rating: number
+}
+
+export interface ContentUserData{
+	id: number,
+	createdAt: CreatedAt,
+	LevelOfActivity: number
+}
+
+export interface CreatedAt {
+	dateObject: Date;
+	timeObject: Date;
+}
+
+export interface Date {
+	resume: string;
+	day: number;
+	month: number;
+	year: number;
+}
+
+
+
+
 export interface User {
 	id: string;
 	fullName: string;
 	email: string;
 	password: string;
 	image: string;
+	active?: boolean;
 }
 
-export interface FiltersCaché {
+export interface FiltersCache {
 	status: string | undefined;
 	categoryName: string | undefined;
 	location: string | undefined;
@@ -35,6 +74,7 @@ export interface Product {
 	categoryName: string;
 	userID: string;
 	userName: string;
+	active: boolean;
 }
 
 export interface Category {
@@ -73,7 +113,9 @@ export interface user {
 	email: string | number;
 	id: string;
 	image: string;
+	active?: boolean;
 }
+
 export interface UserData {
 	token: string;
 	user: user;
@@ -132,3 +174,12 @@ export interface GoogleUser {
 	email: string
 	picture: string
 }
+
+
+export interface Review {
+	id: number;
+	userID: number;
+	fullName:string;
+	rating: number;
+	text: string;
+  }
