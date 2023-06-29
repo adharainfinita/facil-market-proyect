@@ -18,7 +18,7 @@ function Home() {
 	const products = useSelector(
 		(state: RootState) => state.product.originalCopy
 	);
-
+	const productsAuth = products.filter((product:any) => product.active === true)
 	const images = [
 		banner1,
 		banner2,
@@ -41,7 +41,7 @@ function Home() {
 		fetchProducts();
 	}, [dispatch]);
 
-	const trendProducts = [...products]
+	const trendProducts = [...productsAuth]
 		.sort((a, b) => {
 			if (a.rating > b.rating) {
 				return -1; // Indica que a debe ser ordenado antes que b
@@ -60,7 +60,7 @@ function Home() {
 			<h3 className="trend-title">Categorias destacadas</h3>
 			<FeaturedCategory />
 			<h3 className="trend-title">Más vendidos</h3>
-			{products ? <ProductCard products={trendProducts} /> : ""}
+			{productsAuth ? <ProductCard products={trendProducts} /> : ""}
 		</>
 	);
 }

@@ -107,6 +107,11 @@ const DetailProduct = () => {
 						</section>
 
 						<section className="detail-product-section">
+							<h2>Cantidad:</h2>
+							<h3>{product.unities}</h3>
+						</section>
+
+						<section className="detail-product-section">
 							<div className="container-description">
 								<h2>Descripción:</h2>
 								<p className="detail-product-description">

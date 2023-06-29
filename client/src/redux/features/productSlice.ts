@@ -28,6 +28,7 @@ const initialState: ProductState = {
 		categoryName: "",
 		userID: "",
 		userName: "",
+		active: true,
 	},
 	requireFilters: {
 		status: "",
