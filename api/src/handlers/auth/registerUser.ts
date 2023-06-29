@@ -19,7 +19,6 @@ const registerUser = async (req: Request, res: Response) => {
 		if (!newUser) {
 			throw new Error("NO TENGO USER");
 		}
-
 		sendEmailToUser(newUser.email, newUser.fullName);
 
 		return res.status(201).json(newUser);

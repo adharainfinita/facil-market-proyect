@@ -170,5 +170,5 @@ export const {
   updateRating,
 } = productSlice.actions;
 export default productSlice.reducer;
-export const selectSearchedProducts = (state: RootState) =>
-  state.product.products;
+// export const selectSearchedProducts = (state: RootState) =>
+// 	state.product.products;

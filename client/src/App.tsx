@@ -1,14 +1,14 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // Pages
 import Login from "./pages/Login";
 import Terms from "./pages/Terms";
 import VerificationPage from "./pages/VerificationPage";
 import Home from "./pages/Home";
-import UserProducts from "./pages/UserProducts";
+// import UserProducts from "./pages/UserProducts";
 // Dashboard Admin
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
@@ -42,6 +42,9 @@ import UserProfile from "./components/UserProfile";
 import EditUser from "./pages/admin/EditUser";
 import Products from "./pages/admin/Products";
 import Resume from "./pages/admin/Resume";
+import UserProducts from "./components/UserProducts";
+import ProductEdit from "./components/ProductEdit";
+import NotFound from "./errors/NotFound";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -158,14 +161,15 @@ const App = () => {
           <Route path="/ventas" element={<UserProducts />} />
           <Route path="/verification" element={<VerificationPage />} />
           <Route path="/user/:id" element={<EditUser />} />
+          <Route path="/product/edit/:id" element={<ProductEdit />} />
 
           <Route path="/admin" element={<Dashboard />}>
-            <Route path="/admin/summary" element={<Resume/>} />
+            <Route path="/admin/summary" element={<Resume />} />
             <Route path="users" element={<Users />} />
             <Route path="products" element={<Products />} />
           </Route>
         </Route>
-        <Route path="/admin/summary" element={<Resume/>} />
+        <Route path="/admin/summary" element={<Resume />} />
         <Route path="/products" element={<Market />} />
         <Route path="/product/detail/:id" element={<DetailProduct />} />
         <Route path="/login" element={<Login />} />
@@ -173,14 +177,7 @@ const App = () => {
         <Route path="/profile/:id" element={<UserProfiles />} />
         <Route path="/review/:id" element={<ProductReviews />} />
 
-        <Route
-          path="*"
-          element={
-            <h1>
-              404 no hay nada loco Go <Link to="/">home</Link>
-            </h1>
-          }
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>

@@ -15,6 +15,11 @@ function Navbar() {
     navigate("/");
   };
 
+  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate("/login");
+  };
+
   return (
     <nav className="nav">
       <Link to="/">
@@ -46,9 +51,9 @@ function Navbar() {
         {session && <User handleLogOut={handleLogOut} />}
 
         {!session && (
-          <Link to="/login">
-            <button className="nav__button-login">Iniciar Sesión</button>
-          </Link>
+          <button className="nav__button-login" onClick={handleLogin}>
+            Iniciar Sesión
+          </button>
         )}
       </div>
     </nav>

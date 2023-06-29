@@ -87,6 +87,13 @@ class Product extends Model {
   })
   createdAt!: Date;
 
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: string;
+
 	//...... Relaciones
 
 	@ForeignKey(() => Category)

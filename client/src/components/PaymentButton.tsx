@@ -35,4 +35,5 @@ const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
     </div>
   );
 };
-export default PaymentButton;
+
+export default PaymentButton
