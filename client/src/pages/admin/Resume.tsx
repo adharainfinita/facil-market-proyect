@@ -18,7 +18,7 @@ const Resume = ( ) => {
       dispatch(getAnalyticsData(data))
     }
     fetchDashboardData();
-  },[])
+  },[dispatch])
 
   const properties = Object.entries(dataResume.ProductsOnAccesories)
   
@@ -38,7 +38,7 @@ const Resume = ( ) => {
             })}
         </div>
       </section>
-      <section style={{backgroundColor:'grey'}}>
+      <section>
         <BarChart />
       </section>
     </main>

@@ -10,9 +10,9 @@ const { URL_HOST, PORT_CLIENT } = process.env;
 export const createUser = async (authUser: userInterface) => {
   const userFound = await User.findOne({ where: { email: authUser.email } });
 
-  if (userFound) {
-    throw new Error("Ya existe una cuenta creada con ese e-mail");
-  }
+	if (userFound?.email) {
+		throw new Error("Ya existe una cuenta creada con ese e-mail");
+	}
 
   const passwordHash = await encrypt(authUser.password);
 

@@ -35,7 +35,7 @@ function Navbar() {
         </Link>
 
         <Link to="/products">
-          <li>Market</li>
+          <li>Productos</li>
         </Link>
 
         <li>Nosotros</li>
