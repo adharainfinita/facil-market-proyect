@@ -109,42 +109,37 @@ const Reviews: React.FC = () => {
     setRating(newRating);
   };
 
-
-// elimina las reviews
-const handleDeleteReview = async (reviewId: number) => {
-  try {
-    await deleteReview(reviewId);
-    setHasReviewed(false);
-
-    const updatedReviews = reviews.filter((review) => review.id !== reviewId);
-    setReviews(updatedReviews);
-
-
-    const newRatings = updatedReviews.map((review) => review.rating);
-    const newAverage =
-      newRatings.reduce((sum, rating) => sum + rating, 0) / newRatings.length;
-    const formattedAverage = parseFloat(newAverage.toFixed(2));
-
+  // elimina las reviews
+  const handleDeleteReview = async (reviewId: number) => {
     try {
+      await deleteReview(reviewId);
+      setHasReviewed(false);
 
-      const updatedProduct = { ...product, rating: formattedAverage };
-      await updateProduct(updatedProduct);
+      const updatedReviews = reviews.filter((review) => review.id !== reviewId);
+      setReviews(updatedReviews);
 
+      const newRatings = updatedReviews.map((review) => review.rating);
+      const newAverage =
+        newRatings.reduce((sum, rating) => sum + rating, 0) / newRatings.length;
+      const formattedAverage = parseFloat(newAverage.toFixed(2));
 
-      dispatch(updateRating(formattedAverage));
+      try {
+        const updatedProduct = { ...product, rating: formattedAverage };
+        await updateProduct(updatedProduct);
+
+        dispatch(updateRating(formattedAverage));
+      } catch (error) {
+        console.error(
+          "Error al actualizar la calificación del producto:",
+          error
+        );
+      }
+
+      alert("Se eliminó la reseña");
     } catch (error) {
-      console.error(
-        "Error al actualizar la calificación del producto:",
-        error
-      );
+      console.error("Error al eliminar la review:", error);
     }
-
-    alert("Se eliminó la reseña");
-  } catch (error) {
-    console.error("Error al eliminar la review:", error);
-  }
-};
-
+  };
 
   return (
     <div>
@@ -167,7 +162,12 @@ const handleDeleteReview = async (reviewId: number) => {
               onChange={handleCommentChange}
               placeholder="Escribe tu comentario..."
             ></textarea>
-            <button onClick={submitReview}>Enviar Reseña</button>
+            <button
+              onClick={submitReview}
+              disabled={rating === 0 || comment === ""}
+            >
+              Enviar Reseña
+            </button>
           </div>
         )}
 
@@ -181,21 +181,30 @@ const handleDeleteReview = async (reviewId: number) => {
                     <p>Estrellas: {review.rating}⭐</p>
                     <p>Comentario: {review.text}</p>
                     {review.userID === parseInt(userLogin.user.id, 10) && (
-                      <button className="review__detele"onClick={() => handleDeleteReview(review.id)}>X</button>
+                      <button
+                        className="review__detele"
+                        onClick={() => handleDeleteReview(review.id)}
+                      >
+                        X
+                      </button>
                     )}
                   </div>
                 ))
               : reviews.slice(0, 3).map((review) => (
                   <div key={review.id} className="review-item">
-
                     {review.userID === parseInt(userLogin.user.id, 10) && (
-                      <button className="review__detele"onClick={() => handleDeleteReview(review.id)}>X</button>
-                    )}                    
+                      <button
+                        className="review__detele"
+                        onClick={() => handleDeleteReview(review.id)}
+                      >
+                        X
+                      </button>
+                    )}
                     <div className="review__cont">
-                    <p>Usuario: {review.fullName}</p>
-                    <p>Estrellas: {review.rating}⭐</p>
-                    <p>Comentario: {review.text}</p>
-                  </div>
+                      <p>Usuario: {review.fullName}</p>
+                      <p>Estrellas: {review.rating}⭐</p>
+                      <p>Comentario: {review.text}</p>
+                    </div>
                   </div>
                 ))}
           </div>

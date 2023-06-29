@@ -32,10 +32,14 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-  
+      
+      
       &:hover {
         background-color: #0056b3;
       }
+      &:disabled {
+        background-color: red;
+      cursor: default; }
     }
   
     .detail-product-review-container {
