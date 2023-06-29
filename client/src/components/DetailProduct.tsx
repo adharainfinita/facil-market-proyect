@@ -131,7 +131,10 @@ const DetailProduct = () => {
 						<h2>Estado:</h2>
 						<h3>{product.status}</h3>
 					</section>
-
+					<section className="detail-product-section">
+						<h2>Unidades:</h2>
+						<h3>{product.unities}</h3>
+					</section>
 					<section className="detail-product-section">
 						<h2>Stock:</h2>
 						<h3>{product.stock}</h3>

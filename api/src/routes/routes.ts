@@ -6,6 +6,7 @@ import registerUser from "../handlers/auth/registerUser";
 import postCategory from "../handlers/categories/postCategory";
 import postReview from "../handlers/reviews/postReview";
 import postProduct from "../handlers/products/postProduct";
+import postPurchase from "../handlers/purchases/postPurchase";
 
 //! Handlers GET
 import getAllProducts from "../handlers/products/getAllProducts";
@@ -18,12 +19,14 @@ import {
 import getAllReviews from "../handlers/reviews/getReviews";
 import getProductByName from "../handlers/products/getProductByName";
 import getProductById from "../handlers/products/getProductById";
+import getUserPurchases from "../handlers/purchases/getUserPurchases";
 
 //! UTILS
 import categoryCreate from "../validators/categoryValidation";
 //import { validateCreate } from "../validators/userValidation";
 //import { productCreate } from "../validators/productValidation";
 import { reviewCreate } from "../validators/reviewValidation";
+import { purchaseCreate } from "../validators/purchaseValidator";
 import loginUser from "../handlers/auth/loginUser";
 import checkSession from "../Middleware/session";
 
@@ -42,6 +45,7 @@ router.post("/login", loginUser);
 router.post("/product", checkSession, postProduct);
 router.post("/category", categoryCreate, postCategory);
 router.post("/review", reviewCreate, postReview);
+router.post("/purchase", purchaseCreate, postPurchase);
 
 //* Rutas de Compras
 router.use("/product", paymentRouter);
@@ -55,5 +59,6 @@ router.get("/category", getAllCategories);
 router.get("/product/search", getProductByName);
 router.get("/product/:id", getProductById);
 router.get("/token", checkSession, getByToken);
+router.get("/purchases/:id", getUserPurchases);
 
 export default router;

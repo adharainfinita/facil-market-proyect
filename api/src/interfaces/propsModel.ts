@@ -28,3 +28,8 @@ export interface categoryProps {
 	name: string;
 	image: string;
 }
+
+export interface purchases {
+	userId?: number
+	productId?: number
+}
