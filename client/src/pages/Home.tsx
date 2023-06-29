@@ -19,6 +19,8 @@ function Home() {
 		(state: RootState) => state.product.originalCopy
 	);
 
+	const productsAuth = products.filter((product:any) => product.active === true)
+
 	const images = [
 		banner1,
 		banner2,
@@ -41,7 +43,7 @@ function Home() {
 		fetchProducts();
 	}, [dispatch]);
 
-	const trendProducts = [...products]
+	const trendProducts = [...productsAuth]
 		.sort((a, b) => {
 			if (a.rating > b.rating) {
 				return -1; // Indica que a debe ser ordenado antes que b

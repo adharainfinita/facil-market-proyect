@@ -2,7 +2,7 @@ import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import User from "./User";
+import User from "../pages/User";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,6 +13,11 @@ function Navbar() {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("items");
     navigate("/");
+  };
+
+  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate("/login");
   };
 
   return (
@@ -30,7 +35,7 @@ function Navbar() {
         </Link>
 
         <Link to="/products">
-          <li>Market</li>
+          <li>Productos</li>
         </Link>
 
         <li>Nosotros</li>
@@ -46,9 +51,9 @@ function Navbar() {
         {session && <User handleLogOut={handleLogOut} />}
 
         {!session && (
-          <Link to="/login">
-            <button className="nav__button-login">Iniciar Sesión</button>
-          </Link>
+          <button className="nav__button-login" onClick={handleLogin}>
+            Iniciar Sesión
+          </button>
         )}
       </div>
     </nav>

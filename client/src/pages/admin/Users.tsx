@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
+import { Link } from "react-router-dom";
+// import { useState, useEffect } from "react";
 
 function Users() {
   const users = useSelector((state: RootState) => state.user.users);
-
+  
   const disabledUser = async (user: user) => {
-    console.log(user);
-    const updatedUser = { ...user, active: !user.active };
+    const updatedUser = { active: !user.active };
     const disabled = await updateUser(user.id, updatedUser);
     console.log(disabled);
   };
@@ -34,7 +35,7 @@ function Users() {
                 {user.active ? "Desactivar" : "Activar"}
               </button>
               
-              <button>Editar</button>
+              <Link to={`/user/${user.id}`}><button>Editar</button></Link>
             </td>
           </tr>
         ))}

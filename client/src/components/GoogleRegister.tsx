@@ -1,13 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
-import { logUser } from "../services/userServices";
+import { postUser } from "../services/userServices";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loggedUser } from "../redux/features/userSlice";
+import { addUser } from "../redux/features/userSlice";
 import { useState } from "react";
 import { GoogleUser } from "../utils/interfaces";
 
-const GoogleAuth = () => {
+const GoogleRegister = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [error, setError] = useState<string>('')
@@ -18,34 +18,32 @@ const GoogleAuth = () => {
         onSuccess={credentialResponse => {
             if(credentialResponse.credential){
                 const decoded: GoogleUser = jwt_decode(credentialResponse.credential);
-                console.log(decoded);
-
                 const userInfo = {
+                  fullName: decoded.name,
+                  password: decoded.sub,
                   email: decoded.email,
-                  password: decoded.sub
+                  image: decoded.picture,
                 }
-
-                const LogUser = async () => {
+                const logUser = async () => {
                   try {
-                    const response = await logUser(userInfo);
-                    const token = response.token;
-                    window.localStorage.setItem("token", token);
-              
-                    if (response) {
-                      dispatch(loggedUser(response));
-                      navigate("/");
+                    const response = await postUser(userInfo);
+  
+                    if (response.status === 201) {
+                      dispatch(addUser(response.data));
                     }
-                  } catch (error) {
-                    setError(`${error}`);
-                    console.error(error);
+                    alert("Registro exitoso");
+                    navigate("/login");
+  
+                  } catch (error: any) {
+                    setError(error)
                   }
                 }
-                LogUser()
+                logUser()
             }     
            
         }}
         onError={() => {
-            setError('Ingreso no permitido');
+          setError('No se pudo registrar el usuario');
         }}
     />
     <p>{error ? error : ''}</p>
@@ -54,4 +52,4 @@ const GoogleAuth = () => {
 
 };
 
-export default GoogleAuth;
+export default GoogleRegister;

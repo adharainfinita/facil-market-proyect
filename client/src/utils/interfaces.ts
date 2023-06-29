@@ -74,6 +74,7 @@ export interface Product {
 	categoryName: string;
 	userID: string;
 	userName: string;
+	active: boolean;
 }
 
 export interface Category {
@@ -114,6 +115,7 @@ export interface user {
 	image: string;
 	active?: boolean;
 }
+
 export interface UserData {
 	token: string;
 	user: user;
@@ -165,3 +167,19 @@ export interface isLogin {
 	email: string;
 	image: string;
 }
+
+export interface GoogleUser {
+	name: string
+	sub: string
+	email: string
+	picture: string
+}
+
+
+export interface Review {
+	id: number;
+	userID: number;
+	fullName:string;
+	rating: number;
+	text: string;
+  }

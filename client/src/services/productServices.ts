@@ -79,6 +79,7 @@ export const buyProduct = async (product: Product) => {
 		console.log(error.message);
 	}
 };
+
 export const updateProduct = async (product: Product) => {
 	try {
 		const { data } = await axios.put(
@@ -95,19 +96,4 @@ export const updateProduct = async (product: Product) => {
 		throw error;
 	}
 };
-// export const updateProduct = async (product: Product) => {
-// 	try {
-// 		const { data } = await axios.put(
-// 			`${URL_HOST}/product/${product.id}`,
-// 			product
-// 		);
-// 		return data;
-// 	} catch (error: any) {
-// 		let errorMessage = "An error occurred";
-// 		if (axios.isAxiosError(error)) {
-// 			errorMessage = error.response?.data?.error || errorMessage;
-// 		}
-// 		alert(errorMessage);
-// 		throw error;
-// 	}
-// };
+
