@@ -9,16 +9,16 @@ export const formatTime = (data: string) =>{
 
   const dateObject = {
     resume: date.toString().replace(regex, '-'),
-    day: date[0],
-    year: date[1],
-    month: date[2],
+    day: Number(date[0]),
+    month: Number(date[1]),
+    year: Number(date[2]),
   };
 
   const timeObject = {
     resume: time.toString().replace(regex, '-'),
-    hour: time[0],
-    minutes: time[1],
-    seconds: time[2]
+    hour: Number(time[0]),
+    minutes: Number(time[1]),
+    seconds: Number(time[2])
   }
 
   return {dateObject, timeObject};

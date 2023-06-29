@@ -1,36 +1,56 @@
-// import React,{ useState } from 'react';
-// import {Bar} from 'react-chartjs-2';
-// // import {useSelector} from 'react-redux';
-// // import { RootState } from '../redux/store';
+import React, { useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+import { Chart, CategoryScale, LinearScale, BarController, BarElement } from 'chart.js';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
-// const BarChart: React.FC = ({data}: BarProp) => {
-//   const salesInFacilMarket = [
-//     {
-//       year: 2020,
-//       sales: 55 
+const BarChart: React.FC = () => {
+  const dataComplete = useSelector((state:RootState) => state.admin.analyticsData);
 
-//     },
-//     {
-//       year: 2021,
-//       sales: 155,
-//     },
-//     {
-//       year: 2022,
-//       sales: 1110
-//     }
-//   ]
+  console.log(dataComplete.allUsers);
+  console.log("info:" ,dataComplete.productsInfo);
+ const dates = dataComplete.productsInfo.map(match => match.createdAt)
 
-//   const [sales, setSales] = useState({
-//     lables: salesInFacilMarket.map(data => data.year),
-//     datasets: [{
-//       label: "Users gained",
-//       data: salesInFacilMarket.map(data => data.sales),
-//       backgroundColor: ['green', 'grey', 'red']
-//     }],
-//   })
-//   return (
-//     <Bar data={sales} />
-//   )
-// }
+  const dates2 = dates.map(match => match.dateObject.day);
 
-// export default BarChart
+  
+  
+ 
+
+ //
+  
+
+  Chart.register(CategoryScale, LinearScale, BarController, BarElement);
+  const [chartData, setChartData] = useState({
+    labels: dates2,
+    datasets: [
+      {
+        label: 'New users',
+        data: dataComplete.allUsers.map(match => match.LevelOfActivity),
+        backgroundColor: 'rgba(100, 200, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  });
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+
+  return (
+    <div>
+      <h2>Activity of users</h2>
+      <Bar data={chartData}  />
+    </div>
+  );
+};
+
+export default BarChart;

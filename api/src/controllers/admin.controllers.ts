@@ -3,25 +3,40 @@ import User from "../models/User";
 import Payments from "../models/Payments";
 import { formatTime } from "../helpers/formatTime";
 import Category from "../models/Category";
+import Review from "../models/Review";
 
 export const createDataAnalitycs = async () => {
-	const allProducts = (await Product.findAll()).map((product) => {
-		return formatTime(String(product.createdAt));
+
+
+	 const productsInfo = (await Product.findAll()).map((product) => {
+		return {
+			id: product.id,
+			createdAt: formatTime(String(product.createdAt)),
+			category: product.categoryID,
+			rating: product.rating
+		}
+		
 	});
 
-	const allUsers = (await User.findAll()).map((user) => {
-		return formatTime(String(user.createdAt));
-	});
+	const allUsers = await Promise.all(
+		(await User.findAll()).map(async (user) => {
+		return {
+			id: user.id,
+			createdAt: formatTime(String(user.createdAt)),
+			LevelOfActivity: await getLevelOfActivity(user.id)
+		};
+	})
+	);
 
 	const newStateData = {
-		userInfo: {
-			productsDate: allProducts,
-			usersDate: allUsers,
-		},
+		productsInfo,
+		allUsers
+		};
+
+		return newStateData;
 	};
 
-	return newStateData;
-};
+
 
 export const createResumeData = async () => {
 	const countProduct = await Product.count();
@@ -61,3 +76,35 @@ export const getProductsByCategories = async (
 	};
 	return getProductsByCategories(count + 1, updateMatches);
 };
+
+export const getLevelOfActivity=  async(user: number) =>{
+		
+	const reviewsFound = await Review.findAll({
+			where: {
+				userID: user
+			}
+		});
+	
+	const publicationsFound = await Product.findAll({
+		where:{
+			userID: user
+		}
+	})
+
+	const salesFound = await Payments.findAll({
+		where:{
+			sellerID: user
+		}
+	})
+
+	const paymentsFound = await Payments.findAll({
+		where: {
+			buyerID: user
+		}
+	})
+
+	return reviewsFound.length 
+	+ publicationsFound.length 
+	+ salesFound.length 
+	+ paymentsFound.length
+}

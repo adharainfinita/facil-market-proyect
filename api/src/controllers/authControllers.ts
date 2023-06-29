@@ -96,8 +96,10 @@ export const changeUser = async (userId: string, updates: object) => {
 	}
 
 	// Actualiza los campos proporcionados en el objeto de actualización
-	await user.update(updates);
-	return true;
+	const updateUser = await user.update(updates);
+
+	return updateUser;
+	// return true;
 	// Object.assign(user, updates);
 	// await user.save();
 };
