@@ -3,6 +3,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../redux/store";
 import { Product } from "../utils/interfaces";
 import { Link } from "react-router-dom";
+import ShoppingHistory from "./Shoppinghistory";
 
 const UserProducts: React.FC = () => {
 	const products = useSelector((state: RootState) => state.product.products);
@@ -28,6 +29,7 @@ const UserProducts: React.FC = () => {
 					);
 				})}
 			</div>
+			<ShoppingHistory id={userLogin.user.id}/> 
 		</div>
 	);
 };

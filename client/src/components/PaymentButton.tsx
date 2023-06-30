@@ -1,13 +1,14 @@
-import { Product } from "../utils/interfaces";
+import { BuyProduct } from "../utils/interfaces";
 import { useState } from "react";
 import { buyProduct } from "../services/productServices";
 
 interface MercadoPagoButtonProps {
-  product: Product;
+    product: BuyProduct
 }
 
 const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
+  
 
   const generateLink = async () => {
     setLoading(true);

@@ -1,5 +1,5 @@
 import { Router } from "express";
-const router = Router();
+const purchase = Router();
 
 //! Handlers POST
 
@@ -13,11 +13,11 @@ import { purchaseCreate } from "../validators/purchaseValidator";
 
 //* POST
 
-router.post("/purchase", purchaseCreate, postPurchase);
+purchase.post("/", purchaseCreate, postPurchase);
 
 //* Rutas de Compras
 
 //* GET
-router.get("/purchases/:id", getUserPurchases);
+purchase.get("/:id", getUserPurchases);
 
-export default router;
+export default purchase;

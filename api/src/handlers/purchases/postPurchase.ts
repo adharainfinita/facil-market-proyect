@@ -4,9 +4,9 @@ import { createPurchase } from "../../controllers/purchaseController";
 
 const postPurchase = async (req: Request, res: Response) => {
 	try {
-		const { userId, productId } = req.body;
+		const { userId, productId, paymentId } = req.body;
 
-        const data: purchases = {userId, productId}
+        const data: purchases = {userId, productId, paymentId}
 		const newPurchase = await createPurchase(data);
 
 		return res

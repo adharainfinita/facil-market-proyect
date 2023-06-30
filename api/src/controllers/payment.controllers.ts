@@ -1,10 +1,10 @@
-import { productProps } from "../interfaces/propsModel";
+import { BuyProduct } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 dotenv.config();
 const { URL_HOST, TOKEN, URL_NGROK } = process.env;
 
-export const createOrder = async (product: productProps) => {
+export const createOrder = async (product: BuyProduct) => {
 	mercadopago.configure({
 		access_token: TOKEN!,
 	});
@@ -17,15 +17,15 @@ export const createOrder = async (product: productProps) => {
 				unit_price: product.price,
 				currency_id: "ARS",
 				picture_url: product.image,
-				quantity: 1,
+				quantity: product.quantity,
 			},
 		],
 		back_urls: {
-			success: `${URL_HOST}product/detail/${product.id}`,
-			failure: `${URL_HOST}product/payment/failure`,
-			pending: `${URL_HOST}product/payment/pending`,
+			success: `${URL_HOST}detail/${product.id}`,
+			failure: `${URL_HOST}detail/${product.id}`,
+			pending: `${URL_HOST}detail/${product.id}`,
 		},
-		notification_url: `${URL_NGROK}product/payment/webhook`,
+		notification_url: `${URL_NGROK}payment/webhook`,
 	});
 
 	return result;

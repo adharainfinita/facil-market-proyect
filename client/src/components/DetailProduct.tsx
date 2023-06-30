@@ -5,22 +5,30 @@ import { Link } from "react-router-dom";
 
 import useProduct from "../hooks/useProduct";
 import PaymentButton from "./PaymentButton";
+import { useSelector } from "react-redux";
 
 import Reviews from "./Review";
-import { NotificationType } from "../utils/interfaces";
+import { BuyProduct, NotificationType } from "../utils/interfaces";
+import { RootState } from "../redux/store";
+
+import { postUserPurchase } from "../services/purchaseServices";
 
 const DetailProduct = () => {
   const product = useProduct();
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  const currentUser = useSelector((state: RootState) => state.user.userLogin)
 
+  const [isReadyToPost, setIsReadyToPost] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [error, setError] = useState<string>('');
+  const [stock, setStock] = useState<number>(1);
+
+ 
   const [notification, setNotification] = useState<NotificationType>({
     isOpen: false,
     type: null,
     content: "",
   });
 
-
-  
 
   useEffect(() => {
     if (product?.images.length > 0 && !selectedImage) {
@@ -32,26 +40,66 @@ const DetailProduct = () => {
     setSelectedImage(image);
   };
 
+  const handleStockChange = (action: string) => {
+    if(action === 'increment'){
+      setStock(stock + 1)
+    } else{
+      setStock(stock - 1)
+    }
+  }
+
+  const data: BuyProduct = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.images[0],
+    quantity: stock
+  }
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get("status");
 
-    if (status === "approved") {
+    if (status === "approved" && currentUser && product.id !== 0) {
+      setIsReadyToPost(true);
+    }
+    if (status === "null") {
+      setNotification({
+        content: "Pago rechazado😢",
+        isOpen: true,
+        type: "failure",
+      })};
+  }, [currentUser, product]);
+
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentId = urlParams.get("payment_id");
+    if (isReadyToPost) {
       setNotification({
         content: "Pago aprobado😎",
         isOpen: true,
         type: "approved",
       });
-    }
 
-    if (status === "failure") {
-      setNotification({
-        content: "Pago rechazado😢",
-        isOpen: true,
-        type: "failure",
-      });
+      const postPurchase = async () => {
+        try {
+          const info = {
+            userId: Number(currentUser.user.id),
+            productId: product.id,
+            paymentId: Number(paymentId)
+          };
+          if (info.userId !== 0 && info.productId !== 0) {
+            const response = await postUserPurchase(info);
+            return response;
+          }
+        } catch (error: any) {
+          setError(error);
+        }
+      };
+      postPurchase();
     }
-  }, []);
+  }, [isReadyToPost]);
 
   return (
     <div className="detail-product-container">
@@ -82,7 +130,8 @@ const DetailProduct = () => {
             <h1 className="detail-product-name">{product.name}</h1>
             <h1 className="detail-product-price">
               $
-              {product.price.toLocaleString("es-AR", {
+              {(product.price * stock)            
+              .toLocaleString("es-AR", {
                 minimumFractionDigits: 0,
               })}
             </h1>
@@ -133,11 +182,28 @@ const DetailProduct = () => {
 						<h2>Stock:</h2>
 						<h3>{product.stock}</h3>
 					</section>
+
+          <section className="detail-product-section">
+						<h2>Unidades Disponibles:</h2>
+						<h3>{product.unities}</h3>
+					</section>
+
+          <section className="detail-product-section">
+            <button disabled={stock === 1 ? true : false}
+            onClick={() => handleStockChange('decrement')}
+            > - </button>
+            <h3>{stock}</h3>
+            <button disabled={stock === product.unities ? true : false}
+            onClick={() => handleStockChange('increment')}
+            > + </button>
+					</section>
+
 					<div className=".detail-product-button">
-						<PaymentButton product={product} />
+						<PaymentButton product={data} />
 					</div>
 
           {notification.isOpen && <div>{notification.content}</div>}
+          <p>{error}</p>
         </div>
 
       </div>

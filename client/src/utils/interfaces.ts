@@ -183,3 +183,18 @@ export interface Review {
 	rating: number;
 	text: string;
   }
+
+export interface Purchase{
+	id: number
+	userId: number
+	productId: number
+	product: Product
+}
+
+export interface BuyProduct {
+	id: number
+    name: string,
+    price: number,
+    image: string,
+    quantity: number
+}

@@ -3,9 +3,18 @@ import { purchases } from "../interfaces/propsModel";
 
 //-----------------------
 
-export const createPurchase = async ({ userId, productId}: purchases) => {
-	
-	return await Purchase.create({ userId, productId });
+export const createPurchase = async ({ userId, productId, paymentId}: purchases) => {
+
+	const [purchase, created] = await Purchase.findOrCreate({
+		where: {paymentId},
+  		defaults: { userId, productId, paymentId }
+	})
+
+	if(created){
+		return purchase
+	}else{
+		throw Error('La compra ya existe')
+	}
 };
 //-----------------------
 

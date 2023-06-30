@@ -19,6 +19,12 @@ class Purchase extends Model {
     @Column
     productId!: number;
 
+    @Column({
+		type: DataType.INTEGER,
+        allowNull: false
+	})
+	paymentId!: number;
+
     @BelongsTo(() => User)
     user!: User;
 
