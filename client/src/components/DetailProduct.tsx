@@ -5,17 +5,20 @@ import { Link } from "react-router-dom";
 
 import useProduct from "../hooks/useProduct";
 import PaymentButton from "./PaymentButton";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Reviews from "./Review";
 import { BuyProduct, NotificationType } from "../utils/interfaces";
 import { RootState } from "../redux/store";
 
 import { postUserPurchase } from "../services/purchaseServices";
+import { updateUnities } from "../redux/features/productSlice";
+import { updateStock } from "../services/productServices";
 
 const DetailProduct = () => {
   const product = useProduct();
   const currentUser = useSelector((state: RootState) => state.user.userLogin)
+  const dispatch = useDispatch()
 
   const [isReadyToPost, setIsReadyToPost] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -90,13 +93,14 @@ const DetailProduct = () => {
             paymentId: Number(paymentId)
           };
           if (info.userId !== 0 && info.productId !== 0) {
-            const response = await postUserPurchase(info);
-            return response;
+            const responsePurchase = await postUserPurchase(info);
+            return responsePurchase;
           }
         } catch (error: any) {
           setError(error);
         }
       };
+   
       postPurchase();
     }
   }, [isReadyToPost]);

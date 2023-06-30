@@ -198,3 +198,8 @@ export interface BuyProduct {
     image: string,
     quantity: number
 }
+
+export interface Stock{
+	id: number
+	unities: number
+}
