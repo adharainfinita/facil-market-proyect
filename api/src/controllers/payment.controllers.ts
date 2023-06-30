@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import Payments from "../models/Payments";
 import User from "../models/User";
+import Product from "../models/Product";
 dotenv.config();
 const { TOKEN, URL_NGROK } = process.env;
 
@@ -24,16 +25,28 @@ export const createOrder = async (product: productProps) => {
 				category_id: String(product.categoryID),
 				currency_id: "ARS",
 				picture_url: product.image,
-				quantity: 1,
+				quantity: product.unities,
 			},
 		],
-		payer: {
-			identification: undefined,
-			name: undefined,
-			email: undefined,
-			phone: undefined,
-			address: undefined,
+		payer:{
+			name: "sushi33@gmail.com",
+			email: "sushi33@gmail.com",
+			phone: {
+				area_code: "11",
+				number: 22223333
+			},
+			identification: {
+				type: "DNI",
+				number: "40404040"
+			},
+			address:{
+				zip_code: "3260",
+				street_name: "Calle falsa",
+				street_number: 123
+			}
 		},
+
+		auto_return: "approved",
 
 		back_urls: {
 			success: `http://localhost:3001/payment/success`,
@@ -43,6 +56,7 @@ export const createOrder = async (product: productProps) => {
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
 
+	
 	return result;
 };
 
@@ -51,39 +65,42 @@ export const createNotification = async (id: number) => {
 	return data.body;
 };
 
-export const createdNewPayment = async (data: any) => {
+export const createNewPayment = async (data: any) => {
 	const amount = data.transaction_details.net_received_amount;
 
+	console.log(data);
+	
 	//! En modo de prueba, parece que al no especificar la info del payer,
 	//! mercadopago pone uno que no es ninguno de los que usamos xD, asi que este
 	//!campo queda vacío y por tanto no se guarda en la db
-	const userFound = await User.findOne({
+	const buyerFound = await User.findOne({
 		where: {
-			email: data.payer.email,
+			email: data.additional_info.payer.first_name,
 		},
 	});
 
-	console.log(userFound);
+	const sellerFound = await Product.findOne({
+			where:{
+				userID: data.additional_info.items[0].id
+			}
+	})
+
+
 
 	const currentDate = new Date();
 	const currentDay = currentDate.getDate();
 	currentDate.setDate(currentDay + 28);
 
-	const dataPayment = {
-		id: data.id,
-		sellerID: Number(data.additional_info.items[0].id),
-		buyerID: userFound!.id,
+
+	const newPayment = await Payments.create({
+		order: data.id,
+		sellerID: sellerFound!.id,
+		buyerID: buyerFound!.id,
 		grossAmount: amount,
 		netAmount: amount - amount / 8,
 		limitDate: currentDate,
-		resume: data,
-	};
-
-	console.log(dataPayment);
-
-	// const sellerID =  Number(dataPayment.sellerID)
-
-	const newPayment = await Payments.create(dataPayment);
+		resume: data
+	});
 
 	return newPayment;
 };
