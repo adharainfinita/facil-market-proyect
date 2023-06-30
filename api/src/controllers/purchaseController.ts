@@ -13,7 +13,7 @@ export const createPurchase = async ({ userId, productId, paymentId}: purchases)
 	if(created){
 		return purchase
 	}else{
-		throw Error('La compra ya existe')
+		throw Error('La compra ya se encuentra en tus compras')
 	}
 };
 //-----------------------

@@ -1,6 +1,8 @@
 .shopping-title{
+    margin: 20px 0px;
     text-align: center;
     color: green;
+    cursor: pointer;
 }
 
 .shopping-container{
@@ -8,9 +10,11 @@
     display: flex;
     padding: 20px 30px;
     align-items: center;
-    margin: 10px 50px;
+    margin: 20px 50px;
     border-radius: 1rem;
     justify-content: center;
+    text-decoration: none;
+    color: #000;
 
     img{
         height: 100px;
@@ -20,7 +24,11 @@
     }
 
     h3{
-        font-size: 30px;
+        font-size: 25px;
         margin: 0px 50px;
     }
+}
+
+.shopping-container:hover{
+    background-color: rgb(190, 190, 190);
 }

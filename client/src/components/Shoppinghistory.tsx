@@ -3,6 +3,7 @@ import { getPurchasesByUser } from '../services/purchaseServices';
 import { Purchase } from '../utils/interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { Link } from 'react-router-dom';
 
 
 const ShoppingHistory = () => {
@@ -28,11 +29,13 @@ const ShoppingHistory = () => {
             {purchases ? 
             (
                 purchases.map((purchase) =>
+                    <Link to={`/product/detail/${purchase.productId}`}>
                         <div key={purchase.id} className='shopping-container'>
                             <img src={purchase.product.images[1]} alt={purchase.product.name} />
                             <h3>{purchase.product.name}</h3>
                             <span>{purchase.product.categoryName}</span>
                         </div>
+                    </Link>
                 )
             ) : <p>No haz realizado ninguna compra todavía</p> }
             <p>{error}</p>
