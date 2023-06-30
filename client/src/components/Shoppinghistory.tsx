@@ -1,17 +1,19 @@
 import {useEffect, useState} from 'react'
 import { getPurchasesByUser } from '../services/purchaseServices';
 import { Purchase } from '../utils/interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
-interface idUser { id: string}
 
-const ShoppingHistory = ({id}: idUser) => {
+const ShoppingHistory = () => {
+    const user = useSelector((state: RootState) => state.user.userLogin)
     const [purchases, setPurchases] = useState<Purchase[]>()
     const [error, setError] = useState('')
 
     useEffect(() => {
         const fetchPurchases = async () => {
             try {
-                const response = await getPurchasesByUser(Number(id))
+                const response = await getPurchasesByUser(Number(user.user.id))
                 setPurchases(response)
             } catch (error: any) {
                 setError(error)
@@ -22,14 +24,14 @@ const ShoppingHistory = ({id}: idUser) => {
 
 	return (
 		<>
-            <h1>Historial de compras</h1>
+            <h1 className='shopping-title'>Historial de compras</h1>
             {purchases ? 
             (
                 purchases.map((purchase) =>
-                        <div key={purchase.id}>
+                        <div key={purchase.id} className='shopping-container'>
                             <img src={purchase.product.images[1]} alt={purchase.product.name} />
                             <h3>{purchase.product.name}</h3>
-                            <span>{purchase.product.location}</span>
+                            <span>{purchase.product.categoryName}</span>
                         </div>
                 )
             ) : <p>No haz realizado ninguna compra todavía</p> }
