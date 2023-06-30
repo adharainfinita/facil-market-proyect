@@ -4,13 +4,12 @@ import { getSearchedProducts } from "../redux/features/productSlice";
 import { getProductsByName } from "../services/productServices";
 import { SlMagnifier } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-//import Swal from "sweetalert2";
 
 const SearchBar = () => {
 	const dispatch = useDispatch();
 	const [searchTerm, setSearchTerm] = useState("");
 	const navigate = useNavigate();
-	/* 	const [error, setError] = useState(""); */
+	const [error, setError] = useState("");
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
@@ -18,18 +17,12 @@ const SearchBar = () => {
 
 	const handleSearch = async () => {
 		try {
-			navigate("/products");
 			const filteredProducts = await getProductsByName(searchTerm);
 			if (filteredProducts.length === 0) {
-				/* 	Swal.fire({
-					icon: "error",
-					title: "No se encontró el producto",
-					text: `No se encontró: ${searchTerm}`,
-				}); */
-				/* setError(`No se encontro: ${searchTerm}`); */
+				setError(`No se encontro: ${searchTerm}`);
 				dispatch(getSearchedProducts(filteredProducts));
 			} else {
-				/* 			setError(""); */
+				setError("");
 				dispatch(getSearchedProducts(filteredProducts));
 			}
 			setSearchTerm("");
@@ -60,7 +53,7 @@ const SearchBar = () => {
 					<SlMagnifier />
 				</button>
 			</div>
-			{/* 			{error && <div>{error}</div>} */}
+			{error && <div>{error}</div>}
 		</div>
 	);
 };

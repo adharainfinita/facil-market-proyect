@@ -24,6 +24,13 @@ class Review extends Model {
 		allowNull: false,
 	})
 	userID!: number;
+	
+	@Column({
+		type: DataType.STRING,
+		allowNull: false,
+	})
+	fullName!: string;
+
 
 	@BelongsTo(() => User)
 	user!: User;

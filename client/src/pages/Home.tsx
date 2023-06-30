@@ -18,7 +18,9 @@ function Home() {
 	const products = useSelector(
 		(state: RootState) => state.product.originalCopy
 	);
+
 	const productsAuth = products.filter((product:any) => product.active === true)
+
 	const images = [
 		banner1,
 		banner2,

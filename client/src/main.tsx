@@ -5,14 +5,14 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-const googleClientId = import.meta.env.VITE_GOOGLE_ID;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	<Provider store={store}>
-		<BrowserRouter>
-			<GoogleOAuthProvider clientId={googleClientId}>
-				<App />
-			</GoogleOAuthProvider>
-		</BrowserRouter>
-	</Provider>
+		<Provider store={store}>
+			<BrowserRouter>
+			<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+					<App />
+				</GoogleOAuthProvider>
+			</BrowserRouter>
+		</Provider>
 );

@@ -9,6 +9,7 @@ import auth from "./routes/auth.routes";
 import paymentRouter from "./routes/payments.routes";
 import category from "./routes/category.routes";
 import review from "./routes/review.routes";
+import admin from "./routes/admin.routes";
 const server = express();
 
 //! Middlewares
@@ -24,6 +25,7 @@ server.use("/auth", auth);
 server.use("/payment", paymentRouter);
 server.use("/category", category);
 server.use("/review", review);
+server.use("/admin", admin);
 
 
 export default server;

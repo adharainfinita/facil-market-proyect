@@ -14,6 +14,7 @@ import { postUser } from "../services/userServices";
 import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
+import GoogleRegister from "./GoogleRegister";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
@@ -106,7 +107,10 @@ const RegisterForm = () => {
 	return (
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
-
+			<div className="google-login">
+				<GoogleRegister/>
+			</div>
+			<hr />
 			<form onSubmit={handleSubmit}>
 				<div className="input-field">
 					<input

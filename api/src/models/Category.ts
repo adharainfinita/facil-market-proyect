@@ -38,13 +38,13 @@ class Category extends Model {
 				highlight: false,
 			},
 			{
-				name: "Computación",
+				name: "Tecnologia",
 				image:
 					"https://w7.pngwing.com/pngs/426/410/png-transparent-black-dell-computer-monitor-set-illustration-laptop-personal-computer-computer-repair-technician-computer-desktop-pc-electronics-computer-computer-monitor-accessory-thumbnail.png",
 				highlight: true,
 			},
 			{
-				name: "Celular",
+				name: "Celulares",
 				image:
 					"https://images.samsung.com/is/image/samsung/p6pim/ar/sm-a235mlbearo/gallery/ar-galaxy-a23-sm-a235-sm-a235mlbearo-532206854?$650_519_PNG$",
 				highlight: true,
