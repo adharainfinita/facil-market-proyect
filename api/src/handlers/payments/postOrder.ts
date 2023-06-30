@@ -6,7 +6,6 @@ const postOrder = async (req: Request, res: Response) => {
 
 	const response = await createOrder(product);
 	
-
 	return res.status(200).send(response.body);
 };
 

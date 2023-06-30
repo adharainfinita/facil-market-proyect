@@ -29,3 +29,13 @@ export interface categoryProps {
 	name: string;
 	image: string;
 }
+
+export interface paymentProps {
+	id: number;
+	sellerID: number | string;
+	buyerID: string | number;
+	grossAmount: number;
+	netAmount: number;
+	limitDate: Date;
+	resume: object;
+}
