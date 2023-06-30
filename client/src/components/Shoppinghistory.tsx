@@ -22,7 +22,7 @@ const ShoppingHistory = () => {
             }
         }
         fetchPurchases()
-    }, [])
+    }, [user])
 
 	return (
 		<>

@@ -10,8 +10,9 @@ import {
   deleteReview,
 } from "../services/reviewService";
 import { RootState } from "../redux/store";
-import { Review } from "../utils/interfaces";
+import { Purchase, Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
+import { getPurchasesByUser } from "../services/purchaseServices";
 
 const Reviews: React.FC = () => {
   const product = useProduct();
@@ -21,6 +22,7 @@ const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
 
   const [hasReviewed, setHasReviewed] = useState(false);
+  const [hasBuy, setHasBuy] = useState(false);
   const [userProduct, setUserProduct] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
@@ -31,6 +33,8 @@ const Reviews: React.FC = () => {
     if (parseInt(product.userID, 10) === parseInt(userLogin.user.id, 10)) {
       setUserProduct(true);
     }
+
+
   }, [userLogin, product.userID]);
 
   useEffect(() => {
@@ -51,6 +55,21 @@ const Reviews: React.FC = () => {
 
     fetchReviews();
   }, [product.id, fullName]);
+
+  useEffect(() => {
+    const fetchPurchases = async () => {
+      try {
+        const response = await getPurchasesByUser(Number(userLogin.user.id));
+        const findProduct = response.find((purchase: Purchase) => purchase.productId === product.id);  
+        if (findProduct) {
+          setHasBuy(true);
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+    fetchPurchases();
+  }, [product.unities]);
 
   // Maneja los comentarios
   const handleCommentChange = (
@@ -148,7 +167,7 @@ const Reviews: React.FC = () => {
           <div>
             <p>Ya has dejado una reseña</p>
           </div>
-        ) : userProduct ? null : (
+        ) : (userProduct || hasBuy === false) ? null : (
           <div>
             <section className="detail-product-section">
               <h2>Reseñas:</h2>
@@ -174,6 +193,7 @@ const Reviews: React.FC = () => {
         <div className="detail-product-review-container">
           <div className="detail-product-review">
             <h2>Reseñas:</h2>
+            {reviews.length === 0 && <p>Este producto no tiene reseñas todavía</p>}
             {showAllReviews
               ? reviews.map((review) => (
                   <div key={review.id} className="review-item">

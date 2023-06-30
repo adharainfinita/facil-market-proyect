@@ -98,13 +98,8 @@ export const updateProduct = async (product: Product) => {
 };
 
 export const updateStock = async (product: Stock) => {
-	console.log(product);
-	
-	const unities = product.unities
-	console.log(unities);
-	
 	try {
-		const { data } = await axios.put(`${URL_HOST}/product/5/stock`, unities);
+		const { data } = await axios.put(`${URL_HOST}/product/${product.id}/stock`, product);
 		return data;
 	} catch (error: any) {
 		let errorMessage = "An error occurred";

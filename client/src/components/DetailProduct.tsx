@@ -12,13 +12,13 @@ import { BuyProduct, NotificationType } from "../utils/interfaces";
 import { RootState } from "../redux/store";
 
 import { postUserPurchase } from "../services/purchaseServices";
-import { updateUnities } from "../redux/features/productSlice";
-import { updateStock } from "../services/productServices";
+//import { updateUnities } from "../redux/features/productSlice";
+//import { updateStock } from "../services/productServices";
 
 const DetailProduct = () => {
   const product = useProduct();
   const currentUser = useSelector((state: RootState) => state.user.userLogin)
-  const dispatch = useDispatch()
+  //const dispatch = useDispatch()
 
   const [isReadyToPost, setIsReadyToPost] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -100,8 +100,7 @@ const DetailProduct = () => {
           setError(error);
         }
       };
-   
-      postPurchase();
+      postPurchase();      
     }
   }, [isReadyToPost]);
 
