@@ -32,3 +32,29 @@
 .shopping-container:hover{
     background-color: rgb(190, 190, 190);
 }
+
+.no-purchases{
+    text-align: center;
+    font-weight: 800;
+    margin: 100px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    .warning{
+        margin: 10px 0px;
+        font-size: 80px;
+        color: rgb(255, 72, 72);
+    }
+
+    button{
+        padding: 20px;
+        background-color: green;
+        font-size: 20px;
+        border: none;
+        color: #fff;
+        border-radius: 1rem;
+        cursor: pointer;
+    }
+}

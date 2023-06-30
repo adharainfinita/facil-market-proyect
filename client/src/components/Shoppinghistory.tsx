@@ -4,6 +4,7 @@ import { Purchase } from '../utils/interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { Link } from 'react-router-dom';
+import { BsExclamationTriangle } from 'react-icons/bs';
 
 
 const ShoppingHistory = () => {
@@ -26,7 +27,7 @@ const ShoppingHistory = () => {
 	return (
 		<>
             <h1 className='shopping-title'>Historial de compras</h1>
-            {purchases ? 
+            {purchases?.length ? 
             (
                 purchases.map((purchase) =>
                     <Link to={`/product/detail/${purchase.productId}`}>
@@ -37,7 +38,12 @@ const ShoppingHistory = () => {
                         </div>
                     </Link>
                 )
-            ) : <p>No haz realizado ninguna compra todavía</p> }
+            ) : (
+            <div className='no-purchases'>
+                 <p>No haz realizado ninguna compra todavía</p>
+                 <BsExclamationTriangle className='warning'/>
+                 <Link to={'/products'}><button>¡Comprar Ahora!</button></Link>
+            </div>)}
             <p>{error}</p>
         </>
 	);
