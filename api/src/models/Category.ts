@@ -40,7 +40,7 @@ class Category extends Model {
 			{
 				name: "Tecnologia",
 				image:
-					"https://w7.pngwing.com/pngs/426/410/png-transparent-black-dell-computer-monitor-set-illustration-laptop-personal-computer-computer-repair-technician-computer-desktop-pc-electronics-computer-computer-monitor-accessory-thumbnail.png",
+					"https://www.comeros.com.ar/wp-content/uploads/2022/04/UX425EA-a.png",
 				highlight: true,
 			},
 			{
@@ -52,13 +52,13 @@ class Category extends Model {
 			{
 				name: "Electrodomesticos",
 				image:
-					"https://www.nicepng.com/png/detail/295-2957720_conjunto-de-electrodomsticos-en-lnea-blanca-warranty-appliances.png",
+					"https://images.samsung.com/is/image/samsung/ar-washer-ww90j5410gs-ww90j5410gsubg-frontsilver-148680635?$650_519_PNG$",
 				highlight: true,
 			},
 			{
 				name: "Indumentaria",
 				image:
-					"https://w7.pngwing.com/pngs/987/597/png-transparent-assorted-color-clothes-on-clothes-rack-t-shirt-clothing-armoires-wardrobes-closet-clothes-hanger-clothing-retail-fashion-top-thumbnail.png",
+					"https://www.pngmart.com/files/21/Adidas-Shoes-PNG-Pic.png",
 				highlight: true,
 			},
 			{

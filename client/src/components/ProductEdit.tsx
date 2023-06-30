@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { updateProduct } from "../services/productServices";
 import axios from "axios";
 import Dropzone from "react-dropzone";
+import { Link } from "react-router-dom";
 
 const ProductEdit = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -34,7 +35,7 @@ const ProductEdit = () => {
 
 	const handleModes = (event: React.MouseEvent<HTMLButtonElement>) => {
 		const buttonText = event.currentTarget.textContent;
-		buttonText === "Edit" && setEditMode(true);
+		buttonText === "Editar" && setEditMode(true);
 	};
 
 	const handleChange = (
@@ -188,6 +189,9 @@ const ProductEdit = () => {
 		<div className="edit-detail-product-container">
 			<form onSubmit={handleSubmit}>
 				<div className="edit-detail-product">
+				<button className="buttom_close">
+				<Link to= "/ventas" className="close-link" > X </Link>
+			</button>
 					{editMode ? editModePrevImages() : contentPrevImages()}
 					<div className="edit-detail-product-image">
 						<img src={selectedImage} alt={product.name} />
@@ -318,11 +322,11 @@ const ProductEdit = () => {
 						onClick={handleModes}
 						disabled={editMode}
 					>
-						Edit
+						Editar
 					</button>
 				</div>
 				<button type="submit" disabled={!editMode}>
-					Save
+					Guardar
 				</button>
 			</form>
 		</div>

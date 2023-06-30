@@ -160,15 +160,38 @@
 				}
 			}
 		}
-
 		.edit-btn {
-			width: 2.5rem;
+			width: fit-content;
 			height: 1.5rem;
 		}
 
 		.save-btn {
-			width: 2.5rem;
+			width: fit-content;
 			height: 1.5rem;
 		}
 	}
-}
+	.close-link {
+		font-size: 0.5rem;
+		color: #000;
+		text-decoration: none;
+	  }
+	  .buttom_close {
+		position: absolute;
+		border-radius: 50%; /* Cambiar a 50% para obtener un círculo perfecto */
+		background-color: red;
+		width: 2rem; /* Ajusta el ancho deseado */
+		height: 2rem; /* Ajusta la altura deseada */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		font-size: 1rem;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.3s; /* Agregar una transición de color de fondo */
+	  }
+	
+	  .buttom_close:hover {
+		background-color: darkred; /* Cambia el color de fondo al pasar el cursor */
+	  }
+	}
