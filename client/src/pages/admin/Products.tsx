@@ -1,8 +1,29 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateProduct } from "../../services/productServices";
+import { Product } from "../../utils/interfaces";
 
 function Products() {
   const products = useSelector((state: RootState) => state.product.products);
+  const [updatedProducts, setUpdatedProducts] = useState<Product[]>([]);
+
+  const disabledProduct = async (product: Product) => {
+    const updatedProduct = { active: !product.active };
+    const disabled = await updateProduct(product.id, updatedProduct);
+
+    const updatedProductsList = updatedProducts.map((p) => {
+      if (p.id === product.id) {
+        return { ...p, active: disabled.prod.active };
+      }
+      return p;
+    });
+    setUpdatedProducts(updatedProductsList);
+  };
+
+  useEffect(() => {
+    setUpdatedProducts(products)
+  }, [products])
 
   return (
     <table className="user-table">
@@ -13,10 +34,11 @@ function Products() {
           <th className="user-table-th">Nombre</th>
           <th className="user-table-th">Precio</th>
           <th className="user-table-th">Stock</th>
+          <th className="user-table-th">Acción</th>
         </tr>
       </thead>
       <tbody>
-        {products.map((product) => (
+        {updatedProducts.map((product) => (
           <tr key={product.id}>
             <td className="user-table-td">{product.id}</td>
             <td className="user-table-td">
@@ -25,6 +47,9 @@ function Products() {
             <td className="user-table-td">{product.name}</td>
             <td className="user-table-td">${product.price}</td>
             <td className="user-table-td">{product.unities}</td>
+            <td className="user-table-td">
+              <button onClick={() => disabledProduct(product)}>{product.active ? "Desactivar" : "Activar"}</button>
+            </td>
           </tr>
         ))}
       </tbody>

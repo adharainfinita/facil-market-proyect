@@ -43,6 +43,13 @@ class User extends Model {
 	active!: string;
 
 	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: true,
+		defaultValue: false,
+	})
+	admin!: string;
+
+	@Column({
 		type: DataType.DATE,
 		defaultValue: DataType.NOW,
 		field: 'createdAt',

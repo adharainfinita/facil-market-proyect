@@ -8,7 +8,6 @@ import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
-import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

@@ -15,8 +15,6 @@ const BarChart: React.FC = () => {
     (state: RootState) => state.admin.analyticsData
   );
 
-  console.log(dataComplete.allUsers);
-  console.log("info:", dataComplete.productsInfo);
   const dates = dataComplete.productsInfo.map((match) => match.createdAt);
 
   const dates2 = dates.map((match) => match.dateObject.day);

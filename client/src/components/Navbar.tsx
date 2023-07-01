@@ -2,7 +2,8 @@ import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import User from "../pages/User";
+import User from "./User";
+import {AiOutlineShoppingCart} from 'react-icons/ai'
 
 function Navbar() {
   const navigate = useNavigate();
@@ -48,6 +49,11 @@ function Navbar() {
           <button className="nav__button-sell">Vender</button>
         </Link>
 
+
+        <Link to="/cart">
+          <AiOutlineShoppingCart className="nav__icon" />
+        </Link>
+          
         {session && <User handleLogOut={handleLogOut} />}
 
         {!session && (

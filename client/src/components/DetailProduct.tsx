@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
+import { Product } from "../utils/interfaces";
 import useProduct from "../hooks/useProduct";
-import PaymentButton from "./PaymentButton";
+// import PaymentButton from "./PaymentButton";
 
 import Reviews from "./Review";
 import { NotificationType } from "../utils/interfaces";
+import { addToCart } from "../redux/features/cartSlice";
+import { useDispatch } from "react-redux";
 
 const DetailProduct = () => {
   const product = useProduct();
@@ -19,8 +21,11 @@ const DetailProduct = () => {
     content: "",
   });
 
+  const dispatch = useDispatch();
 
-  
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product));
+  };
 
   useEffect(() => {
     if (product?.images.length > 0 && !selectedImage) {
@@ -32,26 +37,26 @@ const DetailProduct = () => {
     setSelectedImage(image);
   };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get("status");
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const status = urlParams.get("status");
 
-    if (status === "approved") {
-      setNotification({
-        content: "Pago aprobado😎",
-        isOpen: true,
-        type: "approved",
-      });
-    }
+  //   if (status === "approved") {
+  //     setNotification({
+  //       content: "Pago aprobado😎",
+  //       isOpen: true,
+  //       type: "approved",
+  //     });
+  //   }
 
-    if (status === "failure") {
-      setNotification({
-        content: "Pago rechazado😢",
-        isOpen: true,
-        type: "failure",
-      });
-    }
-  }, []);
+  //   if (status === "failure") {
+  //     setNotification({
+  //       content: "Pago rechazado😢",
+  //       isOpen: true,
+  //       type: "failure",
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="detail-product-container">
@@ -110,7 +115,6 @@ const DetailProduct = () => {
         </div>
         </div>
         
-
         <div className="detail-product-sales">
           <h2>Informacion sobre el vendedor</h2>
           <section className="detail-product-section">
@@ -134,7 +138,8 @@ const DetailProduct = () => {
             <h3>{product.stock}</h3>
           </section>
           <div className=".detail-product-button">
-            <PaymentButton product={product} />
+            {/* <PaymentButton product={product} /> */}
+            <button onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
           </div>
 
           {notification.isOpen && <div>{notification.content}</div>}

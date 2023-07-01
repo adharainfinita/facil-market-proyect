@@ -3,16 +3,29 @@ import { RootState } from "../../redux/store";
 import { updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { User } from "../../utils/interfaces";
 
 function Users() {
   const users = useSelector((state: RootState) => state.user.users);
-  
+  const [updatedUsers, setUpdatedUsers] = useState<User[]>([]);
+
   const disabledUser = async (user: user) => {
     const updatedUser = { active: !user.active };
     const disabled = await updateUser(user.id, updatedUser);
     console.log(disabled);
+    const updatedUsersList = updatedUsers.map((u) => {
+      if (u.id === user.id) {
+        return { ...u, active: disabled.user.active };
+      }
+      return u;
+    });
+    setUpdatedUsers(updatedUsersList)
   };
+
+  useEffect(() => {
+    setUpdatedUsers(users);
+  }, [users]);
 
   return (
     <table className="user-table">
@@ -21,11 +34,11 @@ function Users() {
           <th className="user-table-th">ID</th>
           <th className="user-table-th">Nombre</th>
           <th className="user-table-th">Email</th>
-          <th className="user-table-th">Action</th>
+          <th className="user-table-th">Acción</th>
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
+        {updatedUsers.map((user) => (
           <tr key={user.id}>
             <td className="user-table-td">{user.id}</td>
             <td className="user-table-td">{user.fullName}</td>
@@ -34,8 +47,10 @@ function Users() {
               <button onClick={() => disabledUser(user)}>
                 {user.active ? "Desactivar" : "Activar"}
               </button>
-              
-              <Link to={`/user/${user.id}`}><button>Editar</button></Link>
+
+              <Link to={`/user/${user.id}`}>
+                <button>Editar</button>
+              </Link>
             </td>
           </tr>
         ))}

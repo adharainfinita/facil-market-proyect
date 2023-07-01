@@ -3,6 +3,7 @@ const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 // Pages
 import Login from "./pages/Login";
 import Terms from "./pages/Terms";
@@ -45,6 +46,7 @@ import Resume from "./pages/admin/Resume";
 import UserProducts from "./components/UserProducts";
 import ProductEdit from "./components/ProductEdit";
 import NotFound from "./errors/NotFound";
+import Cart from "./pages/Cart/Cart"
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,12 +56,15 @@ const App = () => {
     Authorization: `Bearer ${session}`,
   };
 
-  const userLogin2 = useSelector((state: RootState) => state.user.userLogin);
-  const userId = userLogin2.user.id;
+  const login = useSelector((state: RootState) => state.user.userLogin);
+  const permissions = login?.user?.admin;
+
+  const id = login.user.id;
+
   useEffect(() => {
     const fetchUserData = async () => {
-      const userId2 = userId; // Reemplaza con el ID del usuario deseado
-      const fetchedUser = await getUserById(userId2);
+      const userId = id; // Reemplaza con el ID del usuario deseado
+      const fetchedUser = await getUserById(userId);
 
       if (fetchedUser) {
         if (fetchedUser.image !== undefined) {
@@ -82,7 +87,7 @@ const App = () => {
     };
 
     fetchUserData();
-  }, [dispatch, userId]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (session) {
@@ -94,8 +99,8 @@ const App = () => {
             fullName: response.data.user.fullName,
             email: response.data.user.email,
             image: response.data.user.image,
+            admin: response.data.user.admin,
           };
-
           dispatch(userLogin(data));
         })
         .catch((error) => {
@@ -156,26 +161,43 @@ const App = () => {
         <Route path="/vender" element={<FormCreateProduct />} />
         <Route path="/terminos_y_condiciones" element={<Terms />} />
 
-        <Route element={<ProtectedRoute isAllowed={Boolean(session)} />}>
+        <Route
+          element={
+            <ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
+          }
+        >
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/ventas" element={<UserProducts />} />
           <Route path="/verification" element={<VerificationPage />} />
           <Route path="/user/:id" element={<EditUser />} />
           <Route path="/product/edit/:id" element={<ProductEdit />} />
-
-          <Route path="/admin" element={<Dashboard />}>
-            <Route path="/admin/summary" element={<Resume />} />
-            <Route path="users" element={<Users />} />
-            <Route path="products" element={<Products />} />
-          </Route>
+          <Route path="/admin" element={<Dashboard />} />
         </Route>
-        <Route path="/admin/summary" element={<Resume />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute
+              isAllowed={Boolean(session) && permissions}
+              redirectTo="/admin"
+            >
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="summary" element={<Resume />} />
+          <Route path="users" element={<Users />} />
+          <Route path="products" element={<Products />} />
+        </Route>
+
         <Route path="/products" element={<Market />} />
         <Route path="/product/detail/:id" element={<DetailProduct />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/profile/:id" element={<UserProfiles />} />
         <Route path="/review/:id" element={<ProductReviews />} />
+
+        <Route path="/cart" element={<Cart />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

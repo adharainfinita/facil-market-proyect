@@ -5,8 +5,7 @@ import User from "../../models/User";
 const updateUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const updates = req.body;
-	console.log("Entrada" + updates);
-	
+
   try {
     const response = await changeUser(userId, updates);
 
