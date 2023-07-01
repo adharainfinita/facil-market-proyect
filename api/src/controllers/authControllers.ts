@@ -71,7 +71,7 @@ export const sendEmailToUser = async (email: string, name: string) => {
     subject: "Te damos la bienvenida a Facil Market",
     html: `<div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;">
         <img src="https://cspmarketplaceprd.s3.us-west-2.amazonaws.com/media-files/marketplace_logo_large.png" alt="Logo de Facil Market" style="max-width: 200px; margin-bottom: 10px;">
-        <p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 20px; margin-top: 0;">Facil-Market</p>
+        <p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 20px; margin-top: 0;">Facil-Market Team</p>
         <h1 style="color: #333333;">¡Hola, ${name}!</h1>
         <p style="color: #333333;">¡Bienvenid@ a Facil Market! 😎</p>
         <p style="color: #333333;">Estamos encantados de tenerte como parte de nuestra comunidad. Queremos asegurarnos de que tu experiencia sea lo más placentera posible, por lo que estamos aquí para ayudarte en todo lo que necesites.</p>

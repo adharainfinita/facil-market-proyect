@@ -31,11 +31,30 @@ export interface categoryProps {
 }
 
 export interface paymentProps {
-	id: number;
+	order: number;
 	sellerID: number | string;
 	buyerID: string | number;
 	grossAmount: number;
 	netAmount: number;
 	limitDate: Date;
-	resume: object;
+	resume: resumeProps;
+}
+
+export interface resumeProps {
+	additional_info: additional_info;
+	collector_id: number;
+	currency_id: string;
+}
+export interface additional_info {
+	ip_address: string;
+	items: Array<items>,
+	payer: string;
+}
+
+export interface items {
+	category_id: string;
+	description: string | null;
+	id: string;
+	title: string;
+	unit_price: string;
 }
