@@ -58,3 +58,9 @@ export interface items {
 	title: string;
 	unit_price: string;
 }
+
+export interface cartProductProps {
+	id: number;
+  userID: number;
+  productID: Array<object>
+}
