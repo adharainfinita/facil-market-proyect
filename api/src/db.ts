@@ -3,6 +3,7 @@ import Review from "./models/Review";
 import Category from "./models/Category";
 import Product from "./models/Product";
 import Payments from "./models/Payments";
+import ShoppingCart from "./models/Cart";
 import { Sequelize } from "sequelize-typescript";
 import dotenv from "dotenv";
 
@@ -21,7 +22,7 @@ const database = new Sequelize({
 	host: DB_HOST,
 	port: Number(DB_PORT),
 	dialect: "postgres",
-	models: [User, Review, Category, Product, Payments],
+	models: [User, Review, Category, Product, Payments, ShoppingCart],
 	logging: false,
 	native: false,
 });

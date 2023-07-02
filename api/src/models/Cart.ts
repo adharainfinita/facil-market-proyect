@@ -25,18 +25,17 @@ class Cart extends Model {
   })
   userID!: number;
 
-  @ForeignKey(() => Product)
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.ARRAY(DataType.INTEGER),
     allowNull: false,
   })
-  productID!: number;
+  productID!: Array<number>;
 
   @BelongsTo(() => User)
-	user!: User;
+  user!: User;
 
   @BelongsTo(() => Product)
-	product!: Product;
+  product!: Product;
 }
 
 export default Cart;
