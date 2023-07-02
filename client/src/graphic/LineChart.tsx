@@ -1,14 +1,17 @@
-import { Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
 	Chart,
-	CategoryScale,
 	LinearScale,
-	Title,
+	LineController,
+	LineElement,
+	CategoryScale,
+	PointElement,
 	Legend,
 	Tooltip,
 	TitleOptions,
 	FontSpec,
-	ArcElement,
+	Title,
+	scales,
 } from "chart.js";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -34,31 +37,35 @@ const title: TitleOptions = {
 	font: fontStyle,
 };
 
-const PieChart = () => {
+const LineChart = () => {
 	const dataComplete = useSelector(
 		(state: RootState) => state.admin.analyticsData
 	);
 
-	//? Lógica de datos
+	//? Logica
 	const userID = dataComplete.allUsers.map((element) => element.id);
 	const sales = dataComplete.allUsers.map((match) => match.LevelOfActivity - 1);
 
 	//? Registros
 	Chart.register(
-		CategoryScale,
 		LinearScale,
-		Title,
+		LineController,
+		LineElement,
+		CategoryScale,
+		PointElement,
 		Legend,
 		Tooltip,
-		ArcElement
+		Title,
+		scales
 	);
 
-	//? Set de datos
-	const chartData = {
-		type: "pie",
+	//? set datos
+	const lineData = {
+		type: "line",
 		labels: userID,
 		datasets: [
 			{
+				label: "Ventas",
 				data: sales,
 				backgroundColor: [
 					"rgba(255, 0, 0, 0.3)", //? Rojo
@@ -85,6 +92,36 @@ const PieChart = () => {
 	//? Set de configuración
 	const options = {
 		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+			y: {
+				display: true,
+				beginAtZero: true,
+				title: {
+					display: true,
+					text: "Ventas",
+					color: "black",
+					font: {
+						size: 16,
+						weight: "bold",
+					},
+				},
+			},
+
+			x: {
+				display: true,
+				title: {
+					display: true,
+					text: "Usuarios por ID",
+					color: "black",
+					font: {
+						size: 16,
+						weight: "bold",
+					},
+				},
+			},
+		},
+
 		plugins: {
 			title: title,
 			legend: {
@@ -95,11 +132,11 @@ const PieChart = () => {
 			},
 			tooltip: {
 				callbacks: {
-					title: (context: any) => {
-						let value = context[0].label || "";
+					title: (config: any) => {
+						let value = config[0].label || "";
 						return `UserID: ${value}`;
 					},
-					label: (context: any) => `Ventas: ${context.formattedValue}`,
+					label: (config: any) => `Ventas: ${config.formattedValue}`,
 				},
 				titleFont: {
 					size: 16,
@@ -116,10 +153,10 @@ const PieChart = () => {
 	};
 
 	return (
-		<div className="conteiner-pieChart">
-			<Pie data={chartData} options={options} />
+		<div className="conteiner-LineChart">
+			<Line data={lineData} options={options} />
 		</div>
 	);
 };
 
-export default PieChart;
+export default LineChart;

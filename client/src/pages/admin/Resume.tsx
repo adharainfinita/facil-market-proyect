@@ -8,6 +8,7 @@ import {
 } from "../../redux/features/adminSlice";
 import BarChart from "../../graphic/BarChart";
 import PieChart from "../../graphic/PieChar";
+import LineChart from "../../graphic/LineChart";
 
 const Resume = () => {
 	const dispatch = useDispatch();
@@ -26,18 +27,48 @@ const Resume = () => {
 	const properties = Object.entries(dataResume.ProductsOnAccesories);
 
 	const [graphMode, setGraphMode] = useState({
-		pieChart: false,
 		barChart: true,
+		pieChart: false,
+		lineChart: false,
 	});
 
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		const value = event.target.value;
 		if (value === "circular") {
-			setGraphMode({ ...graphMode, pieChart: true, barChart: false });
+			setGraphMode({
+				...graphMode,
+				pieChart: true,
+				barChart: false,
+				lineChart: false,
+			});
 		}
 
 		if (value === "columnas") {
-			setGraphMode({ ...graphMode, barChart: true, pieChart: false });
+			setGraphMode({
+				...graphMode,
+				barChart: true,
+				pieChart: false,
+				lineChart: false,
+			});
+		}
+
+		if (value === "lineal") {
+			setGraphMode({
+				...graphMode,
+				lineChart: true,
+				barChart: false,
+				pieChart: false,
+			});
+		}
+	};
+
+	const renderChart = () => {
+		if (graphMode.barChart) {
+			return <BarChart />;
+		} else if (graphMode.lineChart) {
+			return <LineChart />;
+		} else if (graphMode.pieChart) {
+			return <PieChart />;
 		}
 	};
 
@@ -50,10 +81,11 @@ const Resume = () => {
 					</option>
 					<option value="columnas">Columnas</option>
 					<option value="circular">Circular</option>
+					<option value="lineal">Lineal</option>
 				</select>
 			</section>
 
-			{graphMode.barChart ? <BarChart /> : <PieChart />}
+			{renderChart()}
 
 			<section>
 				<h3>Resumen general</h3>
@@ -70,7 +102,7 @@ const Resume = () => {
 							<h4 key={index}>
 								{match[0]}: {match[1]}
 							</h4>
-						);
+						)
 					})}
 				</div>
 			</section>

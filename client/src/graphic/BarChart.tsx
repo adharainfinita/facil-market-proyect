@@ -41,9 +41,9 @@ const BarChart = () => {
 		(state: RootState) => state.admin.analyticsData
 	);
 
-	//? Logica
+	//? Logica de datos
 	const userID = dataComplete.allUsers.map((element) => element.id);
-	const sales = dataComplete.allUsers.map((match) => match.LevelOfActivity);
+	const sales = dataComplete.allUsers.map((match) => match.LevelOfActivity - 1);
 
 	//? Registros
 	Chart.register(
@@ -87,7 +87,7 @@ const BarChart = () => {
 		],
 	};
 
-	//? set confiug
+	//? set config
 	const options = {
 		responsive: true,
 		maintainAspectRatio: false,
@@ -132,12 +132,12 @@ const BarChart = () => {
 
 			tooltip: {
 				callbacks: {
-					title: (context: any) => {
-						let value = context[0].label || "";
+					title: (config: any) => {
+						let value = config[0].label || "";
 						return `UserID: ${value}`;
 					},
 
-					label: (context: any) => `Ventas: ${context.parsed.y}`,
+					label: (config: any) => `Ventas: ${config.parsed.y}`,
 				},
 
 				//? fuente del titulo (id)
@@ -160,7 +160,7 @@ const BarChart = () => {
 
 	return (
 		<div className="conteiner-barChart">
-			<Bar data={chartData} options={options} />;
+			<Bar data={chartData} options={options} />
 		</div>
 	);
 };
