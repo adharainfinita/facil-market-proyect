@@ -1,0 +1,26 @@
+.graph-conteiner {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  position: absolute;
+	min-width: fit-content;
+	min-height: fit-content;
+	gap: 1rem;
+
+	.conteiner-barChart {
+		display: flex;
+    flex-direction: column;
+		justify-content: center;
+		width: 500px;
+		height: 400px;
+	}
+
+	.conteiner-pieChart {
+    display: flex;
+    position: relative;
+		justify-content: center;
+		width: 500px;
+		height: 400px;
+	}
+}
