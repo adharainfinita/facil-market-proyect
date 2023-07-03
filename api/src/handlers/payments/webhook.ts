@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { createNotification } from "../../controllers/payment.controllers";
-import { createdNewPayment } from "../../controllers/payment.controllers";
+import { createNotification, createNewPayment } from "../../controllers/payment.controllers";
+import { sendPurchaseNotification } from "../../controllers/payment.controllers";
+// import { paymentProps } from "../../interfaces/propsModel";
 
 const receivedWebhook = async (req: Request, res: Response) => {
 	const payment = req.query;
@@ -11,17 +12,23 @@ const receivedWebhook = async (req: Request, res: Response) => {
 			const data = await createNotification(id);
 
 			console.log(data);
+			if(data.status === 'approved'){
+				const response = await createNewPayment(data);
 
-			const response = await createdNewPayment(data);
-			return res.send(response);
+				// const contentForMail: paymentProps = {
+				// 	order: response.order,
+				// 	sellerID: response.sellerID,
+				// 	buyerID: response.buyerID,
+				// 	grossAmount: response.grossAmount,
+				// 	netAmount: response.netAmount,
+				// 	limitDate: response.limitDate,
+				// 	resume: response.resume
+				// }
+				sendPurchaseNotification(response);
+
+				return res.status(201).json(response);
+			}
 		}
-
-		// if(payment.topic === 'merchant_order'){
-		// 	const id = Number(payment['id']);
-		// 	const dataMerchant = await createNotification(id);
-		// 	console.log(dataMerchant);
-
-		// }
 	} catch (error: any) {
 		console.log(error);
 		return res.status(500).json({ error: error.message });
