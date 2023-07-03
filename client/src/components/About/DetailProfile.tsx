@@ -1,13 +1,45 @@
-import React from "react";
+import React, { useRef } from "react";
 import { PropsProfile } from "./dataProfile";
 import { Link } from "react-router-dom";
 import linkedin from "../../assets/About/linkedin.svg";
 import github from "../../assets/About/github2.svg";
 import gmail from "../../assets/About/gmail.svg";
 
-const DetailProfile: React.FC<PropsProfile> = (data) => {
+interface DetailProfileProps extends PropsProfile {}
+
+const DetailProfile: React.FC<DetailProfileProps> = (data) => {
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+		const card = cardRef.current;
+		if (card) {
+			const cardRect = card.getBoundingClientRect();
+			const cardCenterX = cardRect.left + cardRect.width / 2;
+			const cardCenterY = cardRect.top + cardRect.height / 2;
+			const mouseX = e.clientX;
+			const mouseY = e.clientY;
+
+			const translateX = (mouseX - cardCenterX) / 5; // Ajusta el factor de movimiento horizontal
+			const translateY = (mouseY - cardCenterY) / 5; // Ajusta el factor de movimiento vertical
+
+			card.style.transform = `translate(${translateX}px, ${translateY}px)`;
+		}
+	};
+
+	const handleMouseLeave = () => {
+		const card = cardRef.current;
+		if (card) {
+			card.style.transform = "none";
+		}
+	};
+
 	return (
-		<div className="conteiner-about-contributors">
+		<div
+			className="conteiner-about-contributors"
+			onMouseMove={handleMouseMove}
+			onMouseLeave={handleMouseLeave}
+			ref={cardRef} // Añade la referencia al contenedor principal
+		>
 			<img
 				className="image-about-contributors"
 				src={data.image}
