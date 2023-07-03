@@ -49,7 +49,7 @@ import NotFound from "./errors/NotFound";
 import ShoppingHistory from "./components/Shoppinghistory";
 import Cart from "./pages/cart/Cart";
 import { startCart } from "./redux/features/cartSlice";
-import { addItem } from "./services/cartServicer";
+import { getAllItems } from "./services/cartServicer";
 // import Cart from "./pages/Cart/Cart"
 import About from "./components/About/About";
 
@@ -104,10 +104,10 @@ const App = () => {
             fullName: response.data.user.fullName,
             email: response.data.user.email,
             image: response.data.user.image,
-            admin: response.data.user.admin,
+            admin: true,
           };
         const fetchCart = async () => {
-          const result = await addItem(Number(id), []);
+          const result = await getAllItems(Number(id));
           dispatch(startCart(result));
           dispatch(userLogin(data));
         }
@@ -164,71 +164,56 @@ const App = () => {
 
 	return (
 		<>
-			<Navbar />
+		<Navbar />
 
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/vender" element={<FormCreateProduct />} />
-				<Route path="/terminos_y_condiciones" element={<Terms />} />
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/vender" element={<FormCreateProduct />} />
+			<Route path="/terminos_y_condiciones" element={<Terms />} />
 
-        <Route
-          element={
-            <ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
-          }
-        >
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/compras" element={<ShoppingHistory />} />
-          <Route path="/ventas" element={<UserProducts />} />
-          <Route path="/verification" element={<VerificationPage />} />
-          <Route path="/user/:id" element={<EditUser />} />
-          <Route path="/product/edit/:id" element={<ProductEdit />} />
-          <Route path="/admin" element={<Dashboard />} />
-        </Route>
+			<Route
+				element={
+					<ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
+				}
+			>
+				<Route path="/profile" element={<UserProfile />} />
+				<Route path="/compras" element={<ShoppingHistory />} />
+				<Route path="/ventas" element={<UserProducts />} />
+				<Route path="/verification" element={<VerificationPage />} />
+				<Route path="/user/:id" element={<EditUser />} />
+				<Route path="/product/edit/:id" element={<ProductEdit />} />
+				<Route path="/admin" element={<Dashboard />} />
+			</Route>
 
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute
-              isAllowed={Boolean(session) && permissions}
-              redirectTo="/admin"
-            >
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="summary" element={<Resume />} />
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
-        </Route>
+			<Route
+				path="/admin"
+				element={
+					<ProtectedRoute
+						isAllowed={Boolean(session) && permissions}
+						redirectTo="/admin"
+					>
+						<Dashboard />
+					</ProtectedRoute>
+				}
+			>
+				<Route path="summary" element={<Resume />} />
+				<Route path="users" element={<Users />} />
+				<Route path="products" element={<Products />} />
+			</Route>
 
-        <Route path="/products" element={<Market />} />
-        <Route path="/product/detail/:id" element={<DetailProduct />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/profile/:id" element={<UserProfiles />} />
-        <Route path="/review/:id" element={<ProductReviews />} />
-					<Route path="/admin" element={<Dashboard />}>
-						<Route path="/admin/summary" element={<Resume />} />
-						<Route path="users" element={<Users />} />
-						<Route path="products" element={<Products />} />
-					</Route>
-				</Route>
+			<Route path="/products" element={<Market />} />
+			<Route path="/product/detail/:id" element={<DetailProduct />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<RegisterForm />} />
+			<Route path="/profile/:id" element={<UserProfiles />} />
+			<Route path="/review/:id" element={<ProductReviews />} />
 
-				<Route path="/about" element={<About />} />
-				<Route path="/admin/summary" element={<Resume />} />
-				<Route path="/products" element={<Market />} />
-				<Route path="/product/detail/:id" element={<DetailProduct />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<RegisterForm />} />
-				<Route path="/profile/:id" element={<UserProfiles />} />
-				<Route path="/review/:id" element={<ProductReviews />} />
+			<Route path="/cart" element={<Cart />} />
 
-        <Route path="/cart" element={<Cart />} />
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </>
+			<Route path="*" element={<NotFound />} />
+		</Routes>
+		<Footer />
+	</>
   );
 };
 

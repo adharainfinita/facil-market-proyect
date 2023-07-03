@@ -19,7 +19,6 @@ const DetailProduct = () => {
   const currentUser = useSelector((state: RootState) => state.user.userLogin);
   const items = useSelector((state: RootState) => state.cart.cartItems.products)
 
-
   const [isReadyToPost, setIsReadyToPost] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [error, setError] = useState<string>('');
