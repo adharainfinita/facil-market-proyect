@@ -6,14 +6,14 @@ const updateProductStock = async (req: Request, res: Response) => {
 	const { id } = req.params;
 
 	console.log(`Este es el req body: ${unities}`);
-	
-    try {
+
+	try {
 		const response = await updateStock(Number(id), unities);
 		if (response) {
-            return res.status(200).json("Stock actualizado");
-        } else {
-            return res.status(404).json({ error: "Producto no encontrado" });
-    }
+			return res.status(200).json("Stock actualizado");
+		} else {
+			return res.status(404).json({ error: "Producto no encontrado" });
+		}
 	} catch (error: any) {
 		return res.status(400).json({ error: error.message });
 	}

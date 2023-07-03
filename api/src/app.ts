@@ -29,6 +29,6 @@ server.use("/category", category);
 server.use("/review", review);
 server.use("/admin", admin);
 server.use("/purchase", purchase);
-server.use("/cart" , cart)
+server.use("/cart", cart);
 
 export default server;

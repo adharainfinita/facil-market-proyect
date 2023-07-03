@@ -6,10 +6,7 @@ const getUserPurchases = async (req: Request, res: Response) => {
 		const { id } = req.params;
 		const Userpurchases = await getPurchaseByUser(Number(id));
 
-		return res
-			.status(201)
-			.json(Userpurchases);
-
+		return res.status(201).json(Userpurchases);
 	} catch (error: any) {
 		return error.message.includes("Not Found")
 			? res.status(404).json({ error: error.message })

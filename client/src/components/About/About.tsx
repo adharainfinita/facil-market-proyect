@@ -19,8 +19,8 @@ const About = () => {
 			</section>
 			{/* //? Participantes */}
 			<div className="conteiner-aboutCardProfile">
-				{dataProfile.data.map((user: PropsProfile) => {
-					return <DetailProfile {...user} />;
+				{dataProfile.data.map((user: PropsProfile, index: number) => {
+					return <DetailProfile {...user} key={index} />;
 				})}
 			</div>
 		</div>

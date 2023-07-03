@@ -7,32 +7,32 @@ export interface UXDataLogin {
 
 // Interfaces de de estados global
 export interface BasicData {
-  totalProducts: number,
-  totalUsers: number,
-  totalSales: number,
-  ProductsOnAccesories: object
+	totalProducts: number;
+	totalUsers: number;
+	totalSales: number;
+	ProductsOnAccesories: object;
 }
 
 export interface Cart {
 	id: number;
 	userID: number;
-	products: Array<BuyProduct>
+	products: Array<BuyProduct>;
 }
 
 export interface AnalyticsData {
-  productsInfo: Array<ContentProductData>;
-  allUsers: Array<ContentUserData>;
+	productsInfo: Array<ContentProductData>;
+	allUsers: Array<ContentUserData>;
 }
-export interface ContentProductData{
-	id: number,
-	createdAt: CreatedAt,
-	rating: number
+export interface ContentProductData {
+	id: number;
+	createdAt: CreatedAt;
+	rating: number;
 }
 
-export interface ContentUserData{
-	id: number,
-	createdAt: CreatedAt,
-	LevelOfActivity: number
+export interface ContentUserData {
+	id: number;
+	createdAt: CreatedAt;
+	LevelOfActivity: number;
 }
 
 export interface CreatedAt {
@@ -52,7 +52,6 @@ export interface Cart {
 	userID: number;
 	products: Array<BuyProduct>;
 }
-
 
 export interface User {
 	id: string;
@@ -85,12 +84,12 @@ export interface Product {
 	userID: string;
 	userName: string;
 	active: boolean;
-	cartQuantity?: number
+	cartQuantity?: number;
 }
 
 //?probando
 export interface PaymentProduct {
-	products: Array<Product>
+	products: Array<Product>;
 }
 
 export interface Category {
@@ -130,7 +129,7 @@ export interface user {
 	id: string;
 	image: string;
 	active?: boolean;
-	admin?: boolean
+	admin?: boolean;
 }
 
 export interface UserData {
@@ -183,41 +182,40 @@ export interface isLogin {
 	id: string;
 	email: string;
 	image: string;
-	admin: boolean
+	admin: boolean;
 }
 
 export interface GoogleUser {
-	name: string
-	sub: string
-	email: string
-	picture: string
+	name: string;
+	sub: string;
+	email: string;
+	picture: string;
 }
-
 
 export interface Review {
 	id: number;
 	userID: number;
-	fullName:string;
+	fullName: string;
 	rating: number;
 	text: string;
-  }
+}
 
-export interface Purchase{
-	id: number
-	userId: number
-	productId: number
-	product: Product
+export interface Purchase {
+	id: number;
+	userId: number;
+	productId: number;
+	product: Product;
 }
 
 export interface BuyProduct {
-	id: number
-    name: string,
-    price: number,
-    image: string,
-    quantity: number
+	id: number;
+	name: string;
+	price: number;
+	image: string;
+	quantity: number;
 }
 
-export interface Stock{
-	id: number
-	unities: number
+export interface Stock {
+	id: number;
+	unities: number;
 }

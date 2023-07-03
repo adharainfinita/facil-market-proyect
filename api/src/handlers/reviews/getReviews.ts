@@ -12,19 +12,16 @@ const getAllReviews = async (req: Request, res: Response) => {
 	}
 };
 
-
 const getAllReviewsProduct = async (req: Request, res: Response) => {
 	try {
-	  const productId = req.params.id; // Obtén el ID del producto de los parámetros de la solicitud
-  
-	  const reviews = await findAllReviewsByProductId(Number(productId));
-  
-	  return res.status(200).json(reviews);
+		const productId = req.params.id; // Obtén el ID del producto de los parámetros de la solicitud
+
+		const reviews = await findAllReviewsByProductId(Number(productId));
+
+		return res.status(200).json(reviews);
 	} catch (error: any) {
-	  return res.status(500).json({ error: error.message });
+		return res.status(500).json({ error: error.message });
 	}
-  };
+};
 
-
-
-export { getAllReviews, getAllReviewsProduct};
+export { getAllReviews, getAllReviewsProduct };

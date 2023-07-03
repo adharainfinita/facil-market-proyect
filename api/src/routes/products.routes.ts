@@ -23,5 +23,5 @@ product.put("/:id", putProduct);
 product.put("/:id/stock", updateProductStock);
 
 //! routes Delete
-product.put("/delete/:id", deleteProduct)
+product.put("/delete/:id", deleteProduct);
 export default product;

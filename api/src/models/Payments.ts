@@ -1,5 +1,5 @@
 import { Table, Column, Model, DataType } from "sequelize-typescript";
-import moment from 'moment';
+import moment from "moment";
 import { resumeProps } from "../interfaces/propsModel";
 
 @Table({ tableName: "payments" })
@@ -68,20 +68,22 @@ class Payments extends Model {
 
 	@Column({
 		type: DataType.JSON,
-		allowNull:false,
+		allowNull: false,
 	})
 	resume!: resumeProps;
 
 	@Column({
-    type: DataType.DATE,
-    defaultValue: DataType.NOW,
-    field: 'createdAt',
-    get() {
-      // Formatear la fecha utilizando Moment.js
-      return moment(this.getDataValue('createdAt')).format('DD-MM-YYYY HH:mm:ss');
-    },
-  })
-  createdAt!: Date;
+		type: DataType.DATE,
+		defaultValue: DataType.NOW,
+		field: "createdAt",
+		get() {
+			// Formatear la fecha utilizando Moment.js
+			return moment(this.getDataValue("createdAt")).format(
+				"DD-MM-YYYY HH:mm:ss"
+			);
+		},
+	})
+	createdAt!: Date;
 }
 
 export default Payments;

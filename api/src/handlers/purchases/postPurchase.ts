@@ -6,7 +6,7 @@ const postPurchase = async (req: Request, res: Response) => {
 	try {
 		const { userId, productId, paymentId } = req.body;
 
-        const data: purchases = {userId, productId, paymentId}
+		const data: purchases = { userId, productId, paymentId };
 		const newPurchase = await createPurchase(data);
 
 		return res

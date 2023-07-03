@@ -3,7 +3,6 @@ const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 // Pages
 import Login from "./pages/Login";
 import Terms from "./pages/Terms";
@@ -91,34 +90,30 @@ const App = () => {
 			}
 		};
 
-    fetchUserData();
-  }, [dispatch, id]);
+		fetchUserData();
+	}, [dispatch, userId]);
 
-  useEffect(() => {
-    if (session) {
-      axios
-        .get(`${URL_HOST}/auth/token`, { headers })
-        .then((response) => {
-          const data = {
-            id: response.data.user.id,
-            fullName: response.data.user.fullName,
-            email: response.data.user.email,
-            image: response.data.user.image,
-            admin: true,
-          };
-        const fetchCart = async () => {
-          const result = await getAllItems(Number(id));
-          dispatch(startCart(result));
-          dispatch(userLogin(data));
-        }
-        fetchCart()
-        })
-        .catch((error) => {
-          //? mejorar este error
-          console.log(error);
-        });
-    }
-  }, [dispatch, session]);
+	useEffect(() => {
+		if (session) {
+			axios
+				.get(`${URL_HOST}/auth/token`, { headers })
+				.then((response) => {
+					const data = {
+						id: response.data.user.id,
+						fullName: response.data.user.fullName,
+						email: response.data.user.email,
+						image: response.data.user.image,
+						admin: true,
+					};
+
+					dispatch(userLogin(data));
+				})
+				.catch((error) => {
+					//? mejorar este error
+					console.log(error);
+				});
+		}
+	}, [dispatch, session]);
 
 	useEffect(() => {
 		const fetchUsers = async () => {

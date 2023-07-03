@@ -23,7 +23,6 @@ const RegisterForm = () => {
 		(state: RootState) => state.user.userLogin.user.image
 	);
 
-
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
 		password: "",
@@ -109,7 +108,7 @@ const RegisterForm = () => {
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
 			<div className="google-login">
-				<GoogleRegister/>
+				<GoogleRegister />
 			</div>
 			<hr />
 			<form onSubmit={handleSubmit}>

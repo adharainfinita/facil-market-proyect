@@ -7,7 +7,9 @@ export const purchaseCreate = [
 
 	check("userId").isInt().withMessage("El UserId debe ser números y enteros."),
 
-	check("paymentId").isInt().withMessage("El paymentId debe ser números y enteros."),
+	check("paymentId")
+		.isInt()
+		.withMessage("El paymentId debe ser números y enteros."),
 
 	check("productId")
 		.isInt()

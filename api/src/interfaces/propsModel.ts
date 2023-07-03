@@ -15,11 +15,6 @@ export interface ProductProps {
 	status?: string;
 }
 
-export interface PaymentProductsProps{
-	products: Array <BuyProduct>
-}
-
-
 export interface reviewProps {
 	id: number;
 	fullName: string;
@@ -52,7 +47,7 @@ export interface resumeProps {
 }
 export interface additional_info {
 	ip_address: string;
-	items: Array<items>,
+	items: Array<items>;
 	payer: string;
 }
 
@@ -66,20 +61,24 @@ export interface items {
 
 export interface cartProductProps {
 	id: number;
-  userID: number;
-  productID: Array<BuyProduct>
+	userID: number;
+	productID: Array<BuyProduct>;
 }
 export interface purchases {
-	userId?: number
-	productId?: number
-	paymentId: number
+	userId?: number;
+	productId?: number;
+	paymentId: number;
 }
 
 export interface BuyProduct {
-	id: number
-    name: string,
-    price: number,
-		categoryID?: number;
-    image: string,
-    quantity: number
+	id: number;
+	name: string;
+	price: number;
+	categoryID?: number;
+	image: string;
+	quantity: number;
+}
+
+export interface PaymentProductsProps {
+	products: Array<BuyProduct>;
 }

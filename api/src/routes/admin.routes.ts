@@ -4,8 +4,7 @@ const admin = Router();
 import getBasicData from "../handlers/admin/getBasicData";
 import getData from "../handlers/admin/getData";
 
-
-admin.get('/', getBasicData);
-admin.get('/analytics', getData);
+admin.get("/", getBasicData);
+admin.get("/analytics", getData);
 
 export default admin;

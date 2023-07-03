@@ -12,7 +12,6 @@ const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
 
 export const createOrder = async (products: Array<BuyProduct>) => {
-	console.log(products);
 	
 	//Necesito que además del producto, me envíen el id del usuario logueado que está
 	// ejecutando la compra
@@ -22,9 +21,9 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 	});
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
+	
 	const result = await mercadopago.preferences.create({
-
-/* 		items: [
+		/* 		items: [
 			{
 				id: String(product.id),
 				title: product.name,
@@ -54,8 +53,8 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 			name: "adharanosalevich@gmail.com",
 			email: "adharanosalevich@gmail.com",
 			phone: {
-				area_code: "11",
-				number: 22223333,
+				area_code: "54",
+				number: 3644123456,
 			},
 			identification: {
 				type: "DNI",
@@ -77,6 +76,8 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
+	console.log(result);
+	
 
 	return result;
 };
@@ -88,7 +89,6 @@ export const createNotification = async (id: number) => {
 
 export const createNewPayment = async (data: any) => {
 	const amount = data.transaction_details.net_received_amount;
-
 
 	//! En modo de prueba, parece que al no especificar la info del payer,
 	//! mercadopago pone uno que no es ninguno de los que usamos xD, asi que este
@@ -105,7 +105,6 @@ export const createNewPayment = async (data: any) => {
 		},
 	});
 	console.log(sellerFound);
-	
 
 	const currentDate = new Date();
 	const currentDay = currentDate.getDate();
@@ -150,7 +149,7 @@ export const sendPurchaseNotification = async (receipt: paymentProps) => {
 		<h1 style="color: #333333;">¡Hola, ${email?.fullName}!</h1>
 		<p style="color: #333333;">¡Aquí tienes un resumen de tu compra! 😎</p>
 		<p style="color: #333333;">Productos comprados: ${items.map(
-			(match) => `<p>${match.title} ${ match.unit_price}</p>`
+			(match) => `<p>${match.title} ${match.unit_price}</p>`
 		)}.</p>
 		<p style="color: #333333;">Contactate con ${
 			items.length > 1 ? "los vendedores" : "el vendedor"
@@ -159,7 +158,9 @@ export const sendPurchaseNotification = async (receipt: paymentProps) => {
 			items.length > 1 ? "los productos" : "el producto"
 		}. Recuerda tener en cuenta tu seguridad.</p>
 		<p style="color: #333333;">Te proporcionamos la información de contacto:</p>
-		<p style="color: #333333;">${sellers.map((match) => `<p>${match?.fullName} ${match?.email}</p>`)}</p>
+		<p style="color: #333333;">${sellers.map(
+			(match) => `<p>${match?.fullName} ${match?.email}</p>`
+		)}</p>
 		<p style="color: #333333;"> No dudes en consultarnos ante cualquier duda o problema♥.<p/>
 		<p style="color: #333333;">Visualiza tus compras en: <a href="${urlPurchase}"</a></p>
 		<p style="color: #333333;">Volver a la app: <a href="${URL_HOST}"</a></p>

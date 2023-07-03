@@ -39,6 +39,4 @@ class User extends Model {
 	purchases!: Purchase[];
 }
 
-
-
 export default User;

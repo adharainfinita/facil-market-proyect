@@ -6,37 +6,34 @@ import Category from "../models/Category";
 import Review from "../models/Review";
 
 export const createDataAnalitycs = async () => {
-
-
-	 const productsInfo = (await Product.findAll()).map((product) => {
+	const productsInfo = (await Product.findAll()).map((product) => {
 		return {
 			id: product.id,
 			createdAt: formatTime(String(product.createdAt)),
 			category: product.categoryID,
-			rating: product.rating
-		}
-		
+			rating: product.rating,
+		};
 	});
 
 	const allUsers = await Promise.all(
-		(await User.findAll()).map(async (user) => {
-		return {
-			id: user.id,
-			createdAt: formatTime(String(user.createdAt)),
-			LevelOfActivity: await getLevelOfActivity(user.id)
-		};
-	})
+		(
+			await User.findAll()
+		).map(async (user) => {
+			return {
+				id: user.id,
+				createdAt: formatTime(String(user.createdAt)),
+				LevelOfActivity: await getLevelOfActivity(user.id),
+			};
+		})
 	);
 
 	const newStateData = {
 		productsInfo,
-		allUsers
-		};
-
-		return newStateData;
+		allUsers,
 	};
 
-
+	return newStateData;
+};
 
 export const createResumeData = async () => {
 	const countProduct = await Product.count();
@@ -77,34 +74,35 @@ export const getProductsByCategories = async (
 	return getProductsByCategories(count + 1, updateMatches);
 };
 
-export const getLevelOfActivity=  async(user: number) =>{
-		
+export const getLevelOfActivity = async (user: number) => {
 	const reviewsFound = await Review.findAll({
-			where: {
-				userID: user
-			}
-		});
-	
+		where: {
+			userID: user,
+		},
+	});
+
 	const publicationsFound = await Product.findAll({
-		where:{
-			userID: user
-		}
-	})
+		where: {
+			userID: user,
+		},
+	});
 
 	const salesFound = await Payments.findAll({
-		where:{
-			sellerID: user
-		}
-	})
+		where: {
+			sellerID: user,
+		},
+	});
 
 	const paymentsFound = await Payments.findAll({
 		where: {
-			buyerID: user
-		}
-	})
+			buyerID: user,
+		},
+	});
 
-	return reviewsFound.length 
-	+ publicationsFound.length 
-	+ salesFound.length 
-	+ paymentsFound.length
-}
+	return (
+		reviewsFound.length +
+		publicationsFound.length +
+		salesFound.length +
+		paymentsFound.length
+	);
+};
