@@ -7,7 +7,7 @@ import {
   BelongsTo,
 } from "sequelize-typescript";
 import User from "./User";
-import moment from 'moment'
+import moment from "moment";
 
 @Table({ tableName: "cart" })
 class Cart extends Model {
@@ -24,30 +24,29 @@ class Cart extends Model {
     allowNull: false,
   })
   userID!: number;
-  
+
   @BelongsTo(() => User)
   user!: User;
-  
- // Agregar clave foránea de Product
+
+  // Agregar clave foránea de Product
   @Column({
     type: DataType.ARRAY(DataType.INTEGER),
     allowNull: true,
   })
   productID?: Array<number>;
 
-
   @Column({
     type: DataType.DATE,
     defaultValue: DataType.NOW,
-    field: 'createdAt',
+    field: "createdAt",
     get() {
       // Formatear la fecha utilizando Moment.js
-      return moment(this.getDataValue('createdAt')).format('DD-MM-YYYY HH:mm:ss');
+      return moment(this.getDataValue("createdAt")).format(
+        "DD-MM-YYYY HH:mm:ss"
+      );
     },
   })
   createdAt!: Date;
 }
-
-
 
 export default Cart;
