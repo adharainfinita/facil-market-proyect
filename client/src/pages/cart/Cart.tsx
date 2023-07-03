@@ -15,11 +15,11 @@ const Cart = () => {
 	const cartItems = useSelector(
 		(state: RootState) => state.cart.cartItems.products
 	);
-	const products = useSelector((state: RootState) => state.product.products);
-	const [productsCart, setProductsCart] = useState<Product[]>([]);
-	const [quantities, setQuantitiees] = useState<number[]>([])
 
-	console.log(productsCart);
+	console.log(cartItems);
+
+	const products = useSelector((state: RootState) => state.product.products);
+	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
 
 	//? logica de compra
 	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
@@ -37,7 +37,6 @@ const Cart = () => {
 	useEffect(() => {
 		const getProductsCart = () => {
 			const tempProductsCart: Product[] = []; // Array temporal para almacenar los productos
-			const tempQuantiries = [];
 
 			for (const cartItem of cartItems) {
 				const productFound = products.find(
@@ -45,12 +44,10 @@ const Cart = () => {
 				);
 				if (productFound) {
 					tempProductsCart.push(productFound);
-					tempQuantiries.push(cartItem.quantity)
 				}
 			}
 
-			setProductsCart(tempProductsCart);
-			setQuantitiees(tempQuantiries);
+			setProductsCart(cartItems);
 		};
 
 		getProductsCart();
@@ -74,26 +71,27 @@ const Cart = () => {
 	// }, [cartItems, products]);
 
 	return (
-		<div>
+		<div className="cart-conteiner">
 			{cartItems.length === 0 ? (
 				<CartEmpty />
 			) : (
-				<>
-					<h1 className="cart-title">Carrito de compras</h1>
-					<button onClick={handleClearCart}>Limpiar carrito</button>
-					<div className="cards-container">
-						{productsCart.map((item: Product, index: number) => (
-							<CartItem key={index} item={item} quantities={quantities[index]} index={index} />
-						))}
-					</div>
+				<div className="cart-conteiner">
+					<section className="cart-section">
+						<h1 className="cart-title">Carrito de compras</h1>
+						<button onClick={handleClearCart}>Limpiar carrito</button>
+					</section>
 
-					<div className="cartTotal-container">
+					{cartItems.map((item: BuyProduct, index: number) => (
+						<CartItem key={index} item={item} index={index} />
+					))}
+
+					<section className="cart-section">
 						<h2 className="cart__total">
 							{`Precio Final: ${handleTotalPrice(cartItems)}`}
 						</h2>
-					</div>
-					<PaymentButton {...cartItems} />
-				</>
+						<PaymentButton {...cartItems} />
+					</section>
+				</div>
 			)}
 		</div>
 	);

@@ -157,7 +157,7 @@ const DetailProduct = () => {
 							<h1 className="detail-product-name">{product.name}</h1>
 							<h1 className="detail-product-price">
 								$
-								{(product.price).toLocaleString("es-AR", {
+								{product.price.toLocaleString("es-AR", {
 									minimumFractionDigits: 0,
 								})}
 							</h1>
