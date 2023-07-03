@@ -102,7 +102,7 @@ const Resume = () => {
 							<h4 key={index}>
 								{match[0]}: {match[1]}
 							</h4>
-						)
+						);
 					})}
 				</div>
 			</section>

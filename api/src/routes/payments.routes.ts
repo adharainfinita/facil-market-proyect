@@ -1,3 +1,4 @@
+import getPayments from "../handlers/payments/getPayments";
 import postOrder from "../handlers/payments/postOrder";
 import receivedWebhook from "../handlers/payments/webhook";
 
@@ -12,14 +13,8 @@ paymentRouter.post("/webhook", receivedWebhook);
 paymentRouter.get("/success", (req, res) => res.send("success"));
 paymentRouter.get("/failure", (req, res) => res.send("failure"));
 paymentRouter.get("/pending", (req, res) => res.send("pending"));
+paymentRouter.get("/resumes", getPayments);
 
 //! routes Update
-
-//! routes Delete
-paymentRouter.post("/payment", postOrder);
-paymentRouter.post("/payment/webhook", receivedWebhook);
-paymentRouter.get("/payment/success", (req, res) => res.send("success"));
-paymentRouter.get("/payment/failure", (req, res) => res.send("failure"));
-paymentRouter.get("/payment/pending", (req, res) => res.send("pending"));
 
 export default paymentRouter;

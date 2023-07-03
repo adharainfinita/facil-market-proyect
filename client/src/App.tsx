@@ -46,6 +46,8 @@ import UserProducts from "./components/UserProducts";
 import ProductEdit from "./components/ProductEdit";
 import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
+import Cart from "./pages/cart/Cart";
+import ShoppingHistory from "./components/Shoppinghistory";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -95,6 +97,7 @@ const App = () => {
 						fullName: response.data.user.fullName,
 						email: response.data.user.email,
 						image: response.data.user.image,
+						admin: true,
 					};
 
 					dispatch(userLogin(data));
@@ -163,6 +166,8 @@ const App = () => {
 					<Route path="/verification" element={<VerificationPage />} />
 					<Route path="/user/:id" element={<EditUser />} />
 					<Route path="/product/edit/:id" element={<ProductEdit />} />
+					<Route path="/cart" element={<Cart />} />
+					<Route path="/compras" element={<ShoppingHistory />} />
 
 					<Route path="/admin" element={<Dashboard />}>
 						<Route path="/admin/summary" element={<Resume />} />

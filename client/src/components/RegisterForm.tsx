@@ -108,7 +108,7 @@ const RegisterForm = () => {
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
 			<div className="google-login">
-				<GoogleRegister/>
+				<GoogleRegister />
 			</div>
 			<hr />
 			<form onSubmit={handleSubmit}>

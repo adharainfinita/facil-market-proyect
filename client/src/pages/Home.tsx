@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../redux/features/productSlice";
 import { getAllProducts } from "../services/productServices";
-import banner1 from '../assets/1.jpg'
-import banner2 from '../assets/2.jpg'
-import banner3 from '../assets/3.png'
+import banner1 from "../assets/1.jpg";
+import banner2 from "../assets/2.jpg";
+import banner3 from "../assets/3.png";
 
 /*Components*/
 import ProductCard from "../components/ProductCard";
@@ -19,13 +19,11 @@ function Home() {
 		(state: RootState) => state.product.originalCopy
 	);
 
-	const productsAuth = products.filter((product:any) => product.active === true)
+	const productsAuth = products.filter(
+		(product: any) => product.active === true
+	);
 
-	const images = [
-		banner1,
-		banner2,
-		banner3
-	];
+	const images = [banner1, banner2, banner3];
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -58,7 +56,7 @@ function Home() {
 	return (
 		<>
 			{/* <Banner /> */}
-			<Slider images={images}/>
+			<Slider images={images} />
 			<h3 className="trend-title">Categorias destacadas</h3>
 			<FeaturedCategory />
 			<h3 className="trend-title">Más vendidos</h3>

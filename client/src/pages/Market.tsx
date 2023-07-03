@@ -6,7 +6,7 @@ import Filters from "../components/Filters";
 function Market() {
 	const products = useSelector((state: RootState) => state.product.products);
 
-	const productsAuth = products.filter((product) => product.active === true)
+	const productsAuth = products.filter((product) => product.active === true);
 	return (
 		<>
 			<Filters />
