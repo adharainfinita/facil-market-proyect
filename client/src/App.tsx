@@ -109,6 +109,8 @@ const App = () => {
 						await createCart(data.id, []);
 						const results = await getAllItems(data.id);
 
+						console.log(results);
+
 						dispatch(startCart(results));
 						return results;
 					};

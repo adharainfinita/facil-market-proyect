@@ -24,6 +24,7 @@ export const createCart = async (userId: number, products: number[]) => {
 export const updateItem = async (userId: number, products: Array<number>) => {
 	try {
 		const res = await axios.put(`${URL_HOST}/cart/${userId}`, products);
+		console.log(res.data);
 		return res.data;
 	} catch (error) {
 		throw new Error("Error al actualizar el carrito de compras");
