@@ -74,6 +74,7 @@ export interface BuyProduct {
 	id: number
     name: string,
     price: number,
+		categoryID?: number;
     image: string,
     quantity: number
 }
