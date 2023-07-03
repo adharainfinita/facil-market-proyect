@@ -3,30 +3,43 @@ const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// Pages
+
+//? Pages
 import Login from "./pages/Login";
 import Terms from "./pages/Terms";
 import VerificationPage from "./pages/VerificationPage";
 import Home from "./pages/Home";
+import Cart from "./pages/cart/Cart";
+import Market from "./pages/Market";
+import ProductReviews from "./pages/ProductsReviews";
+
 // import UserProducts from "./pages/UserProducts";
-// Dashboard Admin
+//? Dashboard Admin
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
+import EditUser from "./pages/admin/EditUser";
+import Products from "./pages/admin/Products";
+import Resume from "./pages/admin/Resume";
 
-// Components
+//? Components
 import Navbar from "./components/Navbar";
 import FormCreateProduct from "./components/FormCreateProduct";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
-// redux/services
+import RegisterForm from "./components/RegisterForm";
+import DetailProduct from "./components/DetailProduct";
+import UserProfile from "./components/UserProfile";
+import UserProducts from "./components/UserProducts";
+import ProductEdit from "./components/ProductEdit";
+import NotFound from "./errors/NotFound";
+import About from "./components/About/About";
+import ShoppingHistory from "./components/Shoppinghistory";
+import UserProfiles from "./components/UsersProfiles";
+
+//? redux/services
 import { RootState } from "./redux/store";
 import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
-import RegisterForm from "./components/RegisterForm";
-import DetailProduct from "./components/DetailProduct";
-import Market from "./pages/Market";
-import UserProfiles from "./components/UsersProfiles";
-import ProductReviews from "./pages/ProductsReviews";
 import {
 	changePassword,
 	getUsers,
@@ -38,16 +51,7 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import UserProfile from "./components/UserProfile";
-import EditUser from "./pages/admin/EditUser";
-import Products from "./pages/admin/Products";
-import Resume from "./pages/admin/Resume";
-import UserProducts from "./components/UserProducts";
-import ProductEdit from "./components/ProductEdit";
-import NotFound from "./errors/NotFound";
-import About from "./components/About/About";
-import Cart from "./pages/cart/Cart";
-import ShoppingHistory from "./components/Shoppinghistory";
+import { getAllItems } from "./services/cartServicer";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -99,6 +103,17 @@ const App = () => {
 						image: response.data.user.image,
 						admin: true,
 					};
+
+					const results = getAllItems(data.id);
+					console.log(results);
+
+					/* const producItem: BuyProduct = {
+						id: results.id,
+						name: results.name,
+						price: results.price,
+						image: results.images[0],
+						quantity: results,
+					}; */
 
 					dispatch(userLogin(data));
 				})

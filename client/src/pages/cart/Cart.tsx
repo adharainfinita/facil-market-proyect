@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
+import { addItem } from "../../services/cartServicer";
 
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
@@ -16,7 +17,9 @@ const Cart = () => {
 		(state: RootState) => state.cart.cartItems.products
 	);
 
-	console.log(cartItems);
+	const userID = useSelector(
+		(state: RootState) => state.user.userLogin.user.id
+	);
 
 	const products = useSelector((state: RootState) => state.product.products);
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
@@ -52,6 +55,22 @@ const Cart = () => {
 
 		getProductsCart();
 	}, [cartItems, products]);
+
+	useEffect(() => {
+		const arrayId = cartItems.map((item) => item.id);
+		
+		const fetchData = async () => {
+			try {
+				const response = await addItem(Number(userID), arrayId);
+				return response;
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	// useEffect(() => {
 	// 	// Cargar productos al backend cuando se accede a la página
 
