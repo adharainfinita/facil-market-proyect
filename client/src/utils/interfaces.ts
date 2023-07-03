@@ -13,6 +13,12 @@ export interface BasicData {
   ProductsOnAccesories: object
 }
 
+export interface Cart {
+	id: number;
+	userID: number;
+	products: Array<number>
+}
+
 export interface AnalyticsData {
   productsInfo: Array<ContentProductData>;
   allUsers: Array<ContentUserData>;
@@ -80,6 +86,11 @@ export interface Product {
 	userName: string;
 	active: boolean;
 	cartQuantity?: number
+}
+
+//?probando
+export interface PaymentProduct {
+	products: Array<Product>
 }
 
 export interface Category {

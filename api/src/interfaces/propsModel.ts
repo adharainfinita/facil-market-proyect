@@ -1,4 +1,4 @@
-export interface productProps {
+export interface ProductProps {
 	id: number;
 	name: string;
 	description?: string;
@@ -14,6 +14,11 @@ export interface productProps {
 	userName?: string;
 	status?: string;
 }
+
+export interface PaymentProductsProps{
+	products: Array <BuyProduct>
+}
+
 
 export interface reviewProps {
 	id: number;
@@ -62,7 +67,7 @@ export interface items {
 export interface cartProductProps {
 	id: number;
   userID: number;
-  productID: Array<object>
+  productID: Array<BuyProduct>
 }
 export interface purchases {
 	userId?: number

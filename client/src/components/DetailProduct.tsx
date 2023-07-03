@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
+import { Product } from "../utils/interfaces";
 import useProduct from "../hooks/useProduct";
-import PaymentButton from "./PaymentButton";
+import { updateItem } from "../services/cartServicer";
 import { useSelector, useDispatch } from "react-redux";
-
 import Reviews from "./Review";
 import { BuyProduct, NotificationType } from "../utils/interfaces";
-import { RootState } from "../redux/store";
 
 import { postUserPurchase } from "../services/purchaseServices";
 //import { updateUnities } from "../redux/features/productSlice";
 //import { updateStock } from "../services/productServices";
+import { addToCart } from "../redux/features/cartSlice";
+
 
 const DetailProduct = () => {
   const product = useProduct();
@@ -22,6 +21,9 @@ const DetailProduct = () => {
 
   const [isReadyToPost, setIsReadyToPost] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const userLoginId = useSelector(
+    (state: RootState) => state.user.userLogin.user.id
+  );
   const [error, setError] = useState<string>('');
   const [stock, setStock] = useState<number>(1);
 
@@ -32,6 +34,12 @@ const DetailProduct = () => {
     content: "",
   });
 
+  const dispatch = useDispatch();
+
+  const handleAddToCart = async(userID:number ,product: Product) => {
+    dispatch(addToCart(product.id));
+    await updateItem(userID, product)
+  };
 
   useEffect(() => {
     if (product?.images.length > 0 && !selectedImage) {
@@ -43,6 +51,9 @@ const DetailProduct = () => {
     setSelectedImage(image);
   };
 
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const status = urlParams.get("status");
   const handleStockChange = (action: string) => {
     if(action === 'increment'){
       setStock(stock + 1)
@@ -63,6 +74,22 @@ const DetailProduct = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get("status");
 
+  //   if (status === "approved") {
+  //     setNotification({
+  //       content: "Pago aprobado😎",
+  //       isOpen: true,
+  //       type: "approved",
+  //     });
+  //   }
+
+  //   if (status === "failure") {
+  //     setNotification({
+  //       content: "Pago rechazado😢",
+  //       isOpen: true,
+  //       type: "failure",
+  //     });
+  //   }
+  // }, []);
     if (status === "approved" && currentUser && product.id !== 0) {
       setIsReadyToPost(true);
     }
@@ -162,7 +189,6 @@ const DetailProduct = () => {
         </div>
         </div>
         
-
         <div className="detail-product-sales">
           <h2>Informacion sobre el vendedor</h2>
           <section className="detail-product-section">
@@ -181,29 +207,14 @@ const DetailProduct = () => {
 						<h3>{product.status}</h3>
 					</section>
 
-					<section className="detail-product-section">
-						<h2>Stock:</h2>
-						<h3>{product.stock}</h3>
-					</section>
-
           <section className="detail-product-section">
-						<h2>Unidades Disponibles:</h2>
-						<h3>{product.unities}</h3>
-					</section>
-
-          <section className="detail-product-section">
-            <button disabled={stock === 1 ? true : false}
-            onClick={() => handleStockChange('decrement')}
-            > - </button>
-            <h3>{stock}</h3>
-            <button disabled={stock === product.unities ? true : false}
-            onClick={() => handleStockChange('increment')}
-            > + </button>
-					</section>
-
-					<div className=".detail-product-button">
-						<PaymentButton product={data} />
-					</div>
+            <h2>Stock:</h2>
+            <h3>{product.stock}</h3>
+          </section>
+          <div className=".detail-product-button">
+            {/* <PaymentButton product={product} /> */}
+            <button onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
+          </div>
 
           {notification.isOpen && <div>{notification.content}</div>}
           <p>{error}</p>

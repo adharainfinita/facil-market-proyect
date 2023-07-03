@@ -1,4 +1,4 @@
-import { paymentProps, BuyProduct } from "../interfaces/propsModel";
+import { paymentProps, PaymentProductsProps} from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import Payments from "../models/Payments";
@@ -9,14 +9,20 @@ import { transporter } from "../config/mailer";
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
-export const createOrder = async (product: BuyProduct) => {
+
+export const createOrder = async ({products}: PaymentProductsProps) => {
+	//Necesito que además del producto, me envíen el id del usuario logueado que está
+	// ejecutando la compra
+	// lo busco en  la db y lleno los campos de payer
 	mercadopago.configure({
 		access_token: TOKEN!,
 	});
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
+	
 	const result = await mercadopago.preferences.create({
-		items: [
+
+/* 		items: [
 			{
 				id: String(product.id),
 				title: product.name,
@@ -27,6 +33,21 @@ export const createOrder = async (product: BuyProduct) => {
 				quantity: product.quantity,
 			},
 		],
+ */
+
+		items: products.map((product: any) => {
+			return 	{
+			id: String(product.id),
+			title: product.name,
+			unit_price: product.price,
+			category_id: String(product.categoryID),
+			currency_id: "ARS",
+			picture_url: product.image,
+			quantity: product.unities,
+			}
+		})
+		
+		,
 		payer: {
 			name: "adharanosalevich@gmail.com",
 			email: "adharanosalevich@gmail.com",
@@ -48,9 +69,9 @@ export const createOrder = async (product: BuyProduct) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `${URL_HOST}detail/${product.id}`,
-			failure: `${URL_HOST}detail/${product.id}`,
-			pending: `${URL_HOST}detail/${product.id}`,
+			success: `${URL_HOST}/products`,
+			failure: `${URL_HOST}/products`,
+			pending: `${URL_HOST}/products`,
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});

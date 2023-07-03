@@ -2,6 +2,7 @@ import { cartProductProps } from "../interfaces/propsModel";
 import Cart from "../models/Cart";
 import Product from "../models/Product";
 
+
 export const createCart = async (userID: number, products: Array<number>) => {
   const response = await Cart.create({
     userID: userID,
@@ -28,9 +29,17 @@ export const getCartById = async (userID: number) => {
   };
 
   while (myCart?.productID!.length !== count) {
-    const productFound = await Product.findByPk(myCart?.productID![count]);
+    const productFound= await Product.findByPk(myCart?.productID![count]);
     if (productFound) {
-      productsCart.productID.push(productFound);
+
+      productsCart.productID.push({
+        id: productFound.id,
+        name: productFound.name,
+        price: productFound.price,
+        categoryID: productFound.categoryID,
+        image: productFound.images[0],
+        quantity: 0
+      });
       count++;
     } else
       throw Error(`No existe producto con ID: ${myCart?.productID![count]}`);
@@ -39,10 +48,10 @@ export const getCartById = async (userID: number) => {
   return productsCart;
 };
 
-export const changeItemsCart = async (id: number, cart: cartProductProps) => {
+export const changeItemsCart = async (id: number, products: Array<number>) => {
   const myCart = await Cart.findByPk(id);
 
-  myCart?.update(cart);
+  myCart?.update(products);
 
   return myCart;
 };

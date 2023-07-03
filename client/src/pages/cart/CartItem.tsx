@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Product } from "../../utils/interfaces";
-import { removeFromCart } from "../../redux/features/cartSlice";
+// import { removeFromCart } from "../../redux/features/cartSlice";
 
 interface CartItemProps {
   item: Product
@@ -11,7 +11,7 @@ const CartItem = ({item, index}: CartItemProps) => {
   const dispatch = useDispatch()
 
   const handleRemoveFromCart = (product: Product) => {
-    dispatch(removeFromCart(product));
+    // dispatch(removeFromCart(product));
   };
 
   return (

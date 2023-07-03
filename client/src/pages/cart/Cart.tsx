@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
-import { updateItem } from "../../services/cartServicer";
 
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
@@ -11,35 +10,60 @@ import CartItem from "./CartItem";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const userLoginId = useSelector((state: RootState) => state.user.userLogin.user.id);
-  const cartItems = useSelector((state: RootState) => state.cart.cartItems.products);
+ 
+  const cartItems = useSelector(
+    (state: RootState) => state.cart.cartItems.products
+  );
+  const products = useSelector((state: RootState) => state.product.products);
+
   const cartPrice = useSelector((state: RootState) => state.cart.totalPrice);
+  const [productsCart, setProductsCart] = useState<Product[]>([]);
 
+  // const updateCartItems = async (userId: number, products: Array<number>) => {
+  //   try {
+  //     await updateCartItems(userId, products);
+  //     console.log("Carrito de compras actualizado exitosamente");
+  //   } catch (error) {
+  //     console.error(
+  //       "Ocurrió un error al actualizar el carrito de compras:",
+  //       error
+  //     );
+  //   }
+  // };
 
-  const updateCartItems = async (userId: number, products: any[]) => {
-    try {
-      await updateCartItems(userId, products);
-      console.log('Carrito de compras actualizado exitosamente');
-    } catch (error) {
-      console.error('Ocurrió un error al actualizar el carrito de compras:', error);
-    }
+  //? logica de compra
+  const handleTotalPrice = (cartItems: any[]) => {
+    const totalPrice = cartItems.reduce(
+      (total, item) => total + item.price * item.cartQuantity,
+      0
+    );
+
+    return totalPrice;
   };
-  
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
 
   useEffect(() => {
     // Cargar productos al backend cuando se accede a la página
-    const userId = userLoginId;
-    const products = cartItems.map(item => ({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      images: item.images
-    }));
 
-    updateCartItems(Number(userId), products);
-  }, [cartItems]);
-
-
+    const getProductsCart = () => {
+      let count = 0;
+      while (cartItems.length !== count) {
+        const productFound = products.find(
+          (match) => match.id === cartItems[count]
+        );
+        if(productFound){
+          setProductsCart(
+          [...productsCart, productFound]
+        );
+        count++;
+        }
+      }
+    };
+    getProductsCart();
+  }, [cartItems, products, productsCart]);
 
   return (
     <div>
@@ -50,7 +74,7 @@ const Cart = () => {
           <h1 className="cart-title">Carrito de compras</h1>
           <button onClick={handleClearCart}>Limpiar carrito</button>
           <div className="cards-container">
-            {cartItems.map((item: Product, index: number) => (
+            {productsCart.map((item: Product, index: number) => (
               <CartItem key={index} item={item} index={index} />
             ))}
           </div>
@@ -63,7 +87,7 @@ const Cart = () => {
               })}
             </h2>
           </div>
-          <PaymentButton product={cartItems[0]} />
+          <PaymentButton product={productsCart} />
         </>
       )}
     </div>
