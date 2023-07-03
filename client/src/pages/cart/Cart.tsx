@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
-import { addItem } from "../../services/cartServicer";
+import { updateItem } from "../../services/cartServicer";
 
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
@@ -14,8 +14,12 @@ const Cart = () => {
 	const dispatch = useDispatch();
 
 	const cartItems = useSelector(
-		(state: RootState) => state.cart.cartItems.products
+		(state: RootState) => state.cart.cartItems.productID
 	);
+
+	const asd = useSelector((state: RootState) => state.cart.cartItems);
+
+	console.log(asd);
 
 	const userID = useSelector(
 		(state: RootState) => state.user.userLogin.user.id
@@ -26,7 +30,7 @@ const Cart = () => {
 
 	//? logica de compra
 	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
-		const totalPrice = cartItems.reduce(
+		const totalPrice = cartItems?.reduce(
 			(total, item) => total + item.price * item.quantity,
 			0
 		);
@@ -58,10 +62,11 @@ const Cart = () => {
 
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => item.id);
-		
+		console.log(arrayId);
+
 		const fetchData = async () => {
 			try {
-				const response = await addItem(Number(userID), arrayId);
+				const response = await updateItem(Number(userID), arrayId);
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -69,7 +74,7 @@ const Cart = () => {
 		};
 
 		fetchData();
-	}, []);
+	}, [cartItems]);
 
 	// useEffect(() => {
 	// 	// Cargar productos al backend cuando se accede a la página
@@ -91,7 +96,7 @@ const Cart = () => {
 
 	return (
 		<div className="cart-conteiner">
-			{cartItems.length === 0 ? (
+			{cartItems?.length === 0 ? (
 				<CartEmpty />
 			) : (
 				<div className="cart-conteiner">
@@ -100,7 +105,7 @@ const Cart = () => {
 						<button onClick={handleClearCart}>Limpiar carrito</button>
 					</section>
 
-					{cartItems.map((item: BuyProduct, index: number) => (
+					{cartItems?.map((item: BuyProduct, index: number) => (
 						<CartItem key={index} item={item} index={index} />
 					))}
 

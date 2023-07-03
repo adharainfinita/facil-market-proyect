@@ -4,12 +4,18 @@ import Product from "../models/Product";
 
 export const createCart = async (userID: number, products: Array<number>) => {
 	console.log(`userID: ${userID} --- product: ${products}`);
-	const response = await Cart.findOrCreate({
+
+	const cartFound = await Cart.findOne({
 		where: { userID: userID },
-		defaults: {
-			userID: userID,
-			productID: products,
-		},
+	});
+
+	if (cartFound?.dataValues.id) {
+		return "ya existe el carrito";
+	}
+
+	const response = await Cart.create({
+		userID: userID,
+		productID: products,
 	});
 
 	return response;

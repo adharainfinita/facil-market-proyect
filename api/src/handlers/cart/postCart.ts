@@ -5,7 +5,9 @@ export const addItem = async (req: Request, res: Response) => {
 	try {
 		// Obtener los datos de la solicitud
 		const { userID } = req.params;
-		const products: Array<number> = req.body;
+		const products = req.body.productID;
+
+		//const parseProducts: Array<number> = Object.values(products)[0];
 
 		// Crear el carrito de compras
 		const response = await createCart(Number(userID), products);

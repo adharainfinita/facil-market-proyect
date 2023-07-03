@@ -51,7 +51,8 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import { getAllItems } from "./services/cartServicer";
+import { createCart, getAllItems } from "./services/cartServicer";
+import { startCart } from "./redux/features/cartSlice";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -104,8 +105,14 @@ const App = () => {
 						admin: true,
 					};
 
-					const results = getAllItems(data.id);
-					console.log(results);
+					const fetchData = async () => {
+						await createCart(data.id, []);
+						const results = await getAllItems(data.id);
+
+						dispatch(startCart(results));
+						return results;
+					};
+					fetchData();
 
 					/* const producItem: BuyProduct = {
 						id: results.id,

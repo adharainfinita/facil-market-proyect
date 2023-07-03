@@ -17,7 +17,7 @@ const DetailProduct = () => {
 	const product = useProduct();
 	const currentUser = useSelector((state: RootState) => state.user.userLogin);
 	const items = useSelector(
-		(state: RootState) => state.cart.cartItems.products
+		(state: RootState) => state.cart.cartItems.productID
 	);
 
 	const [isReadyToPost, setIsReadyToPost] = useState(false);
@@ -41,9 +41,19 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
-	const handleAddToCart = async (userID: number, data: BuyProduct) => {
+	//?fn random
+	const fetchInfo = async () => {
+		const arrayID = items.map((item: BuyProduct) => item.id);
+		await updateItem(Number(currentUser.user.id), arrayID);
+		console.log(arrayID);
+	};
+
+	useEffect(() => {
+		fetchInfo();
+	}, [items]);
+
+	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		dispatch(addToCart(data));
-		await updateItem(userID, items);
 	};
 
 	useEffect(() => {
