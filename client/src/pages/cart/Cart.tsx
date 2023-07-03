@@ -17,11 +17,9 @@ const Cart = () => {
 	);
 
 	console.log(cartItems);
-	
-	const products = useSelector((state: RootState) => state.product.products);
-	const [productsCart, setProductsCart] = useState<Product[]>([]);
 
-	console.log(productsCart);
+	const products = useSelector((state: RootState) => state.product.products);
+	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
 
 	//? logica de compra
 	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
@@ -49,8 +47,7 @@ const Cart = () => {
 				}
 			}
 
-			
-			setProductsCart(tempProductsCart);
+			setProductsCart(cartItems);
 		};
 
 		getProductsCart();
@@ -74,26 +71,27 @@ const Cart = () => {
 	// }, [cartItems, products]);
 
 	return (
-		<div>
+		<div className="cart-conteiner">
 			{cartItems.length === 0 ? (
 				<CartEmpty />
 			) : (
-				<>
-					<h1 className="cart-title">Carrito de compras</h1>
-					<button onClick={handleClearCart}>Limpiar carrito</button>
-					<div className="cards-container">
-						{productsCart.map((item: Product, index: number) => (
-							<CartItem key={index} item={item} index={index} />
-						))}
-					</div>
+				<div className="cart-conteiner">
+					<section className="cart-section">
+						<h1 className="cart-title">Carrito de compras</h1>
+						<button onClick={handleClearCart}>Limpiar carrito</button>
+					</section>
 
-					<div className="cartTotal-container">
+					{cartItems.map((item: BuyProduct, index: number) => (
+						<CartItem key={index} item={item} index={index} />
+					))}
+
+					<section className="cart-section">
 						<h2 className="cart__total">
 							{`Precio Final: ${handleTotalPrice(cartItems)}`}
 						</h2>
-					</div>
-					<PaymentButton {...cartItems} />
-				</>
+						<PaymentButton {...cartItems} />
+					</section>
+				</div>
 			)}
 		</div>
 	);

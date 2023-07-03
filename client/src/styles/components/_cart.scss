@@ -1,0 +1,18 @@
+.cart-conteiner {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 100%;
+	gap: 1rem;
+	align-items: center;
+  padding: 1rem;
+}
+
+.cart-section {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	gap: 1rem;
+	align-items: center;
+}

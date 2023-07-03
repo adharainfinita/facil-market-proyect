@@ -1,13 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Product } from "../../utils/interfaces";
 import { removeFromCart } from "../../redux/features/cartSlice";
 import { updateItem } from "../../services/cartServicer";
 import { RootState } from "../../redux/store";
-
+import { BuyProduct } from "../../utils/interfaces";
+import {
+	incrementQuantity,
+	decrementQuantity,
+} from "../../redux/features/cartSlice";
 interface CartItemProps {
-	item: Product;
+	item: BuyProduct;
 	index: number;
 }
+import { Link } from "react-router-dom";
 
 const CartItem = ({ item, index }: CartItemProps) => {
 	const dispatch = useDispatch();
@@ -15,37 +19,62 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.products
 	);
-	const handleRemoveFromCart = async (item: Product) => {
+	const handleRemoveFromCart = async (item: BuyProduct) => {
 		dispatch(removeFromCart(item.id));
 		await updateItem(Number(user.id), items);
 	};
 
+	const handleIncrementQuantity = () => {
+		dispatch(incrementQuantity(item.id));
+	};
+
+	const handleDecrementQuantity = () => {
+		dispatch(decrementQuantity(item.id));
+	};
+
 	return (
-		<div key={index} className="item-card">
-			<button
-				className="cart_delete"
-				onClick={() => handleRemoveFromCart(item)}
-			>
-				X
-			</button>
-			<img width={100} src={item.images[0]} alt={item.name} />
-			<div className="item-details">
-				<div>
-					<p>Categoría: {item.categoryName}</p>
-					<p>Nombre: {item.name}</p>
-				</div>
-				<div>
-					<p>
-						Precio: $
-						{item.price.toLocaleString("es-AR", {
-							minimumFractionDigits: 0,
-						})}
-					</p>
-					<p>Ubicación: {item.location}</p>
-				</div>
-				<div>
-					<p>Cantidad: {item.unities}</p>
-				</div>
+		<div key={index} className="cart-detail-container">
+			<div className="cart-image-container">
+				<Link to={`/product/detail/${item.id}`}>
+					<img className="cart-detail-image" src={item.image} alt={item.name} />
+				</Link>
+			</div>
+
+			<div className="cart-detail-div-section">
+				<section className="cart-detail-section">
+					<h4>Nombre</h4>
+					<p>{item.name}</p>
+				</section>
+
+				<section className="cart-detail-section">
+					<h4>Precio</h4>
+					<p>{item.price * item.quantity}</p>
+				</section>
+
+				<section className="cart-detail-section">
+					<h4>Cantidad</h4>
+					<div className="cart-detail-quantity">
+						<button
+							onClick={handleDecrementQuantity}
+							className="cart-detail-btn-quantity"
+						>
+							-
+						</button>
+						<p>{item.quantity}</p>
+						<button
+							onClick={handleIncrementQuantity}
+							className="cart-detail-btn-quantity"
+						>
+							+
+						</button>
+					</div>
+				</section>
+				<button
+					className="cart-detail-btn"
+					onClick={() => handleRemoveFromCart(item)}
+				>
+					X
+				</button>
 			</div>
 		</div>
 	);
