@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart } from "../../redux/features/cartSlice";
 import { Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { updateItem } from "../../services/cartServicer";
@@ -13,9 +12,7 @@ import CartItem from "./CartItem";
 const Cart = () => {
   const dispatch = useDispatch();
   const userLoginId = useSelector((state: RootState) => state.user.userLogin.user.id);
-  const cartItems = useSelector((state: RootState) =>
-    state.cart.cartItems.filter((item: Product) => item.userID === userLoginId)
-  );
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems.products);
   const cartPrice = useSelector((state: RootState) => state.cart.totalPrice);
 
 
@@ -26,10 +23,6 @@ const Cart = () => {
     } catch (error) {
       console.error('Ocurrió un error al actualizar el carrito de compras:', error);
     }
-  };
-
-  const handleClearCart = () => {
-    dispatch(clearCart());
   };
   
 

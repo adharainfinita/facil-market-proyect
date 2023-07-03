@@ -41,7 +41,11 @@ export interface Date {
 	year: number;
 }
 
-
+export interface Cart {
+	id: number;
+	userID: number;
+	products: Array<Product>;
+}
 
 
 export interface User {

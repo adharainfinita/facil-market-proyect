@@ -23,9 +23,7 @@ const RegisterForm = () => {
 	const defaultImage = useSelector(
 		(state: RootState) => state.user.userLogin.user.image
 	);
-	const userId = useSelector(
-		(state: RootState) => state.user.userLogin.user.id
-	);
+
 
 	const [inputs, setInputs] = useState<NewUser>({
 		fullName: "",
@@ -106,7 +104,7 @@ const RegisterForm = () => {
 		});
 		setErrors({});
 		setFormSubmitted(true);
-		addItem(Number(1), [])
+		const response = await addItem(Number(1), []);
 	};
 
 	return (
