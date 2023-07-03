@@ -1,9 +1,9 @@
-import { Product } from "../utils/interfaces";
+import { PaymentProduct } from "../utils/interfaces";
 import { useState } from "react";
 import { buyProduct } from "../services/productServices";
 
 interface MercadoPagoButtonProps {
-  product: Product;
+  product: PaymentProduct;
 }
 
 const PaymentButton = ({ product }: MercadoPagoButtonProps) => {

@@ -27,6 +27,8 @@ const Reviews: React.FC = () => {
   const userLogin = useSelector((state: RootState) => state.user.userLogin);
   const fullName = userLogin.user.fullName;
 
+  const session = window.localStorage.getItem("token");
+
   useEffect(() => {
     if (parseInt(product.userID, 10) === parseInt(userLogin.user.id, 10)) {
       setUserProduct(true);
@@ -148,7 +150,7 @@ const Reviews: React.FC = () => {
           <div>
             <p>Ya has dejado una reseña</p>
           </div>
-        ) : userProduct ? null : (
+        ) : userProduct || !session ? null : (
           <div>
             <section className="detail-product-section">
               <h2>Reseñas:</h2>

@@ -1,4 +1,4 @@
-export interface productProps {
+export interface ProductProps {
 	id: number;
 	name: string;
 	description?: string;
@@ -14,6 +14,11 @@ export interface productProps {
 	userName?: string;
 	status?: string;
 }
+
+export interface PaymentProductsProps{
+	products: Array <ProductProps>
+}
+
 
 export interface reviewProps {
 	id: number;
