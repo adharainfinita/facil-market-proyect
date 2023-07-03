@@ -4,7 +4,7 @@ import { findProductByName } from "../../controllers/productControllers";
 const getProductByName = async (req: Request, res: Response) => {
 	try {
 		const { name } = req.query;
-		
+
 		//? obtener todos los productos de la db
 		const responseDB = await findProductByName(String(name));
 

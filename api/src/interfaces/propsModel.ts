@@ -1,4 +1,4 @@
-export interface productProps {
+export interface ProductProps {
 	id: number;
 	name: string;
 	description?: string;
@@ -47,7 +47,7 @@ export interface resumeProps {
 }
 export interface additional_info {
 	ip_address: string;
-	items: Array<items>,
+	items: Array<items>;
 	payer: string;
 }
 
@@ -61,6 +61,24 @@ export interface items {
 
 export interface cartProductProps {
 	id: number;
-  userID: number;
-  productID: Array<object>
+	userID: number;
+	productID: Array<BuyProduct>;
+}
+export interface purchases {
+	userId?: number;
+	productId?: number;
+	paymentId: number;
+}
+
+export interface BuyProduct {
+	id: number;
+	name: string;
+	price: number;
+	categoryID?: number;
+	image: string;
+	quantity: number;
+}
+
+export interface PaymentProductsProps {
+	products: Array<BuyProduct>;
 }

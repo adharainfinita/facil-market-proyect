@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { createNotification, createNewPayment } from "../../controllers/payment.controllers";
+import {
+	createNotification,
+	createNewPayment,
+} from "../../controllers/payment.controllers";
 import { sendPurchaseNotification } from "../../controllers/payment.controllers";
 // import { paymentProps } from "../../interfaces/propsModel";
 
@@ -12,7 +15,7 @@ const receivedWebhook = async (req: Request, res: Response) => {
 			const data = await createNotification(id);
 
 			console.log(data);
-			if(data.status === 'approved'){
+			if (data.status === "approved") {
 				const response = await createNewPayment(data);
 
 				// const contentForMail: paymentProps = {

@@ -13,7 +13,7 @@ paymentRouter.post("/webhook", receivedWebhook);
 paymentRouter.get("/success", (req, res) => res.send("success"));
 paymentRouter.get("/failure", (req, res) => res.send("failure"));
 paymentRouter.get("/pending", (req, res) => res.send("pending"));
-paymentRouter.get('/resumes', getPayments)
+paymentRouter.get("/resumes", getPayments);
 
 //! routes Update
 

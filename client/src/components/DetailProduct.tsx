@@ -8,7 +8,7 @@ import Reviews from "./Review";
 import { BuyProduct, NotificationType } from "../utils/interfaces";
 import { RootState } from "../redux/store";
 
-import { postUserPurchase } from "../services/purchaservices";
+import { postUserPurchase } from "../services/purchaseServices";
 //import { updateUnities } from "../redux/features/productSlice";
 //import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";

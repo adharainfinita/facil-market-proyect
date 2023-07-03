@@ -1,52 +1,52 @@
 import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  ForeignKey,
-  BelongsTo,
+	Table,
+	Column,
+	Model,
+	DataType,
+	ForeignKey,
+	BelongsTo,
 } from "sequelize-typescript";
 import User from "./User";
 import moment from "moment";
 
 @Table({ tableName: "cart" })
 class Cart extends Model {
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  id!: number;
+	@Column({
+		type: DataType.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+	})
+	id!: number;
 
-  @ForeignKey(() => User)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  userID!: number;
+	@ForeignKey(() => User)
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
+	})
+	userID!: number;
 
-  @BelongsTo(() => User)
-  user!: User;
+	@BelongsTo(() => User)
+	user!: User;
 
-  // Agregar clave foránea de Product
-  @Column({
-    type: DataType.ARRAY(DataType.INTEGER),
-    allowNull: true,
-  })
-  productID?: Array<number>;
+	// Agregar clave foránea de Product
+	@Column({
+		type: DataType.ARRAY(DataType.INTEGER),
+		allowNull: true,
+	})
+	productID?: Array<number>;
 
-  @Column({
-    type: DataType.DATE,
-    defaultValue: DataType.NOW,
-    field: "createdAt",
-    get() {
-      // Formatear la fecha utilizando Moment.js
-      return moment(this.getDataValue("createdAt")).format(
-        "DD-MM-YYYY HH:mm:ss"
-      );
-    },
-  })
-  createdAt!: Date;
+	@Column({
+		type: DataType.DATE,
+		defaultValue: DataType.NOW,
+		field: "createdAt",
+		get() {
+			// Formatear la fecha utilizando Moment.js
+			return moment(this.getDataValue("createdAt")).format(
+				"DD-MM-YYYY HH:mm:ss"
+			);
+		},
+	})
+	createdAt!: Date;
 }
 
 export default Cart;

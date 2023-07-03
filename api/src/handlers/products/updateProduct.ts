@@ -10,10 +10,10 @@ const updateProduct = async (req: Request, res: Response) => {
 		const response = await changeProductProperties(product, productId);
 
 		if (response) {
-      return res.status(200).json(response);
-    } else {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
+			return res.status(200).json("Producto eliminado");
+		} else {
+			return res.status(404).json({ error: "Producto no encontrado" });
+		}
 	} catch (error: any) {
 		return res.status(400).json({ error: error.message });
 	}

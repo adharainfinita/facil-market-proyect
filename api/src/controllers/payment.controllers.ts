@@ -1,4 +1,4 @@
-import { paymentProps, productProps } from "../interfaces/propsModel";
+import { paymentProps } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import Payments from "../models/Payments";
@@ -9,7 +9,7 @@ import { transporter } from "../config/mailer";
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
-export const createOrder = async (product: productProps) => {
+export const createOrder = async (products: any) => {
 	//Necesito que además del producto, me envíen el id del usuario logueado que está
 	// ejecutando la compra
 	// lo busco en  la db y lleno los campos de payer
@@ -18,8 +18,11 @@ export const createOrder = async (product: productProps) => {
 	});
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
+
+	console.log(products);
+
 	const result = await mercadopago.preferences.create({
-		items: [
+		/* 		items: [
 			{
 				id: String(product.id),
 				title: product.name,
@@ -27,15 +30,29 @@ export const createOrder = async (product: productProps) => {
 				category_id: String(product.categoryID),
 				currency_id: "ARS",
 				picture_url: product.image,
-				quantity: product.unities,
+				quantity: product.quantity,
 			},
 		],
+ */
+
+		items: products.map((product: any) => {
+			return {
+				id: String(product.id),
+				title: product.name,
+				unit_price: product.price,
+				category_id: String(product.categoryID),
+				currency_id: "ARS",
+				picture_url: product.image,
+				quantity: product.quantity,
+			};
+		}),
+
 		payer: {
 			name: "adharanosalevich@gmail.com",
 			email: "adharanosalevich@gmail.com",
 			phone: {
-				area_code: "11",
-				number: 22223333,
+				area_code: "54",
+				number: 3644123456,
 			},
 			identification: {
 				type: "DNI",
@@ -51,9 +68,9 @@ export const createOrder = async (product: productProps) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `http://localhost:3001/payment/success`,
-			failure: `http//localhost:3001/payment/failure`,
-			pending: `http//localhost:3001/payment/pending`,
+			success: `localhost:5173/products`,
+			failure: `${URL_HOST}/products`,
+			pending: `${URL_HOST}/products`,
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
@@ -68,7 +85,6 @@ export const createNotification = async (id: number) => {
 
 export const createNewPayment = async (data: any) => {
 	const amount = data.transaction_details.net_received_amount;
-
 
 	//! En modo de prueba, parece que al no especificar la info del payer,
 	//! mercadopago pone uno que no es ninguno de los que usamos xD, asi que este
@@ -85,7 +101,6 @@ export const createNewPayment = async (data: any) => {
 		},
 	});
 	console.log(sellerFound);
-	
 
 	const currentDate = new Date();
 	const currentDay = currentDate.getDate();
@@ -130,7 +145,7 @@ export const sendPurchaseNotification = async (receipt: paymentProps) => {
 		<h1 style="color: #333333;">¡Hola, ${email?.fullName}!</h1>
 		<p style="color: #333333;">¡Aquí tienes un resumen de tu compra! 😎</p>
 		<p style="color: #333333;">Productos comprados: ${items.map(
-			(match) => `<p>${match.title} ${ match.unit_price}</p>`
+			(match) => `<p>${match.title} ${match.unit_price}</p>`
 		)}.</p>
 		<p style="color: #333333;">Contactate con ${
 			items.length > 1 ? "los vendedores" : "el vendedor"
@@ -139,7 +154,9 @@ export const sendPurchaseNotification = async (receipt: paymentProps) => {
 			items.length > 1 ? "los productos" : "el producto"
 		}. Recuerda tener en cuenta tu seguridad.</p>
 		<p style="color: #333333;">Te proporcionamos la información de contacto:</p>
-		<p style="color: #333333;">${sellers.map((match) => `<p>${match?.fullName} ${match?.email}</p>`)}</p>
+		<p style="color: #333333;">${sellers.map(
+			(match) => `<p>${match?.fullName} ${match?.email}</p>`
+		)}</p>
 		<p style="color: #333333;"> No dudes en consultarnos ante cualquier duda o problema♥.<p/>
 		<p style="color: #333333;">Visualiza tus compras en: <a href="${urlPurchase}"</a></p>
 		<p style="color: #333333;">Volver a la app: <a href="${URL_HOST}"</a></p>

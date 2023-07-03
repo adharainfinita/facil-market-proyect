@@ -43,7 +43,7 @@ const BarChart = () => {
 
 	//? Logica de datos
 	const userID = dataComplete.allUsers.map((element) => element.id);
-	const sales = dataComplete.allUsers.map((match) => match.LevelOfActivity - 1);
+	const sales = dataComplete.allUsers.map((match) => match.LevelOfActivity);
 
 	//? Registros
 	Chart.register(

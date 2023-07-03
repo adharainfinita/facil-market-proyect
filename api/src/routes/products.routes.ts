@@ -8,6 +8,7 @@ import getProductById from "../handlers/products/getProductById";
 import putProduct from "../handlers/products/updateProduct";
 import checkSession from "../Middleware/session";
 import deleteProduct from "../handlers/products/deleteProduct";
+import updateProductStock from "../handlers/products/updateStock";
 
 //! routes Create
 product.post("/", checkSession, postProduct);
@@ -19,7 +20,8 @@ product.get("/:id", getProductById);
 
 //! routes Update
 product.put("/:id", putProduct);
+product.put("/:id/stock", updateProductStock);
 
 //! routes Delete
-product.put("/delete/:id", deleteProduct)
+product.put("/delete/:id", deleteProduct);
 export default product;

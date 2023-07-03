@@ -15,16 +15,12 @@ import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import GoogleRegister from "./GoogleRegister";
-import { addItem } from "../services/cartServicer";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const defaultImage = useSelector(
 		(state: RootState) => state.user.userLogin.user.image
-	);
-	const userId = useSelector(
-		(state: RootState) => state.user.userLogin.user.id
 	);
 
 	const [inputs, setInputs] = useState<NewUser>({
@@ -106,14 +102,13 @@ const RegisterForm = () => {
 		});
 		setErrors({});
 		setFormSubmitted(true);
-		addItem(Number(1), [])
 	};
 
 	return (
 		<div className="form login">
 			<span className="form-title">Registrarte</span>
 			<div className="google-login">
-				<GoogleRegister/>
+				<GoogleRegister />
 			</div>
 			<hr />
 			<form onSubmit={handleSubmit}>

@@ -11,7 +11,7 @@ export const store = configureStore({
 		product: productSlice,
 		category: categorySlice,
 		admin: adminSlice,
-		cart: cartSlice
+		cart: cartSlice,
 	},
 });
 
