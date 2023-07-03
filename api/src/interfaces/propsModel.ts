@@ -15,10 +15,6 @@ export interface ProductProps {
 	status?: string;
 }
 
-export interface PaymentProductsProps {
-	products: Array<BuyProduct>;
-}
-
 export interface reviewProps {
 	id: number;
 	fullName: string;
@@ -81,4 +77,8 @@ export interface BuyProduct {
 	categoryID?: number;
 	image: string;
 	quantity: number;
+}
+
+export interface PaymentProductsProps {
+	products: Array<BuyProduct>;
 }
