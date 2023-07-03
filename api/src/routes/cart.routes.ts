@@ -11,6 +11,6 @@ cart.post("/:userID", addItem);
 
 // cart.put("/:userId", updateCart)
 
-cart.put("/:id", updateItem);
+cart.put("/:userID", updateItem);
 
 export default cart;

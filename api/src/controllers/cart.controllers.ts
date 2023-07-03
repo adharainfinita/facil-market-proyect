@@ -3,27 +3,24 @@ import Cart from "../models/Cart";
 import Product from "../models/Product";
 
 export const createCart = async (userID: number, products: Array<number>) => {
-	console.log(userID);
-	console.log(products);
-
-	const response = await Cart.create({
-		userID: userID,
-		productID: products,
+	console.log(`userID: ${userID} --- product: ${products}`);
+	const response = await Cart.findOrCreate({
+		where: { userID: userID },
+		defaults: {
+			userID: userID,
+			productID: products,
+		},
 	});
 
 	return response;
 };
 
 export const getCartById = async (userID: number) => {
-	
-	
 	const myCart = await Cart.findOne({
 		where: {
 			userID: userID,
 		},
 	});
-
-	console.log(myCart);
 
 	if (!myCart) throw Error("No existe el usuario");
 
@@ -32,7 +29,7 @@ export const getCartById = async (userID: number) => {
 		userID: myCart!.userID,
 		productID: [],
 	};
-	
+
 	let count = 0;
 	while (myCart?.productID!.length !== count) {
 		const productFound = await Product.findByPk(myCart?.productID![count]);
@@ -53,10 +50,14 @@ export const getCartById = async (userID: number) => {
 	return productsCart;
 };
 
-export const changeItemsCart = async (id: number, products: Array<number>) => {
-	const myCart = await Cart.findByPk(id);
+export const changeItemsCart = async (
+	userID: number,
+	productID: Array<number>
+) => {
+	const myCart = await Cart.findOne({ where: { userID: userID } });
 
-	myCart?.update(products);
+	await myCart?.update({ productID: productID });
+	await myCart?.save();
 
 	return myCart;
 };
