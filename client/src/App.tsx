@@ -45,6 +45,7 @@ import Resume from "./pages/admin/Resume";
 import UserProducts from "./components/UserProducts";
 import ProductEdit from "./components/ProductEdit";
 import NotFound from "./errors/NotFound";
+import ShoppingHistory from "./components/Shoppinghistory";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -158,6 +159,7 @@ const App = () => {
 
         <Route element={<ProtectedRoute isAllowed={Boolean(session)} />}>
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/compras" element={<ShoppingHistory />} />
           <Route path="/ventas" element={<UserProducts />} />
           <Route path="/verification" element={<VerificationPage />} />
           <Route path="/user/:id" element={<EditUser />} />

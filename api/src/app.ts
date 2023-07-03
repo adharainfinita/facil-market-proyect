@@ -11,6 +11,7 @@ import category from "./routes/category.routes";
 import review from "./routes/review.routes";
 import admin from "./routes/admin.routes";
 import cart from "./routes/cart.routes";
+import purchase from "./routes/purchase.routes";
 const server = express();
 
 //! Middlewares
@@ -27,6 +28,7 @@ server.use("/payment", paymentRouter);
 server.use("/category", category);
 server.use("/review", review);
 server.use("/admin", admin);
+server.use("/purchase", purchase);
 server.use("/cart" , cart)
 
 export default server;

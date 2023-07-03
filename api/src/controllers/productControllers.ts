@@ -113,6 +113,18 @@ export const changeProductProperties = async (
 	return productFound
 };
 
+export const updateStock = async (id: number, unities: number) => {
+	console.log(id, unities);
+	
+	const productFound = await Product.findByPk(id);
+  
+	if (productFound && unities) {
+	  const updatedUnits = productFound.unities - unities;
+	  await productFound.update({ unities: updatedUnits });
+	}
+  
+	return productFound;
+  };
 // ? delete
 
 

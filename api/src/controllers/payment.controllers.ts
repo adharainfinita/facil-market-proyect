@@ -1,4 +1,4 @@
-import { paymentProps, productProps } from "../interfaces/propsModel";
+import { paymentProps, BuyProduct } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import Payments from "../models/Payments";
@@ -9,10 +9,7 @@ import { transporter } from "../config/mailer";
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
-export const createOrder = async (product: productProps) => {
-	//Necesito que además del producto, me envíen el id del usuario logueado que está
-	// ejecutando la compra
-	// lo busco en  la db y lleno los campos de payer
+export const createOrder = async (product: BuyProduct) => {
 	mercadopago.configure({
 		access_token: TOKEN!,
 	});
@@ -27,7 +24,7 @@ export const createOrder = async (product: productProps) => {
 				category_id: String(product.categoryID),
 				currency_id: "ARS",
 				picture_url: product.image,
-				quantity: product.unities,
+				quantity: product.quantity,
 			},
 		],
 		payer: {
@@ -51,9 +48,9 @@ export const createOrder = async (product: productProps) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `http://localhost:3001/payment/success`,
-			failure: `http//localhost:3001/payment/failure`,
-			pending: `http//localhost:3001/payment/pending`,
+			success: `${URL_HOST}detail/${product.id}`,
+			failure: `${URL_HOST}detail/${product.id}`,
+			pending: `${URL_HOST}detail/${product.id}`,
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});

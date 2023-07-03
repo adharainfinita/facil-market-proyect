@@ -64,3 +64,16 @@ export interface cartProductProps {
   userID: number;
   productID: Array<object>
 }
+export interface purchases {
+	userId?: number
+	productId?: number
+	paymentId: number
+}
+
+export interface BuyProduct {
+	id: number
+    name: string,
+    price: number,
+    image: string,
+    quantity: number
+}

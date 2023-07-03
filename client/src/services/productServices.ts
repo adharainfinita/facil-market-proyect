@@ -1,4 +1,4 @@
-import { FormCreateProduct, Product } from "../utils/interfaces";
+import { BuyProduct, FormCreateProduct, Product, Stock } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 //import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
@@ -70,7 +70,7 @@ export const getAllProducts = async () => {
 	}
 };
 
-export const buyProduct = async (product: Product) => {
+export const buyProduct = async (product: BuyProduct) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/payment/order`, product);
 
@@ -93,6 +93,20 @@ export const updateProduct = async (product: Product) => {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
 		alert(errorMessage);
+		throw error;
+	}
+};
+
+export const updateStock = async (product: Stock) => {
+	try {
+		const { data } = await axios.put(`${URL_HOST}/product/${product.id}/stock`, product);
+		return data;
+	} catch (error: any) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		alert(`Es aqui ${errorMessage}`);
 		throw error;
 	}
 };

@@ -1,5 +1,5 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
-import moment from "moment";
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import Purchase from "./Purchase";
 
 @Table({ tableName: "users" })
 class User extends Model {
@@ -35,23 +35,8 @@ class User extends Model {
 	})
 	image!: string;
 
-	@Column({
-		type: DataType.BOOLEAN,
-		allowNull: false,
-		defaultValue: true,
-	})
-	active!: string;
-
-	@Column({
-		type: DataType.DATE,
-		defaultValue: DataType.NOW,
-		field: 'createdAt',
-		get() {
-			// Formatear la fecha utilizando Moment.js
-			return moment(this.getDataValue('createdAt')).format('DD-MM-YYYY HH:mm:ss');
-		},
-	})
-	createdAt!: Date;
+	@HasMany(() => Purchase)
+	purchases!: Purchase[];
 }
 
 
