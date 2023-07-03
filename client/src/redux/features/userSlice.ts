@@ -16,7 +16,8 @@ const initialState: UserState = {
 			fullName: "",
 			email: "",
 			image:
-				"https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+			"https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+			admin: false,
 		},
 	},
 	userValidation: false,

@@ -75,6 +75,7 @@ export interface Product {
 	userID: string;
 	userName: string;
 	active: boolean;
+	cartQuantity?: number
 }
 
 export interface Category {
@@ -115,6 +116,7 @@ export interface user {
 	id: string;
 	image: string;
 	active?: boolean;
+	admin?: boolean
 }
 
 export interface UserData {
@@ -167,6 +169,7 @@ export interface isLogin {
 	id: string;
 	email: string;
 	image: string;
+	admin: boolean
 }
 
 export interface GoogleUser {
