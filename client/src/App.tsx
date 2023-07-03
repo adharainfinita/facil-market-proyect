@@ -47,8 +47,7 @@ import ProductEdit from "./components/ProductEdit";
 import NotFound from "./errors/NotFound";
 import ShoppingHistory from "./components/Shoppinghistory";
 import Cart from "./pages/cart/Cart";
-import { startCart } from "./redux/features/cartSlice";
-import { getAllItems } from "./services/cartServicer";
+
 // import Cart from "./pages/Cart/Cart"
 import About from "./components/About/About";
 
@@ -91,7 +90,7 @@ const App = () => {
 		};
 
 		fetchUserData();
-	}, [dispatch, userId]);
+	}, [dispatch, id]);
 
 	useEffect(() => {
 		if (session) {
@@ -165,6 +164,7 @@ const App = () => {
 			<Route path="/" element={<Home />} />
 			<Route path="/vender" element={<FormCreateProduct />} />
 			<Route path="/terminos_y_condiciones" element={<Terms />} />
+			<Route path="/about" element={<About/>} />
 
 			<Route
 				element={

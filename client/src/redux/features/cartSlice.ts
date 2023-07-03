@@ -1,5 +1,4 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
-import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems");

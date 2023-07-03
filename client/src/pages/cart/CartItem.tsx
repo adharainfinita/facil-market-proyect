@@ -7,9 +7,10 @@ import {RootState} from '../../redux/store'
 interface CartItemProps {
   item: Product
   index: number
+  quantities: number
 }
 
-const CartItem = ({item, index}: CartItemProps) => {
+const CartItem = ({item, index, quantities}: CartItemProps) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.userLogin.user)
   const items = useSelector((state: RootState) => state.cart.cartItems.products)
@@ -42,7 +43,7 @@ const CartItem = ({item, index}: CartItemProps) => {
           <p>Ubicación: {item.location}</p>
         </div>
         <div>
-          <p>Cantidad: {item.unities}</p>
+          <p>Cantidad: {quantities}</p>
         </div>
       </div>
     </div>

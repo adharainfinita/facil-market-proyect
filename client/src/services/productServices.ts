@@ -1,4 +1,4 @@
-import { BuyProduct, FormCreateProduct, Product, PaymentProduct, Stock } from "../utils/interfaces";
+import { BuyProduct, FormCreateProduct, Product, Stock } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 //import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { Product } from "../utils/interfaces";
 import useProduct from "../hooks/useProduct";
 import { updateItem } from "../services/cartServicer";
 import { useSelector, useDispatch } from "react-redux";
 import Reviews from "./Review";
 import { BuyProduct, NotificationType } from "../utils/interfaces";
+import { RootState } from "../redux/store";
 
 import { postUserPurchase } from "../services/purchaseServices";
 //import { updateUnities } from "../redux/features/productSlice";
@@ -14,14 +14,16 @@ import { postUserPurchase } from "../services/purchaseServices";
 import { addToCart } from "../redux/features/cartSlice";
 
 const DetailProduct = () => {
-  const product = useProduct();
-  const currentUser = useSelector((state: RootState) => state.user.userLogin)
-  //const dispatch = useDispatch()
+	const product = useProduct();
+	const currentUser = useSelector((state: RootState) => state.user.userLogin);
+	const items = useSelector(
+		(state: RootState) => state.cart.cartItems.products
+	);
 
-  const [isReadyToPost, setIsReadyToPost] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string>("");
-  const [error, setError] = useState<string>('');
-  const [stock, setStock] = useState<number>(1);
+	const [isReadyToPost, setIsReadyToPost] = useState(false);
+	const [selectedImage, setSelectedImage] = useState<string>("");
+	const [error, setError] = useState<string>("");
+	const [stock, setStock] = useState<number>(1);
 
 	const [notification, setNotification] = useState<NotificationType>({
 		isOpen: false,
@@ -31,10 +33,18 @@ const DetailProduct = () => {
 
 	const dispatch = useDispatch();
 
-  const handleAddToCart = async(userID:number ,product: BuyProduct) => {
-    dispatch(addToCart(product.id));
-    await updateItem(userID, product)
-  };
+	const data: BuyProduct = {
+		id: product.id,
+		name: product.name,
+		price: product.price,
+		image: product.images[0],
+		quantity: stock,
+	};
+
+	const handleAddToCart = async (userID: number, data: BuyProduct) => {
+		dispatch(addToCart(data));
+		await updateItem(userID, items);
+	};
 
 	useEffect(() => {
 		if (product?.images.length > 0 && !selectedImage) {
@@ -46,18 +56,16 @@ const DetailProduct = () => {
 		setSelectedImage(image);
 	};
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const status = urlParams.get("status");
-  const handleStockChange = (action: string) => {
-    if(action === 'increment'){
-      setStock(stock + 1)
-    } else{
-      setStock(stock - 1)
-    }
-  }
-
-  
+	// useEffect(() => {
+	//   const urlParams = new URLSearchParams(window.location.search);
+	//   const status = urlParams.get("status");
+	const handleStockChange = (action: string) => {
+		if (action === "increment") {
+			setStock(stock + 1);
+		} else {
+			setStock(stock - 1);
+		}
+	};
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
@@ -149,7 +157,7 @@ const DetailProduct = () => {
 							<h1 className="detail-product-name">{product.name}</h1>
 							<h1 className="detail-product-price">
 								$
-								{(product.price * stock).toLocaleString("es-AR", {
+								{(product.price).toLocaleString("es-AR", {
 									minimumFractionDigits: 0,
 								})}
 							</h1>
@@ -194,15 +202,37 @@ const DetailProduct = () => {
 						<h2>Estado:</h2>
 						<h3>{product.status}</h3>
 					</section>
+					<section className="detail-product-section">
+						<h2>Stock:</h2>
+						<h3>{product.stock}</h3>
+					</section>
 
-          <section className="detail-product-section">
-            <h2>Stock:</h2>
-            <h3>{product.stock}</h3>
-          </section>
-          <div className=".detail-product-button">
-            {/* <PaymentButton product={product} /> */}
-            <button onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
-          </div>
+					<section className="detail-product-section">
+						<button
+							disabled={stock === 1 ? true : false}
+							onClick={() => handleStockChange("decrement")}
+						>
+							{" "}
+							-{" "}
+						</button>
+						<h3>{stock}</h3>
+						<button
+							disabled={stock === product.unities ? true : false}
+							onClick={() => handleStockChange("increment")}
+						>
+							{" "}
+							+{" "}
+						</button>
+					</section>
+
+					<div className=".detail-product-button">
+						{/* <PaymentButton product={product} /> */}
+						<button
+							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+						>
+							Agregar al carrito
+						</button>
+					</div>
 
 					{notification.isOpen && <div>{notification.content}</div>}
 					<p>{error}</p>
