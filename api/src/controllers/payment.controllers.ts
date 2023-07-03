@@ -43,7 +43,7 @@ export const createOrder = async ({products}: PaymentProductsProps) => {
 			category_id: String(product.categoryID),
 			currency_id: "ARS",
 			picture_url: product.image,
-			quantity: product.unities,
+			quantity: product.quantity,
 			}
 		})
 		

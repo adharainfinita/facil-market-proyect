@@ -1,4 +1,4 @@
-import { Cart } from "../../utils/interfaces";
+import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
@@ -25,17 +25,17 @@ const cartSlice = createSlice({
     startCart: (state, action: PayloadAction<Cart>) => {
       state.cartItems = action.payload;
     },
-    addToCart: (state, action: PayloadAction<number>) => {
-      if (!state.cartItems.products.includes(action.payload)) {
+    addToCart: (state, action: PayloadAction<BuyProduct>) => {
+      
         state.cartItems.products = [...state.cartItems.products, action.payload]
-      }
+
       alert("Producto agregado al carrito")
       // state.totalPrice = calculateTotalPrice(state.cartItems.products).toString();
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
       const productIdToRemove = action.payload;
 
-      state.cartItems.products = state.cartItems.products.filter((item) => item !== productIdToRemove)
+      state.cartItems.products = state.cartItems.products.filter((item) => item.id !== productIdToRemove)
 
       // state.totalPrice = calculateTotalPrice(state.cartItems.products).toString()
     },
@@ -46,6 +46,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, clearCart } = cartSlice.actions;
+export const { addToCart, clearCart, removeFromCart, startCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

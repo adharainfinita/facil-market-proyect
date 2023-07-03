@@ -15,7 +15,6 @@ import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import GoogleRegister from "./GoogleRegister";
-import { addItem } from "../services/cartServicer";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
@@ -104,7 +103,6 @@ const RegisterForm = () => {
 		});
 		setErrors({});
 		setFormSubmitted(true);
-		const response = await addItem(Number(1), []);
 	};
 
 	return (

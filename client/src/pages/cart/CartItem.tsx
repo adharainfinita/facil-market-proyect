@@ -1,6 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../../utils/interfaces";
-// import { removeFromCart } from "../../redux/features/cartSlice";
+import { removeFromCart } from "../../redux/features/cartSlice";
+import { updateItem } from "../../services/cartServicer";
+import {RootState} from '../../redux/store'
 
 interface CartItemProps {
   item: Product
@@ -8,10 +10,12 @@ interface CartItemProps {
 }
 
 const CartItem = ({item, index}: CartItemProps) => {
-  const dispatch = useDispatch()
-
-  const handleRemoveFromCart = (product: Product) => {
-    // dispatch(removeFromCart(product));
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.userLogin.user)
+  const items = useSelector((state: RootState) => state.cart.cartItems.products)
+  const handleRemoveFromCart = async(item: Product) => {
+      dispatch(removeFromCart(item.id));
+      await updateItem( Number(user.id), items)
   };
 
   return (
@@ -38,7 +42,7 @@ const CartItem = ({item, index}: CartItemProps) => {
           <p>Ubicación: {item.location}</p>
         </div>
         <div>
-          <p>Cantidad: {item.cartQuantity}</p>
+          <p>Cantidad: {item.unities}</p>
         </div>
       </div>
     </div>

@@ -1,97 +1,97 @@
 import { useEffect, useState } from "react";
 import { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { Product } from "../../utils/interfaces";
+import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
+import { clearCart } from "../../redux/features/cartSlice";
 
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const dispatch = useDispatch();
- 
-  const cartItems = useSelector(
-    (state: RootState) => state.cart.cartItems.products
-  );
-  const products = useSelector((state: RootState) => state.product.products);
+	const dispatch = useDispatch();
 
-  const cartPrice = useSelector((state: RootState) => state.cart.totalPrice);
-  const [productsCart, setProductsCart] = useState<Product[]>([]);
+	const cartItems = useSelector(
+		(state: RootState) => state.cart.cartItems.products
+	);
+	const products = useSelector((state: RootState) => state.product.products);
+	const [productsCart, setProductsCart] = useState<Product[]>([]);
 
-  // const updateCartItems = async (userId: number, products: Array<number>) => {
-  //   try {
-  //     await updateCartItems(userId, products);
-  //     console.log("Carrito de compras actualizado exitosamente");
-  //   } catch (error) {
-  //     console.error(
-  //       "Ocurrió un error al actualizar el carrito de compras:",
-  //       error
-  //     );
-  //   }
-  // };
+console.log(productsCart);
 
-  //? logica de compra
-  const handleTotalPrice = (cartItems: any[]) => {
-    const totalPrice = cartItems.reduce(
-      (total, item) => total + item.price * item.cartQuantity,
-      0
-    );
+	//? logica de compra
+	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
+		const totalPrice = cartItems.reduce(
+			(total, item) => total + item.price * item.quantity,
+			0
+		);
 
-    return totalPrice;
-  };
+		return totalPrice;
+	};
 
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
-
+	const handleClearCart = () => {
+		dispatch(clearCart());
+	};
   useEffect(() => {
-    // Cargar productos al backend cuando se accede a la página
-
     const getProductsCart = () => {
-      let count = 0;
-      while (cartItems.length !== count) {
-        const productFound = products.find(
-          (match) => match.id === cartItems[count]
-        );
-        if(productFound){
-          setProductsCart(
-          [...productsCart, productFound]
-        );
-        count++;
+      const tempProductsCart: Product[] = []; // Array temporal para almacenar los productos
+  
+      for (const cartItem of cartItems) {
+        const productFound = products.find((product) => product.id === cartItem.id);
+        if (productFound) {
+          tempProductsCart.push(productFound);
         }
       }
+  
+      setProductsCart(tempProductsCart);
     };
+  
     getProductsCart();
-  }, [cartItems, products, productsCart]);
+  }, [cartItems, products]);
+	// useEffect(() => {
+	// 	// Cargar productos al backend cuando se accede a la página
 
-  return (
-    <div>
-      {cartItems.length === 0 ? (
-        <CartEmpty />
-      ) : (
-        <>
-          <h1 className="cart-title">Carrito de compras</h1>
-          <button onClick={handleClearCart}>Limpiar carrito</button>
-          <div className="cards-container">
-            {productsCart.map((item: Product, index: number) => (
-              <CartItem key={index} item={item} index={index} />
-            ))}
-          </div>
+	// 	const getProductsCart = () => {
+	// 		let count = 0;
+	// 		while (cartItems?.length !== count) {
+	// 			const productFound = products.find(
+	// 				(match) => match.id === cartItems[count].id
+	// 			);
+	// 			if (productFound) {
+	// 				setProductsCart([...productsCart, productFound]);
+	// 			}
+  //       count++;
+	// 		}
+	// 	};
+	// 	getProductsCart();
+	// }, [cartItems, products]);
 
-          <div className="cartTotal-container">
-            <h2 className="cart__total">
-              Precio Final: $
-              {cartPrice?.toLocaleString("es-AR", {
-                minimumFractionDigits: 0,
-              })}
-            </h2>
-          </div>
-          <PaymentButton product={productsCart} />
-        </>
-      )}
-    </div>
-  );
+	return (
+		<div>
+			{cartItems.length === 0 ? (
+				<CartEmpty />
+			) : (
+				<>
+					<h1 className="cart-title">Carrito de compras</h1>
+					<button onClick={handleClearCart}>Limpiar carrito</button>
+					<div className="cards-container">
+						{productsCart.map((item: Product, index: number) => (
+							<CartItem key={index} item={item} index={index} />
+						))}
+					</div>
+
+					<div className="cartTotal-container">
+						<h2 className="cart__total">
+							{`Precio Final: ${handleTotalPrice(cartItems)}`}
+						</h2>
+					</div>
+					<PaymentButton {...cartItems} />
+				</>
+			)}
+		</div>
+	);
 };
 
 export default Cart;
+

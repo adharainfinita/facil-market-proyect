@@ -1,6 +1,6 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
-import { Product } from "../utils/interfaces";
+import { BuyProduct } from "../utils/interfaces";
 
 export const getAllItems = async (userId: number) => {
   try {
@@ -22,7 +22,7 @@ export const addItem = async (userId: number, products: number[]) => {
   }
 }
 
-export const updateItem = async (userId: number, products: Product) =>{
+export const updateItem = async (userId: number, products: Array<BuyProduct>) =>{
     try{
         const res = await axios.put(`${URL_HOST}/cart/${userId}`, products)
         return res.data;

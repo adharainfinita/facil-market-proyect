@@ -16,7 +16,7 @@ export interface BasicData {
 export interface Cart {
 	id: number;
 	userID: number;
-	products: Array<number>
+	products: Array<BuyProduct>
 }
 
 export interface AnalyticsData {
@@ -50,7 +50,7 @@ export interface Date {
 export interface Cart {
 	id: number;
 	userID: number;
-	products: Array<Product>;
+	products: Array<BuyProduct>;
 }
 
 

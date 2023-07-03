@@ -48,6 +48,8 @@ import ProductEdit from "./components/ProductEdit";
 import NotFound from "./errors/NotFound";
 import ShoppingHistory from "./components/Shoppinghistory";
 import Cart from "./pages/cart/Cart";
+import { startCart } from "./redux/features/cartSlice";
+import { addItem } from "./services/cartServicer";
 // import Cart from "./pages/Cart/Cart"
 
 const App = () => {
@@ -103,7 +105,12 @@ const App = () => {
             image: response.data.user.image,
             admin: response.data.user.admin,
           };
+        const fetchCart = async () => {
+          const result = await addItem(Number(id), []);
+          dispatch(startCart(result));
           dispatch(userLogin(data));
+        }
+        fetchCart()
         })
         .catch((error) => {
           //? mejorar este error
