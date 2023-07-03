@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { changeItemsCart } from "../../controllers/cart.controllers";
 
-export const removeItem = async (req: Request, res: Response) => {
+export const updateItem = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const cart = req.body;
