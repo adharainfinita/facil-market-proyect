@@ -35,7 +35,7 @@ export const createOrder = async (product: productProps) => {
 			email: "adharanosalevich@gmail.com",
 			phone: {
 				area_code: "11",
-				number: "22223333",
+				number: 22223333,
 			},
 			identification: {
 				type: "DNI",
