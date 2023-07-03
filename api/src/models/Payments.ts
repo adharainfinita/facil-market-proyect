@@ -1,6 +1,6 @@
 import { Table, Column, Model, DataType } from "sequelize-typescript";
 import moment from "moment";
-import { resumeProps } from "../interfaces/propsModel";
+import Product from "./Product";
 
 @Table({ tableName: "payments" })
 class Payments extends Model {
@@ -67,10 +67,10 @@ class Payments extends Model {
 	limitDate!: Date;
 
 	@Column({
-		type: DataType.JSON,
+		type: DataType.ARRAY(DataType.JSON),
 		allowNull: false,
 	})
-	resume!: resumeProps;
+	items!: Array<Product>;
 
 	@Column({
 		type: DataType.DATE,
