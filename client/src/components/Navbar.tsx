@@ -39,7 +39,9 @@ function Navbar() {
           <li>Productos</li>
         </Link>
 
-        <li>Nosotros</li>
+        <Link to="/about">
+          <li>Nosotros</li>
+        </Link>
       </ul>
 
       <div className="nav__user">

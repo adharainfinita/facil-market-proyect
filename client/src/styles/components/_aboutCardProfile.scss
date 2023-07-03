@@ -1,0 +1,24 @@
+.conteiner-about-contributors {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	height: fit-content;
+	width: fit-content;
+}
+.image-about-contributors {
+	width: 12rem;
+	height: 12rem;
+	border-radius: 50%;
+	border: 2px solid black;
+}
+
+.title-about-contributors {
+	font-size: 1.3rem;
+}
+
+.redes-about-contributors {
+	display: flex;
+	gap: 1rem;
+}
