@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
-import { getAllItems } from "../../services/cartServicer";
+
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
-import { startCart } from "../../redux/features/cartSlice";
 
 const Cart = () => {
 	const dispatch = useDispatch();
@@ -16,13 +15,11 @@ const Cart = () => {
 	const cartItems = useSelector(
 		(state: RootState) => state.cart.cartItems.products
 	);
-	console.log(cartItems)
-	const [quantities, setQuantitiees] = useState<number[]>([]);
-	const products = useSelector((state: RootState) => state.product.products);
-	const [productsCart, setProductsCart] = useState<Product[]>([]);
-	const currentUser = useSelector((state: RootState) => state.user.userLogin.user.id);
 
-	/* console.log(productsCart); */
+	console.log(cartItems);
+
+	const products = useSelector((state: RootState) => state.product.products);
+	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
 
 	//? logica de compra
 	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
@@ -40,7 +37,6 @@ const Cart = () => {
 	useEffect(() => {
 		const getProductsCart = () => {
 			const tempProductsCart: Product[] = []; // Array temporal para almacenar los productos
-			const tempQuantiries = [];
 
 			for (const cartItem of cartItems) {
 				const productFound = products.find(
@@ -48,33 +44,14 @@ const Cart = () => {
 				);
 				if (productFound) {
 					tempProductsCart.push(productFound);
-					tempQuantiries.push(cartItem.quantity);
 				}
 			}
 
-			setProductsCart(tempProductsCart);
-			setQuantitiees(tempQuantiries);
+			setProductsCart(cartItems);
 		};
 
 		getProductsCart();
-
 	}, [cartItems, products]);
-
-	/* useEffect (() => {
-		const fetchItems = async () => {
-			try {
-				const response = await getAllItems(Number(currentUser));
-				if (response) {
-					dispatch(startCart(response));
-				} else {
-					console.error("No existen items");
-				}
-			} catch (error) {
-				console.error("Error al obtener las items:", error);
-			}
-		};
-		fetchItems();
-	}, [dispatch]) */
 	// useEffect(() => {
 	// 	// Cargar productos al backend cuando se accede a la página
 
@@ -94,31 +71,27 @@ const Cart = () => {
 	// }, [cartItems, products]);
 
 	return (
-		<div>
+		<div className="cart-conteiner">
 			{cartItems.length === 0 ? (
 				<CartEmpty />
 			) : (
-				<>
-					<h1 className="cart-title">Carrito de compras</h1>
-					<button onClick={handleClearCart}>Limpiar carrito</button>
-					<div className="cards-container">
-						{productsCart.map((item: Product, index: number) => (
-							<CartItem
-								key={index}
-								item={item}
-								quantities={quantities[index]}
-								index={index}
-							/>
-						))}
-					</div>
+				<div className="cart-conteiner">
+					<section className="cart-section">
+						<h1 className="cart-title">Carrito de compras</h1>
+						<button onClick={handleClearCart}>Limpiar carrito</button>
+					</section>
 
-					<div className="cartTotal-container">
+					{cartItems.map((item: BuyProduct, index: number) => (
+						<CartItem key={index} item={item} index={index} />
+					))}
+
+					<section className="cart-section">
 						<h2 className="cart__total">
 							{`Precio Final: ${handleTotalPrice(cartItems)}`}
 						</h2>
-					</div>
-					<PaymentButton {...cartItems} />
-				</>
+						<PaymentButton {...cartItems} />
+					</section>
+				</div>
 			)}
 		</div>
 	);
