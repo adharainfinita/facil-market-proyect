@@ -19,7 +19,6 @@ export const createOrder = async (products: any) => {
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
 
-	console.log(products);
 
 	const result = await mercadopago.preferences.create({
 		/* 		items: [
@@ -43,7 +42,7 @@ export const createOrder = async (products: any) => {
 				category_id: String(product.categoryID),
 				currency_id: "ARS",
 				picture_url: product.image,
-				quantity: product.unities,
+				quantity: product.quantity,
 			};
 		}),
 
@@ -52,7 +51,7 @@ export const createOrder = async (products: any) => {
 			email: "adharanosalevich@gmail.com",
 			phone: {
 				area_code: "54",
-				number: "3644123456",
+				number: 3644123456,
 			},
 			identification: {
 				type: "DNI",
@@ -100,7 +99,6 @@ export const createNewPayment = async (data: any) => {
 			userID: data.additional_info.items[0].id,
 		},
 	});
-	console.log(sellerFound);
 
 	const currentDate = new Date();
 	const currentDay = currentDate.getDate();

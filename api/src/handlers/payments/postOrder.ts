@@ -7,7 +7,6 @@ const postOrder = async (req: Request, res: Response) => {
 
 	if (products) {
 		const productsArray: any = Object.values(products);
-		console.log(productsArray);
 		const response = await createOrder(productsArray);
 		return res.status(200).send(response.body);
 	}

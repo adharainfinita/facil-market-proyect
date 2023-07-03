@@ -15,6 +15,9 @@ const Cart = () => {
 	const cartItems = useSelector(
 		(state: RootState) => state.cart.cartItems.products
 	);
+
+	console.log(cartItems);
+	
 	const products = useSelector((state: RootState) => state.product.products);
 	const [productsCart, setProductsCart] = useState<Product[]>([]);
 
@@ -46,6 +49,7 @@ const Cart = () => {
 				}
 			}
 
+			
 			setProductsCart(tempProductsCart);
 		};
 
