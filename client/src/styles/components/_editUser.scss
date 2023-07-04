@@ -15,17 +15,21 @@
     padding: 2rem;
   }
   &-form {
+     font-family: map-get($fonts, "sans-serif");
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     h2 {
+       font-family: map-get($fonts, "sans-serif");
       margin-bottom: 50px;
     }
     label {
+       font-family: map-get($fonts, "sans-serif");
       margin-bottom: 0.2rem;
       color: gray;
     }
     input {
+       font-family: map-get($fonts, "sans-serif");
       margin-bottom: 1rem;
       outline: none;
       border: none;

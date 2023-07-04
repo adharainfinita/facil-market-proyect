@@ -19,6 +19,7 @@
       rgba(0, 0, 0, 0.22) 0px 10px 10px;
   }
   &-title {
+     font-family: map-get($fonts, "sans-serif");
     color: rgba(0, 0, 0, 0.9);
     font-size: 1.7rem;
     font-weight: 600;
@@ -26,6 +27,7 @@
     overflow-wrap: break-word;
   }
   &-button {
+     font-family: map-get($fonts, "sans-serif");
     box-shadow: inset 0px -3px 7px 0px #29bbff;
     background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
     background-color: #2dabf9;
@@ -50,6 +52,7 @@
     }
   }
   &-text {
+     font-family: map-get($fonts, "sans-serif");
     text-align: center;
     color: #3483fa;
     font-size: 22px;
@@ -65,11 +68,13 @@
   background-color: #f8f8f8;
 
   h2 {
+     font-family: map-get($fonts, "sans-serif");
     text-align: center;
     margin-bottom: 20px;
   }
 
   label {
+     font-family: map-get($fonts, "sans-serif");
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
@@ -79,6 +84,7 @@
   input[type="text"],
   input[type="number"],
   textarea {
+     font-family: map-get($fonts, "sans-serif");
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -89,6 +95,7 @@
   }
 
   textarea {
+     font-family: map-get($fonts, "sans-serif");
     max-width: 355px;
     max-height: 80px;
   }
@@ -110,6 +117,7 @@
   }
 
   p {
+     font-family: map-get($fonts, "sans-serif");
     font-size: 14px;
     color: #da1616;
     font-weight: 600;
@@ -134,6 +142,7 @@
       gap: 5px;
     }
     label {
+       font-family: map-get($fonts, "sans-serif");
       margin: 0;
       cursor: pointer;
     }
