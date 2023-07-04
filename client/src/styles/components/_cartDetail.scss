@@ -25,11 +25,13 @@
 }
 
 .cart-detail-btn {
+	font-family: map-get($fonts, "sans-serif");
 	width: 2rem;
 	height: 2rem;
 }
 
 .cart-detail-quantity {
+	font-family: map-get($fonts, "sans-serif");
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -39,6 +41,7 @@
 }
 
 .cart-detail-btn-quantity {
+	font-family: map-get($fonts, "sans-serif");
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

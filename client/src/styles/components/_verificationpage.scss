@@ -12,11 +12,13 @@
 
 .title-verification {
 	font-size: 24px;
+	font-family: map-get($fonts, "sans-serif");
 	margin-bottom: 10px;
 }
 
 .text-verification {
 	color: #333333;
+	font-family: map-get($fonts, "sans-serif");
 	margin-bottom: 10px;
 }
 
@@ -31,6 +33,7 @@
 
 .button-verification a {
 	color: #ffffff;
+	font-family: map-get($fonts, "sans-serif");
 	text-decoration: none;
 }
 

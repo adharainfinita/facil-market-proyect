@@ -198,7 +198,7 @@ const ProductEdit = () => {
         <div className="edit-detail-product">
           {editMode ? editModePrevImages() : contentPrevImages()}
           <div className="edit-detail-product-image">
-            <img src={selectedImage} alt={product.name} />
+            <img className="edit__img" src={selectedImage} alt={product.name} />
           </div>
           <div className="edit-conteiner-info">
             <div className="edit-conteiner-name-price">

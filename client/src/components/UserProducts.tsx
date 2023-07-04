@@ -31,7 +31,7 @@ const UserProducts: React.FC = () => {
             })}
           </div>
           <Link to="/profile">
-            <button>Volver al perfil</button>
+            <button className="userProduct__button">Volver al perfil</button>
           </Link>
         </div>
       </div>
