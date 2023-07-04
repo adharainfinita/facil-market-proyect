@@ -187,7 +187,7 @@ const ProductEdit = () => {
       categoryName: categoryName,
     });
 
-    updateProduct(content);
+    updateProduct(product.id ,content);
 
     if (editMode) {
       setEditMode(false);
