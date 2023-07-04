@@ -43,7 +43,7 @@ const Reviews: React.FC = () => {
 				const reviewsData: Review[] = await getAllReviewsProduct(product.id);
 				setReviews(reviewsData);
 
-				// Verificar si el usuario actual ya ha dejado una reseña
+				//? Verificar si el usuario actual ya ha dejado una reseña
 				const hasReviewed = reviewsData.some(
 					(review) => review.fullName === fullName
 				);
@@ -73,14 +73,14 @@ const Reviews: React.FC = () => {
 		fetchPurchases();
 	}, [product.unities]);
 
-	// Maneja los comentarios
+	//? Maneja los comentarios
 	const handleCommentChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement>
 	) => {
 		setComment(event.target.value);
 	};
 
-	// Submitea a la base de datos
+	//? Submitea a la base de datos
 	const submitReview = async () => {
 		if (hasReviewed) {
 			console.log("El usuario ya ha dejado una reseña");
@@ -114,10 +114,10 @@ const Reviews: React.FC = () => {
 				);
 			}
 
-			// Marcar que el usuario ha dejado una reseña
+			//? Marcar que el usuario ha dejado una reseña
 			setHasReviewed(true);
 
-			// Volver a cargar las reseñas actualizadas
+			//? Volver a cargar las reseñas actualizadas
 			const reviewsData: Review[] = await getAllReviewsProduct(product.id);
 			setReviews(reviewsData);
 		} catch (error) {
@@ -125,12 +125,12 @@ const Reviews: React.FC = () => {
 		}
 	};
 
-	// Controlador de las estrellas
+	//? Controlador de las estrellas
 	const handleRatingChange = async (newRating: number) => {
 		setRating(newRating);
 	};
 
-	// elimina las reviews
+	//? elimina las reviews
 	const handleDeleteReview = async (reviewId: number) => {
 		try {
 			await deleteReview(reviewId);

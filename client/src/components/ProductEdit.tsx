@@ -193,8 +193,6 @@ const ProductEdit = () => {
 		if (editMode) {
 			setEditMode(false);
 		}
-
-		console.log(content);
 	};
 
 	return (
