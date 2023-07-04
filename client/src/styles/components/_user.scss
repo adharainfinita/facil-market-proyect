@@ -27,7 +27,6 @@
     background: #f3ecec;
 
     &-name {
-      font-family: map-get($fonts, "sans-serif");
       display: flex;
       align-items: center;
     }
@@ -45,7 +44,6 @@
       margin-right: 15px;
     }
     h4 {
-      font-family: map-get($fonts, "sans-serif");
       font-size: 15px;
       font-weight: 500;
       color: #111;

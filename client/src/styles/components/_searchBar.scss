@@ -10,7 +10,6 @@
 	display: flex;
 
 	&__term {
-		font-family: map-get($fonts, "sans-serif");
 		width: 100%;
 		border: 3px solid #1e428a;
 		border-right: none;
@@ -24,7 +23,6 @@
 		}
 	}
 	&__button {
-		font-family: map-get($fonts, "sans-serif");
 		display: flex;
 		align-items: center;
 		justify-content: center;

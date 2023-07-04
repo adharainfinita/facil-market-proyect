@@ -30,29 +30,26 @@
   }
 
   .text {
-     font-family: map-get($fonts, "sans-serif");
     height: 35%;
     position: relative;
     p {
-       font-family: map-get($fonts, "sans-serif");
+
       text-transform: uppercase;
       color: #aeaeae;
       font-size: 13px;
       margin: 5px 0px;
     }
     h3 {
-       font-family: map-get($fonts, "sans-serif");
       font-size: 18px;
       margin: 10px 0px;
     }
     h4 {
-       font-family: map-get($fonts, "sans-serif");
+
       color: green;
       font-size: 18px;
 			margin-bottom: 5px;
     }
     span {
-       font-family: map-get($fonts, "sans-serif");
       color: #00000093;
     }
   }

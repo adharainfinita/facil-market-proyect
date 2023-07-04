@@ -30,14 +30,12 @@
 			width: 100%;
 
 			h2 {
-				 font-family: map-get($fonts, "sans-serif");
 				font-size: 1.1rem;
 				letter-spacing: 0.1rem;
 				font-weight: bold;
 			}
 
 			h3 {
-				 font-family: map-get($fonts, "sans-serif");
 				font-size: 1rem;
 				letter-spacing: 0.1rem;
 				text-align: start;
@@ -121,7 +119,6 @@
 				text-align: start;
 
 				.detail-product-name {
-					 font-family: map-get($fonts, "sans-serif");
 					font-size: 2rem;
 					font-weight: 600;
 					letter-spacing: 0.1rem;
@@ -129,7 +126,6 @@
 				}
 
 				.detail-product-price {
-					 font-family: map-get($fonts, "sans-serif");
 					font-size: 2.5rem;
 				}
 			}
@@ -145,7 +141,6 @@
 				gap: 1rem;
 
 				.container-description {
-					font-family: map-get($fonts, "sans-serif");
 					display: flex;
 					flex-direction: column;
 					text-align: start;
@@ -155,7 +150,6 @@
 					gap: 0.5rem;
 
 					.detail-product-description {
-						 font-family: map-get($fonts, "sans-serif");
 						font-size: 1rem;
 						text-align: justify;
 						padding-right: 1rem;
@@ -167,7 +161,6 @@
 
 		/* Info vendedor */
 		.detail-product-sales {
-			font-family: map-get($fonts, "sans-serif");
 			display: flex;
 			flex-direction: column;
 			border: 3px solid #dadada;
@@ -180,7 +173,6 @@
 			height: fit-content;
 
 			.detail-product-button {
-				font-family: map-get($fonts, "sans-serif");
 				width: 80%;
 				height: 3rem;
 				margin: 0 auto;

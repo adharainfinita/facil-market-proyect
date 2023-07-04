@@ -30,14 +30,13 @@
 	text-align: center; /* Centra el texto horizontalmente */
 
 	h1 {
-		 font-family: map-get($fonts, "sans-serif");
+
 		font-size: 2rem;
 		letter-spacing: 1px;
 		font-weight: bold;
 	}
 
 	p {
-		 font-family: map-get($fonts, "sans-serif");
 		font-size: 1rem;
 		letter-spacing: 1px;
 		font-weight: bold;

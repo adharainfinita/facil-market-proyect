@@ -10,7 +10,6 @@
 		p {
 			color: map-get($colors, "footer-font");
 			font-size: 1.2rem;
-			font-family: map-get($fonts, "sans-serif");
 			line-height: 30px;
 			margin: 20px 0;
 		}
@@ -18,7 +17,6 @@
 		h4 {
 			margin-bottom: 1.5rem;
 			font-size: 20px;
-			font-family: map-get($fonts, "sans-serif");
 		}
 
 		li {
@@ -26,7 +24,6 @@
 
 			a {
 				display: block;
-				font-family: map-get($fonts, "sans-serif");
 				color: map-get($colors, "footer-font");
 				font-size: 20px;
 				font-weight: 400;
@@ -42,7 +39,6 @@
 			a {
 				display: inline-block;
 				font-size: 22px;
-				font-family: map-get($fonts, "sans-serif");
 				color: map-get($colors, "footer-font");
 				margin-right: 20px;
 				transition: all 0.4s ease;
