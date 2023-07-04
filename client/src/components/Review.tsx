@@ -22,7 +22,7 @@ const Reviews: React.FC = () => {
 	const [reviews, setReviews] = useState<Review[]>([]);
 
 	const [hasReviewed, setHasReviewed] = useState(false);
-	const [hasBuy, setHasBuy] = useState(false);
+	//const [hasBuy, setHasBuy] = useState(false);
 	const [userProduct, setUserProduct] = useState(false);
 	const [showAllReviews, _setShowAllReviews] = useState(false);
 
@@ -64,7 +64,7 @@ const Reviews: React.FC = () => {
 					(purchase: Purchase) => purchase.productId === product.id
 				);
 				if (findProduct) {
-					setHasBuy(true);
+					//setHasBuy(true);
 				}
 			} catch (error: any) {
 				console.log(error);
@@ -169,7 +169,7 @@ const Reviews: React.FC = () => {
 					<div>
 						<p>Ya has dejado una reseña</p>
 					</div>
-				) : userProduct || hasBuy === false || !session ? null : (
+				) : userProduct || !session ? null : (
 					<div>
 						<section className="detail-product-section">
 							<h2>Reseñas:</h2>

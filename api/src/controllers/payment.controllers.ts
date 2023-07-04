@@ -10,15 +10,15 @@ import { createPurchase } from "./purchaseController";
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
-export const createOrder = async (products: Array<BuyProduct>) => {
-	//? Necesito que además del producto, me envíen el id del usuario logueado que está
-	//? ejecutando la compra
-	//? lo busco en  la db y lleno los campos de payer
+export const createOrder = async (
+	userID: number,
+	products: Array<BuyProduct>,
+) => {
+	const userInfo = await User.findByPk(userID);
+
 	mercadopago.configure({
 		access_token: TOKEN!,
 	});
-
-	//? Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
 
 	const result = await mercadopago.preferences.create({
 		items: products.map((product: BuyProduct) => {
@@ -34,12 +34,12 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		}),
 
 		payer: {
-			name: "adharanosalevich@gmail.com",
-			email: "adharanosalevich@gmail.com",
-			phone: {
-				area_code: "54",
-				number: "3644123456",
-			},
+			name: userInfo?.email,
+			email: userInfo?.email,
+			// phone: {
+			// 	area_code: "54",
+			// 	number: '3644123456'},,
+
 			identification: {
 				type: "DNI",
 				number: "40404040",
@@ -54,7 +54,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `localhost:5173/products`,
+			success: `${URL_HOST}/products`,
 			failure: `${URL_HOST}/products`,
 			pending: `${URL_HOST}/products`,
 		},
@@ -89,7 +89,6 @@ export const createNewPayment = async (data: any) => {
 		let idProduct = Number(data.additional_info.items[count].id);
 		sellersFound.push(await Product.findByPk(idProduct));
 
-		//? ESTO ES DE ALGUIEN, yo no lo tenia
 		await createPurchase({
 			userId: buyerFound!.id,
 			productId: sellersFound[count]?.id,
