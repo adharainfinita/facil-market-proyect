@@ -26,7 +26,6 @@
 		flex-grow: 1;
 		display: flex;
 		justify-content: center;
-		margin-right: 250px;
 	}
 
 	&__bottom-row {
@@ -44,7 +43,7 @@
 		font-size: 1.1rem;
 		gap: 10rem;
 		flex-grow: 1;
-		margin-left: 185px;
+		margin-right: 100px;
 	}
 
 	&__user {

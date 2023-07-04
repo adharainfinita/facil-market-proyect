@@ -34,6 +34,24 @@ function Navbar() {
 				<div className="nav__search-bar">
 					<SearchBar />
 				</div>
+
+				<div className="nav__user">
+					<Link to="/cart">
+						<AiOutlineShoppingCart className="nav__icon" />
+					</Link>
+
+					<Link to="/vender">
+						<button className="nav__button-sell">Vender</button>
+					</Link>
+
+					{session && <User handleLogOut={handleLogOut} />}
+
+					{!session && (
+						<button className="nav__button-login" onClick={handleLogin}>
+							Iniciar Sesión
+						</button>
+					)}
+				</div>
 			</div>
 
 			<div className="nav__bottom-row">
@@ -49,24 +67,7 @@ function Navbar() {
 					<Link to="/about">
 						<li>Nosotros</li>
 					</Link>
-					<Link to="/vender">
-						<button className="nav__button-sell">Vender</button>
-					</Link>
 				</ul>
-
-				<div className="nav__user">
-					<Link to="/cart">
-						<AiOutlineShoppingCart className="nav__icon" />
-					</Link>
-
-					{session && <User handleLogOut={handleLogOut} />}
-
-					{!session && (
-						<button className="nav__button-login" onClick={handleLogin}>
-							Iniciar Sesión
-						</button>
-					)}
-				</div>
 			</div>
 		</nav>
 	);
