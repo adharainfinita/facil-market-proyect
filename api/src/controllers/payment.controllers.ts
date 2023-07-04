@@ -5,14 +5,14 @@ import Payments from "../models/Payments";
 import User from "../models/User";
 import Product from "../models/Product";
 import { transporter } from "../config/mailer";
-import { createPurchase } from "./purchaseController";
+//import { createPurchase } from "./purchaseController";
 
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
 export const createOrder = async (
 	userID: number,
-	products: Array<BuyProduct>,
+	products: Array<BuyProduct>
 ) => {
 	const userInfo = await User.findByPk(userID);
 
@@ -54,7 +54,7 @@ export const createOrder = async (
 		auto_return: "approved",
 
 		back_urls: {
-			success: `${URL_HOST}/products`,
+			success: `${URL_HOST}/approved`,
 			failure: `${URL_HOST}/products`,
 			pending: `${URL_HOST}/products`,
 		},
@@ -89,11 +89,11 @@ export const createNewPayment = async (data: any) => {
 		let idProduct = Number(data.additional_info.items[count].id);
 		sellersFound.push(await Product.findByPk(idProduct));
 
-		await createPurchase({
+		/* 	await createPurchase({
 			userId: buyerFound!.id,
-			productId: sellersFound[count]?.id,
+			products: sellersFound[count]!.id,
 			paymentId: data.id + sellersFound[count]?.userID,
-		});
+		}); */
 
 		const newPayment = await Payments.create({
 			order: data.id + sellersFound[count]?.userID,
