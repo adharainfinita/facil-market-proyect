@@ -1,12 +1,4 @@
-import {
-	Table,
-	Model,
-	ForeignKey,
-	BelongsTo,
-	Column,
-	DataType,
-} from "sequelize-typescript";
-import Product from "./Product";
+import { Table, Model, ForeignKey, BelongsTo, Column, DataType } from "sequelize-typescript";
 import User from "./User";
 
 @Table({ tableName: "purchases" })
@@ -22,21 +14,17 @@ class Purchase extends Model {
 	@Column
 	userId!: number;
 
-	@ForeignKey(() => Product)
-	@Column
-	productId!: number;
+	@Column({ type: DataType.ARRAY(DataType.JSON) })
+  	products!: number[];
 
 	@Column({
 		type: DataType.INTEGER,
-		allowNull: false,
+		allowNull: false
 	})
 	paymentId!: number;
 
 	@BelongsTo(() => User)
-	user!: User;
-
-	@BelongsTo(() => Product)
-	product!: Product;
+	user!: User;  
 }
 
 export default Purchase;

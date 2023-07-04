@@ -5,12 +5,12 @@ import { purchases } from "../interfaces/propsModel";
 
 export const createPurchase = async ({
 	userId,
-	productId,
+	products,
 	paymentId,
 }: purchases) => {
 	const [purchase, created] = await Purchase.findOrCreate({
 		where: { paymentId },
-		defaults: { userId, productId, paymentId },
+		defaults: { userId, products, paymentId },
 	});
 
 	if (created) {
@@ -25,8 +25,7 @@ export const getPurchaseByUser = async (id: number) =>
 	await Purchase.findAll({
 		where: {
 			userId: id,
-		},
-		include: ["product"],
+		}
 	});
 
 //-----------------------
