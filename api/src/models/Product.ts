@@ -95,7 +95,7 @@ class Product extends Model {
 		allowNull: false,
 		defaultValue: true,
 	})
-	active!: string;
+	active!: boolean;
 
 	//? Relaciones
 	@ForeignKey(() => Category)

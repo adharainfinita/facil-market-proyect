@@ -84,7 +84,7 @@ export const findProductByName = async (name: string) => {
 	return responseDB;
 };
 
-//?  search id
+//? buscar productos por name
 export const findProductById = async (id: number) => {
 	if (!id) {
 		throw new Error("The id cannot be a string");
@@ -99,7 +99,7 @@ export const findProductById = async (id: number) => {
 	return product;
 };
 
-// ? PUT
+//? Actualizar un producto
 export const changeProductProperties = async (
 	product: localProps,
 	id: number
@@ -121,19 +121,17 @@ export const updateStock = async (id: number, unities: number) => {
 	return productFound;
 };
 
-// ? delete
-export const deleteProductProperties = async (
-	id: number,
-	changeActive: string
-) => {
-	const product = await Product.findByPk(id);
+//? Delete product
+export const deleteProductProperties = async (productID: number) => {
+	const product = await Product.findByPk(productID);
+
 	if (!product) {
 		throw new Error("No se encontro el producto.");
 	}
 
-	product.active = changeActive;
+	product.active = !product.active;
 
 	await product.save();
 
-	return { message: `Estado del producto: ${changeActive}`, prod: product };
+	return { message: `Estado del producto: ${product.active}`, prod: product };
 };
