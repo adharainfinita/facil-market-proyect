@@ -1,58 +1,57 @@
 .User__products {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.conteiner-my-products {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid #1d428a;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  border-radius: 20px;
+}
+
+/* Estilos para centrar todo el contenido */
+.conteiner2-my-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+button {
+  background-color: #1d428a;
+  color: #ffffff;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s; /* Transición suave */
+
+  &:hover {
+    background-color: #0c2c5a; /* Color al pasar el cursor */
   }
-  
-  .conteiner-my-products {
-	background-color: rgb(255, 255, 255);
-	border: 2px solid #1d428a;
-	width: 90%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	margin: 20px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-	height: 100vh;
-	border-radius: 20px;
+
+  &:active {
+    background-color: #08203f; /* Color al pulsar el botón */
   }
-  
-  /* Estilos para centrar todo el contenido */
-  .conteiner2-my-products {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-  }
-  
-  button {
-	background-color: #1d428a;
-	color: #ffffff;
-	padding: 5px 5px;
-	border: none;
-	border-radius: 4px;
-	text-decoration: none;
-	transition: background-color 0.3s; /* Transición suave */
-  
-	&:hover {
-	  background-color: #0c2c5a; /* Color al pasar el cursor */
-	}
-  
-	&:active {
-	  background-color: #08203f; /* Color al pulsar el botón */
-	}
-  }
-  
-  .product-card {
-	position: relative;
-	transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
-  }
-  
-  .product-card:hover {
-	transform: translateY(-5px); /* Levantar la tarjeta */
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), 0px 8px 15px rgba(0, 0, 0, 0.1); /* Brillo */
-  }
-  
+}
+
+.product-card {
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* Levantar la tarjeta */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), 0px 8px 15px rgba(0, 0, 0, 0.1); /* Brillo */
+}
