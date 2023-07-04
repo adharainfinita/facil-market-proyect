@@ -11,9 +11,8 @@ import {
 import { user } from "../utils/interfaces";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { BsBagCheck} from "react-icons/bs";
-
-
+import { BsBagCheck } from "react-icons/bs";
+import { BsPencilFill } from "react-icons/bs";
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -54,6 +53,11 @@ const UserProfile: React.FC = () => {
       if (newImage !== "") {
         dispatch(changeImage(newImage));
       }
+
+      setNewPassword("");
+      setNewName("");
+      setNewEmail("");
+      setShowFields(false);
     } catch (error) {
       console.log("Error al actualizar los campos:", error);
     }
@@ -83,85 +87,93 @@ const UserProfile: React.FC = () => {
   };
 
   useEffect(() => {
+    if (newImage !== "") {
+      dispatch(changeImage(newImage));
+    }
+  }, [newImage, dispatch]);
+
+  useEffect(() => {
     if (isPasswordChanged) {
       console.log("Contraseña actualizada exitosamente");
     }
   }, [isPasswordChanged]);
 
   return (
-  <div className="Center">
-    <div className="Profile__conteiner">
-      <div className="Profile__data">
-        <img src={userLogin.user.image} alt="user" className="nav__userLogo" />
-        <h2>Nombre: {userLogin.user.fullName}</h2>
-        <h2>Email: {userLogin.user.email}</h2>
-        {/* <h2>
-          Contraseña: {showPassword ? userLogin.user.password : "********"}
-        </h2>
-        <button onClick={() => setShowPassword(!showPassword)}>
-          {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-        </button> */}
-        {/* <p>Deseas cambiar tu contraseña?</p> */}
-        <div className="Profile__myProducts">
-          <h4>
-            <BsBagCheck className="icon" />
-            <Link to="/ventas">Mis Productos</Link>
-          </h4>
-        </div>
-
-        <button onClick={() => setShowFields(!showFields)}>
-          ⚙ Editar campos
-        </button>
-        {showFields && (
-          <div className="Profile__fields">
-            <div>
-              <h2>Cambiar contraseña</h2>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-              />
-              <button onClick={handleFieldChange}>Guardar contraseña</button>
-            </div>
-            <div>
-              <h2>Cambiar nombre</h2>
-              <input
-                type="text"
-                value={newName}
-                onChange={(event) => setNewName(event.target.value)}
-              />
-              <button onClick={handleFieldChange}>Guardar nombre</button>
-            </div>
-            <div>
-              <h2>Cambiar email</h2>
-              <input
-                type="text"
-                value={newEmail}
-                onChange={(event) => setNewEmail(event.target.value)}
-              />
-              <button onClick={handleFieldChange}>Guardar email</button>
-            </div>
-            <div>
-              <h2>Cambiar imagen</h2>
+    <div className="Center">
+      <div className="Profile__conteiner">
+        <div className="Profile__data">
+          <div>
+            {showFields && (
               <label htmlFor="image-upload" className="change_img_label">
                 <span role="button" tabIndex={0}>
-                  📂
+                  <BsPencilFill className="user__pencil" />
                 </span>
+                <div>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={uploadImage}
+                    style={{ display: "none" }}
+                  />
+                </div>
               </label>
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                onChange={uploadImage}
-                style={{ display: "none" }}
-              />
-              <button onClick={handleFieldChange}>Guardar imagen</button>
-            </div>
+            )}
+            <img
+              src={userLogin.user.image}
+              alt="user"
+              className="nav__userLogo"
+            ></img>
           </div>
-        )}
+          <h2 className="user__name">Nombre: {userLogin.user.fullName}</h2>
+          <h2 className="user__email">Email: {userLogin.user.email}</h2>
+          <div className="Profile__myProducts">
+            <h4>
+              <BsBagCheck className="icon" />
+              <Link to="/ventas">Mis Productos</Link>
+            </h4>
+          </div>
+
+          <button onClick={() => setShowFields(!showFields)}>
+            {showFields ? "Cancelar" : "⚙ Editar campos"}
+          </button>
+          {showFields && (
+            <div className="Profile__fields">
+              <div>
+                <h2>Cambiar contraseña</h2>
+                <input
+                  type="password"
+                  value={newPassword}
+                  placeholder="Ingresa Tu Nueva Contraseña"
+                  onChange={(event) => setNewPassword(event.target.value)}
+                />
+              </div>
+              <div>
+                <h2>Cambiar nombre</h2>
+                <input
+                  type="text"
+                  placeholder="Ingresa Tu Nuevo Nombre"
+                  value={newName}
+                  onChange={(event) => setNewName(event.target.value)}
+                />
+              </div>
+              <div>
+                <h2>Cambiar email</h2>
+                <input
+                  type="text"
+                  placeholder="Ingresa Tu Nuevo Email"
+                  value={newEmail}
+                  onChange={(event) => setNewEmail(event.target.value)}
+                />
+              </div>
+              <button className="profile__save" onClick={handleFieldChange}>
+                Guardar cambios
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
