@@ -15,6 +15,7 @@ interface localProps {
 	price: number;
 	userID: number;
 	categoryID: number;
+	active: boolean;
 }
 
 export const createProduct = async ({
@@ -29,6 +30,7 @@ export const createProduct = async ({
 	price,
 	userID,
 	categoryID,
+	active,
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
@@ -61,6 +63,7 @@ export const createProduct = async ({
 		userName: userFound?.fullName,
 		categoryID: categoryFound?.id,
 		categoryName: categoryFound?.name,
+		active,
 	});
 };
 
@@ -73,7 +76,7 @@ export const findProductByName = async (name: string) => {
 	});
 
 	if (!name) {
-		throw new Error(`No se proporcionó un nombre`);
+		throw new Error(`Se proporcionó un nombre`);
 	}
 
 	if (!Object.keys(responseDB).length) {
@@ -83,7 +86,7 @@ export const findProductByName = async (name: string) => {
 	return responseDB;
 };
 
-///// search id /////
+//?  search id
 export const findProductById = async (id: number) => {
 	if (!id) {
 		throw new Error("The id cannot be a string");
@@ -99,7 +102,7 @@ export const findProductById = async (id: number) => {
 };
 
 // import { productProps } from "../interfaces/propsModel";
-
+// ? PUT
 export const changeProductProperties = async (
 	product: localProps,
 	id: number
@@ -109,3 +112,34 @@ export const changeProductProperties = async (
 	await productFound?.update(product);
 	return productFound;
 };
+
+export const updateStock = async (id: number, unities: number) => {
+	console.log(id, unities);
+
+	const productFound = await Product.findByPk(id);
+
+	if (productFound && unities) {
+		const updatedUnits = productFound.unities - unities;
+		await productFound.update({ unities: updatedUnits });
+	}
+
+	return productFound;
+};
+// ? delete
+
+export const deleteProductProperties = async (
+  id: number,
+  changeActive: string
+) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    throw new Error("Producto no encontrado");
+  }
+
+  product.active = changeActive;
+
+  await product.save();
+
+  return { message: `Estado del producto: ${changeActive}`, prod: product };
+};
+

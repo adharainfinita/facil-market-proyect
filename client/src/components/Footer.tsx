@@ -1,8 +1,8 @@
-import React from "react";
 import logo from "../assets/marketplace_logo.png";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
-const Footer: React.FC = () => {
+const Footer = () => {
 	return (
 		<footer className="footer">
 			<div className="footer-content">
@@ -26,36 +26,38 @@ const Footer: React.FC = () => {
 					<a href="/">Inicio</a>
 				</li>
 				<li>
-					<a href="#">Nosotros</a>
+					<Link to="/about">
+						Nosotros
+					</Link>
 				</li>
 				<li>
-					<a href="/products">Market</a>
+					<Link to="/products">Market</Link>
 				</li>
 			</div>
 
 			<div className="footer-content">
 				<h4>Ayuda</h4>
 				<li>
-					<a href="/preguntas_precuentes">FAQS</a>
+					<a href="#">FAQS</a>
 				</li>
 				<li>
 					<a href="#">Política de privacidad</a>
 				</li>
 				<li>
-					<a href="/terminos_y_condiciones">Términos y condiciones</a>
+					<Link to="/terminos_y_condiciones">Términos y condiciones</Link>
 				</li>
 			</div>
 
 			<div className="footer-content">
 				<h4>Mi cuenta</h4>
 				<li>
-					<a href="/login">Iniciar Sesión</a>
+					<Link to="/login">Iniciar Sesión</Link>
 				</li>
 				<li>
-					<a href="/register">Registrarse</a>
+					<Link to="/register">Registrarse</Link>
 				</li>
 				<li>
-					<a href="/vender">Vender</a>
+					<Link to="/vender">Vender</Link>
 				</li>
 			</div>
 		</footer>

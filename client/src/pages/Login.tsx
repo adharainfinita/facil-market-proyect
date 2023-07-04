@@ -8,7 +8,6 @@ import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
-import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -41,6 +40,12 @@ const Login: React.FC = () => {
 		event.preventDefault();
 		try {
 			const response = await logUser(formData);
+
+			if (response.user.active === false) {
+				setMessage("Tu cuenta ha sido desactivada");
+				return;
+			}
+
 			const token = response.token;
 			window.localStorage.setItem("token", token);
 
@@ -59,11 +64,6 @@ const Login: React.FC = () => {
 			<div className="forms">
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
-
-					<div className="google-login">
-						<GoogleAuth />
-					</div>
-					<hr />
 
 					<form onSubmit={handleSubmit}>
 						<div className="input-field">
@@ -118,21 +118,24 @@ const Login: React.FC = () => {
 									Recordarme
 								</label>
 							</div>
-							<Link to="#" className="text">
+							<a href="#" className="text">
 								¿Olvidaste tu contraseña?
-							</Link>
+							</a>
 						</div>
 
 						<div className="input-field button">
 							<input type="submit" value="Iniciar Sesión" />
 						</div>
+						<div className="google-login">
+							<GoogleAuth />
+						</div>
 					</form>
 					<div className="login-signup">
 						<span className="text">
 							¿Aún no tienes una cuenta?
-							<Link to="/register" className="text signup-text">
+							<a href="/register" className="text signup-text">
 								Regístrate aquí
-							</Link>
+							</a>
 						</span>
 					</div>
 				</div>

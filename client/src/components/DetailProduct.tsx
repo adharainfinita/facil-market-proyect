@@ -1,44 +1,53 @@
-import useProduct from "../hooks/useProduct";
-import { BsCardImage } from "react-icons/bs";
-import PaymentButton from "./PaymentButton";
 import { useEffect, useState } from "react";
-import { NotificationType } from "../utils/interfaces";
-import RatingStars from "./ReviewStar";
-import { useDispatch } from "react-redux";
-import { updateRating } from "../redux/features/productSlice";
-import { updateProduct } from "../services/productServices";
+import { BsCardImage } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import useProduct from "../hooks/useProduct";
+import { updateItem } from "../services/cartServicer";
+import { useSelector, useDispatch } from "react-redux";
+import Reviews from "./Review";
+import { BuyProduct, NotificationType } from "../utils/interfaces";
+import { RootState } from "../redux/store";
+
+import { postUserPurchase } from "../services/purchaseServices";
+//import { updateUnities } from "../redux/features/productSlice";
+//import { updateStock } from "../services/productServices";
+import { addToCart } from "../redux/features/cartSlice";
 
 const DetailProduct = () => {
 	const product = useProduct();
-	const dispatch = useDispatch();
+	const currentUser = useSelector((state: RootState) => state.user.userLogin);
+	const items = useSelector(
+		(state: RootState) => state.cart.cartItems.productID
+	);
+
+	const [isReadyToPost, setIsReadyToPost] = useState(false);
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [_rating, setRating] = useState(0);
+	const [error, setError] = useState<string>("");
+	const [stock, setStock] = useState<number>(1);
+
 	const [notification, setNotification] = useState<NotificationType>({
 		isOpen: false,
 		type: null,
 		content: "",
 	});
 
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const status = urlParams.get("status");
+	const dispatch = useDispatch();
 
-		if (status === "approved") {
-			setNotification({
-				content: "Pago aprobado😎",
-				isOpen: true,
-				type: "approved",
-			});
-		}
+	const data: BuyProduct = {
+		id: product.id,
+		name: product.name,
+		price: product.price,
+		image: product.images[0],
+		quantity: stock,
+	};
 
-		if (status === "failure") {
-			setNotification({
-				content: "Pago rechazado😢",
-				isOpen: true,
-				type: "failure",
-			});
-		}
-	}, []);
+	//?fn random
+
+
+
+	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
+		dispatch(addToCart(data));
+	};
 
 	useEffect(() => {
 		if (product?.images.length > 0 && !selectedImage) {
@@ -50,15 +59,83 @@ const DetailProduct = () => {
 		setSelectedImage(image);
 	};
 
-	const handleRatingChange = async (newRating: number) => {
-		dispatch(updateRating(newRating));
-		setRating(newRating);
-		// Actualizar el objeto `product` si es necesario
-
-		const response = await updateProduct(product);
-		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
-		console.log("Nueva calificación:", response.rating);
+	// useEffect(() => {
+	//   const urlParams = new URLSearchParams(window.location.search);
+	//   const status = urlParams.get("status");
+	const handleStockChange = (action: string) => {
+		if (action === "increment") {
+			setStock(stock + 1);
+		} else {
+			setStock(stock - 1);
+		}
 	};
+
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const status = urlParams.get("status");
+
+		const fetchInfo = async () => {
+			const arrayID = items.map((item: BuyProduct) => item.id);
+			await updateItem(Number(currentUser.user.id), arrayID);
+		};
+	
+			fetchInfo();
+		//   if (status === "approved") {
+		//     setNotification({
+		//       content: "Pago aprobado😎",
+		//       isOpen: true,
+		//       type: "approved",
+		//     });
+		//   }
+
+		//   if (status === "failure") {
+		//     setNotification({
+		//       content: "Pago rechazado😢",
+		//       isOpen: true,
+		//       type: "failure",
+		//     });
+		//   }
+		// }, []);
+		if (status === "approved" && currentUser && product.id !== 0) {
+			setIsReadyToPost(true);
+		}
+		if (status === "null") {
+			setNotification({
+				content: "Pago rechazado😢",
+				isOpen: true,
+				type: "failure",
+			});
+		}
+	}, [currentUser, product]);
+
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const paymentId = urlParams.get("payment_id");
+		if (isReadyToPost) {
+			setNotification({
+				content: "Pago aprobado😎",
+				isOpen: true,
+				type: "approved",
+			});
+
+			const postPurchase = async () => {
+				try {
+					const info = {
+						userId: Number(currentUser.user.id),
+						productId: product.id,
+						paymentId: Number(paymentId),
+					};
+					if (info.userId !== 0 && info.productId !== 0) {
+						const responsePurchase = await postUserPurchase(info);
+						return responsePurchase;
+					}
+				} catch (error: any) {
+					setError(error);
+				}
+			};
+			postPurchase();
+		}
+	}, [isReadyToPost]);
 
 	return (
 		<div className="detail-product-container">
@@ -84,25 +161,23 @@ const DetailProduct = () => {
 				</div>
 
 				<div className="conteiner-info">
-					<div className="conteiner-name-price">
-						<h1 className="detail-product-name">{product.name}</h1>
-						<h1 className="detail-product-price">
-							$
-							{product.price.toLocaleString("es-AR", {
-								minimumFractionDigits: 0,
-							})}
-						</h1>
-					</div>
-
 					<div className="detail-product-info">
+						<div className="conteiner-name-price">
+							<h1 className="detail-product-name">{product.name}</h1>
+							<h1 className="detail-product-price">
+								$
+								{product.price.toLocaleString("es-AR", {
+									minimumFractionDigits: 0,
+								})}
+							</h1>
+						</div>
 						<section className="detail-product-section">
 							<h2>Categoria:</h2>
 							<h3>{product.categoryName}</h3>
 						</section>
-
 						<section className="detail-product-section">
-							<h2>Reseñas:</h2>
-							<h3>{product.rating}</h3>
+							<h2>Estrellas:</h2>
+							<h3>{product.rating}⭐</h3>
 						</section>
 
 						<section className="detail-product-section">
@@ -114,13 +189,18 @@ const DetailProduct = () => {
 							</div>
 						</section>
 					</div>
+					<div className="review__cont">
+						<Reviews></Reviews>
+					</div>
 				</div>
 
 				<div className="detail-product-sales">
 					<h2>Informacion sobre el vendedor</h2>
 					<section className="detail-product-section">
 						<h2>Vendedor:</h2>
-						<h3>{product.userName}</h3>
+						<Link to={`/profile/${product.userID}`}>
+							<h3>{product.userName}</h3>
+						</Link>
 					</section>
 
 					<section className="detail-product-section">
@@ -131,26 +211,40 @@ const DetailProduct = () => {
 						<h2>Estado:</h2>
 						<h3>{product.status}</h3>
 					</section>
-
 					<section className="detail-product-section">
 						<h2>Stock:</h2>
 						<h3>{product.stock}</h3>
 					</section>
-					<div className=".detail-product-button">
-						<PaymentButton product={product} />
-					</div>
 
-					<div>
-						<section className="detail-product-section">
-							<h2>Reseñas:</h2>
-							<RatingStars
-								rating={product.rating}
-								onRatingChange={handleRatingChange}
-							/>
-						</section>
+					<section className="detail-product-section">
+						<button className="detail__product_quantity"
+							disabled={stock === 1 ? true : false}
+							onClick={() => handleStockChange("decrement")}
+						>
+							{" "}
+							-{" "}
+						</button>
+						<h3>{stock}</h3>
+						<button className="detail__product_quantity"
+							disabled={stock === product.unities ? true : false}
+							onClick={() => handleStockChange("increment")}
+						>
+							{" "}
+							+{" "}
+						</button>
+					</section>
+
+					<div >
+						<button className="detail-product-button"
+						
+							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+						>
+							Agregar al carrito
+						</button>
 					</div>
 
 					{notification.isOpen && <div>{notification.content}</div>}
+					<p>{error}</p>
 				</div>
 			</div>
 		</div>

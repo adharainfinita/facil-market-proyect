@@ -10,7 +10,7 @@ const { URL_HOST, PORT_CLIENT } = process.env;
 export const createUser = async (authUser: userInterface) => {
 	const userFound = await User.findOne({ where: { email: authUser.email } });
 
-	if (userFound) {
+	if (userFound?.email) {
 		throw new Error("Ya existe una cuenta creada con ese e-mail");
 	}
 
@@ -25,43 +25,6 @@ export const createUser = async (authUser: userInterface) => {
 
 	return newUser;
 };
-
-/* export const createUser = async ({
-	id,
-	fullName,
-	password,
-	email,
-	image,
-}: userInterface) => {
-	const userFound = await findUser({ param: email });
-	if (!userFound) {
-		return await User.create({
-			fullName,
-			password,
-			email,
-			image,
-		});
-	}
-};
- */
-
-/* export const findUser = async ({ param }: any) => {
-	if (typeof param === "number") {
-		return await User.findOne({
-			where: {
-				id: param,
-			},
-		});
-	}
-	const emailExist = await User.findOne({
-		where: {
-			email: param,
-		},
-	});
-	if (emailExist) {
-		throw new Error("This email already exists");
-	}
-}; */
 
 export const userCredentials = async (authLogin: loginData) => {
 	const userExist = await User.findOne({
@@ -94,21 +57,6 @@ export const userCredentials = async (authLogin: loginData) => {
 	};
 
 	return data;
-
-	/* const userInfo = {
-		id: userExist?.id,
-		fullName: userExist?.fullName,
-		email: userExist?.email,
-		image: userExist?.image,
-	};
-
-	if (userExist && userExist.password === authLogin.password) {
-		return userInfo;
-	} else if (userExist && userExist.password !== authLogin.password) {
-		throw new Error("Contraseña incorrecta");
-	} else {
-		throw new Error("Email incorrecto");
-	} */
 };
 
 export const findAllUsers = async () => await User.findAll();
@@ -123,7 +71,7 @@ export const sendEmailToUser = async (email: string, name: string) => {
 		subject: "Te damos la bienvenida a Facil Market",
 		html: `<div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;">
         <img src="https://cspmarketplaceprd.s3.us-west-2.amazonaws.com/media-files/marketplace_logo_large.png" alt="Logo de Facil Market" style="max-width: 200px; margin-bottom: 10px;">
-        <p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 20px; margin-top: 0;">Facil-Market</p>
+        <p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 20px; margin-top: 0;">Facil-Market Team</p>
         <h1 style="color: #333333;">¡Hola, ${name}!</h1>
         <p style="color: #333333;">¡Bienvenid@ a Facil Market! 😎</p>
         <p style="color: #333333;">Estamos encantados de tenerte como parte de nuestra comunidad. Queremos asegurarnos de que tu experiencia sea lo más placentera posible, por lo que estamos aquí para ayudarte en todo lo que necesites.</p>
@@ -137,7 +85,13 @@ export const sendEmailToUser = async (email: string, name: string) => {
 	});
 };
 
-export const changeUser = async (userId: string, updates: object) => {
+interface Updates {
+	fullName: string;
+	email: string;
+	password: string;
+}
+
+export const changeUser = async (userId: string, updates: Updates) => {
 	const user = await User.findByPk(userId);
 
 	// Encuentra y actualiza el usuario por su ID
@@ -145,8 +99,16 @@ export const changeUser = async (userId: string, updates: object) => {
 		throw Error("Usuario no encontrado");
 	}
 
+	if (updates.password) {
+		const encryptPass = await encrypt(updates.password);
+		updates.password = encryptPass;
+	} else {
+		updates.password = user.password;
+	}
+
 	// Actualiza los campos proporcionados en el objeto de actualización
 	await user.update(updates);
+
 	return true;
 	// Object.assign(user, updates);
 	// await user.save();

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { findAllReviews } from "../../controllers/reviewControllers";
+import { findAllReviewsByProductId } from "../../controllers/reviewControllers";
 
 const getAllReviews = async (req: Request, res: Response) => {
 	try {
@@ -11,4 +12,16 @@ const getAllReviews = async (req: Request, res: Response) => {
 	}
 };
 
-export default getAllReviews;
+const getAllReviewsProduct = async (req: Request, res: Response) => {
+	try {
+		const productId = req.params.id; // Obtén el ID del producto de los parámetros de la solicitud
+
+		const reviews = await findAllReviewsByProductId(Number(productId));
+
+		return res.status(200).json(reviews);
+	} catch (error: any) {
+		return res.status(500).json({ error: error.message });
+	}
+};
+
+export { getAllReviews, getAllReviewsProduct };

@@ -2,7 +2,8 @@ import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import User from "./User";
+import User from "../pages/User";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Navbar() {
 	const navigate = useNavigate();
@@ -15,81 +16,62 @@ function Navbar() {
 		navigate("/");
 	};
 
+	const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		navigate("/login");
+	};
+
 	return (
 		<nav className="nav">
-			<Link to="/">
-				<div className="nav__logo">
-					<img width={70} src={logo} alt="marketplace logo" />
-					<h1>Facil Market</h1>
-				</div>
-			</Link>
+	<div className="nav__top-row">
+		<Link to="/">
+			<div className="nav__logo">
+				<img width={70} src={logo} alt="marketplace logo" />
+				<h1>Facil Market</h1>
+			</div>
+		</Link>
 
-			<ul className="nav__items">
-				<Link to="/">
-					<li>Inicio</li>
-				</Link>
-
-				<Link to="/products">
-					<li>Market</li>
-				</Link>
-
-				<li>Nosotros</li>
-
-				
-			</ul>
-
-			
-
-			<div className="nav__user">
+		<div className="nav__search-bar">
 			<SearchBar />
+		</div>
+	</div>
 
-			<Link to="/vender">
-					<button className="nav__button-sell">Vender</button>
+	<div className="nav__bottom-row">
+		<ul className="nav__items">
+			<Link to="/">
+				<li>Inicio</li>
 			</Link>
 
+			<Link to="/products">
+				<li>Productos</li>
+			</Link>
 
-				{session && <User handleLogOut={handleLogOut} />}
+			<Link to="/about">
+				<li>Nosotros</li>
+			</Link>
+			<Link to="/vender">
+				<button className="nav__button-sell">Vender</button>
+			</Link>
 
-				{!session && (
-					<Link to="/login">
-						<button className="nav__button-login">Iniciar Sesión</button>
-					</Link>
-				)}
-			</div>
-		</nav>
+		</ul>
+
+		<div className="nav__user">
+			
+			<Link to="/cart">
+				<AiOutlineShoppingCart className="nav__icon" />
+			</Link>
+
+			{session && <User handleLogOut={handleLogOut} />}
+
+			{!session && (
+				<button className="nav__button-login" onClick={handleLogin}>
+					Iniciar Sesión
+				</button>
+			)}
+		</div>
+	</div>
+</nav>
 	);
-	/* 	<SearchBar />
-
-			<div className="nav__user">
-				{session && (
-					<div>
-						<Link to="/profile">
-							<img
-								src={userLogin.user.image}
-								alt="user"
-								className="nav__userLogo"
-							/>
-							)
-						</Link>
-						<h5 className="nav___userName">{userLogin.user.fullName}</h5>
-					</div>
-				)}
-
-				<Link to="/login">
-					{!session ? (
-						<button className="nav__button-login">Iniciar Sesión</button>
-					) : (
-						<button
-							className="nav__button-login"
-							onClick={(event) => handleLogOut(event)}
-						>
-							Cerrar Sesión
-						</button>
-					)}
-				</Link>
-			</div>
-		</nav>
-	); */
 }
 
 export default Navbar;
