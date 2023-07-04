@@ -4,8 +4,9 @@ import { changeItemsCart } from "../../controllers/cart.controllers";
 export const updateItem = async (req: Request, res: Response) => {
 	try {
 		const { userID } = req.params;
-		const { productID } = req.body;
+		const productID = req.body;
 
+		console.log("BACK" + userID, productID)
 		const cartItem = await changeItemsCart(Number(userID), productID);
 
 		res.status(200).json(cartItem);

@@ -7,7 +7,7 @@ export const getAllItems = async (req: Request, res: Response) => {
 
 	try {
 		const cartItems = await getCartById(Number(userID));
-		res.json(cartItems);
+		return res.status(200).json(cartItems);
 	} catch (error: any) {
 		error.message.includes("usuario")
 			? res.status(404).json(error.message)

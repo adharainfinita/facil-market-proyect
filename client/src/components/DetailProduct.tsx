@@ -42,15 +42,8 @@ const DetailProduct = () => {
 	};
 
 	//?fn random
-	const fetchInfo = async () => {
-		const arrayID = items.map((item: BuyProduct) => item.id);
-		await updateItem(Number(currentUser.user.id), arrayID);
-		console.log(arrayID);
-	};
 
-	useEffect(() => {
-		fetchInfo();
-	}, [items]);
+
 
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		dispatch(addToCart(data));
@@ -81,6 +74,12 @@ const DetailProduct = () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const status = urlParams.get("status");
 
+		const fetchInfo = async () => {
+			const arrayID = items.map((item: BuyProduct) => item.id);
+			await updateItem(Number(currentUser.user.id), arrayID);
+		};
+	
+			fetchInfo();
 		//   if (status === "approved") {
 		//     setNotification({
 		//       content: "Pago aprobado😎",

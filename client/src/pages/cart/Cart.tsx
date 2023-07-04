@@ -17,9 +17,6 @@ const Cart = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 
-	const asd = useSelector((state: RootState) => state.cart.cartItems);
-
-	console.log(asd);
 
 	const userID = useSelector(
 		(state: RootState) => state.user.userLogin.user.id
@@ -75,6 +72,22 @@ const Cart = () => {
 
 		getProductsCart();
 	}, [cartItems, products]);
+
+	useEffect(() => {
+		const arrayId = cartItems.map((item) => item.id);
+		console.log(arrayId);
+
+		const fetchData = async () => {
+			try {
+				const response = await updateItem(Number(userID), arrayId);
+				return response;
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
+	}, [cartItems]);
 
 	// useEffect(() => {
 	// 	// Cargar productos al backend cuando se accede a la página

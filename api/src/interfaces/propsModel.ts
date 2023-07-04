@@ -37,7 +37,7 @@ export interface paymentProps {
 	grossAmount: number;
 	netAmount: number;
 	limitDate: Date;
-	resume: resumeProps;
+	resume: Array<number>;
 }
 
 export interface resumeProps {

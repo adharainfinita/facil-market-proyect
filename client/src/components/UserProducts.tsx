@@ -17,14 +17,20 @@ const UserProducts: React.FC = () => {
 			<div className="cards-cont">
 				{userProducts.map((product, index) => {
 					return (
-						<Link key={index} to={`/product/edit/${product.id}`}>
-							<div className="product-card">
+						<div className="product-card">
 								<img src={product.images[0]} alt={product.name} />
 								<div className="text">
+								<Link key={index} to={`/product/detail/${product.id}`} >
 									<h3>{product.name}</h3>
+									</Link>
+									<div>
+									<h1></h1>
+									<Link key={index} to={`/product/edit/${product.id}`}>
+										Editar
+									</Link>
+									</div>
 								</div>
 							</div>
-						</Link>
 					);
 				})}
 			</div>
