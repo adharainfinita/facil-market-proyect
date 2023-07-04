@@ -70,7 +70,7 @@ export const getAllProducts = async () => {
 	}
 };
 
-export const buyProduct = async (product: BuyProduct) => {
+export const buyProduct = async (product: Array<BuyProduct>) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/payment/order`, product);
 

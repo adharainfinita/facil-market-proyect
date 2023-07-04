@@ -70,7 +70,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `localhost:5173/products`,
+			success: `${URL_HOST}/products`,
 			failure: `${URL_HOST}/products`,
 			pending: `${URL_HOST}/products`,
 		},
@@ -197,4 +197,3 @@ export const findSellersByID = async (sellers: Array<number>) => {
 	);
 	return contactsFound;
 };
-
