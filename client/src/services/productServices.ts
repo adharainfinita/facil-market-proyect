@@ -1,9 +1,4 @@
-import {
-	BuyProduct,
-	FormCreateProduct,
-	Product,
-	Stock,
-} from "../utils/interfaces";
+import { BuyProduct, FormCreateProduct, Product, Stock } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 //import { FormCreateProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
@@ -75,7 +70,7 @@ export const getAllProducts = async () => {
 	}
 };
 
-export const buyProduct = async (product: Array<BuyProduct>) => {
+export const buyProduct = async (product: BuyProduct) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/payment/order`, product);
 

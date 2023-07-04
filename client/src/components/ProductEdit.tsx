@@ -1,14 +1,13 @@
-import useProduct from "../hooks/useProduct";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-
-import axios from "axios";
-import Dropzone from "react-dropzone";
 import { RootState } from "../redux/store";
+import { Link } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import useProduct from "../hooks/useProduct";
 import { updateProduct } from "../services/productServices";
-import { Category } from "../utils/interfaces";
+import axios from "axios";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { Category, Product } from "../utils/interfaces";
 
 const ProductEdit = () => {
   const categories = useSelector((state: RootState) => state.category.value);
@@ -16,29 +15,23 @@ const ProductEdit = () => {
 
   const [content, setContent] = useState<any>([]);
   const [editMode, setEditMode] = useState(false);
-  const [_loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
-    //setea el content con los datos del producto
     setContent(product);
   }, [product]);
 
   useEffect(() => {
-    //selecciona la imagen
     if (content.images?.length > 0 && !selectedImage) {
       setSelectedImage(content.images[0]);
     }
-  }, [content, selectedImage]);
+  }, [selectedImage, content.images]);
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
   };
 
-  // const handleModes = (event: React.MouseEvent<HTMLButtonElement>) => {
-  // 	const buttonText = event.currentTarget.textContent;
-  // 	buttonText === "Edit" && setEditMode(true);
-  // };
   const handleModes = () => {
     setEditMode(true);
   };
@@ -50,18 +43,12 @@ const ProductEdit = () => {
   ) => {
     const { name, value } = event.target;
 
-    // setContent({
-    // 	...content,
-    // 	[name]: value,
-    // });
-    // chatGPT
-    setContent((prevContent: any) => ({
-      ...prevContent,
+    setContent({
+      ...content,
       [name]: value,
-    }));
+    });
   };
 
-  //? proban2
   const uploadImages = async (files: File[]): Promise<void> => {
     setLoading(true);
 
@@ -85,14 +72,10 @@ const ProductEdit = () => {
       });
 
       const uploadedImages = await Promise.all(uploadPromises);
-      // setContent({
-      // 	...content,
-      // 	images: [...content.images, ...uploadedImages],
-      // });
-      setContent((prevContent: any) => ({
-        ...prevContent,
-        images: [...prevContent.images, ...uploadedImages],
-      }));
+      setContent({
+        ...content,
+        images: [...content.images, ...uploadedImages],
+      });
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -121,49 +104,42 @@ const ProductEdit = () => {
   };
 
   const handleDeleteImg = (index: number) => {
-    const updatedImages = [...content.images];
-    let newSelectedImage = selectedImage;
+    const deletedImage = content.images[index];
+    const updatedImages = content.images.filter((_: Product, i: number) => i !== index);
 
-    if (selectedImage === content.images[index]) {
-      // Verificar si la imagen seleccionada se elimina del array de imágenes
-      if (index === content.images.length - 2) {
-        // Si la imagen eliminada es la anteúltima
-        newSelectedImage = content.images[index + 1]; // Seleccionar la siguiente imagen
-        setSelectedImage(newSelectedImage); // Actualizar el estado de selectedImage
-      } else if (index === content.images.length - 1) {
-        // Si la imagen eliminada es la última
-        newSelectedImage = content.images[index - 1]; // Seleccionar la imagen anterior
-        setSelectedImage(newSelectedImage); // Actualizar el estado de selectedImage
-      }
-    }
-
-    // Eliminar la imagen del array de imágenes
-    updatedImages.splice(index, 1);
     const updatedContent = {
       ...content,
       images: updatedImages,
     };
-
+  
     setContent(updatedContent);
-  };
+  
+    if (selectedImage === deletedImage) {
+      const newSelectedImage = updatedImages.length > 0 ? updatedImages[0] : "";
 
-const editModePrevImages = () => {
+      setSelectedImage(newSelectedImage);
+    }
+  };
+  
+
+  const editModePrevImages = () => {
     return (
       <div className="edit-conteiner-pre-image">
         {content.images?.map((img: string, index: number) => (
-          <div>
-  
+          <div key={index}>
             <div
-              key={index}
               className="edit-pre-image"
               onClick={() => handleImageClick(img)}
-            >          <button
-				className="edit__x"
-              onClick={() => handleDeleteImg(index)}
-              disabled={content.images.length === 1}
             >
-              X
-            </button>
+              <button
+                className="edit__x"
+                type="button"
+                onClick={() => handleDeleteImg(index)}
+                disabled={content.images.length === 1}
+              >
+                X
+              </button>
+
               <img
                 className="edit-preview-image"
                 src={img}
@@ -177,12 +153,16 @@ const editModePrevImages = () => {
           <Dropzone onDrop={uploadImages}>
             {({ getRootProps, getInputProps }) => (
               <section>
-                <div {...getRootProps({ className: "dropzone" })}>
-                  <input {...getInputProps()} />
-                  <div className="edit-pre-image">
-                    <h2>+</h2>
+                {loading ? (
+                  <span>cargando...</span>
+                ) : (
+                  <div {...getRootProps({ className: "dropzone" })}>
+                    <input {...getInputProps()} />
+                    <div className="edit-pre-image">
+                      <h1>+</h1>
+                    </div>
                   </div>
-                </div>
+                )}
               </section>
             )}
           </Dropzone>
@@ -194,7 +174,6 @@ const editModePrevImages = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    //? set info
     const categoryFound = categories.find(
       (category) => category.id === Number(content.categoryID)
     );
@@ -203,17 +182,20 @@ const editModePrevImages = () => {
       ? categoryFound.name
       : content.categoryName;
 
-    content.categoryName = categoryName;
+    setContent({
+      ...content,
+      categoryName: categoryName,
+    });
 
     updateProduct(content);
+
     if (editMode) {
       setEditMode(false);
     }
 
-    setEditMode(false);
     console.log(content);
   };
-
+  
   return (
     <div className="edit-detail-product-container">
       <button className="buttom_close">
@@ -228,35 +210,33 @@ const editModePrevImages = () => {
             <img src={selectedImage} alt={product.name} />
           </div>
           <div className="edit-conteiner-info">
-            <div className="edit-conteiner-name-price">
-              <h4 className="edit-detail-product-name">
-                Nombre:
-                {editMode ? (
-                  <input
-                    type="text"
-                    name="name"
-                    value={content.name}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  content.name
-                )}
-              </h4>
+            <h4 className="edit-detail-product-name">
+              Nombre:
+              {editMode ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={content.name}
+                  onChange={handleChange}
+                />
+              ) : (
+                content.name
+              )}
+            </h4>
 
-              <h4 className="edit-detail-product-price">
-                Precio:
-                {editMode ? (
-                  <input
-                    type="text"
-                    name="price"
-                    value={content.price}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  `$${content.price}`
-                )}
-              </h4>
-            </div>
+            <h4 className="edit-detail-product-price">
+              Precio:
+              {editMode ? (
+                <input
+                  type="text"
+                  name="price"
+                  value={content.price}
+                  onChange={handleChange}
+                />
+              ) : (
+                `$${content.price}`
+              )}
+            </h4>
 
             <div className="edit-detail-product-info">
               <section className="edit-detail-product-section">
@@ -267,7 +247,7 @@ const editModePrevImages = () => {
                     value={content.categoryID}
                     onChange={handleChange}
                   >
-                    {categories.map((category: any, index: number) => (
+                    {categories.map((category: Category, index: number) => (
                       <option key={index} value={category.id}>
                         {category.name}
                       </option>
@@ -339,6 +319,7 @@ const editModePrevImages = () => {
                   {editMode ? (
                     <textarea
                       name="description"
+                      className="edit-textarea"
                       placeholder="Ingresa una descripción para tu producto"
                       value={content.description}
                       onChange={handleChange}
@@ -350,17 +331,18 @@ const editModePrevImages = () => {
               </section>
             </div>
           </div>
-          <button
-            className="edit-btn"
-            onClick={handleModes}
-            disabled={editMode}
-          >
-            Editar
-          </button>
+          <div>
+            {editMode ? (
+              <button type="submit" className="edit-btn" disabled={!editMode}>
+                Guardar
+              </button>
+            ) : (
+              <div className="edit-btn" onClick={handleModes}>
+                Editar
+              </div>
+            )}
+          </div>
         </div>
-        <button type="submit" disabled={!editMode}>
-          Guardar
-        </button>
       </form>
     </div>
   );

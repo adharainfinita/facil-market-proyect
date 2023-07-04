@@ -2,6 +2,7 @@ import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { BuyProduct } from "../utils/interfaces";
 
+
 export const getAllItems = async (userId: number) => {
 	try {
 		const res = await axios.get(`${URL_HOST}/cart/${userId}`);

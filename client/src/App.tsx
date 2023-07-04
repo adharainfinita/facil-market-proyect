@@ -13,7 +13,6 @@ import Cart from "./pages/cart/Cart";
 import Market from "./pages/Market";
 import ProductReviews from "./pages/ProductsReviews";
 
-// import UserProducts from "./pages/UserProducts";
 //? Dashboard Admin
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
@@ -30,7 +29,7 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import UserProfile from "./components/UserProfile";
 import UserProducts from "./components/UserProducts";
-import ProductEdit from "./components/ProductEdit";
+
 import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
 import ShoppingHistory from "./components/Shoppinghistory";
@@ -52,6 +51,7 @@ import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import { getAllItems } from "./services/cartServicer";
+import ProductEdit from "./components/ProductEdit";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -61,12 +61,15 @@ const App = () => {
 		Authorization: `Bearer ${session}`,
 	};
 
-	const userLogin2 = useSelector((state: RootState) => state.user.userLogin);
-	const userId = userLogin2.user.id;
-	useEffect(() => {
-		const fetchUserData = async () => {
-			const userId2 = userId; // Reemplaza con el ID del usuario deseado
-			const fetchedUser = await getUserById(userId2);
+  const login = useSelector((state: RootState) => state.user.userLogin);
+  const permissions = login?.user?.admin;
+
+  const id = login.user.id;
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = id; // Reemplaza con el ID del usuario deseado
+      const fetchedUser = await getUserById(userId);
 
 			if (fetchedUser) {
 				if (fetchedUser.image !== undefined) {
@@ -89,7 +92,7 @@ const App = () => {
 		};
 
 		fetchUserData();
-	}, [dispatch, userId]);
+	}, [dispatch, id]);
 
 	useEffect(() => {
 		if (session) {
@@ -168,43 +171,58 @@ const App = () => {
 
 	return (
 		<>
-			<Navbar />
+		<Navbar />
 
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/vender" element={<FormCreateProduct />} />
-				<Route path="/terminos_y_condiciones" element={<Terms />} />
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/vender" element={<FormCreateProduct />} />
+			<Route path="/terminos_y_condiciones" element={<Terms />} />
+			<Route path="/about" element={<About/>} />
 
-				<Route element={<ProtectedRoute isAllowed={Boolean(session)} />}>
-					<Route path="/profile" element={<UserProfile />} />
-					<Route path="/ventas" element={<UserProducts />} />
-					<Route path="/verification" element={<VerificationPage />} />
-					<Route path="/user/:id" element={<EditUser />} />
-					<Route path="/product/edit/:id" element={<ProductEdit />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="/compras" element={<ShoppingHistory />} />
+			<Route
+				element={
+					<ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
+				}
+			>
+				<Route path="/profile" element={<UserProfile />} />
+				<Route path="/compras" element={<ShoppingHistory />} />
+				<Route path="/ventas" element={<UserProducts />} />
+				<Route path="/verification" element={<VerificationPage />} />
+				<Route path="/user/:id" element={<EditUser />} />
+				<Route path="/product/edit/:id" element={<ProductEdit />} />
+				<Route path="/admin" element={<Dashboard />} />
+			</Route>
 
-					<Route path="/admin" element={<Dashboard />}>
-						<Route path="/admin/summary" element={<Resume />} />
-						<Route path="users" element={<Users />} />
-						<Route path="products" element={<Products />} />
-					</Route>
-				</Route>
+			<Route
+				path="/admin"
+				element={
+					<ProtectedRoute
+						isAllowed={Boolean(session) && permissions}
+						redirectTo="/admin"
+					>
+						<Dashboard />
+					</ProtectedRoute>
+				}
+			>
+				<Route path="summary" element={<Resume />} />
+				<Route path="users" element={<Users />} />
+				<Route path="products" element={<Products />} />
+			</Route>
 
-				<Route path="/about" element={<About />} />
-				<Route path="/admin/summary" element={<Resume />} />
-				<Route path="/products" element={<Market />} />
-				<Route path="/product/detail/:id" element={<DetailProduct />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<RegisterForm />} />
-				<Route path="/profile/:id" element={<UserProfiles />} />
-				<Route path="/review/:id" element={<ProductReviews />} />
+			<Route path="/products" element={<Market />} />
+			<Route path="/product/detail/:id" element={<DetailProduct />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<RegisterForm />} />
+			<Route path="/profile/:id" element={<UserProfiles />} />
+			<Route path="/review/:id" element={<ProductReviews />} />
 
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-			<Footer />
-		</>
-	);
+			<Route path="/cart" element={<Cart />} />
+
+			<Route path="*" element={<NotFound />} />
+		</Routes>
+		<Footer />
+	</>
+  );
 };
 
 export default App;
