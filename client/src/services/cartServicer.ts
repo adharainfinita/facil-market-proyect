@@ -12,9 +12,9 @@ export const getAllItems = async (userId: number) => {
 	}
 };
 
-export const createCart = async (userId: number, products: number[]) => {
+export const createCart = async (userId: number) => {
 	try {
-		const res = await axios.post(`${URL_HOST}/cart/${userId}`, products);
+		const res = await axios.post(`${URL_HOST}/cart/${userId}`);
 		return res.data;
 	} catch (error) {
 		console.error(error);

@@ -2,8 +2,8 @@ import { cartProductProps } from "../interfaces/propsModel";
 import Cart from "../models/Cart";
 import Product from "../models/Product";
 
-export const createCart = async (userID: number, products: Array<number>) => {
-	console.log(`userID: ${userID} --- product: ${products}`);
+export const createCart = async (userID: number) => {
+	console.log(`userID: ${userID} `);
 
 	const cartFound = await Cart.findOne({
 		where: { userID: userID },
@@ -15,7 +15,7 @@ export const createCart = async (userID: number, products: Array<number>) => {
 
 	const response = await Cart.create({
 		userID: userID,
-		productID: products,
+		productID: [],
 	});
 
 	return response;
@@ -37,7 +37,8 @@ export const getCartById = async (userID: number) => {
 	};
 
 	let count = 0;
-	while (myCart?.productID!.length !== count) {
+	if(!myCart.productID?.length) return myCart;
+	while (myCart?.productID?.length !== count) {
 		const productFound = await Product.findByPk(myCart?.productID![count]);
 		if (productFound) {
 			productsCart.productID.push({
@@ -63,7 +64,7 @@ export const changeItemsCart = async (
 	const myCart = await Cart.findOne({ where: { userID: userID } });
 
 	await myCart?.update({ productID: productID });
-	await myCart?.save();
+
 
 	return myCart;
 };

@@ -109,7 +109,7 @@ const App = () => {
 					};
 
 					const fetchData = async () => {
-						await createCart(data.id, []);
+						await createCart(data.id);
 						const results = await getAllItems(data.id);
 
 						dispatch(startCart(results));
