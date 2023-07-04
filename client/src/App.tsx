@@ -29,7 +29,6 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import UserProfile from "./components/UserProfile";
 import UserProducts from "./components/UserProducts";
-
 import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
 import ShoppingHistory from "./components/Shoppinghistory";
