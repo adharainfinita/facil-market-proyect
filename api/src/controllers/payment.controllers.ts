@@ -58,8 +58,8 @@ export const createOrder = async (products: Array<BuyProduct>, userID:number) =>
 			email: userInfo?.email,
 			// phone: {
 			// 	area_code: "54",
-			// 	number: '3644123456',
-			},
+			// 	number: '3644123456'},,
+			
 			identification: {
 				type: "DNI",
 				number: "40404040",
