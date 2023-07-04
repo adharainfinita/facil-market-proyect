@@ -17,7 +17,6 @@ const Cart = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 
-
 	const userID = useSelector(
 		(state: RootState) => state.user.userLogin.user.id
 	);
@@ -75,11 +74,12 @@ const Cart = () => {
 
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => item.id);
-		console.log(arrayId);
 
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
+				/* console.log("put cart" + userID, arrayId)
+				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);

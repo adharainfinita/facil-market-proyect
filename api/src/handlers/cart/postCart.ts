@@ -10,7 +10,7 @@ export const addItem = async (req: Request, res: Response) => {
 
 		// Crear el carrito de compras
 		const response = await createCart(Number(userID));
-		console.log("hola" + response)
+
 		// Enviar respuesta de éxito
 		res.status(201).json(response);
 	} catch (error) {

@@ -12,27 +12,28 @@ const UserProducts: React.FC = () => {
 	);
 
 	return (
-		<div className="conteiner-my-products">
-			<h2>Mis Productos</h2>
-			<div className="cards-cont">
-				{userProducts.map((product, index) => {
-					return (
-						<div className="product-card">
-								<img src={product.images[0]} alt={product.name} />
-								<div className="text">
-								<Link key={index} to={`/product/detail/${product.id}`} >
-									<h3>{product.name}</h3>
-									</Link>
-									<div>
-									<h1></h1>
-									<Link key={index} to={`/product/edit/${product.id}`}>
-										Editar
-									</Link>
+		<div className="User__products">
+			<div className="conteiner-my-products">
+				<div className="conteiner2-my-products">
+					<h2 className="myproducts__title">Mis Productos</h2>
+					<div className="cards-cont">
+						{userProducts.map((product, index) => {
+							return (
+								<Link key={index} to={`/product/edit/${product.id}`}>
+									<div className="product-card">
+										<img src={product.images[0]} alt={product.name} />
+										<div className="text">
+											<h3>{product.name}</h3>
+										</div>
 									</div>
-								</div>
-							</div>
-					);
-				})}
+								</Link>
+							);
+						})}
+					</div>
+					<Link to="/profile">
+						<button>Volver al perfil</button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

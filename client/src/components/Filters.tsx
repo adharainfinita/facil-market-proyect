@@ -65,7 +65,7 @@ const Filters = () => {
 				>
 					<option value="All">Todas</option>
 					{categories.map((category: any) => (
-						<option key={category.name} value={category.name}>
+						<option key={category.id} value={category.name}>
 							{category.name}
 						</option>
 					))}

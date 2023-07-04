@@ -10,10 +10,12 @@ import {
 } from "../redux/features/userSlice";
 import { user } from "../utils/interfaces";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { BsBagCheck } from "react-icons/bs";
 
 const UserProfile: React.FC = () => {
 	const dispatch = useDispatch();
-	const [showPassword, setShowPassword] = useState(false);
+	const [showFields, setShowFields] = useState(false);
 	const [newPassword, setNewPassword] = useState("");
 	const [newName, setNewName] = useState("");
 	const [newEmail, setNewEmail] = useState("");
@@ -85,62 +87,80 @@ const UserProfile: React.FC = () => {
 	}, [isPasswordChanged]);
 
 	return (
-		<div className="Profile__conteiner">
-			<div className="Profile__data">
-				<img src={userLogin.user.image} alt="user" className="nav__userLogo" />
-				<h2>Nombre: {userLogin.user.fullName}</h2>
-				<h2>Email: {userLogin.user.email}</h2>
-				<h2>
-					Contraseña: {showPassword ? userLogin.user.password : "********"}
-				</h2>
-				<button onClick={() => setShowPassword(!showPassword)}>
-					{showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-				</button>
-				<p>Deseas cambiar tu contraseña?</p>
-				<div className="Profile__fields">
-					<div>
-						<h2>Cambiar contraseña</h2>
-						<input
-							type="password"
-							value={newPassword}
-							onChange={(event) => setNewPassword(event.target.value)}
-						/>
-						<button onClick={handleFieldChange}>Guardar contraseña</button>
+		<div className="Center">
+			<div className="Profile__conteiner">
+				<div className="Profile__data">
+					<img
+						src={userLogin.user.image}
+						alt="user"
+						className="nav__userLogo"
+					/>
+					<h2>Nombre: {userLogin.user.fullName}</h2>
+					<h2>Email: {userLogin.user.email}</h2>
+					{/* <h2>
+          Contraseña: {showPassword ? userLogin.user.password : "********"}
+        </h2>
+        <button onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+        </button> */}
+					{/* <p>Deseas cambiar tu contraseña?</p> */}
+					<div className="Profile__myProducts">
+						<h4>
+							<BsBagCheck className="icon" />
+							<Link to="/ventas">Mis Productos</Link>
+						</h4>
 					</div>
-					<div>
-						<h2>Cambiar nombre</h2>
-						<input
-							type="text"
-							value={newName}
-							onChange={(event) => setNewName(event.target.value)}
-						/>
-						<button onClick={handleFieldChange}>Guardar nombre</button>
-					</div>
-					<div>
-						<h2>Cambiar email</h2>
-						<input
-							type="text"
-							value={newEmail}
-							onChange={(event) => setNewEmail(event.target.value)}
-						/>
-						<button onClick={handleFieldChange}>Guardar email</button>
-					</div>
-					<div>
-						<h2>Cambiar imagen</h2>
-						<label htmlFor="image-upload" className="change_img_label">
-							<span role="button" tabIndex={0}>
-								📂
-							</span>
-						</label>
-						<input
-							id="image-upload"
-							type="file"
-							accept="image/*"
-							onChange={uploadImage}
-							style={{ display: "none" }}
-						/>
-						<button onClick={handleFieldChange}>Guardar imagen</button>
-					</div>
+
+					<button onClick={() => setShowFields(!showFields)}>
+						⚙ Editar campos
+					</button>
+					{showFields && (
+						<div className="Profile__fields">
+							<div>
+								<h2>Cambiar contraseña</h2>
+								<input
+									type="password"
+									value={newPassword}
+									onChange={(event) => setNewPassword(event.target.value)}
+								/>
+								<button onClick={handleFieldChange}>Guardar contraseña</button>
+							</div>
+							<div>
+								<h2>Cambiar nombre</h2>
+								<input
+									type="text"
+									value={newName}
+									onChange={(event) => setNewName(event.target.value)}
+								/>
+								<button onClick={handleFieldChange}>Guardar nombre</button>
+							</div>
+							<div>
+								<h2>Cambiar email</h2>
+								<input
+									type="text"
+									value={newEmail}
+									onChange={(event) => setNewEmail(event.target.value)}
+								/>
+								<button onClick={handleFieldChange}>Guardar email</button>
+							</div>
+							<div>
+								<h2>Cambiar imagen</h2>
+								<label htmlFor="image-upload" className="change_img_label">
+									<span role="button" tabIndex={0}>
+										📂
+									</span>
+								</label>
+								<input
+									id="image-upload"
+									type="file"
+									accept="image/*"
+									onChange={uploadImage}
+									style={{ display: "none" }}
+								/>
+								<button onClick={handleFieldChange}>Guardar imagen</button>
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

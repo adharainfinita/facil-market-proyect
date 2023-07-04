@@ -7,7 +7,7 @@ const About = () => {
 		<div className="conteiner-about">
 			<section className="section-about">
 				<h1>Sobre nosotros:</h1>
-				<p>
+				{/* <p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam
 					eligendi voluptatum eius doloremque. Quis, maiores quod quae dicta
 					reprehenderit dolores suscipit ex sit ipsum accusamus exercitationem?
@@ -15,7 +15,7 @@ const About = () => {
 					adipisicing elit. Quibusdam eligendi voluptatum eius doloremque. Quis,
 					maiores quod quae dicta reprehenderit dolores suscipit ex sit ipsum
 					accusamus exercitationem? Modi deserunt atque harum?
-				</p>
+				</p> */}
 			</section>
 			{/* //? Participantes */}
 			<div className="conteiner-aboutCardProfile">
