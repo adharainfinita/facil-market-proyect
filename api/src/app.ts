@@ -1,5 +1,5 @@
 import express from "express";
-import log from "./Middleware/log";
+import log from "./Middleware/log"
 import cors from "cors";
 import morgan from "morgan";
 
