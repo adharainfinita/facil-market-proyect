@@ -1,6 +1,5 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
-import { BuyProduct } from "../utils/interfaces";
 
 
 export const getAllItems = async (userId: number) => {
@@ -13,9 +12,9 @@ export const getAllItems = async (userId: number) => {
 	}
 };
 
-export const addItem = async (userId: number, products: number[]) => {
+export const createCart = async (userId: number) => {
 	try {
-		const res = await axios.post(`${URL_HOST}/cart/${userId}`, products);
+		const res = await axios.post(`${URL_HOST}/cart/${userId}`);
 		return res.data;
 	} catch (error) {
 		console.error(error);
@@ -23,12 +22,10 @@ export const addItem = async (userId: number, products: number[]) => {
 	}
 };
 
-export const updateItem = async (
-	userId: number,
-	products: Array<BuyProduct>
-) => {
+export const updateItem = async (userId: number, products: Array<number>) => {
 	try {
 		const res = await axios.put(`${URL_HOST}/cart/${userId}`, products);
+		console.log("services put"+ res)
 		return res.data;
 	} catch (error) {
 		throw new Error("Error al actualizar el carrito de compras");
