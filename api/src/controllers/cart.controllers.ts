@@ -2,28 +2,31 @@ import { cartProductProps } from "../interfaces/propsModel";
 import Cart from "../models/Cart";
 import Product from "../models/Product";
 
-export const createCart = async (userID: number, products: Array<number>) => {
-	console.log(userID);
-	console.log(products);
+export const createCart = async (userID: number) => {
+	console.log(`userID: ${userID} `);
+
+	const cartFound = await Cart.findOne({
+		where: { userID: userID },
+	});
+
+	if (cartFound?.dataValues.id) {
+		return "ya existe el carrito";
+	}
 
 	const response = await Cart.create({
 		userID: userID,
-		productID: products,
+		productID: [],
 	});
 
 	return response;
 };
 
 export const getCartById = async (userID: number) => {
-	
-	
 	const myCart = await Cart.findOne({
 		where: {
 			userID: userID,
 		},
 	});
-
-	console.log(myCart);
 
 	if (!myCart) throw Error("No existe el usuario");
 
@@ -32,7 +35,7 @@ export const getCartById = async (userID: number) => {
 		userID: myCart!.userID,
 		productID: [],
 	};
-	
+
 	let count = 0;
 	while (myCart?.productID!.length !== count) {
 		const productFound = await Product.findByPk(myCart?.productID![count]);
@@ -43,7 +46,7 @@ export const getCartById = async (userID: number) => {
 				price: productFound.price,
 				categoryID: productFound.categoryID,
 				image: productFound.images[0],
-				quantity: 0,
+				quantity: 1,
 			});
 			count++;
 		} else
@@ -53,10 +56,13 @@ export const getCartById = async (userID: number) => {
 	return productsCart;
 };
 
-export const changeItemsCart = async (id: number, products: Array<number>) => {
-	const myCart = await Cart.findByPk(id);
+export const changeItemsCart = async (
+	userID: number,
+	productID: Array<number>
+) => {
+	const myCart = await Cart.findOne({ where: { userID: userID } });
 
-	myCart?.update(products);
+	await myCart?.update({ productID: productID });
 
 	return myCart;
 };

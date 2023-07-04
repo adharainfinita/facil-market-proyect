@@ -6,15 +6,22 @@
 	gap: 0.5rem;
 	height: fit-content;
 	width: fit-content;
+	position: relative; /* Añade una posición relativa para poder mover el contenido */
+	perspective: 1000px; /* Añade una perspectiva para el efecto 3D */
+	transition: transform 0.3s ease;
 }
+
 .image-about-contributors {
-	width: 12rem;
-	height: 12rem;
+	width: 15rem;
+	height: 15rem;
 	border-radius: 50%;
-	border: 2px solid black;
+	transform-style: preserve-3d; /* Conserva la transformación 3D */
+	backface-visibility: hidden; /* Oculta las caras traseras */
+	transition: transform 0.3s ease;
 }
 
 .title-about-contributors {
+	font-family: map-get($fonts, "sans-serif");
 	font-size: 1.3rem;
 }
 

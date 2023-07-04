@@ -1,18 +1,30 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateUser } from "../../services/userServices";
-import { user } from "../../utils/interfaces";
+import { User, user } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Users() {
 	const users = useSelector((state: RootState) => state.user.users);
+	const [updatedUsers, setUpdatedUsers] = useState<User[]>([]);
 
-	const disabledUser = async (user: user) => {
-		const updatedUser = { active: !user.active };
-		const disabled = await updateUser(user.id, updatedUser);
-		console.log(disabled);
-	};
+  const disabledUser = async (user: user) => {
+    const updatedUser = { active: !user.active };
+    const disabled = await updateUser(user.id, updatedUser);
+    console.log(disabled);
+    const updatedUsersList = updatedUsers.map((u) => {
+      if (u.id === user.id) {
+        return { ...u, active: disabled.user.active };
+      }
+      return u;
+    });
+    setUpdatedUsers(updatedUsersList)
+  };
+
+  useEffect(() => {
+    setUpdatedUsers(users);
+  }, [users]);
 
 	return (
 		<table className="user-table">
@@ -25,7 +37,7 @@ function Users() {
 				</tr>
 			</thead>
 			<tbody>
-				{users.map((user) => (
+				{updatedUsers.map((user) => (
 					<tr key={user.id}>
 						<td className="user-table-td">{user.id}</td>
 						<td className="user-table-td">{user.fullName}</td>

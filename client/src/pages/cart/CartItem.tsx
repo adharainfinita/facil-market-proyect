@@ -17,11 +17,12 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.user.userLogin.user);
 	const items = useSelector(
-		(state: RootState) => state.cart.cartItems.products
+		(state: RootState) => state.cart.cartItems.productID
 	);
 	const handleRemoveFromCart = async (item: BuyProduct) => {
+		const arrayID = items.map((item) => item.id);
 		dispatch(removeFromCart(item.id));
-		await updateItem(Number(user.id), items);
+		await updateItem(Number(user.id), arrayID);
 	};
 
 	const handleIncrementQuantity = () => {

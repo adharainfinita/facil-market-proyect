@@ -17,7 +17,7 @@ const DetailProduct = () => {
 	const product = useProduct();
 	const currentUser = useSelector((state: RootState) => state.user.userLogin);
 	const items = useSelector(
-		(state: RootState) => state.cart.cartItems.products
+		(state: RootState) => state.cart.cartItems.productID
 	);
 
 	const [isReadyToPost, setIsReadyToPost] = useState(false);
@@ -41,9 +41,12 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
-	const handleAddToCart = async (userID: number, data: BuyProduct) => {
+	//?fn random
+
+
+
+	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		dispatch(addToCart(data));
-		await updateItem(userID, items);
 	};
 
 	useEffect(() => {
@@ -71,6 +74,12 @@ const DetailProduct = () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const status = urlParams.get("status");
 
+		const fetchInfo = async () => {
+			const arrayID = items.map((item: BuyProduct) => item.id);
+			await updateItem(Number(currentUser.user.id), arrayID);
+		};
+	
+			fetchInfo();
 		//   if (status === "approved") {
 		//     setNotification({
 		//       content: "Pago aprobado😎",
@@ -208,7 +217,7 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<button
+						<button className="detail__product_quantity"
 							disabled={stock === 1 ? true : false}
 							onClick={() => handleStockChange("decrement")}
 						>
@@ -216,7 +225,7 @@ const DetailProduct = () => {
 							-{" "}
 						</button>
 						<h3>{stock}</h3>
-						<button
+						<button className="detail__product_quantity"
 							disabled={stock === product.unities ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
@@ -225,9 +234,9 @@ const DetailProduct = () => {
 						</button>
 					</section>
 
-					<div className=".detail-product-button">
-						{/* <PaymentButton product={product} /> */}
-						<button
+					<div >
+						<button className="detail-product-button"
+						
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
 						>
 							Agregar al carrito

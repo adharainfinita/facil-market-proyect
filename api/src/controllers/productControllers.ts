@@ -128,17 +128,18 @@ export const updateStock = async (id: number, unities: number) => {
 // ? delete
 
 export const deleteProductProperties = async (
-	changeActive: string,
-	id: number
+  id: number,
+  changeActive: string
 ) => {
-	const product = await Product.findByPk(id);
-	if (!product) {
-		throw new Error("Producto no encontrado");
-	}
+  const product = await Product.findByPk(id);
+  if (!product) {
+    throw new Error("Producto no encontrado");
+  }
 
-	product.active = changeActive;
+  product.active = changeActive;
 
-	await product.save();
+  await product.save();
 
-	return `Estado del producto, ${changeActive}`;
+  return { message: `Estado del producto: ${changeActive}`, prod: product };
 };
+

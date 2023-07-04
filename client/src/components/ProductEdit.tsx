@@ -28,20 +28,20 @@ const ProductEdit = () => {
     }
   }, [selectedImage, content.images]);
 
-  const handleImageClick = (image: string) => {
-    setSelectedImage(image);
-  };
+	const handleImageClick = (image: string) => {
+		setSelectedImage(image);
+	};
 
   const handleModes = () => {
     setEditMode(true);
   };
 
-  const handleChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = event.target;
+	const handleChange = (
+		event: ChangeEvent<
+			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+		>
+	) => {
+		const { name, value } = event.target;
 
     setContent({
       ...content,
@@ -52,24 +52,24 @@ const ProductEdit = () => {
   const uploadImages = async (files: File[]): Promise<void> => {
     setLoading(true);
 
-    try {
-      const uploadPromises = files.map(async (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("tags", "codeinfuse, medium, gist");
-        formData.append("upload_preset", "facilmarket");
-        formData.append("api_key", "711728988333761");
+		try {
+			const uploadPromises = files.map(async (file: File) => {
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("tags", "codeinfuse, medium, gist");
+				formData.append("upload_preset", "facilmarket");
+				formData.append("api_key", "711728988333761");
 
-        const res = await axios.post(
-          "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
-          formData,
-          {
-            headers: { "X-Requested-With": "XMLHttpRequest" },
-          }
-        );
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+					}
+				);
 
-        return res.data.secure_url;
-      });
+				return res.data.secure_url;
+			});
 
       const uploadedImages = await Promise.all(uploadPromises);
       setContent({
@@ -83,25 +83,25 @@ const ProductEdit = () => {
     }
   };
 
-  const contentPrevImages = () => {
-    return (
-      <div className="edit-conteiner-pre-image">
-        {content.images?.map((img: string, index: number) => (
-          <div
-            key={index}
-            className="edit-pre-image"
-            onClick={() => handleImageClick(img)}
-          >
-            <img
-              className="edit-preview-image"
-              src={img}
-              alt="preview images"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
+	const contentPrevImages = () => {
+		return (
+			<div className="edit-conteiner-pre-image">
+				{content.images?.map((img: string, index: number) => (
+					<div
+						key={index}
+						className="edit-pre-image"
+						onClick={() => handleImageClick(img)}
+					>
+						<img
+							className="edit-preview-image"
+							src={img}
+							alt="preview images"
+						/>
+					</div>
+				))}
+			</div>
+		);
+	};
 
   const handleDeleteImg = (index: number) => {
     const deletedImage = content.images[index];
@@ -258,60 +258,60 @@ const ProductEdit = () => {
                 )}
               </section>
 
-              <section className="edit-detail-product-section">
-                <h2>Ubicación:</h2>
-                <h3>
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="location"
-                      value={content.location}
-                      onChange={handleChange}
-                    />
-                  ) : (
-                    content.location
-                  )}
-                </h3>
-              </section>
+							<section className="edit-detail-product-section">
+								<h2>Ubicación:</h2>
+								<h3>
+									{editMode ? (
+										<input
+											type="text"
+											name="location"
+											value={content.location}
+											onChange={handleChange}
+										/>
+									) : (
+										content.location
+									)}
+								</h3>
+							</section>
 
-              <section className="edit-detail-product-section">
-                <h2>Estado:</h2>
-                <h3>
-                  {editMode ? (
-                    <select
-                      name="status"
-                      value={content.status}
-                      onChange={handleChange}
-                    >
-                      <option value="Nuevo">Nuevo</option>
-                      <option value="Usado">Usado</option>
-                    </select>
-                  ) : (
-                    content.status
-                  )}
-                </h3>
-              </section>
+							<section className="edit-detail-product-section">
+								<h2>Estado:</h2>
+								<h3>
+									{editMode ? (
+										<select
+											name="status"
+											value={content.status}
+											onChange={handleChange}
+										>
+											<option value="Nuevo">Nuevo</option>
+											<option value="Usado">Usado</option>
+										</select>
+									) : (
+										content.status
+									)}
+								</h3>
+							</section>
 
-              <section className="edit-detail-product-section">
-                <h2>Unidades:</h2>
-                <h3>{content.stock}</h3>
-              </section>
+							<section className="edit-detail-product-section">
+								<h2>Unidades:</h2>
+								<h3>{content.stock}</h3>
+							</section>
 
-              <section className="edit-detail-product-section">
-                <h2>Cantidad:</h2>
-                <h3>
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="unities"
-                      value={content.unities}
-                      onChange={handleChange}
-                    />
-                  ) : (
-                    content.unities
-                  )}
-                </h3>
-              </section>
+							<section className="edit-detail-product-section">
+								<h2>Cantidad:</h2>
+								<h3>
+									{editMode ? (
+										<input
+											type="text"
+											name="unities"
+											value={content.unities}
+											onChange={handleChange}
+										/>
+									) : (
+										content.unities
+									)}
+								</h3>
+							</section>
 
               <section className="edit-detail-product-section">
                 <div className="edit-container-description">

@@ -51,7 +51,7 @@ export const dataProfile: Structure = {
 		},
 
 		{
-			fullName: "Lauara Peréz",
+			fullName: "Laura Pérez",
 			image: laura,
 			github: "https://github.com/LaucataPe",
 			linkdin: "https://www.linkedin.com/in/laura-p%C3%A9rez-49056b248/",

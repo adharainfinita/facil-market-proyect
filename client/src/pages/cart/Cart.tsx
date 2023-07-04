@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
-import { addItem } from "../../services/cartServicer";
+import { updateItem } from "../../services/cartServicer";
 
 // import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
@@ -14,19 +14,35 @@ const Cart = () => {
 	const dispatch = useDispatch();
 
 	const cartItems = useSelector(
-		(state: RootState) => state.cart.cartItems.products
+		(state: RootState) => state.cart.cartItems.productID
 	);
 
 	const userID = useSelector(
 		(state: RootState) => state.user.userLogin.user.id
 	);
 
+	useEffect(() => {
+		const arrayId = cartItems.map((item) => item.id);
+		console.log(arrayId);
+
+		const fetchData = async () => {
+			try {
+				const response = await updateItem(Number(userID), arrayId);
+				return response;
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
+	}, [cartItems]);
+
 	const products = useSelector((state: RootState) => state.product.products);
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
 
 	//? logica de compra
 	const handleTotalPrice = (cartItems: Array<BuyProduct>) => {
-		const totalPrice = cartItems.reduce(
+		const totalPrice = cartItems?.reduce(
 			(total, item) => total + item.price * item.quantity,
 			0
 		);
@@ -58,10 +74,12 @@ const Cart = () => {
 
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => item.id);
-		
+
 		const fetchData = async () => {
 			try {
-				const response = await addItem(Number(userID), arrayId);
+				const response = await updateItem(Number(userID), arrayId);
+				/* console.log("put cart" + userID, arrayId)
+				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -69,7 +87,7 @@ const Cart = () => {
 		};
 
 		fetchData();
-	}, []);
+	}, [cartItems]);
 
 	// useEffect(() => {
 	// 	// Cargar productos al backend cuando se accede a la página
@@ -91,16 +109,16 @@ const Cart = () => {
 
 	return (
 		<div className="cart-conteiner">
-			{cartItems.length === 0 ? (
+			{cartItems?.length === 0 ? (
 				<CartEmpty />
 			) : (
 				<div className="cart-conteiner">
 					<section className="cart-section">
 						<h1 className="cart-title">Carrito de compras</h1>
-						<button onClick={handleClearCart}>Limpiar carrito</button>
+						<button onClick={handleClearCart} className="cart__clear">Limpiar carrito</button>
 					</section>
 
-					{cartItems.map((item: BuyProduct, index: number) => (
+					{cartItems?.map((item: BuyProduct, index: number) => (
 						<CartItem key={index} item={item} index={index} />
 					))}
 

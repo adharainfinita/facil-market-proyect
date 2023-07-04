@@ -1,4 +1,4 @@
-import {  BuyProduct} from "../interfaces/propsModel";
+import { BuyProduct } from "../interfaces/propsModel";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import Payments from "../models/Payments";
@@ -6,13 +6,10 @@ import User from "../models/User";
 import Product from "../models/Product";
 import { transporter } from "../config/mailer";
 
-
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
-
 export const createOrder = async (products: Array<BuyProduct>) => {
-	
 	//Necesito que además del producto, me envíen el id del usuario logueado que está
 	// ejecutando la compra
 	// lo busco en  la db y lleno los campos de payer
@@ -21,7 +18,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 	});
 
 	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
-	
+
 	const result = await mercadopago.preferences.create({
 		/* 		items: [
 			{
@@ -37,18 +34,17 @@ export const createOrder = async (products: Array<BuyProduct>) => {
  */
 
 		items: products.map((product: BuyProduct) => {
-		return 	{
-		id: String(product.id),
-		title: product.name,
-		unit_price: product.price,
-		category_id: String(product.categoryID),
-		currency_id: "ARS",
-		picture_url: product.image,
-		quantity: product.quantity,
-		}
-	})
-		
-		,
+			return {
+				id: String(product.id),
+				title: product.name,
+				unit_price: product.price,
+				category_id: String(product.categoryID),
+				currency_id: "ARS",
+				picture_url: product.image,
+				quantity: product.quantity,
+			};
+		}),
+
 		payer: {
 			name: "adharanosalevich@gmail.com",
 			email: "adharanosalevich@gmail.com",
@@ -70,13 +66,12 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `${URL_HOST}/products`,
+			success: `localhost:5173/products`,
 			failure: `${URL_HOST}/products`,
 			pending: `${URL_HOST}/products`,
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
-	
 
 	return result;
 };
@@ -102,25 +97,25 @@ export const createNewPayment = async (data: any) => {
 	const currentDay = currentDate.getDate();
 	currentDate.setDate(currentDay + 28);
 
-	while(data.additional_info.items.length !== count){
+	while (data.additional_info.items.length !== count) {
 		let idProduct = Number(data.additional_info.items[count].id);
 		sellersFound.push(await Product.findByPk(idProduct));
-		console.log('before:',data.additional_info.items[count]);
+		console.log("before:", data.additional_info.items[count]);
 
-	console.log('after:',sellersFound[count]?.userID);
-	
-const newPayment = await Payments.create({
-		order: data.id+sellersFound[count]?.userID,
-		sellerID: sellersFound[count]?.userID,
-		buyerID: buyerFound!.id,
-		grossAmount: amount,
-		netAmount: amount - amount / 8,
-		limitDate: currentDate,
-		items: sellersFound,
-	});
-	newPayments.push(newPayment)
-	count++; 
-}
+		console.log("after:", sellersFound[count]?.userID);
+
+		const newPayment = await Payments.create({
+			order: data.id + sellersFound[count]?.userID,
+			sellerID: sellersFound[count]?.userID,
+			buyerID: buyerFound!.id,
+			grossAmount: amount,
+			netAmount: amount - amount / 8,
+			limitDate: currentDate,
+			items: sellersFound,
+		});
+		newPayments.push(newPayment);
+		count++;
+	}
 
 	return newPayments;
 };
@@ -134,12 +129,14 @@ export const sendPurchaseNotification = async (receipt: Array<Payments>) => {
 
 	const email = await User.findByPk(receipt[0].buyerID);
 
-  const products = receipt.map((payment) =>
-    payment.items.map((item) => `<li>${item.name} - $${item.price}</li>`).join('')
-  );
+	const products = receipt.map((payment) =>
+		payment.items
+			.map((item) => `<li>${item.name} - $${item.price}</li>`)
+			.join("")
+	);
 
-  const sellerIDs = receipt.map((payment) => payment.sellerID);
-  const sellersFound = await findSellersByID(sellerIDs);
+	const sellerIDs = receipt.map((payment) => payment.sellerID);
+	const sellersFound = await findSellersByID(sellerIDs);
 
 	// const sellers = await findSellersByID(email!.id);
 
@@ -152,17 +149,19 @@ export const sendPurchaseNotification = async (receipt: Array<Payments>) => {
 		html: `<div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;">
 		<img src="https://cspmarketplaceprd.s3.us-west-2.amazonaws.com/media-files/marketplace_logo_large.png" alt="Logo de Facil Market" style="max-width: 200px; margin-bottom: 10px;">
 		<p style="color: #1D428A; font-family: 'Gochi Hand', cursive; font-size: 24px; margin-top: 0;">Facil-Market Team</p>
-		<h1 style="color: #333333; font-size: 28px; margin-bottom: 20px;">¡Hola, ${email?.fullName}!</h1>
+		<h1 style="color: #333333; font-size: 28px; margin-bottom: 20px;">¡Hola, ${
+			email?.fullName
+		}!</h1>
 		<p style="color: #333333; font-size: 18px;">¡Aquí tienes un resumen de tu compra! 😎</p>
 		<ul style="color: #333333; font-size: 16px; list-style: none; padding-left: 0;">
-			${products.join('')}
+			${products.join("")}
 		</ul>
 		<hr style="border: none; border-top: 1px solid #FF90BB; margin: 40px 0;">
 		<p style="color: #333333; font-size: 18px;">Contacta a ${
-			receipt.length > 1 ? 'los vendedores' : 'el vendedor'
+			receipt.length > 1 ? "los vendedores" : "el vendedor"
 		} para coordinar la entrega de ${
-	receipt.length > 1 ? 'los productos' : 'el producto'
-}. Recuerda tener en cuenta tu seguridad.</p>
+			receipt.length > 1 ? "los productos" : "el producto"
+		}. Recuerda tener en cuenta tu seguridad.</p>
 		<p style="color: #333333; font-size: 18px;">Te proporcionamos la siguiente información de contacto:</p>
 		${sellersFound
 			.map(
@@ -172,7 +171,7 @@ export const sendPurchaseNotification = async (receipt: Array<Payments>) => {
 					</p>
 				`
 			)
-			.join('')}
+			.join("")}
 		<p style="color: #333333; font-size: 18px;">No dudes en consultarnos ante cualquier duda o problema ♥.</p>
 		<p style="color: #333333; font-size: 18px;">Visualiza tus compras en: <a href="${urlPurchase}" style="color: #1D428A; text-decoration: none;">${urlPurchase}</a></p>
 		<p style="color: #333333; font-size: 18px;">Volver a la app: <a href="${URL_HOST}" style="color: #1D428A; text-decoration: none;">${URL_HOST}</a></p></div>`,
@@ -197,4 +196,3 @@ export const findSellersByID = async (sellers: Array<number>) => {
 	);
 	return contactsFound;
 };
-

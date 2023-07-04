@@ -50,8 +50,9 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import { getAllItems } from "./services/cartServicer";
 import ProductEdit from "./components/ProductEdit";
+import { createCart, getAllItems } from "./services/cartServicer";
+import { startCart } from "./redux/features/cartSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -104,11 +105,18 @@ const App = () => {
             fullName: response.data.user.fullName,
             email: response.data.user.email,
             image: response.data.user.image,
-            admin: true,
+            admin: response.data.user.admin,
           };
 
-          const results = getAllItems(data.id);
-          console.log(results);
+          const fetchData = async () => {
+            await createCart(data.id);
+            const results = await getAllItems(data.id);
+            console.log(results);
+
+            dispatch(startCart(results));
+            return results;
+          };
+          fetchData();
 
           dispatch(userLogin(data));
         })
