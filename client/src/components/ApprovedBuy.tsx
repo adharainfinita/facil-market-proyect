@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { postUserPurchase } from "../services/purchaseServices";
 import { RootState } from "../redux/store";
 import { BuyProduct, Product } from "../utils/interfaces";
+import { BsCheck2Circle } from "react-icons/bs";
 
 const ApprovedBuy = () => {
   const currentUser = useSelector((state: RootState) => state.user.userLogin);
@@ -56,8 +57,9 @@ const ApprovedBuy = () => {
   }, [_productsCart]);
 
   return (
-    <div>
-      <h1>Tu compra fue Aprobada</h1>
+    <div className="approved-purchase">
+      <BsCheck2Circle className="approved-check"/>
+      <h1>Tu compra fue aprobada</h1>
       <Link to="/products">
         <button>Seguir Comprando</button>
       </Link>
