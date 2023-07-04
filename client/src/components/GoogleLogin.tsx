@@ -7,51 +7,58 @@ import { loggedUser } from "../redux/features/userSlice";
 import { useState } from "react";
 import { GoogleUser } from "../utils/interfaces";
 
-const GoogleAuth = () => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const [error, setError] = useState<string>("");
+interface GoogleLoginProps {
+  updateMessage: (newMessage: string) => void;
+}
 
-	return (
-		<>
-			<GoogleLogin
-				onSuccess={(credentialResponse) => {
-					if (credentialResponse.credential) {
-						const decoded: GoogleUser = jwt_decode(
-							credentialResponse.credential
-						);
-						console.log(decoded);
+const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [error, setError] = useState<string>("");
 
-						const userInfo = {
-							email: decoded.email,
-							password: decoded.sub,
-						};
+  return (
+    <>
+      <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          if (credentialResponse.credential) {
+            const decoded: GoogleUser = jwt_decode(
+              credentialResponse.credential
+            );
 
-						const LogUser = async () => {
-							try {
-								const response = await logUser(userInfo);
-								const token = response.token;
-								window.localStorage.setItem("token", token);
+            const userInfo = {
+              email: decoded.email,
+              password: decoded.sub,
+            };
 
-								if (response) {
-									dispatch(loggedUser(response));
-									navigate("/");
-								}
-							} catch (error) {
-								setError(`${error}`);
-								console.error(error);
-							}
-						};
-						LogUser();
-					}
-				}}
-				onError={() => {
-					setError("Ingreso no permitido");
-				}}
-			/>
-			<p>{error ? error : ""}</p>
-		</>
-	);
+            const LogUser = async () => {
+              try {
+                const response = await logUser(userInfo);
+                if (response.user.active === false) {
+                  updateMessage("Tu cuenta ha sido desactivada");
+                  return;
+                }
+                const token = response.token;
+                window.localStorage.setItem("token", token);
+
+                if (response) {
+                  dispatch(loggedUser(response));
+                  navigate("/");
+                }
+              } catch (error) {
+                setError(`${error}`);
+                console.error(error);
+              }
+            };
+            LogUser();
+          }
+        }}
+        onError={() => {
+          setError("Ingreso no permitido");
+        }}
+      />
+      <p>{error ? error : ""}</p>
+    </>
+  );
 };
 
 export default GoogleAuth;
