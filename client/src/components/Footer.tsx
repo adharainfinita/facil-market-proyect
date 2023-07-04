@@ -29,7 +29,7 @@ const Footer = () => {
 					<a href="#">Nosotros</a>
 				</li>
 				<li>
-					<Link to="/products">Market</Link>
+					<Link to="/products">Productos</Link>
 				</li>
 			</div>
 
