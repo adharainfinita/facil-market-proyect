@@ -9,9 +9,7 @@
 	position: relative; /* Añade una posición relativa para poder mover el contenido */
 	perspective: 1000px; /* Añade una perspectiva para el efecto 3D */
 	transition: transform 0.3s ease;
-
 }
-
 
 .image-about-contributors {
 	width: 15rem;
@@ -23,6 +21,7 @@
 }
 
 .title-about-contributors {
+	font-family: map-get($fonts, "sans-serif");
 	font-size: 1.3rem;
 }
 

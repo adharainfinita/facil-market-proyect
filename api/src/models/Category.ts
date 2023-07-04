@@ -57,8 +57,7 @@ class Category extends Model {
 			},
 			{
 				name: "Indumentaria",
-				image:
-					"https://www.pngmart.com/files/21/Adidas-Shoes-PNG-Pic.png",
+				image: "https://www.pngmart.com/files/21/Adidas-Shoes-PNG-Pic.png",
 				highlight: true,
 			},
 			{

@@ -11,7 +11,6 @@ const postOrder = async (req: Request, res: Response) => {
 		const response = await createOrder(productsArray, Number(userID));
 		return res.status(200).send(response.body);
 	}
-
 };
 
 export default postOrder;

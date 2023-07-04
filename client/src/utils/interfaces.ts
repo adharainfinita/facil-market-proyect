@@ -78,7 +78,8 @@ export interface Product {
 	userID: string;
 	userName: string;
 	active: boolean;
-	cartQuantity?: number;
+	/* cartQuantity?: number; */
+	quantity: number
 }
 
 //?probando
@@ -192,24 +193,23 @@ export interface Review {
 	fullName: string;
 	rating: number;
 	text: string;
-}
-
-export interface Purchase {
-	id: number;
-	userId: number;
-	productId: number;
-	product: Product;
-}
-
-export interface BuyProduct {
-	id: number;
-	name: string;
-	price: number;
-	image: string;
-	quantity: number;
-}
-
-export interface Stock {
-	id: number;
-	unities: number;
-}
+  }
+	export interface Purchase {
+		id: number;
+		userId: number;
+		productId: number;
+		product: Product;
+	}
+	
+	export interface BuyProduct {
+		id: number;
+		name: string;
+		price: number;
+		image: string;
+		quantity: number;
+	}
+	
+	export interface Stock {
+		id: number;
+		unities: number;
+	}

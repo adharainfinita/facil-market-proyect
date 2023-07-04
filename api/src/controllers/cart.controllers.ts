@@ -37,8 +37,7 @@ export const getCartById = async (userID: number) => {
 	};
 
 	let count = 0;
-	if(!myCart.productID?.length) return myCart;
-	while (myCart?.productID?.length !== count) {
+	while (myCart?.productID!.length !== count) {
 		const productFound = await Product.findByPk(myCart?.productID![count]);
 		if (productFound) {
 			productsCart.productID.push({
@@ -64,7 +63,6 @@ export const changeItemsCart = async (
 	const myCart = await Cart.findOne({ where: { userID: userID } });
 
 	await myCart?.update({ productID: productID });
-
 
 	return myCart;
 };
