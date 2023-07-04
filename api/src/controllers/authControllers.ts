@@ -90,7 +90,7 @@ interface Updates {
 	password: string;
 }
 
-export const changeUser = async (userId: string, updates: Updates) => {
+export const changeUser = async (userId: number, updates: Updates) => {
 	const user = await User.findByPk(userId);
 
 	//? Encuentra y actualiza el usuario por su ID
@@ -109,6 +109,27 @@ export const changeUser = async (userId: string, updates: Updates) => {
 	await user.update(updates);
 
 	return true;
-	// Object.assign(user, updates);
-	// await user.save();
+};
+
+export const updateActiveUser = async (userId: number) => {
+	try {
+		const user = await User.findByPk(userId);
+
+		//? Verifica si el usuario existe
+		if (!user) {
+			throw new Error("Usuario no encontrado");
+		}
+
+		//? Actualiza el estado del usuario
+		user.active = !user.active;
+
+		//? Guarda los cambios en la base de datos
+		await user.save();
+
+		return true;
+	} catch (error) {
+		//? Manejo de errores
+		console.error(error);
+		return false;
+	}
 };
