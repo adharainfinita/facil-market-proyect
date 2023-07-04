@@ -6,11 +6,8 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 
 import axios from "axios";
 import Dropzone from "react-dropzone";
-import { Link } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { updateProduct } from "../services/productServices";
-import { Category } from "../utils/interfaces";
-
 const ProductEdit = () => {
   const categories = useSelector((state: RootState) => state.category.value);
   const product = useProduct();
