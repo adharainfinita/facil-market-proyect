@@ -1,11 +1,13 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
+import { user } from "../../utils/interfaces";
 
 const EditUser = () => {
 	const { id } = useParams();
 
-	const [user, setUser] = useState({
+	const [user, setUser] = useState<user>({
+		id: String(id),
 		fullName: "",
 		email: "",
 		password: "",

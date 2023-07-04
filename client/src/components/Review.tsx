@@ -22,7 +22,7 @@ const Reviews: React.FC = () => {
 	const [reviews, setReviews] = useState<Review[]>([]);
 
 	const [hasReviewed, setHasReviewed] = useState(false);
-	const [hasBuy, setHasBuy] = useState(false);
+	const [_hasBuy, setHasBuy] = useState(false);
 	const [userProduct, setUserProduct] = useState(false);
 	const [showAllReviews, _setShowAllReviews] = useState(false);
 
@@ -91,7 +91,7 @@ const Reviews: React.FC = () => {
 
 		try {
 			const userID = parseInt(userLogin.user.id, 10);
-			const productID = product.id;
+			const productID = Number(product.id);
 
 			await createReview(userID, fullName, productID, comment, rating);
 
@@ -100,13 +100,13 @@ const Reviews: React.FC = () => {
 				newRatings.reduce((sum, rating) => sum + rating, 0) / newRatings.length;
 			const formattedAverage = parseFloat(newAverage.toFixed(2));
 
-			const updatedProduct = { ...product, rating: formattedAverage };
+			const productForUpdate = { ...product, rating: formattedAverage };
 			dispatch(updateRating(formattedAverage));
 			setRating(0);
 			setComment("");
 
 			try {
-				updateProduct(updatedProduct);
+				updateProduct( productID, productForUpdate);
 			} catch (error) {
 				console.error(
 					"Error al actualizar la calificación del producto:",
@@ -146,7 +146,7 @@ const Reviews: React.FC = () => {
 
 			try {
 				const updatedProduct = { ...product, rating: formattedAverage };
-				await updateProduct(updatedProduct);
+				await updateProduct(product.id, updatedProduct);
 
 				dispatch(updateRating(formattedAverage));
 			} catch (error) {
