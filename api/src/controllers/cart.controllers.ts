@@ -46,7 +46,7 @@ export const getCartById = async (userID: number) => {
 				price: productFound.price,
 				categoryID: productFound.categoryID,
 				image: productFound.images[0],
-				quantity: 0,
+				quantity: 1,
 			});
 			count++;
 		} else
