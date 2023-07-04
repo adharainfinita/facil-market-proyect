@@ -52,6 +52,7 @@ import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import ProductEdit from "./components/ProductEdit";
 import { createCart, getAllItems } from "./services/cartServicer";
+import ProductEdit from "./components/ProductEdit";
 import { startCart } from "./redux/features/cartSlice";
 
 const App = () => {

@@ -169,7 +169,7 @@ const Reviews: React.FC = () => {
 					<div>
 						<p>Ya has dejado una reseña</p>
 					</div>
-				) : userProduct || hasBuy === false || !session ? null : (
+				) : userProduct  || !session ? null : (
 					<div>
 						<section className="detail-product-section">
 							<h2>Reseñas:</h2>

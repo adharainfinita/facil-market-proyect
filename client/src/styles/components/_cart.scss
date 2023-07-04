@@ -18,7 +18,6 @@
 }
 
 .cart__clear{
-	font-family: map-get($fonts, "sans-serif");
 		box-shadow: inset 0px 1px 0px 0px #caefab;
 		background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
 		background-color: #77d42a;
@@ -42,7 +41,6 @@
 
 
 .detail-product-btn{
-	font-family: map-get($fonts, "sans-serif");
 	box-shadow: inset 0px 1px 0px 0px #caefab;
 	background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
 	background-color: #77d42a;

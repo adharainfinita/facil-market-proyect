@@ -49,7 +49,6 @@ $gray-color: #808080;
 			margin: 30px;
 			font-size: 24px;
 			margin-bottom: 10px;
-			font-family: map-get($fonts, "sans-serif");
 			color: #333333;
 			font-weight: bold;
 			text-align: center; /* Centra el texto horizontalmente */
@@ -58,7 +57,6 @@ $gray-color: #808080;
 		p {
 			margin: 30px;
 			font-size: 16px;
-			font-family: map-get($fonts, "sans-serif");
 			color: #666666;
 			margin-top: 20px;
 			text-align: center; /* Centra el texto horizontalmente */
@@ -85,12 +83,10 @@ $gray-color: #808080;
 }
 
 	.profile__save{
-		font-family: map-get($fonts, "sans-serif");
 		margin: 20px;
 	}
 
 	.change_img_label {
-		font-family: map-get($fonts, "sans-serif");
 		display: inline-block;
 		position: absolute;
 		overflow: hidden;
@@ -99,6 +95,7 @@ $gray-color: #808080;
 
 	.change_img_label span {
 		display: inline-block;
+
 		cursor: pointer;
 	}
 
@@ -107,11 +104,10 @@ $gray-color: #808080;
 		left: -9999px;
 	}
 
-/* Estilo adicional para los textos más pequeños */
-.Profile__fields h2 {
-	font-family: map-get($fonts, "sans-serif");
-	font-size: 18px;
-}
+	/* Estilo adicional para los textos más pequeños */
+	.Profile__fields h2 {
+		font-size: 18px;
+	}
 
 
 .Profile__imageContainer {
@@ -128,7 +124,6 @@ background-color: #1d428a;
 color: #ffffff;
 padding: 5px;
 border-radius: 50%;
-font-family: map-get($fonts, "sans-serif");
 font-size: 14px;
 }
 

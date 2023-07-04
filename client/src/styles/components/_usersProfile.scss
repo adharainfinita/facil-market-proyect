@@ -20,7 +20,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: map-get($fonts, "sans-serif");
     align-items: center;
     padding: 50px;
     width: 600px;
@@ -40,7 +39,6 @@
   
     h2 {
       margin: 30px;
-      font-family: map-get($fonts, "sans-serif");
       font-size: 24px;
       margin-bottom: 10px;
       color: #333333;
@@ -51,7 +49,6 @@
     p {
       margin: 30px;
       font-size: 16px;
-      font-family: map-get($fonts, "sans-serif");
       color: #666666;
       margin-top: 20px;
       text-align: center;
@@ -79,7 +76,6 @@
   
   &__h2 {
     margin: 20px;
-    font-family: map-get($fonts, "sans-serif");
     text-align: center;
   }
 }

@@ -3,14 +3,12 @@
 	margin: 20px 2%;
 
 	.filter-title {
-		 font-family: map-get($fonts, "sans-serif");
 		font-size: 23px;
 		font-weight: bold;
 		color: #77d42a;
 	}
 
 	.filter-group {
-		 font-family: map-get($fonts, "sans-serif");
 		width: 70%;
 
 		label {
@@ -18,7 +16,6 @@
 		}
 
 		.filter-select {
-			 font-family: map-get($fonts, "sans-serif");
 			padding: 5px;
 			font-size: 14px;
 			border: 1px solid #ccc;
@@ -30,7 +27,6 @@
 		}
 
 		.reset-filters {
-			 font-family: map-get($fonts, "sans-serif");
 			height: 30px;
 			padding: 5px 10px;
 			background-color: #77d42a;
@@ -52,7 +48,6 @@
 		width: 30%;
 
 		select {
-			 font-family: map-get($fonts, "sans-serif");
 			padding: 5px;
 			font-size: 14px;
 			border: 1px solid #ccc;
