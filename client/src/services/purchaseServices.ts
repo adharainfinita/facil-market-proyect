@@ -29,7 +29,20 @@ export const postUserPurchase = async ({
 	}
 };
 
-export const getPurchasesByUser = async (id: number) => {
+export const getPurchasesByUser = async (userId: number) => {
+	try {
+		const response = await axios(`${URL_HOST}/purchase/user/${userId}`);
+		return response.data;
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		throw errorMessage;
+	}
+};
+
+export const getPurchasesById = async (id: number) => {
 	try {
 		const response = await axios(`${URL_HOST}/purchase/${id}`);
 		return response.data;

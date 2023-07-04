@@ -5,7 +5,7 @@ import useProduct from "../hooks/useProduct";
 import { updateItem } from "../services/cartServicer";
 import { useSelector, useDispatch } from "react-redux";
 import Reviews from "./Review";
-import { BuyProduct, NotificationType } from "../utils/interfaces";
+import { BuyProduct } from "../utils/interfaces";
 import { RootState } from "../redux/store";
 
 //import { updateUnities } from "../redux/features/productSlice";
@@ -19,14 +19,7 @@ const DetailProduct = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [error, setError] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
-
-	const [notification, setNotification] = useState<NotificationType>({
-		isOpen: false,
-		type: null,
-		content: "",
-	});
 
 	const dispatch = useDispatch();
 
@@ -182,9 +175,6 @@ const DetailProduct = () => {
 							Agregar al carrito
 						</button>
 					</div>
-
-					{notification.isOpen && <div>{notification.content}</div>}
-					<p>{error}</p>
 				</div>
 			</div>
 		</div>

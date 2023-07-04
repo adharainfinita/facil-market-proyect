@@ -54,6 +54,7 @@ import { getCategory } from "./services/categoryServices";
 import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
 import ApprovedBuy from "./components/ApprovedBuy";
+import Purchase from "./components/Purchase";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -187,6 +188,7 @@ const App = () => {
 			>
 				<Route path="/profile" element={<UserProfile />} />
 				<Route path="/compras" element={<ShoppingHistory />} />
+				<Route path="/compra/:id" element={<Purchase />} />
 				<Route path="/ventas" element={<UserProducts />} />
 				<Route path="/verification" element={<VerificationPage />} />
 				<Route path="/user/:id" element={<EditUser />} />

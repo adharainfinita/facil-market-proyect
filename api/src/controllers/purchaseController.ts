@@ -29,3 +29,6 @@ export const getPurchaseByUser = async (id: number) =>
 	});
 
 //-----------------------
+
+export const getPurchaseById = async (id: number) =>
+	await Purchase.findByPk(id);

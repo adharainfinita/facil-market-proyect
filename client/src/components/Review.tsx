@@ -45,7 +45,7 @@ const Reviews: React.FC = () => {
 
 				// Verificar si el usuario actual ya ha dejado una reseña
 				const hasReviewed = reviewsData.some(
-					(review) => review.fullName === fullName
+					(review) => review.userID === Number(userLogin.user.id)
 				);
 				setHasReviewed(hasReviewed);
 			} catch (error) {
@@ -60,9 +60,12 @@ const Reviews: React.FC = () => {
 		const fetchPurchases = async () => {
 			try {
 				const response = await getPurchasesByUser(Number(userLogin.user.id));
-				const findProduct = response.find(
-					(purchase: Purchase) => purchase.productId === product.id
-				);
+				const findProduct = response.some((purchase: Purchase) => {
+					return purchase.products.find(producto => producto.id === product.id);
+				  });
+				
+				console.log(findProduct);
+				
 				if (findProduct) {
 					setHasBuy(true);
 				}
@@ -167,7 +170,7 @@ const Reviews: React.FC = () => {
 			<section className="review-container">
 				{hasReviewed ? (
 					<div>
-						<p>Ya has dejado una reseña</p>
+						<p>Ya has dejado una reseña</p><br />
 					</div>
 				) : userProduct || hasBuy === false || !session ? null : (
 					<div>
