@@ -1,8 +1,6 @@
 import Purchase from "../models/Purchase";
 import { purchases } from "../interfaces/propsModel";
 
-//-----------------------
-
 export const createPurchase = async ({
 	userId,
 	products,
@@ -19,13 +17,12 @@ export const createPurchase = async ({
 		throw Error("La compra ya se encuentra en tus compras");
 	}
 };
-//-----------------------
 
 export const getPurchaseByUser = async (id: number) =>
 	await Purchase.findAll({
 		where: {
 			userId: id,
-		}
+		},
 	});
 
 //-----------------------

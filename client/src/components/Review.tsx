@@ -43,7 +43,7 @@ const Reviews: React.FC = () => {
 				const reviewsData: Review[] = await getAllReviewsProduct(product.id);
 				setReviews(reviewsData);
 
-				// Verificar si el usuario actual ya ha dejado una reseña
+				//? Verificar si el usuario actual ya ha dejado una reseña
 				const hasReviewed = reviewsData.some(
 					(review) => review.userID === Number(userLogin.user.id)
 				);
@@ -61,11 +61,13 @@ const Reviews: React.FC = () => {
 			try {
 				const response = await getPurchasesByUser(Number(userLogin.user.id));
 				const findProduct = response.some((purchase: Purchase) => {
-					return purchase.products.find(producto => producto.id === product.id);
-				  });
-				
+					return purchase.products.find(
+						(producto) => producto.id === product.id
+					);
+				});
+
 				console.log(findProduct);
-				
+
 				if (findProduct) {
 					setHasBuy(true);
 				}
@@ -76,14 +78,14 @@ const Reviews: React.FC = () => {
 		fetchPurchases();
 	}, [product.unities]);
 
-	// Maneja los comentarios
+	//? Maneja los comentarios
 	const handleCommentChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement>
 	) => {
 		setComment(event.target.value);
 	};
 
-	// Submitea a la base de datos
+	//? Submitea a la base de datos
 	const submitReview = async () => {
 		if (hasReviewed) {
 			console.log("El usuario ya ha dejado una reseña");
@@ -117,10 +119,10 @@ const Reviews: React.FC = () => {
 				);
 			}
 
-			// Marcar que el usuario ha dejado una reseña
+			//? Marcar que el usuario ha dejado una reseña
 			setHasReviewed(true);
 
-			// Volver a cargar las reseñas actualizadas
+			//? Volver a cargar las reseñas actualizadas
 			const reviewsData: Review[] = await getAllReviewsProduct(product.id);
 			setReviews(reviewsData);
 		} catch (error) {
@@ -128,12 +130,12 @@ const Reviews: React.FC = () => {
 		}
 	};
 
-	// Controlador de las estrellas
+	//? Controlador de las estrellas
 	const handleRatingChange = async (newRating: number) => {
 		setRating(newRating);
 	};
 
-	// elimina las reviews
+	//? elimina las reviews
 	const handleDeleteReview = async (reviewId: number) => {
 		try {
 			await deleteReview(reviewId);
@@ -170,7 +172,8 @@ const Reviews: React.FC = () => {
 			<section className="review-container">
 				{hasReviewed ? (
 					<div>
-						<p>Ya has dejado una reseña</p><br />
+						<p>Ya has dejado una reseña</p>
+						<br />
 					</div>
 				) : userProduct || hasBuy === false || !session ? null : (
 					<div>

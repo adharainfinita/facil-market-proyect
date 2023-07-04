@@ -1,19 +1,18 @@
 import { Request, Response } from "express";
-import { changeUser } from "../../controllers/authControllers";
+import { updateActiveUser } from "../../controllers/authControllers";
 import User from "../../models/User";
 
-const updateUser = async (req: Request, res: Response) => {
+const deleteUser = async (req: Request, res: Response) => {
 	const { userId } = req.params;
-	const updates = req.body;
 
 	try {
-		const response = await changeUser(Number(userId), updates);
+		const response = await updateActiveUser(Number(userId));
 
 		if (response) {
-			const updateUser = await User.findByPk(Number(userId));
+			const user = await User.findByPk(Number(userId));
 			return res.status(200).json({
 				message: "Usuario actualizado correctamente",
-				user: updateUser,
+				user,
 			});
 		}
 	} catch (error: any) {
@@ -21,4 +20,4 @@ const updateUser = async (req: Request, res: Response) => {
 	}
 };
 
-export default updateUser;
+export default deleteUser;

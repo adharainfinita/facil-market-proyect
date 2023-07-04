@@ -60,7 +60,7 @@ function Pagination(props: productList) {
 					{"<"}
 				</button>
 				<h3>
-					Page {currentPage} of {pagesNumber}
+					Pagina {currentPage} de {pagesNumber}
 				</h3>
 				<button
 					className="pag-buttons"

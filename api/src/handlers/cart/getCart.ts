@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { getCartById } from "../../controllers/cart.controllers";
 
-// Ruta: GET /cart
 export const getAllItems = async (req: Request, res: Response) => {
 	const { userID } = req.params;
 

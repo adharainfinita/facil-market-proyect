@@ -7,7 +7,7 @@ import {
 	BelongsTo,
 } from "sequelize-typescript";
 import User from "./User";
-import Product from "./Product"; // Importa el modelo Producto
+import Product from "./Product";
 
 @Table({ tableName: "reviews" })
 class Review extends Model {
@@ -34,14 +34,14 @@ class Review extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 
-	@ForeignKey(() => Product) // Agrega esta línea para establecer la clave externa
+	@ForeignKey(() => Product)
 	@Column({
 		type: DataType.INTEGER,
 		allowNull: false,
 	})
-	productID!: number; // Cambia el nombre de la columna a productoID o el nombre de tu elección
+	productID!: number;
 
-	@BelongsTo(() => Product) // Agrega esta línea para definir la asociación con Producto
+	@BelongsTo(() => Product)
 	product!: Product;
 
 	@Column({

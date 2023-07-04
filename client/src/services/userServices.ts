@@ -5,6 +5,7 @@ const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
 import { user } from "../utils/interfaces";
 
+//? REGISTAR UN USUARIO
 export const postUser = async (userData: NewUser) => {
 	try {
 		const response = await axios.post(`${URL_HOST}/auth/register`, userData);
@@ -18,6 +19,7 @@ export const postUser = async (userData: NewUser) => {
 	}
 };
 
+//? OBTENER TODOS LOS USUARIOS
 export const getAllUsers = async () => {
 	try {
 		const response = await axios.get(`${URL_HOST}/user`);
@@ -31,14 +33,24 @@ export const getAllUsers = async () => {
 		throw error;
 	}
 };
-interface UpdateUser {
-	active: boolean;
-}
 
-export const updateUser = async (
-	userId: string | undefined,
-	userData: user | UpdateUser
-) => {
+//? BORRAR UN USUARIO
+export const deleteUser = async (userID: number) => {
+	try {
+		const response = await axios.put(`${URL_HOST}/user/delete/${userID}`);
+		return response.data;
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		alert(errorMessage);
+		throw error;
+	}
+};
+
+//? ACTUALIZAR UN USUARIO
+export const updateUser = async (userId: string, userData: user) => {
 	try {
 		const response = await axios.put(`${URL_HOST}/user/${userId}`, userData);
 		return response.data;
@@ -52,6 +64,7 @@ export const updateUser = async (
 	}
 };
 
+//? AUTHENTICAR UN USUARIO
 export const logUser = async (logData: LoginData) => {
 	try {
 		const { data } = await axios.post(`${URL_HOST}/auth/login`, logData);
@@ -67,6 +80,7 @@ export const logUser = async (logData: LoginData) => {
 	}
 };
 
+//? OBTENER UN USUARIO POR ID
 export const getUserById = async (userId: string | undefined) => {
 	try {
 		const response = await axios.get(`${URL_HOST}/user/${userId}`);

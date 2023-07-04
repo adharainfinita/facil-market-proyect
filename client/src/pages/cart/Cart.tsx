@@ -17,10 +17,25 @@ const Cart = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 
-
 	const userID = useSelector(
 		(state: RootState) => state.user.userLogin.user.id
 	);
+
+	useEffect(() => {
+		const arrayId = cartItems.map((item) => item.id);
+		console.log(arrayId);
+
+		const fetchData = async () => {
+			try {
+				const response = await updateItem(Number(userID), arrayId);
+				return response;
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
+	}, [cartItems]);
 
 	const products = useSelector((state: RootState) => state.product.products);
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);

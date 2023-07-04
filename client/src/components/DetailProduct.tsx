@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import useProduct from "../hooks/useProduct";
-import { updateItem } from "../services/cartServicer";
 import { useSelector, useDispatch } from "react-redux";
 import Reviews from "./Review";
 import { BuyProduct } from "../utils/interfaces";
 import { RootState } from "../redux/store";
-
 //import { updateUnities } from "../redux/features/productSlice";
 //import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";
+import useProduct from "../hooks/useProduct";
+import { updateItem } from "../services/cartServicer";
 
 const DetailProduct = () => {
 	const product = useProduct();
@@ -31,10 +30,6 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
-	//?fn random
-
-
-
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		dispatch(addToCart(data));
 	};
@@ -49,9 +44,6 @@ const DetailProduct = () => {
 		setSelectedImage(image);
 	};
 
-	// useEffect(() => {
-	//   const urlParams = new URLSearchParams(window.location.search);
-	//   const status = urlParams.get("status");
 	const handleStockChange = (action: string) => {
 		if (action === "increment") {
 			setStock(stock + 1);
@@ -65,10 +57,9 @@ const DetailProduct = () => {
 			const arrayID = items.map((item: BuyProduct) => item.id);
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
-	
-			fetchInfo();
-	}, [currentUser, product]);
 
+		fetchInfo();
+	}, [currentUser, product]);
 
 	return (
 		<div className="detail-product-container">
@@ -150,7 +141,8 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<button className="detail__product_quantity"
+						<button
+							className="detail__product_quantity"
 							disabled={stock === 1 ? true : false}
 							onClick={() => handleStockChange("decrement")}
 						>
@@ -158,7 +150,8 @@ const DetailProduct = () => {
 							-{" "}
 						</button>
 						<h3>{stock}</h3>
-						<button className="detail__product_quantity"
+						<button
+							className="detail__product_quantity"
 							disabled={stock === product.unities ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
@@ -167,9 +160,9 @@ const DetailProduct = () => {
 						</button>
 					</section>
 
-					<div >
-						<button className="detail-product-button"
-						
+					<div>
+						<button
+							className="detail-product-button"
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
 						>
 							Agregar al carrito

@@ -31,7 +31,7 @@ const Filters = () => {
 	const resetAllFilters = () => {
 		dispatch(resetFilters());
 
-		// Restablecer los valores predeterminados en los selectores
+		//? Restablecer los valores predeterminados en los selectores
 		const categorySelect = document.getElementsByName(
 			"forCategory"
 		)[0] as HTMLSelectElement;
@@ -47,7 +47,7 @@ const Filters = () => {
 		dispatch(orderProducts(event.target.value));
 	};
 
-	// Obtener locaciones únicas
+	//? Obtener locaciones únicas
 	const uniqueLocations = Array.from(
 		new Set(products.map((product: any) => product.location))
 	);
@@ -65,7 +65,7 @@ const Filters = () => {
 				>
 					<option value="All">Todas</option>
 					{categories.map((category: any) => (
-						<option key={category.name} value={category.name}>
+						<option key={category.id} value={category.name}>
 							{category.name}
 						</option>
 					))}

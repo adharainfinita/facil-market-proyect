@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { getAllItems } from "../handlers/Cart/getCart";
-import { updateItem } from "../handlers/Cart/updateCart";
-import { addItem } from "../handlers/Cart/postCart";
+import { getAllItems } from "../handlers/cart/getCart";
+import { updateItem } from "../handlers/cart/updateCart";
+import { addItem } from "../handlers/cart/postCart";
 const cart = Router();
 
-cart.get("/:userID", getAllItems);
-
+//! routes Create
 cart.post("/:userID", addItem);
 
+//! routes Read
+cart.get("/:userID", getAllItems);
+
+//! routes Update
 cart.put("/:userID", updateItem);
+
+//! routes Delete
 
 export default cart;

@@ -9,7 +9,6 @@ import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
 
-
 const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
