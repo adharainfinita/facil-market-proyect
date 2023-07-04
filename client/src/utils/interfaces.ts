@@ -197,8 +197,9 @@ export interface Review {
 	export interface Purchase {
 		id: number;
 		userId: number;
-		productId: number;
-		product: Product;
+		products: Array<BuyProduct>;
+		paymentId: number;
+		createdAt: string
 	}
 	
 	export interface BuyProduct {

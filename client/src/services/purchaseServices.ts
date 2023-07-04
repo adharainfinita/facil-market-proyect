@@ -1,21 +1,22 @@
 import axios from "axios";
+import { BuyProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 
 interface localProps {
 	userId: number;
-	productId: number;
+	products: Array<BuyProduct>;
 	paymentId: number;
 }
 
 export const postUserPurchase = async ({
 	userId,
-	productId,
+	products,
 	paymentId,
 }: localProps) => {
 	try {
 		const response = await axios.post(`${URL_HOST}/purchase`, {
 			userId,
-			productId,
+			products,
 			paymentId,
 		});
 		return response.data;

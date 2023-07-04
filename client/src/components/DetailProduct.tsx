@@ -8,7 +8,6 @@ import Reviews from "./Review";
 import { BuyProduct, NotificationType } from "../utils/interfaces";
 import { RootState } from "../redux/store";
 
-import { postUserPurchase } from "../services/purchaseServices";
 //import { updateUnities } from "../redux/features/productSlice";
 //import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";
@@ -19,8 +18,6 @@ const DetailProduct = () => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
-
-	const [isReadyToPost, setIsReadyToPost] = useState(false);
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [error, setError] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
@@ -71,71 +68,14 @@ const DetailProduct = () => {
 	};
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const status = urlParams.get("status");
-
 		const fetchInfo = async () => {
 			const arrayID = items.map((item: BuyProduct) => item.id);
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
 	
 			fetchInfo();
-		//   if (status === "approved") {
-		//     setNotification({
-		//       content: "Pago aprobado😎",
-		//       isOpen: true,
-		//       type: "approved",
-		//     });
-		//   }
-
-		//   if (status === "failure") {
-		//     setNotification({
-		//       content: "Pago rechazado😢",
-		//       isOpen: true,
-		//       type: "failure",
-		//     });
-		//   }
-		// }, []);
-		if (status === "approved" && currentUser && product.id !== 0) {
-			setIsReadyToPost(true);
-		}
-		if (status === "null") {
-			setNotification({
-				content: "Pago rechazado😢",
-				isOpen: true,
-				type: "failure",
-			});
-		}
 	}, [currentUser, product]);
 
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const paymentId = urlParams.get("payment_id");
-		if (isReadyToPost) {
-			setNotification({
-				content: "Pago aprobado😎",
-				isOpen: true,
-				type: "approved",
-			});
-
-			const postPurchase = async () => {
-				try {
-					const info = {
-						userId: Number(currentUser.user.id),
-						productId: product.id,
-						paymentId: Number(paymentId),
-					};
-					if (info.userId !== 0 && info.productId !== 0) {
-						const responsePurchase = await postUserPurchase(info);
-						return responsePurchase;
-					}
-				} catch (error: any) {
-					setError(error);
-				}
-			};
-			postPurchase();
-		}
-	}, [isReadyToPost]);
 
 	return (
 		<div className="detail-product-container">

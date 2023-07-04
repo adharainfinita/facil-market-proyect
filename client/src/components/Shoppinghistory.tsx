@@ -15,6 +15,8 @@ const ShoppingHistory = () => {
 		const fetchPurchases = async () => {
 			try {
 				const response = await getPurchasesByUser(Number(user.user.id));
+				console.log(response);
+				
 				setPurchases(response);
 			} catch (error: any) {
 				setError(error);
@@ -28,16 +30,16 @@ const ShoppingHistory = () => {
 			<h1 className="shopping-title">Historial de compras</h1>
 			{purchases?.length ? (
 				purchases.map((purchase) => (
-					<Link to={`/product/detail/${purchase.productId}`}>
 						<div key={purchase.id} className="shopping-container">
-							<img
-								src={purchase.product.images[1]}
-								alt={purchase.product.name}
-							/>
-							<h3>{purchase.product.name}</h3>
-							<span>{purchase.product.categoryName}</span>
+							<h3>{purchase.createdAt}</h3>
+							{purchase.products.map((product) =>
+								<div key={product.id}>
+									<img src={product.image} alt={product.name} />
+									<h3>{product.name}</h3>
+									<span>{product.price}</span>
+								</div>
+							)}
 						</div>
-					</Link>
 				))
 			) : (
 				<div className="no-purchases">

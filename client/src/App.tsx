@@ -53,6 +53,7 @@ import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
+import ApprovedBuy from "./components/ApprovedBuy";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -215,6 +216,7 @@ const App = () => {
 			<Route path="/register" element={<RegisterForm />} />
 			<Route path="/profile/:id" element={<UserProfiles />} />
 			<Route path="/review/:id" element={<ProductReviews />} />
+			<Route path="/approved" element={<ApprovedBuy />} />
 
 			<Route path="/cart" element={<Cart />} />
 
