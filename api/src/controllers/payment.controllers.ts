@@ -5,13 +5,17 @@ import Payments from "../models/Payments";
 import User from "../models/User";
 import Product from "../models/Product";
 import { transporter } from "../config/mailer";
+import { createPurchase } from "./purchaseController";
+
 
 
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
 
-export const createOrder = async (products: Array<BuyProduct>) => {
+export const createOrder = async (products: Array<BuyProduct>, userID:number) => {
+
+	const userInfo = await User.findByPk(userID);
 	
 	//Necesito que además del producto, me envíen el id del usuario logueado que está
 	// ejecutando la compra
@@ -50,8 +54,8 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		
 		,
 		payer: {
-			name: "adharanosalevich@gmail.com",
-			email: "adharanosalevich@gmail.com",
+			name: userInfo?.email,
+			email: userInfo?.email,
 			phone: {
 				area_code: "54",
 				number: 3644123456,
@@ -105,9 +109,13 @@ export const createNewPayment = async (data: any) => {
 	while(data.additional_info.items.length !== count){
 		let idProduct = Number(data.additional_info.items[count].id);
 		sellersFound.push(await Product.findByPk(idProduct));
-		console.log('before:',data.additional_info.items[count]);
+	
 
-	console.log('after:',sellersFound[count]?.userID);
+	await createPurchase({
+		userId: buyerFound!.id,
+		productId: sellersFound[count]?.id,
+		paymentId: data.id+sellersFound[count]?.userID
+	})
 	
 const newPayment = await Payments.create({
 		order: data.id+sellersFound[count]?.userID,

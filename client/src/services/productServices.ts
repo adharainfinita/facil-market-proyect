@@ -70,9 +70,9 @@ export const getAllProducts = async () => {
 	}
 };
 
-export const buyProduct = async (product: Array<BuyProduct>) => {
+export const buyProduct = async (product: Array<BuyProduct>, userID: number) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/payment/order`, product);
+		const { data } = await axios.post(`${URL_HOST}/payment/order/${userID}`, product);
 
 		return data;
 	} catch (error: any) {

@@ -6,7 +6,7 @@ import { Router } from "express";
 const paymentRouter = Router();
 
 //! routes Create
-paymentRouter.post("/order", postOrder);
+paymentRouter.post("/order/:userID", postOrder);
 paymentRouter.post("/webhook", receivedWebhook);
 
 //! routes Read

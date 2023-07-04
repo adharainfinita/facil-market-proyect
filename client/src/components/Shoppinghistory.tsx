@@ -31,7 +31,7 @@ const ShoppingHistory = () => {
 					<Link to={`/product/detail/${purchase.productId}`}>
 						<div key={purchase.id} className="shopping-container">
 							<img
-								src={purchase.product.images[1]}
+								src={purchase.product.images[0]}
 								alt={purchase.product.name}
 							/>
 							<h3>{purchase.product.name}</h3>
