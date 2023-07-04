@@ -5,34 +5,22 @@ import Payments from "../models/Payments";
 import User from "../models/User";
 import Product from "../models/Product";
 import { transporter } from "../config/mailer";
+import { createPurchase } from "./purchaseController";
 
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
 
 export const createOrder = async (products: Array<BuyProduct>) => {
-	//Necesito que además del producto, me envíen el id del usuario logueado que está
-	// ejecutando la compra
-	// lo busco en  la db y lleno los campos de payer
+	//? Necesito que además del producto, me envíen el id del usuario logueado que está
+	//? ejecutando la compra
+	//? lo busco en  la db y lleno los campos de payer
 	mercadopago.configure({
 		access_token: TOKEN!,
 	});
 
-	//Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
+	//? Si quiero crear una orden de compras de muchos productos, debería hacer un map del product
 
 	const result = await mercadopago.preferences.create({
-		/* 		items: [
-			{
-				id: String(product.id),
-				title: product.name,
-				unit_price: product.price,
-				category_id: String(product.categoryID),
-				currency_id: "ARS",
-				picture_url: product.image,
-				quantity: product.quantity,
-			},
-		],
- */
-
 		items: products.map((product: BuyProduct) => {
 			return {
 				id: String(product.id),
@@ -50,7 +38,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 			email: "adharanosalevich@gmail.com",
 			phone: {
 				area_code: "54",
-				number: 3644123456,
+				number: "3644123456",
 			},
 			identification: {
 				type: "DNI",
@@ -100,9 +88,13 @@ export const createNewPayment = async (data: any) => {
 	while (data.additional_info.items.length !== count) {
 		let idProduct = Number(data.additional_info.items[count].id);
 		sellersFound.push(await Product.findByPk(idProduct));
-		console.log("before:", data.additional_info.items[count]);
 
-		console.log("after:", sellersFound[count]?.userID);
+		//? ESTO ES DE ALGUIEN, yo no lo tenia
+		await createPurchase({
+			userId: buyerFound!.id,
+			productId: sellersFound[count]?.id,
+			paymentId: data.id + sellersFound[count]?.userID,
+		});
 
 		const newPayment = await Payments.create({
 			order: data.id + sellersFound[count]?.userID,
@@ -138,10 +130,7 @@ export const sendPurchaseNotification = async (receipt: Array<Payments>) => {
 	const sellerIDs = receipt.map((payment) => payment.sellerID);
 	const sellersFound = await findSellersByID(sellerIDs);
 
-	// const sellers = await findSellersByID(email!.id);
-
 	//? Agregar número de telefono y dirección de los vendedores
-
 	await transporter.sendMail({
 		from: '"Soporte de Facil Market" <benjaminszodo@gmail.com>',
 		to: email?.email,
@@ -179,11 +168,6 @@ export const sendPurchaseNotification = async (receipt: Array<Payments>) => {
 };
 
 export const findSellersByID = async (sellers: Array<number>) => {
-	// const sellersIdOnPayments = await Payments.findAll({
-	// 	where: {
-	// 		buyerID: buyerID,
-	// 	},
-	// });
 	const contactsFound = await Promise.all(
 		sellers.map(async (match) => {
 			const user = await User.findOne({

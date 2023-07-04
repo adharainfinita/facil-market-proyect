@@ -1,23 +1,18 @@
 import { Router } from "express";
 const purchase = Router();
 
-//! Handlers POST
-
 import postPurchase from "../handlers/purchases/postPurchase";
-
-//! Handlers GET
 import getUserPurchases from "../handlers/purchases/getUserPurchases";
-
-//! UTILS
 import { purchaseCreate } from "../validators/purchaseValidator";
 
-//* POST
-
+//! routes Create
 purchase.post("/", purchaseCreate, postPurchase);
 
-//* Rutas de Compras
-
-//* GET
+//! routes Read
 purchase.get("/:id", getUserPurchases);
+
+//! routes Update
+
+//! routes Delete
 
 export default purchase;

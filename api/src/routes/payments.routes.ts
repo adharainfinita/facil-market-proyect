@@ -17,4 +17,6 @@ paymentRouter.get("/resumes", getPayments);
 
 //! routes Update
 
+//! routes Delete
+
 export default paymentRouter;

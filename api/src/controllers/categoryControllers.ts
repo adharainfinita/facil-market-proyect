@@ -9,14 +9,12 @@ interface localPropsFinder {
 	id: number;
 }
 
-//-----------------------
-
 export const createCategory = async ({
 	name,
 	image,
 	highlight = false,
 }: localPropsCreate) => {
-	// Verificar si la categoría ya existe
+	//? Verificar si la categoría ya existe
 	const existingCategory = await Category.findOne({
 		where: { name },
 	});
@@ -26,11 +24,8 @@ export const createCategory = async ({
 
 	return await Category.create({ name, image, highlight });
 };
-//-----------------------
 
 export const findAllCategories = async () => await Category.findAll();
-
-//-----------------------
 
 export const findCategoryByID = async ({ id }: localPropsFinder) => {
 	return await Category.findByPk(id);

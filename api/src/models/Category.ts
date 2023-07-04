@@ -28,7 +28,7 @@ class Category extends Model {
 	})
 	id!: number;
 
-	// ! AGREGADO PARA QUE QUEDEN CREADAS LAS CATEGORIAS POR DEFAULT SI YA EXISTEN NO SE DUPLICAN
+	//! AGREGADO PARA QUE QUEDEN CREADAS LAS CATEGORIAS POR DEFAULT SI YA EXISTEN NO SE DUPLICAN
 	public static async loadDefaultCategories() {
 		const defaultCategories = [
 			{
@@ -105,11 +105,9 @@ class Category extends Model {
 			});
 
 			if (created) {
-				console.log(`Created category: ${category.name}, ${category.image}`);
+				console.log(`Created category: ${category.name}`);
 			} else {
-				console.log(
-					`Category ${category.name}, ${category.image} already exists.`
-				);
+				console.log(`Category ${category.name} already exists.`);
 			}
 		}
 	}

@@ -6,7 +6,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 	const { active } = req.body;
 
 	try {
-		const response = await deleteProductProperties(active, productId);
+		const response = await deleteProductProperties(productId, active);
 
 		if (response) {
 			return res.status(200).json(response);

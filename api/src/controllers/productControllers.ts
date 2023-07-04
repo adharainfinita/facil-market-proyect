@@ -34,14 +34,12 @@ export const createProduct = async ({
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
-	console.log(createProduct);
 	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
 	}
 
 	//? Verificar si la categoría existe y obtener su nombre
-
 	let id = categoryID;
 	const categoryFound = await findCategoryByID({ id });
 	if (!categoryFound) {
@@ -76,7 +74,7 @@ export const findProductByName = async (name: string) => {
 	});
 
 	if (!name) {
-		throw new Error(`Se proporcionó un nombre`);
+		throw new Error(`No se proporcionó un nombre`);
 	}
 
 	if (!Object.keys(responseDB).length) {
@@ -101,7 +99,6 @@ export const findProductById = async (id: number) => {
 	return product;
 };
 
-// import { productProps } from "../interfaces/propsModel";
 // ? PUT
 export const changeProductProperties = async (
 	product: localProps,
@@ -114,8 +111,6 @@ export const changeProductProperties = async (
 };
 
 export const updateStock = async (id: number, unities: number) => {
-	console.log(id, unities);
-
 	const productFound = await Product.findByPk(id);
 
 	if (productFound && unities) {
@@ -125,20 +120,20 @@ export const updateStock = async (id: number, unities: number) => {
 
 	return productFound;
 };
-// ? delete
 
+// ? delete
 export const deleteProductProperties = async (
-	changeActive: string,
-	id: number
+	id: number,
+	changeActive: string
 ) => {
 	const product = await Product.findByPk(id);
 	if (!product) {
-		throw new Error("Producto no encontrado");
+		throw new Error("No se encontro el producto.");
 	}
 
 	product.active = changeActive;
 
 	await product.save();
 
-	return `Estado del producto, ${changeActive}`;
+	return { message: `Estado del producto: ${changeActive}`, prod: product };
 };

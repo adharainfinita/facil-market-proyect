@@ -5,7 +5,6 @@ import User from "../../models/User";
 const updateUser = async (req: Request, res: Response) => {
 	const { userId } = req.params;
 	const updates = req.body;
-	console.log("Entrada" + updates);
 
 	try {
 		const response = await changeUser(userId, updates);
@@ -18,7 +17,6 @@ const updateUser = async (req: Request, res: Response) => {
 			});
 		}
 	} catch (error: any) {
-		console.log(error);
 		return res.status(500).json({ message: "Error del servidor" });
 	}
 };

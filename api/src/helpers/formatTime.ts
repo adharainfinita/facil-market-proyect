@@ -1,5 +1,5 @@
 export const formatTime = (data: string) => {
-	//Hay dos tipos de formatos. Primero verificamos cuál es.
+	//? Hay dos tipos de formatos. Primero verificamos cuál es.
 	const regex = /,/g;
 
 	let dataToFormat = data.split(" ");

@@ -2,7 +2,6 @@ import { Router } from "express";
 const user = Router();
 
 import { getUserById, getAllUsers } from "../handlers/auth/getUsers";
-
 import updateUser from "../handlers/auth/updateUser";
 
 //! routes Create

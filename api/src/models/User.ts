@@ -35,6 +35,20 @@ class User extends Model {
 	})
 	image!: string;
 
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: string;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: true,
+		defaultValue: false,
+	})
+	admin!: string;
+
 	@HasMany(() => Purchase)
 	purchases!: Purchase[];
 }
