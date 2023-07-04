@@ -1,7 +1,7 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //? Pages
@@ -56,7 +56,8 @@ import { startCart } from "./redux/features/cartSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const session = window.localStorage.getItem("token");
+
+  const session = Boolean(window.localStorage.getItem("token"));
 
   const headers = {
     Authorization: `Bearer ${session}`,
@@ -111,7 +112,6 @@ const App = () => {
           const fetchData = async () => {
             await createCart(data.id);
             const results = await getAllItems(data.id);
-            console.log(results);
 
             dispatch(startCart(results));
             return results;
@@ -180,9 +180,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
 
         <Route
-          element={
-            <ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
-          }
+          element={<ProtectedRoute isAllowed={session} redirectTo="/" />}
         >
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/compras" element={<ShoppingHistory />} />
@@ -192,12 +190,20 @@ const App = () => {
           <Route path="/product/edit/:id" element={<ProductEdit />} />
           <Route path="/admin" element={<Dashboard />} />
         </Route>
+        <Route
+          path="/login"
+          element={session ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={session ? <Navigate to="/" /> : <RegisterForm />}
+        />
 
         <Route
           path="/admin"
           element={
             <ProtectedRoute
-              isAllowed={Boolean(session) && permissions}
+              isAllowed={session && permissions}
               redirectTo="/admin"
             >
               <Dashboard />

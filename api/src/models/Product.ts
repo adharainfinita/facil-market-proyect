@@ -82,7 +82,7 @@ class Product extends Model {
 		defaultValue: DataType.NOW,
 		field: "createdAt",
 		get() {
-			// Formatear la fecha utilizando Moment.js
+			//? Formatear la fecha utilizando Moment.js
 			return moment(this.getDataValue("createdAt")).format(
 				"DD-MM-YYYY HH:mm:ss"
 			);
@@ -95,10 +95,9 @@ class Product extends Model {
 		allowNull: false,
 		defaultValue: true,
 	})
-	active!: string;
+	active!: boolean;
 
-	//...... Relaciones
-
+	//? Relaciones
 	@ForeignKey(() => Category)
 	@Column({
 		type: DataType.INTEGER,
@@ -134,31 +133,5 @@ class Product extends Model {
 	@HasMany(() => Purchase)
 	purchases!: Purchase[];
 }
-/* public static async loadDefaultProducts() {
-	const defaultProducts = [
-		{ name: "Ropa y accesorios" },
-		{ name: "Computación" },
-		{ name: "Smartphone" },
-		{ name: "Electrodomesticos" },
-		{ name: "Indumentaria" },
-		{ name: "Inmuebles" },
-		{ name: "Vehiculos"},
-		{ name: "Hogar"},
-		{ name: "Belleza"},
-		{ name: "Libros"},
-	];
 
-	for (const ProductData of defaultProducts) {
-		const [product, created] = await Product.findOrCreate({
-			where: { name: categoryData.name },
-			defaults: categoryData,
-		});
-
-		if (created) {
-			console.log(`Created category: ${category.name}`);
-		} else {
-			console.log(`Category ${category.name} already exists.`);
-		}
-	} 
-}*/
 export default Product;

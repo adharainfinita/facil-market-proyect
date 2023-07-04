@@ -7,11 +7,9 @@ export const updateItem = async (req: Request, res: Response) => {
 		const productID = req.body;
 
 		const cartItem = await changeItemsCart(Number(userID), productID);
-		console.log(cartItem);
 
 		res.status(200).json(cartItem);
 	} catch (error) {
-		console.error(error);
 		res.status(500).json(error);
 	}
 };

@@ -3,7 +3,6 @@ import { changeProductProperties } from "../../controllers/productControllers";
 
 const updateProduct = async (req: Request, res: Response) => {
 	const product = req.body;
-
 	const productId = Number(req.params.id);
 
 	try {

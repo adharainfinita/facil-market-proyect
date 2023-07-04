@@ -28,7 +28,7 @@ class Cart extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 
-	// Agregar clave foránea de Product
+	//? Agregar clave foránea de Product
 	@Column({
 		type: DataType.ARRAY(DataType.INTEGER),
 		allowNull: true,
@@ -40,7 +40,7 @@ class Cart extends Model {
 		defaultValue: DataType.NOW,
 		field: "createdAt",
 		get() {
-			// Formatear la fecha utilizando Moment.js
+			//? Formatear la fecha utilizando Moment.js
 			return moment(this.getDataValue("createdAt")).format(
 				"DD-MM-YYYY HH:mm:ss"
 			);

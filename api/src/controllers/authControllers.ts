@@ -48,7 +48,6 @@ export const userCredentials = async (authLogin: loginData) => {
 	if (!isCorrect) throw new Error("Revisá tu contraseña.");
 
 	//? si todo sale bien retorno el usuario
-
 	const token = await generateToken(userExist);
 
 	const data = {
@@ -63,7 +62,7 @@ export const findAllUsers = async () => await User.findAll();
 
 export const sendEmailToUser = async (email: string, name: string) => {
 	const verificationLink = `${URL_HOST}:${PORT_CLIENT}/verification`;
-	// Reemplaza con la URL correcta de tu página de verificación
+	//? Reemplaza con la URL correcta de tu página de verificación
 
 	await transporter.sendMail({
 		from: '"Soporte de Facil Market" <benjaminszodo@gmail.com>',
@@ -91,10 +90,10 @@ interface Updates {
 	password: string;
 }
 
-export const changeUser = async (userId: string, updates: Updates) => {
+export const changeUser = async (userId: number, updates: Updates) => {
 	const user = await User.findByPk(userId);
 
-	// Encuentra y actualiza el usuario por su ID
+	//? Encuentra y actualiza el usuario por su ID
 	if (!user) {
 		throw Error("Usuario no encontrado");
 	}
@@ -106,10 +105,31 @@ export const changeUser = async (userId: string, updates: Updates) => {
 		updates.password = user.password;
 	}
 
-	// Actualiza los campos proporcionados en el objeto de actualización
+	//? Actualiza los campos proporcionados en el objeto de actualización
 	await user.update(updates);
 
 	return true;
-	// Object.assign(user, updates);
-	// await user.save();
+};
+
+export const updateActiveUser = async (userId: number) => {
+	try {
+		const user = await User.findByPk(userId);
+
+		//? Verifica si el usuario existe
+		if (!user) {
+			throw new Error("Usuario no encontrado");
+		}
+
+		//? Actualiza el estado del usuario
+		user.active = !user.active;
+
+		//? Guarda los cambios en la base de datos
+		await user.save();
+
+		return true;
+	} catch (error) {
+		//? Manejo de errores
+		console.error(error);
+		return false;
+	}
 };

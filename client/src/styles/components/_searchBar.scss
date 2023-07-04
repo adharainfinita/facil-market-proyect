@@ -5,8 +5,9 @@
 }
 
 .search {
-	width: 800px;
-	position: relative;
+	max-width: 40rem;
+	width: 100%;
+
 	display: flex;
 
 	&__term {

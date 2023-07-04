@@ -40,7 +40,7 @@ class User extends Model {
 		allowNull: false,
 		defaultValue: true,
 	})
-	active!: string;
+	active!: boolean;
 
 	@Column({
 		type: DataType.BOOLEAN,
