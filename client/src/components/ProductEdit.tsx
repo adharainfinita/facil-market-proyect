@@ -1,42 +1,46 @@
 import useProduct from "../hooks/useProduct";
-import { FormEvent, ChangeEvent, useEffect, useState } from "react";
-import { RootState } from "../redux/store";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { updateProduct } from "../services/productServices";
-import axios from "axios";
-import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+
+import axios from "axios";
+import Dropzone from "react-dropzone";
+import { RootState } from "../redux/store";
+import { updateProduct } from "../services/productServices";
+import { Category } from "../utils/interfaces";
 
 const ProductEdit = () => {
   const categories = useSelector((state: RootState) => state.category.value);
   const product = useProduct();
-  //const dispatch = useDispatch();
+
   const [content, setContent] = useState<any>([]);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [_loading, setLoading] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState(false);
+  const [_loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
     //setea el content con los datos del producto
     setContent(product);
   }, [product]);
 
-  const [selectedImage, setSelectedImage] = useState<string>("");
-
   useEffect(() => {
     //selecciona la imagen
     if (content.images?.length > 0 && !selectedImage) {
       setSelectedImage(content.images[0]);
     }
-  }, [content]);
+  }, [content, selectedImage]);
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
   };
 
-  const handleModes = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonText = event.currentTarget.textContent;
-    buttonText === "Editar" && setEditMode(true);
+  // const handleModes = (event: React.MouseEvent<HTMLButtonElement>) => {
+  // 	const buttonText = event.currentTarget.textContent;
+  // 	buttonText === "Edit" && setEditMode(true);
+  // };
+  const handleModes = () => {
+    setEditMode(true);
   };
 
   const handleChange = (
@@ -46,10 +50,15 @@ const ProductEdit = () => {
   ) => {
     const { name, value } = event.target;
 
-    setContent({
-      ...content,
+    // setContent({
+    // 	...content,
+    // 	[name]: value,
+    // });
+    // chatGPT
+    setContent((prevContent: any) => ({
+      ...prevContent,
       [name]: value,
-    });
+    }));
   };
 
   //? proban2
@@ -76,10 +85,14 @@ const ProductEdit = () => {
       });
 
       const uploadedImages = await Promise.all(uploadPromises);
-      setContent({
-        ...content,
-        images: [...content.images, ...uploadedImages],
-      });
+      // setContent({
+      // 	...content,
+      // 	images: [...content.images, ...uploadedImages],
+      // });
+      setContent((prevContent: any) => ({
+        ...prevContent,
+        images: [...prevContent.images, ...uploadedImages],
+      }));
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -107,27 +120,34 @@ const ProductEdit = () => {
     );
   };
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleDeleteImg = (index: number) => {
+    const updatedImages = [...content.images];
+    let newSelectedImage = selectedImage;
 
-    //? set info
-    const categoryFound = categories.find(
-      (category) => category.id === Number(content.categoryID)
-    );
+    if (selectedImage === content.images[index]) {
+      // Verificar si la imagen seleccionada se elimina del array de imágenes
+      if (index === content.images.length - 2) {
+        // Si la imagen eliminada es la anteúltima
+        newSelectedImage = content.images[index + 1]; // Seleccionar la siguiente imagen
+        setSelectedImage(newSelectedImage); // Actualizar el estado de selectedImage
+      } else if (index === content.images.length - 1) {
+        // Si la imagen eliminada es la última
+        newSelectedImage = content.images[index - 1]; // Seleccionar la imagen anterior
+        setSelectedImage(newSelectedImage); // Actualizar el estado de selectedImage
+      }
+    }
 
-    const categoryName = categoryFound
-      ? categoryFound.name
-      : content.categoryName;
+    // Eliminar la imagen del array de imágenes
+    updatedImages.splice(index, 1);
+    const updatedContent = {
+      ...content,
+      images: updatedImages,
+    };
 
-    content.categoryName = categoryName;
-
-    updateProduct(content);
-
-    setEditMode(false);
-    console.log(content);
+    setContent(updatedContent);
   };
 
-  const editModePrevImages = () => {
+const editModePrevImages = () => {
     return (
       <div className="edit-conteiner-pre-image">
         {content.images?.map((img: string, index: number) => (
@@ -171,20 +191,27 @@ const ProductEdit = () => {
     );
   };
 
-  const handleDeleteImg = (index: number) => {
-    if (selectedImage === content.images[index]) {
-      setSelectedImage(content.images[index + 1]);
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    //? set info
+    const categoryFound = categories.find(
+      (category) => category.id === Number(content.categoryID)
+    );
+
+    const categoryName = categoryFound
+      ? categoryFound.name
+      : content.categoryName;
+
+    content.categoryName = categoryName;
+
+    updateProduct(content);
+    if (editMode) {
+      setEditMode(false);
     }
 
-    const updatedImages = [...content.images];
-    updatedImages.splice(index, 1);
-
-    const updatedContent = {
-      ...content,
-      images: updatedImages,
-    };
-
-    setContent(updatedContent);
+    setEditMode(false);
+    console.log(content);
   };
 
   return (
@@ -198,7 +225,7 @@ const ProductEdit = () => {
         <div className="edit-detail-product">
           {editMode ? editModePrevImages() : contentPrevImages()}
           <div className="edit-detail-product-image">
-            <img className="edit__img" src={selectedImage} alt={product.name} />
+            <img src={selectedImage} alt={product.name} />
           </div>
           <div className="edit-conteiner-info">
             <div className="edit-conteiner-name-price">
@@ -331,7 +358,7 @@ const ProductEdit = () => {
             Editar
           </button>
         </div>
-        <button className="save-btn" type="submit" disabled={!editMode}>
+        <button type="submit" disabled={!editMode}>
           Guardar
         </button>
       </form>
