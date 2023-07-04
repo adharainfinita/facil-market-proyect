@@ -18,14 +18,16 @@ const UserProfiles: React.FC = () => {
 	);
 
 	return (
-		<div className="Profile__conteiner">
-			<div className="Profile__data">
-				<img src={userProfile?.image} alt="user" className="nav__userLogo" />
-				<h2>Nombre: {userProfile?.fullName}</h2>
-				<h2>Email: {userProfile?.email}</h2>
+		<div className="Profiles___cont">
+			<div className="Profiles__conteiner">
+				<div className="Profiles__data">
+					<img src={userProfile?.image} alt="user" className="Profiles__img" />
+					<h2>Nombre: {userProfile?.fullName}</h2>
+					<h2>Email: {userProfile?.email}</h2>
+				</div>
 			</div>
-			<div className="Profile__buys">
-				<h2>Mis Productos</h2>
+			<div className="Profiles__products">
+				<h2 className="Profiles__h2">Mis Productos</h2>
 				<div className="cards-cont">
 					{userProducts.map((product, index) => {
 						return (

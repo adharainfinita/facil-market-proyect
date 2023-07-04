@@ -217,7 +217,7 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<button
+						<button className="detail__product_quantity"
 							disabled={stock === 1 ? true : false}
 							onClick={() => handleStockChange("decrement")}
 						>
@@ -225,7 +225,7 @@ const DetailProduct = () => {
 							-{" "}
 						</button>
 						<h3>{stock}</h3>
-						<button
+						<button className="detail__product_quantity"
 							disabled={stock === product.unities ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
@@ -234,9 +234,9 @@ const DetailProduct = () => {
 						</button>
 					</section>
 
-					<div className=".detail-product-button">
-						{/* <PaymentButton product={product} /> */}
-						<button
+					<div >
+						<button className="detail-product-button"
+						
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
 						>
 							Agregar al carrito

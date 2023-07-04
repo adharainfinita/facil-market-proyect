@@ -115,7 +115,7 @@ const Cart = () => {
 				<div className="cart-conteiner">
 					<section className="cart-section">
 						<h1 className="cart-title">Carrito de compras</h1>
-						<button onClick={handleClearCart}>Limpiar carrito</button>
+						<button onClick={handleClearCart} className="cart__clear">Limpiar carrito</button>
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (
