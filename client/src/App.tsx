@@ -13,7 +13,6 @@ import Cart from "./pages/cart/Cart";
 import Market from "./pages/Market";
 import ProductReviews from "./pages/ProductsReviews";
 
-// import UserProducts from "./pages/UserProducts";
 //? Dashboard Admin
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
@@ -30,7 +29,7 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import UserProfile from "./components/UserProfile";
 import UserProducts from "./components/UserProducts";
-import ProductEdit from "./components/ProductEdit";
+
 import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
 import ShoppingHistory from "./components/Shoppinghistory";
@@ -51,6 +50,7 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
+import ProductEdit from "./components/ProductEdit";
 import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
 
