@@ -48,6 +48,11 @@
 }
 
 // Users
+.userTable {
+  width: 80%;
+  height: 100%;
+  overflow-y: auto;
+}
 .user-table {
   border-collapse: collapse;
   width: 80%;
