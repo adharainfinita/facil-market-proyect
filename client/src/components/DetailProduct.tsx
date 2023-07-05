@@ -10,6 +10,7 @@ import { RootState } from "../redux/store";
 import { addToCart } from "../redux/features/cartSlice";
 import useProduct from "../hooks/useProduct";
 import { updateItem } from "../services/cartServicer";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const DetailProduct = () => {
 	const product = useProduct();
@@ -20,6 +21,7 @@ const DetailProduct = () => {
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
 
+	const [storage, setStorage] = useLocalStorage("products", {});
 	const dispatch = useDispatch();
 
 	const data: BuyProduct = {
@@ -38,6 +40,8 @@ const DetailProduct = () => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
+
+		setStorage(product);
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -46,9 +50,9 @@ const DetailProduct = () => {
 
 	const handleStockChange = (action: string) => {
 		if (action === "increment") {
-			setStock(stock + 1);
-		} else {
-			setStock(stock - 1);
+			setStorage({ ...storage, unities: storage.unities - 1 });
+		} else if (action === "decrement") {
+			setStorage({ ...storage, unities: storage.unities + 1 });
 		}
 	};
 
@@ -141,18 +145,23 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
+						<h2>Unidades:</h2>
+						<h3>{storage.unities}</h3>
+					</section>
+
+					<section className="detail-product-section">
 						<button
 							className="detail__product_quantity"
-							disabled={stock === 1 ? true : false}
+							disabled={storage.unities < product.unities ? false : true}
 							onClick={() => handleStockChange("decrement")}
 						>
 							{" "}
 							-{" "}
 						</button>
-						<h3>{stock}</h3>
+						<h3>{storage.unities}</h3>
 						<button
 							className="detail__product_quantity"
-							disabled={stock === product.unities ? true : false}
+							disabled={storage.unities === 1 ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
 							{" "}
