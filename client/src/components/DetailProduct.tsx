@@ -21,7 +21,10 @@ const DetailProduct = () => {
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
 
-	const [storage, setStorage] = useLocalStorage("products", {});
+	const [storage, setStorage] = useLocalStorage("product", {});
+	const [globalStorage, setGlobalStorage] = useLocalStorage("products", {
+		products: [],
+	});
 	const dispatch = useDispatch();
 
 	const data: BuyProduct = {
@@ -32,7 +35,33 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
+	const foundProduct = () => {
+		const updatedProducts = globalStorage.products.map((item: any) => {
+			if (item.id === storage.id) {
+				return {
+					...item,
+					unities: storage.unities, 
+				};
+			}
+			return item;
+		});
+
+		const foundIndex = updatedProducts.findIndex(
+			(item: any) => item.id === storage.id
+		);
+		if (foundIndex === -1) {
+			updatedProducts.push(storage);
+		}
+
+		return updatedProducts;
+	};
+
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
+		const updatedGlobalStorage = {
+			...globalStorage,
+			products: foundProduct(),
+		};
+		setGlobalStorage(updatedGlobalStorage);
 		dispatch(addToCart(data));
 	};
 
@@ -40,7 +69,6 @@ const DetailProduct = () => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
-
 		setStorage({ ...product, unities: product.unities - 1 });
 	}, [product, selectedImage]);
 

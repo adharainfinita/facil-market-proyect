@@ -5,8 +5,6 @@ import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
 import { updateItem } from "../../services/cartServicer";
-
-// import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
 
@@ -21,6 +19,14 @@ const Cart = () => {
 		(state: RootState) => state.user.userLogin.user.id
 	);
 
+	const [productsStorage, setProductsStorage] = useState({});
+
+	useEffect(() => {
+		const data = window.localStorage.getItem("products");
+		const info = JSON.parse(data || "");
+		setProductsStorage(info.products);
+	}, []);
+
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => {
 			return {
@@ -28,7 +34,6 @@ const Cart = () => {
 				quantity: item.quantity,
 			};
 		});
-		console.log(arrayId);
 
 		const fetchData = async () => {
 			try {
@@ -88,8 +93,6 @@ const Cart = () => {
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
-				/* console.log("put cart" + userID, arrayId)
-				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -99,23 +102,7 @@ const Cart = () => {
 		fetchData();
 	}, [cartItems]);
 
-	// useEffect(() => {
-	// 	// Cargar productos al backend cuando se accede a la pÃ¡gina
-
-	// 	const getProductsCart = () => {
-	// 		let count = 0;
-	// 		while (cartItems?.length !== count) {
-	// 			const productFound = products.find(
-	// 				(match) => match.id === cartItems[count].id
-	// 			);
-	// 			if (productFound) {
-	// 				setProductsCart([...productsCart, productFound]);
-	// 			}
-	//       count++;
-	// 		}
-	// 	};
-	// 	getProductsCart();
-	// }, [cartItems, products]);
+	//const product = productsStorage.filter((item) => item.id === caritems)
 
 	return (
 		<div className="cart-conteiner">
@@ -131,7 +118,12 @@ const Cart = () => {
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (
-						<CartItem key={index} item={item} index={index} />
+						<CartItem
+							key={index}
+							item={item}
+							index={index}
+							products={productsStorage}
+						/>
 					))}
 
 					<section className="cart-section">
