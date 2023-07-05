@@ -4,12 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserPurchase } from "../services/purchaseServices";
 import { RootState } from "../redux/store";
 import { BuyProduct, Product } from "../utils/interfaces";
+import { BsCheck2Circle } from "react-icons/bs";
 import { clearCart } from "../redux/features/cartSlice";
+import { updateStock } from "../services/productServices";
 
 const ApprovedBuy = () => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state: RootState) => state.user.userLogin);
-	const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+	const cartItems = useSelector(
+		(state: RootState) => state.cart.cartItems.productID
+	);
 	const products = useSelector((state: RootState) => state.product.products);
 	const [error, setError] = useState<string>("");
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
@@ -18,16 +22,17 @@ const ApprovedBuy = () => {
 		const getProductsCart = () => {
 			const tempProductsCart: Product[] = [];
 
-			for (const cartItem of cartItems.productID) {
+			for (const cartItem of cartItems) {
 				const productFound = products.find(
 					(product) => product.id === cartItem.id
 				);
 				if (productFound) {
 					tempProductsCart.push(productFound);
 				}
+				/* const asd = await updateStock() */
 			}
 
-			setProductsCart(cartItems.productID);
+			setProductsCart(cartItems);
 		};
 		getProductsCart();
 	}, [cartItems, products]);
@@ -45,6 +50,13 @@ const ApprovedBuy = () => {
 				};
 				if (info.userId !== 0) {
 					const responsePurchase = await postUserPurchase(info);
+					for (const product of _productsCart) {
+						const stockUpdate = {
+							id: product.id,
+							unities: product.quantity,
+						};
+						await updateStock(stockUpdate);
+					}
 					dispatch(clearCart());
 					return responsePurchase;
 				}
@@ -53,12 +65,18 @@ const ApprovedBuy = () => {
 			}
 		};
 
+		/* 		const fechtData = async () => {
+			await updateItem(cartItems.userID, []);
+		};
+		fechtData(); */
+		/* dispatch(clearCart()); */
 		postPurchase();
-	}, [_productsCart, dispatch]);
+	}, [_productsCart]);
 
 	return (
-		<div>
-			<h1>Tu compra fue Aprobada</h1>
+		<div className="approved-purchase">
+			<BsCheck2Circle className="approved-check" />
+			<h1>Tu compra fue aprobada</h1>
 			<Link to="/products">
 				<button>Seguir Comprando</button>
 			</Link>

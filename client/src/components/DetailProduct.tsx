@@ -41,7 +41,7 @@ const DetailProduct = () => {
 			setSelectedImage(product.images[0]);
 		}
 
-		setStorage(product);
+		setStorage({ ...product, unities: product.unities - 1 });
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -51,14 +51,22 @@ const DetailProduct = () => {
 	const handleStockChange = (action: string) => {
 		if (action === "increment") {
 			setStorage({ ...storage, unities: storage.unities - 1 });
+			setStock(stock + 1);
 		} else if (action === "decrement") {
 			setStorage({ ...storage, unities: storage.unities + 1 });
+			setStock(stock - 1);
 		}
 	};
 
 	useEffect(() => {
 		const fetchInfo = async () => {
-			const arrayID = items.map((item: BuyProduct) => item.id);
+			const arrayID = items.map((item: BuyProduct) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity,
+				};
+			});
+
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
 
@@ -152,16 +160,16 @@ const DetailProduct = () => {
 					<section className="detail-product-section">
 						<button
 							className="detail__product_quantity"
-							disabled={storage.unities < product.unities ? false : true}
+							disabled={storage.unities < product.unities - 1 ? false : true}
 							onClick={() => handleStockChange("decrement")}
 						>
 							{" "}
 							-{" "}
 						</button>
-						<h3>{storage.unities}</h3>
+						<h3>{stock}</h3>
 						<button
 							className="detail__product_quantity"
-							disabled={storage.unities === 1 ? true : false}
+							disabled={storage.unities === 0 ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
 							{" "}

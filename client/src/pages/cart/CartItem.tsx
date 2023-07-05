@@ -3,6 +3,7 @@ import { removeFromCart } from "../../redux/features/cartSlice";
 import { updateItem } from "../../services/cartServicer";
 import { RootState } from "../../redux/store";
 import { BuyProduct } from "../../utils/interfaces";
+
 import {
 	incrementQuantity,
 	decrementQuantity,
@@ -19,8 +20,14 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
+
 	const handleRemoveFromCart = async (item: BuyProduct) => {
-		const arrayID = items.map((item) => item.id);
+		const arrayID = items.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity,
+			};
+		});
 		dispatch(removeFromCart(item.id));
 		await updateItem(Number(user.id), arrayID);
 	};

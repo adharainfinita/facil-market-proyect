@@ -22,7 +22,12 @@ const Cart = () => {
 	);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity,
+			};
+		});
 		console.log(arrayId);
 
 		const fetchData = async () => {
@@ -73,11 +78,18 @@ const Cart = () => {
 	}, [cartItems, products]);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity,
+			};
+		});
 
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
+				/* console.log("put cart" + userID, arrayId)
+				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -87,6 +99,24 @@ const Cart = () => {
 		fetchData();
 	}, [cartItems]);
 
+	// useEffect(() => {
+	// 	// Cargar productos al backend cuando se accede a la pÃ¡gina
+
+	// 	const getProductsCart = () => {
+	// 		let count = 0;
+	// 		while (cartItems?.length !== count) {
+	// 			const productFound = products.find(
+	// 				(match) => match.id === cartItems[count].id
+	// 			);
+	// 			if (productFound) {
+	// 				setProductsCart([...productsCart, productFound]);
+	// 			}
+	//       count++;
+	// 		}
+	// 	};
+	// 	getProductsCart();
+	// }, [cartItems, products]);
+
 	return (
 		<div className="cart-conteiner">
 			{cartItems?.length === 0 ? (
@@ -95,7 +125,9 @@ const Cart = () => {
 				<div className="cart-conteiner">
 					<section className="cart-section">
 						<h1 className="cart-title">Carrito de compras</h1>
-						<button onClick={handleClearCart} className="cart__clear">Limpiar carrito</button>
+						<button onClick={handleClearCart} className="cart__clear">
+							Limpiar carrito
+						</button>
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (

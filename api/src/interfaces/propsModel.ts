@@ -82,3 +82,8 @@ export interface BuyProduct {
 export interface PaymentProductsProps {
 	products: Array<BuyProduct>;
 }
+
+export interface ArrayCart {
+	productId: number
+	quantity: number
+}
