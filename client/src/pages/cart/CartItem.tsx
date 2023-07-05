@@ -19,6 +19,8 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
+
+	
 	const handleRemoveFromCart = async (item: BuyProduct) => {
 		const arrayID = items.map((item) => item.id);
 		dispatch(removeFromCart(item.id));

@@ -124,53 +124,53 @@ const ProductEdit = () => {
 	};
 
 	const editModePrevImages = () => {
+		const showUploadButton = content.images.length < 4;
+	  
 		return (
-			<div className="edit-conteiner-pre-image">
-				{content.images?.map((img: string, index: number) => (
-					<div key={index}>
-						<div
-							className="edit-pre-image"
-							onClick={() => handleImageClick(img)}
-						>
-							<button
-								className="edit__x"
-								type="button"
-								onClick={() => handleDeleteImg(index)}
-								disabled={content.images.length === 1}
-							>
-								X
-							</button>
-
-							<img
-								className="edit-preview-image"
-								src={img}
-								alt="preview images"
-							/>
+		  <div className="edit-conteiner-pre-image">
+			{content.images?.map((img: string, index: number) => (
+			  <div key={index}>
+				<div
+				  className="edit-pre-image"
+				  onClick={() => handleImageClick(img)}
+				>
+				  <button
+					className="edit__x"
+					type="button"
+					onClick={() => handleDeleteImg(index)}
+					disabled={content.images.length === 1}
+				  >
+					X
+				  </button>
+				  <img className="edit-preview-image" src={img} alt="preview images" />
+				</div>
+			  </div>
+			))}
+			
+			{showUploadButton && (
+			  <label htmlFor="form__input-image">
+				<Dropzone onDrop={uploadImages}>
+				  {({ getRootProps, getInputProps }) => (
+					<section>
+					  {loading ? (
+						<span>cargando...</span>
+					  ) : (
+						<div {...getRootProps({ className: "dropzone" })}>
+						  <input {...getInputProps()} />
+						  <div className="edit-pre-image">
+							<h1>+</h1>
+						  </div>
 						</div>
-					</div>
-				))}
-
-				<label htmlFor="form__input-image">
-					<Dropzone onDrop={uploadImages}>
-						{({ getRootProps, getInputProps }) => (
-							<section>
-								{loading ? (
-									<span>cargando...</span>
-								) : (
-									<div {...getRootProps({ className: "dropzone" })}>
-										<input {...getInputProps()} />
-										<div className="edit-pre-image">
-											<h1>+</h1>
-										</div>
-									</div>
-								)}
-							</section>
-						)}
-					</Dropzone>
-				</label>
-			</div>
+					  )}
+					</section>
+				  )}
+				</Dropzone>
+			  </label>
+			)}
+		  </div>
 		);
-	};
+	  };
+	  
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
