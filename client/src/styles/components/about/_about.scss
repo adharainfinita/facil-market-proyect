@@ -1,13 +1,13 @@
 .conteiner-about {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centra verticalmente */
-  align-items: center; /* Centra horizontalmente */
-  min-height: 100vh;
-  width: 100%;
-  gap: 2rem;
-  margin: 20px;
-  overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* Centra verticalmente */
+	align-items: center; /* Centra horizontalmente */
+	min-height: 100vh;
+	width: 100%;
+	gap: 2rem;
+	padding: 40px;
+	overflow: hidden;
 }
 
 .conteiner-aboutCardProfile {

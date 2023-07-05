@@ -5,11 +5,9 @@ import {
 	DataType,
 	ForeignKey,
 	BelongsTo,
-	HasMany,
 } from "sequelize-typescript";
 import Category from "./Category";
 import User from "./User";
-import Purchase from "./Purchase";
 import moment from "moment";
 
 @Table({ tableName: "products" })
@@ -129,9 +127,6 @@ class Product extends Model {
 
 	@BelongsTo(() => User)
 	user!: User;
-
-	@HasMany(() => Purchase)
-	purchases!: Purchase[];
 }
 
 export default Product;

@@ -2,24 +2,25 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 .search {
-	width: 800px;
-	position: relative;
+	width: 82%;
 	display: flex;
 
 	&__term {
 		width: 100%;
-		border: 3px solid #1e428a;
+		border: 0.15rem solid #4967a3dc;
 		border-right: none;
 		padding: 5px;
 		height: 45px;
 		border-radius: 5px 0 0 5px;
 		outline: none;
-		color: #9dbfaf;
+		color: #222;
 		&:focus {
-			color: #111;
+			border: 0.15rem solid #1e428a;
+			border-right: none;
 		}
 	}
 	&__button {

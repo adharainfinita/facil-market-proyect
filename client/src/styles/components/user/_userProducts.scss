@@ -29,21 +29,7 @@
 }
 
 .userProduct__button {
-  background-color: #1d428a;
-  color: #ffffff;
-  padding: 5px 5px;
-  border: none;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background-color 0.3s; /* Transición suave */
-
-  &:hover {
-    background-color: #0c2c5a; /* Color al pasar el cursor */
-  }
-
-  &:active {
-    background-color: #08203f; /* Color al pulsar el botón */
-  }
+  @include button(#1E428A, #264177)
 }
 
 .product-card {

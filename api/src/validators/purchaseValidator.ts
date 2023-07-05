@@ -11,9 +11,7 @@ export const purchaseCreate = [
 		.isInt()
 		.withMessage("El paymentId debe ser números y enteros."),
 
-	check("productId")
-		.isInt()
-		.withMessage("El ProductId debe ser números y enteros."),
+	check("products").isArray().withMessage("El products debe ser un array"),
 
 	(req: Request, res: Response, next: NextFunction) => {
 		validateResult(req, res, next);

@@ -12,6 +12,7 @@ const ProtectedRoute = ({
   children,
   redirectTo = "/",
 }: ProtectedRouteProps) => {
+
   if (!isAllowed) {
     return <Navigate to={redirectTo} />;
   }

@@ -92,7 +92,7 @@ const Resume = () => {
 				<h3>Resumen general</h3>
 				<h4>Productos activos: {dataResume.totalProducts}</h4>
 				<h4>Usuarios activos: {dataResume.totalUsers}</h4>
-				<h4>Ventas totales: {dataResume.totalSales}</h4>
+				<h4>Compras totales: {dataResume.totalSales}</h4>
 				<br />
 				<hr />
 

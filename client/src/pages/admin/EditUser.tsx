@@ -83,7 +83,7 @@ const EditUser = () => {
 							onChange={(e) => setUser({ ...user, password: e.target.value })}
 						/>
 
-						<button type="submit">
+						<button className="user-table-activeBtn" type="submit">
 							{updating ? "actualizando..." : "actualizar"}
 						</button>
 					</form>

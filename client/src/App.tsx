@@ -1,7 +1,7 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //? Pages
@@ -29,7 +29,6 @@ import RegisterForm from "./components/RegisterForm";
 import DetailProduct from "./components/DetailProduct";
 import UserProfile from "./components/UserProfile";
 import UserProducts from "./components/UserProducts";
-
 import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
 import ShoppingHistory from "./components/Shoppinghistory";
@@ -46,6 +45,7 @@ import {
 	changeEmail,
 	changeName,
 	changeImage,
+	setUserValidator,
 } from "./redux/features/userSlice";
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
@@ -53,26 +53,29 @@ import { getCategory } from "./services/categoryServices";
 import ProductEdit from "./components/ProductEdit";
 import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
+import ApprovedBuy from "./components/ApprovedBuy";
+import Purchase from "./components/Purchase";
 
 const App = () => {
 	const dispatch = useDispatch();
+	const login = useSelector((state: RootState) => state.user.userLogin);
+	const { userValidation } = useSelector((state: RootState) => state.user);
+	const permissions = login?.user?.admin;
+
+	const id = login.user.id;
 	const session = window.localStorage.getItem("token");
+	const sessionActive = Boolean(session);
 
 	const headers = {
 		Authorization: `Bearer ${session}`,
 	};
 
-  const login = useSelector((state: RootState) => state.user.userLogin);
-  const permissions = login?.user?.admin;
-
-  const id = login.user.id;
-
 	const location = useLocation().pathname;
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const userId = id; // Reemplaza con el ID del usuario deseado
-      const fetchedUser = await getUserById(userId);
+	useEffect(() => {
+		const fetchUserData = async () => {
+			const userId = id; // Reemplaza con el ID del usuario deseado
+			const fetchedUser = await getUserById(userId);
 
 			if (fetchedUser) {
 				if (fetchedUser.image !== undefined) {
@@ -91,11 +94,14 @@ const App = () => {
 					const newPassword = fetchedUser.password.toString(); // Convertir a cadena
 					dispatch(changePassword(newPassword));
 				}
+				if (sessionActive === true) {
+					dispatch(setUserValidator(true));
+				}
 			}
 		};
 
 		fetchUserData();
-	}, [dispatch, id]);
+	}, [dispatch, id, sessionActive]);
 
 	useEffect(() => {
 		if (session) {
@@ -107,15 +113,12 @@ const App = () => {
 						fullName: response.data.user.fullName,
 						email: response.data.user.email,
 						image: response.data.user.image,
-						admin: true,
+						admin: response.data.user.admin,
 					};
 
 					const fetchData = async () => {
 						await createCart(data.id);
 						const results = await getAllItems(data.id);
-				/* 		console.log(results) */
-
-						console.log(results);
 
 						dispatch(startCart(results));
 						return results;
@@ -175,58 +178,64 @@ const App = () => {
 
 	return (
 		<>
-		<Navbar />
+			<Navbar />
 
-		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/vender" element={<FormCreateProduct />} />
-			<Route path="/terminos_y_condiciones" element={<Terms />} />
-			<Route path="/about" element={<About/>} />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/vender" element={<FormCreateProduct />} />
+				<Route path="/terminos_y_condiciones" element={<Terms />} />
+				<Route path="/about" element={<About />} />
 
-			<Route
-				element={
-					<ProtectedRoute isAllowed={Boolean(session)} redirectTo="/" />
-				}
-			>
-				<Route path="/profile" element={<UserProfile />} />
-				<Route path="/compras" element={<ShoppingHistory />} />
-				<Route path="/ventas" element={<UserProducts />} />
-				<Route path="/verification" element={<VerificationPage />} />
-				<Route path="/user/:id" element={<EditUser />} />
-				<Route path="/product/edit/:id" element={<ProductEdit />} />
-				<Route path="/admin" element={<Dashboard />} />
-			</Route>
+				<Route
+					element={<ProtectedRoute isAllowed={sessionActive} redirectTo="/" />}
+				>
+					<Route path="/profile" element={<UserProfile />} />
+					<Route path="/compras" element={<ShoppingHistory />} />
+					<Route path="/compra/:id" element={<Purchase />} />
+					<Route path="/ventas" element={<UserProducts />} />
+					<Route path="/verification" element={<VerificationPage />} />
+					<Route path="/user/:id" element={<EditUser />} />
+					<Route path="/approved" element={<ApprovedBuy />} />
+					<Route path="/product/edit/:id" element={<ProductEdit />} />
+					<Route path="/admin" element={<Dashboard />} />
+				</Route>
 
-			<Route
-				path="/admin"
-				element={
-					<ProtectedRoute
-						isAllowed={Boolean(session) && permissions}
-						redirectTo={location}
-					>
-						<Dashboard />
-					</ProtectedRoute>
-				}
-			>
-				<Route path="summary" element={<Resume />} />
-				<Route path="users" element={<Users />} />
-				<Route path="products" element={<Products />} />
-			</Route>
+				<Route
+					path="/admin"
+					element={
+						<ProtectedRoute
+							isAllowed={Boolean(session) && permissions}
+							redirectTo={location}
+						>
+							<Dashboard />
+						</ProtectedRoute>
+					}
+				>
+					<Route path="summary" element={<Resume />} />
+					<Route path="users" element={<Users />} />
+					<Route path="products" element={<Products />} />
+				</Route>
 
-			<Route path="/products" element={<Market />} />
-			<Route path="/product/detail/:id" element={<DetailProduct />} />
-			<Route path="/login" element={<Login />} />
-			<Route path="/register" element={<RegisterForm />} />
-			<Route path="/profile/:id" element={<UserProfiles />} />
-			<Route path="/review/:id" element={<ProductReviews />} />
+				<Route path="/products" element={<Market />} />
+				<Route path="/product/detail/:id" element={<DetailProduct />} />
+				<Route
+					path="/login"
+					element={userValidation ? <Navigate to="/" /> : <Login />}
+				/>
+				<Route
+					path="/register"
+					element={userValidation ? <Navigate to="/" /> : <RegisterForm />}
+				/>
+				<Route path="/profile/:id" element={<UserProfiles />} />
+				<Route path="/review/:id" element={<ProductReviews />} />
 
-			<Route path="/cart" element={<Cart />} />
+				<Route path="/cart" element={<Cart />} />
 
-			<Route path="*" element={<NotFound />} />
-		</Routes>
-		<Footer />
-	</>
-  );
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+			<Footer />
+		</>
+	);
 };
 
 export default App;

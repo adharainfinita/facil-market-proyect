@@ -1,21 +1,22 @@
 import axios from "axios";
+import { BuyProduct } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 
 interface localProps {
 	userId: number;
-	productId: number;
+	products: Array<BuyProduct>;
 	paymentId: number;
 }
 
 export const postUserPurchase = async ({
 	userId,
-	productId,
+	products,
 	paymentId,
 }: localProps) => {
 	try {
 		const response = await axios.post(`${URL_HOST}/purchase`, {
 			userId,
-			productId,
+			products,
 			paymentId,
 		});
 		return response.data;
@@ -28,7 +29,20 @@ export const postUserPurchase = async ({
 	}
 };
 
-export const getPurchasesByUser = async (id: number) => {
+export const getPurchasesByUser = async (userId: number) => {
+	try {
+		const response = await axios(`${URL_HOST}/purchase/user/${userId}`);
+		return response.data;
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		throw errorMessage;
+	}
+};
+
+export const getPurchasesById = async (id: number) => {
 	try {
 		const response = await axios(`${URL_HOST}/purchase/${id}`);
 		return response.data;

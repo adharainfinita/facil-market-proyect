@@ -8,10 +8,18 @@ import { useState, useEffect } from "react";
 function Users() {
   const users = useSelector((state: RootState) => state.user.users);
   const [updatedUsers, setUpdatedUsers] = useState<User[]>([]);
+  const login = useSelector((state: RootState) => state.user.userLogin);
+  const admin = login?.user?.admin;
+  const currentUser = login?.user?.id;
 
   const disabledUser = async (user: user) => {
+    if (admin && user.id === currentUser) {
+      alert("No puedes desactivar tu propia cuenta");
+      return;
+    }
+
     const disabled = await deleteUser(Number(user.id));
-    console.log(disabled);
+
     const updatedUsersList = updatedUsers.map((u) => {
       if (u.id === user.id) {
         return { ...u, active: disabled.user.active };
@@ -26,7 +34,7 @@ function Users() {
   }, [users]);
 
   return (
-    <div className="userTable">
+    <div className="relocura">
       <table className="user-table">
         <thead>
           <tr>
@@ -43,12 +51,24 @@ function Users() {
               <td className="user-table-td">{user.fullName}</td>
               <td className="user-table-td">{user.email}</td>
               <td className="user-table-td">
-                <button onClick={() => disabledUser(user)}>
-                  {user.active ? "Desactivar" : "Activar"}
-                </button>
+                {user.active ? (
+                  <button
+                    className="user-table-disableBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Desactivar
+                  </button>
+                ) : (
+                  <button
+                    className="user-table-activeBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Activar
+                  </button>
+                )}
 
                 <Link to={`/user/${user.id}`}>
-                  <button>Editar</button>
+                  <button className="user-table-editBtn">Editar</button>
                 </Link>
               </td>
             </tr>

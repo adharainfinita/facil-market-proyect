@@ -6,7 +6,7 @@ import { Router } from "express";
 const paymentRouter = Router();
 
 //! routes Create
-paymentRouter.post("/order", postOrder);
+paymentRouter.post("/order/:userID", postOrder);
 paymentRouter.post("/webhook", receivedWebhook);
 
 //! routes Read
@@ -16,7 +16,5 @@ paymentRouter.get("/pending", (req, res) => res.send("pending"));
 paymentRouter.get("/resumes", getPayments);
 
 //! routes Update
-
-//! routes Delete
 
 export default paymentRouter;

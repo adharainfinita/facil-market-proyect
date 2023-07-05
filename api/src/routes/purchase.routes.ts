@@ -3,15 +3,17 @@ const purchase = Router();
 
 import postPurchase from "../handlers/purchases/postPurchase";
 import getUserPurchases from "../handlers/purchases/getUserPurchases";
+import getPurchase from "../handlers/purchases/getPurchaseById";
+
+//! UTILS
 import { purchaseCreate } from "../validators/purchaseValidator";
 
 //! routes Create
 purchase.post("/", purchaseCreate, postPurchase);
 
-//! routes Read
-purchase.get("/:id", getUserPurchases);
-
 //! routes Update
+purchase.get("/user/:userId", getUserPurchases);
+purchase.get("/:id", getPurchase);
 
 //! routes Delete
 

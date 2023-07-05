@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateItem } from "../services/cartServicer";
-import { BuyProduct, NotificationType } from "../utils/interfaces";
+import Reviews from "./Review";
+import { BuyProduct } from "../utils/interfaces";
 import { RootState } from "../redux/store";
-import { postUserPurchase } from "../services/purchaseServices";
+//import { updateUnities } from "../redux/features/productSlice";
+//import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";
 import useProduct from "../hooks/useProduct";
-import Reviews from "./Review";
+import { updateItem } from "../services/cartServicer";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const DetailProduct = () => {
 	const product = useProduct();
@@ -17,17 +19,16 @@ const DetailProduct = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 
-	const [isReadyToPost, setIsReadyToPost] = useState(false);
+	const quantity =
+		items.find((element) => element.id === product.id)?.quantity || 1;
+
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [error, setError] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
 
-	const [notification, setNotification] = useState<NotificationType>({
-		isOpen: false,
-		type: null,
-		content: "",
+	const [storage, setStorage] = useLocalStorage("product", {});
+	const [globalStorage, setGlobalStorage] = useLocalStorage("products", {
+		products: [],
 	});
-
 	const dispatch = useDispatch();
 
 	const data: BuyProduct = {
@@ -38,7 +39,34 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
+	const foundProduct = () => {
+		const updatedProducts = globalStorage.products.map((item: any) => {
+			if (item.id === storage.id) {
+				return {
+					...item,
+					unities: storage.unities,
+					quantity: storage.quantity,
+				};
+			}
+			return item;
+		});
+
+		const foundIndex = updatedProducts.findIndex(
+			(item: any) => item.id === storage.id
+		);
+		if (foundIndex === -1) {
+			updatedProducts.push(storage);
+		}
+
+		return updatedProducts;
+	};
+
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
+		const updatedGlobalStorage = {
+			...globalStorage,
+			products: foundProduct(),
+		};
+		setGlobalStorage(updatedGlobalStorage);
 		dispatch(addToCart(data));
 	};
 
@@ -46,6 +74,11 @@ const DetailProduct = () => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
+		setStorage({
+			...product,
+			unities: product.unities - quantity,
+			quantity: quantity,
+		});
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -53,64 +86,35 @@ const DetailProduct = () => {
 	};
 
 	const handleStockChange = (action: string) => {
+		let newStock = stock;
+		let newUnities = storage.unities;
+
 		if (action === "increment") {
-			setStock(stock + 1);
-		} else {
-			setStock(stock - 1);
+			newStock += 1;
+			newUnities -= 1;
+		} else if (action === "decrement") {
+			newStock -= 1;
+			newUnities += 1;
 		}
+
+		setStock(newStock);
+		setStorage({ ...storage, unities: newUnities, quantity: newStock });
 	};
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const status = urlParams.get("status");
-
 		const fetchInfo = async () => {
-			const arrayID = items.map((item: BuyProduct) => item.id);
+			const arrayID = items.map((item: BuyProduct) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity,
+				};
+			});
+
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
 
 		fetchInfo();
-
-		if (status === "approved" && currentUser && product.id !== 0) {
-			setIsReadyToPost(true);
-		}
-		if (status === "null") {
-			setNotification({
-				content: "Pago rechazado😢",
-				isOpen: true,
-				type: "failure",
-			});
-		}
 	}, [currentUser, product]);
-
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const paymentId = urlParams.get("payment_id");
-		if (isReadyToPost) {
-			setNotification({
-				content: "Pago aprobado😎",
-				isOpen: true,
-				type: "approved",
-			});
-
-			const postPurchase = async () => {
-				try {
-					const info = {
-						userId: Number(currentUser.user.id),
-						productId: product.id,
-						paymentId: Number(paymentId),
-					};
-					if (info.userId !== 0 && info.productId !== 0) {
-						const responsePurchase = await postUserPurchase(info);
-						return responsePurchase;
-					}
-				} catch (error: any) {
-					setError(error);
-				}
-			};
-			postPurchase();
-		}
-	}, [isReadyToPost]);
 
 	return (
 		<div className="detail-product-container">
@@ -186,16 +190,17 @@ const DetailProduct = () => {
 						<h2>Estado:</h2>
 						<h3>{product.status}</h3>
 					</section>
+
 					<section className="detail-product-section">
-						<h2>Stock:</h2>
-						<h3>{product.stock}</h3>
+						<h2>Unidades:</h2>
+						<h3>{storage.unities === 0 ? "Agotado" : storage.unities}</h3>
 					</section>
 
 					<section className="detail-product-section">
 						<button
 							className="detail__product_quantity"
-							disabled={stock === 1 ? true : false}
 							onClick={() => handleStockChange("decrement")}
+							disabled={storage.quantity === 1 ? true : false}
 						>
 							{" "}
 							-{" "}
@@ -203,8 +208,8 @@ const DetailProduct = () => {
 						<h3>{stock}</h3>
 						<button
 							className="detail__product_quantity"
-							disabled={stock === product.unities ? true : false}
 							onClick={() => handleStockChange("increment")}
+							disabled={storage.unities === 0 ? true : false}
 						>
 							{" "}
 							+{" "}
@@ -215,13 +220,11 @@ const DetailProduct = () => {
 						<button
 							className="detail-product-button"
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+							disabled={storage.unities < 0}
 						>
 							Agregar al carrito
 						</button>
 					</div>
-
-					{notification.isOpen && <div>{notification.content}</div>}
-					<p>{error}</p>
 				</div>
 			</div>
 		</div>
