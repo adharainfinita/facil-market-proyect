@@ -9,12 +9,12 @@ import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
 	const navigate = useNavigate();
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
 
 	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
-		dispatch(setUserValidator(false))
+		dispatch(setUserValidator(false));
 		window.localStorage.removeItem("token");
 		window.localStorage.removeItem("items");
 		navigate("/");
@@ -67,7 +67,7 @@ function Navbar() {
 					<Link to="/about">
 						<li>Nosotros</li>
 					</Link>
-					
+
 					<Link to="/vender">
 						<button className="nav__button-sell">Vender</button>
 					</Link>

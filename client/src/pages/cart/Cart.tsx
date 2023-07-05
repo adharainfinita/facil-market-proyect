@@ -20,14 +20,6 @@ const Cart = () => {
 	);
 
 	useEffect(() => {
-		const data = window.localStorage.getItem("products");
-		const info = JSON.parse(data || "");
-		setProductsStorage(info.products);
-	}, []);
-
-	const [productsStorage, setProductsStorage] = useState<any>([]);
-
-	useEffect(() => {
 		const arrayId = cartItems.map((item) => {
 			return {
 				productId: item.id,
@@ -62,8 +54,6 @@ const Cart = () => {
 
 	const handleClearCart = () => {
 		dispatch(clearCart());
-		window.localStorage.removeItem("product");
-		window.localStorage.removeItem("products");
 	};
 	useEffect(() => {
 		const getProductsCart = () => {
@@ -118,12 +108,7 @@ const Cart = () => {
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (
-						<CartItem
-							key={index}
-							item={item}
-							index={index}
-							products={productsStorage}
-						/>
+						<CartItem key={index} item={item} index={index} />
 					))}
 
 					<section className="cart-section">
