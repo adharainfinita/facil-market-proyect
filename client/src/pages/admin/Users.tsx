@@ -34,34 +34,48 @@ function Users() {
   }, [users]);
 
   return (
-    <table className="user-table">
-      <thead>
-        <tr>
-          <th className="user-table-th">ID</th>
-          <th className="user-table-th">Nombre</th>
-          <th className="user-table-th">Email</th>
-          <th className="user-table-th">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {updatedUsers.map((user) => (
-          <tr key={user.id}>
-            <td className="user-table-td">{user.id}</td>
-            <td className="user-table-td">{user.fullName}</td>
-            <td className="user-table-td">{user.email}</td>
-            <td className="user-table-td">
-              <button onClick={() => disabledUser(user)}>
-                {user.active ? "Desactivar" : "Activar"}
-              </button>
-
-              <Link to={`/user/${user.id}`}>
-                <button>Editar</button>
-              </Link>
-            </td>
+    <div className="relocura">
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th className="user-table-th">ID</th>
+            <th className="user-table-th">Nombre</th>
+            <th className="user-table-th">Email</th>
+            <th className="user-table-th">Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {updatedUsers.map((user) => (
+            <tr key={user.id}>
+              <td className="user-table-td">{user.id}</td>
+              <td className="user-table-td">{user.fullName}</td>
+              <td className="user-table-td">{user.email}</td>
+              <td className="user-table-td">
+                {user.active ? (
+                  <button
+                    className="user-table-disableBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Desactivar
+                  </button>
+                ) : (
+                  <button
+                    className="user-table-activeBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Activar
+                  </button>
+                )}
+
+                <Link to={`/user/${user.id}`}>
+                  <button className="user-table-editBtn">Editar</button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

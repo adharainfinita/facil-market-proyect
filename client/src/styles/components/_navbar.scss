@@ -45,7 +45,6 @@
 	}
 
 	&__items {
-		color: #111;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -53,6 +52,10 @@
 		gap: 7.5rem;
 		margin-left: 5rem;
 		flex-grow: 1;
+		
+		li {
+			color: #111;
+		}
 	}
 
 	&__user {
@@ -117,7 +120,8 @@
 		}
 	}
 	&__icon {
-		height: 30px;
-		width: 30px;
+		height: 35px;
+		width: 35px;
+		color: #111;
 	}
 }

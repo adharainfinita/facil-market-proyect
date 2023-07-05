@@ -37,7 +37,7 @@ const Cart = () => {
 		};
 
 		fetchData();
-	}, [cartItems]);
+	}, [cartItems, userID]);
 
 	const products = useSelector((state: RootState) => state.product.products);
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
@@ -92,7 +92,7 @@ const Cart = () => {
 		};
 
 		fetchData();
-	}, [cartItems]);
+	}, [cartItems, userID]);
 
 	return (
 		<div className="cart-conteiner">
