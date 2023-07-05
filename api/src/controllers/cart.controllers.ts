@@ -3,8 +3,6 @@ import Cart from "../models/Cart";
 import Product from "../models/Product";
 
 export const createCart = async (userID: number) => {
-	console.log(`userID: ${userID} `);
-
 	const cartFound = await Cart.findOne({
 		where: { userID: userID },
 	});

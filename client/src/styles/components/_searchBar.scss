@@ -2,11 +2,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 .search {
-	width: 800px;
-	position: relative;
+	width: 82%;
 	display: flex;
 
 	&__term {

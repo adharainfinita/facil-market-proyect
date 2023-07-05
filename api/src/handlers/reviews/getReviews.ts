@@ -14,7 +14,7 @@ const getAllReviews = async (req: Request, res: Response) => {
 
 const getAllReviewsProduct = async (req: Request, res: Response) => {
 	try {
-		const productId = req.params.id; // Obtén el ID del producto de los parámetros de la solicitud
+		const productId = req.params.id;
 
 		const reviews = await findAllReviewsByProductId(Number(productId));
 

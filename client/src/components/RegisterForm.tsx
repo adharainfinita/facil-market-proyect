@@ -53,7 +53,6 @@ const RegisterForm = () => {
 						data
 					);
 					const uploadedFile = res.data;
-					// setImage(uploadedFile.secure_url);
 					setInputs({ ...inputs, image: uploadedFile.secure_url });
 				} catch (error) {
 					console.error("Error al subir la imagen", error);
@@ -160,15 +159,6 @@ const RegisterForm = () => {
 						onChange={handleInputs}
 					/>
 					<BiLockAlt className="icon" />
-
-					{/* {showPassword ? (
-            <AiOutlineEye onClick={handleShowPassword} className="showHidePw" />
-          ) : (
-            <AiOutlineEyeInvisible
-              onClick={handleShowPassword}
-              className="showHidePw"
-            />
-          )} */}
 				</div>
 				{errors.password && (
 					<p className="error">
@@ -213,7 +203,6 @@ const RegisterForm = () => {
 					/>
 					<BiImage className="icon" />
 				</div>
-				{/* {errors.image && <p className="error">{errors.image}</p>} */}
 				{errorMessage && (
 					<p className="error-message">
 						<RiErrorWarningLine className="error-icon" /> {errorMessage}

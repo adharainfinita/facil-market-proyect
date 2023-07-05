@@ -19,7 +19,7 @@ const FeaturedCategory = () => {
 		<div className="container-featured">
 			{featured.map(
 				(category: Category, index: number) =>
-					// Verificar si category.highlight es true
+					//? Verificar si category.highlight es true
 					category.highlight && (
 						<div
 							key={index}

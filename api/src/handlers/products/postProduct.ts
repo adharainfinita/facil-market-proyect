@@ -32,7 +32,6 @@ const postProduct = async (req: Request, res: Response) => {
 			categoryID,
 			active,
 		};
-		console.log(typeof data.status);
 
 		const newProduct = await createProduct(data);
 		return res.status(201).json(newProduct);

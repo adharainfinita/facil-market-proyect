@@ -1,27 +1,28 @@
-.container-verification {
+.container_approved {
 	padding: 5%;
 	margin: 5%;
 	padding: 20px;
 	text-align: center;
 }
 
-.logo-verification {
+.logo-approved {
 	max-width: 150px;
 	margin-bottom: 10px;
 }
 
-.title-verification {
+.title-approved {
 	font-size: 24px;
 	
 	margin-bottom: 10px;
 }
 
-.text-verification {
+.text-approved {
 	color: #333333;
 	margin-bottom: 10px;
+    margin: 15px;
 }
 
-.button-verification {
+.buttom-approved {
 	background-color: #1d428a;
 	color: #ffffff;
 	padding: 10px 20px;
@@ -30,12 +31,12 @@
 	text-decoration: none;
 }
 
-.button-verification a {
+.buttom-approved a {
 	color: #ffffff;
 	
 	text-decoration: none;
 }
 
-.button-verification:hover {
+.buttom-approved:hover {
 	background-color: #0c2558;
 }

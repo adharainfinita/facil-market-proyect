@@ -25,13 +25,18 @@ const cartSlice = createSlice({
 			state.cartItems = action.payload;
 		},
 		addToCart: (state, action: PayloadAction<BuyProduct>) => {
-			state.cartItems.productID = [
-				...state.cartItems.productID,
-				action.payload,
-			];
+			const { id, quantity } = action.payload;
+			const existingProduct = state.cartItems.productID.find(
+				(product) => product.id === id
+			);
+
+			if (existingProduct) {
+				existingProduct.quantity += quantity;
+			} else {
+				state.cartItems.productID.push(action.payload);
+			}
 
 			alert("Producto agregado al carrito");
-			// state.totalPrice = calculateTotalPrice(state.cartItems.products).toString();
 		},
 
 		decrementQuantity: (state, action: PayloadAction<number>) => {
@@ -82,6 +87,4 @@ export const {
 	decrementQuantity,
 } = cartSlice.actions;
 
-
-	
 export default cartSlice.reducer;

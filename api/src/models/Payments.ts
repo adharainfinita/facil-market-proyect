@@ -4,14 +4,14 @@ import Product from "./Product";
 
 @Table({ tableName: "payments" })
 class Payments extends Model {
-	//id de la operación
+	//? id de la operación
 	@Column({
 		type: DataType.INTEGER,
 		primaryKey: true,
 	})
 	order!: number;
 
-	//ID del vendedor (al que hay que pagarle)
+	//? ID del vendedor (al que hay que pagarle)
 
 	@Column({
 		type: DataType.INTEGER,
@@ -19,15 +19,14 @@ class Payments extends Model {
 	})
 	sellerID!: number;
 
-	//Monto bruto, es decir el total sin quitar el porcentaje
-
+	//? Monto bruto, es decir el total sin quitar el porcentaje
 	@Column({
 		type: DataType.FLOAT,
 		allowNull: false,
 	})
 	grossAmount!: number;
 
-	//Monto neto, el valor que será pagado al seller
+	//? Monto neto, el valor que será pagado al seller
 
 	@Column({
 		type: DataType.FLOAT,
@@ -35,8 +34,7 @@ class Payments extends Model {
 	})
 	netAmount!: number;
 
-	//Estado de la operación
-
+	//? Estado de la operación
 	@Column({
 		type: DataType.ENUM("pending", "payed", "unresolved"),
 		allowNull: false,
@@ -44,15 +42,14 @@ class Payments extends Model {
 	})
 	status!: string;
 
-	//ID del comprador
-
+	//? ID del comprador
 	@Column({
 		type: DataType.INTEGER,
 		allowNull: false,
 	})
 	buyerID!: number;
 
-	//Texto de aclaración, particularidad o mensaje
+	//? Texto de aclaración, particularidad o mensaje
 
 	@Column({
 		type: DataType.TEXT,
@@ -77,7 +74,7 @@ class Payments extends Model {
 		defaultValue: DataType.NOW,
 		field: "createdAt",
 		get() {
-			// Formatear la fecha utilizando Moment.js
+			//? Formatear la fecha utilizando Moment.js
 			return moment(this.getDataValue("createdAt")).format(
 				"DD-MM-YYYY HH:mm:ss"
 			);

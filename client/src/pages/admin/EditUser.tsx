@@ -39,7 +39,7 @@ const EditUser = () => {
 		event.preventDefault();
 		setUpdating(true);
 		try {
-			const res = await updateUser(id, user);
+			const res = await updateUser(String(id), user);
 			console.log(res);
 
 			setUser({ ...res.user, password: "" });

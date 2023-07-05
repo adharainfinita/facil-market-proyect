@@ -10,14 +10,14 @@ export const createReview = async ({
 	text,
 	rating,
 }: reviewProps) => {
-	// Verificar si el usuario y el producto existen en la base de datos
+	//? Verificar si el usuario y el producto existen en la base de datos
 	const userExists = await User.findByPk(userID);
 	const productExists = await Product.findByPk(productID);
 
 	if (!userExists || !productExists) {
 		throw new Error("User or product not found, please check if they exist");
 	}
-	// Crear el nuevo review
+	//? Crear el nuevo review
 	return await Review.create({
 		userID,
 		fullName,

@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import useProduct from "../hooks/useProduct";
-import { updateItem } from "../services/cartServicer";
 import { useSelector, useDispatch } from "react-redux";
 import Reviews from "./Review";
-import { BuyProduct, NotificationType } from "../utils/interfaces";
+import { BuyProduct } from "../utils/interfaces";
 import { RootState } from "../redux/store";
-
-import { postUserPurchase } from "../services/purchaseServices";
 //import { updateUnities } from "../redux/features/productSlice";
 //import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";
+import useProduct from "../hooks/useProduct";
+import { updateItem } from "../services/cartServicer";
 
 const DetailProduct = () => {
 	const product = useProduct();
@@ -19,17 +17,8 @@ const DetailProduct = () => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
-
-	const [isReadyToPost, setIsReadyToPost] = useState(false);
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [error, setError] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
-
-	const [notification, setNotification] = useState<NotificationType>({
-		isOpen: false,
-		type: null,
-		content: "",
-	});
 
 	const dispatch = useDispatch();
 
@@ -40,10 +29,6 @@ const DetailProduct = () => {
 		image: product.images[0],
 		quantity: stock,
 	};
-
-	//?fn random
-
-
 
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		dispatch(addToCart(data));
@@ -59,9 +44,6 @@ const DetailProduct = () => {
 		setSelectedImage(image);
 	};
 
-	// useEffect(() => {
-	//   const urlParams = new URLSearchParams(window.location.search);
-	//   const status = urlParams.get("status");
 	const handleStockChange = (action: string) => {
 		if (action === "increment") {
 			setStock(stock + 1);
@@ -71,71 +53,13 @@ const DetailProduct = () => {
 	};
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const status = urlParams.get("status");
-
 		const fetchInfo = async () => {
 			const arrayID = items.map((item: BuyProduct) => item.id);
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
-	
-			fetchInfo();
-		//   if (status === "approved") {
-		//     setNotification({
-		//       content: "Pago aprobado😎",
-		//       isOpen: true,
-		//       type: "approved",
-		//     });
-		//   }
 
-		//   if (status === "failure") {
-		//     setNotification({
-		//       content: "Pago rechazado😢",
-		//       isOpen: true,
-		//       type: "failure",
-		//     });
-		//   }
-		// }, []);
-		if (status === "approved" && currentUser && product.id !== 0) {
-			setIsReadyToPost(true);
-		}
-		if (status === "null") {
-			setNotification({
-				content: "Pago rechazado😢",
-				isOpen: true,
-				type: "failure",
-			});
-		}
+		fetchInfo();
 	}, [currentUser, product]);
-
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const paymentId = urlParams.get("payment_id");
-		if (isReadyToPost) {
-			setNotification({
-				content: "Pago aprobado😎",
-				isOpen: true,
-				type: "approved",
-			});
-
-			const postPurchase = async () => {
-				try {
-					const info = {
-						userId: Number(currentUser.user.id),
-						productId: product.id,
-						paymentId: Number(paymentId),
-					};
-					if (info.userId !== 0 && info.productId !== 0) {
-						const responsePurchase = await postUserPurchase(info);
-						return responsePurchase;
-					}
-				} catch (error: any) {
-					setError(error);
-				}
-			};
-			postPurchase();
-		}
-	}, [isReadyToPost]);
 
 	return (
 		<div className="detail-product-container">
@@ -217,7 +141,8 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<button className="detail__product_quantity"
+						<button
+							className="detail__product_quantity"
 							disabled={stock === 1 ? true : false}
 							onClick={() => handleStockChange("decrement")}
 						>
@@ -225,7 +150,8 @@ const DetailProduct = () => {
 							-{" "}
 						</button>
 						<h3>{stock}</h3>
-						<button className="detail__product_quantity"
+						<button
+							className="detail__product_quantity"
 							disabled={stock === product.unities ? true : false}
 							onClick={() => handleStockChange("increment")}
 						>
@@ -234,17 +160,14 @@ const DetailProduct = () => {
 						</button>
 					</section>
 
-					<div >
-						<button className="detail-product-button"
-						
+					<div>
+						<button
+							className="detail-product-button"
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
 						>
 							Agregar al carrito
 						</button>
 					</div>
-
-					{notification.isOpen && <div>{notification.content}</div>}
-					<p>{error}</p>
 				</div>
 			</div>
 		</div>

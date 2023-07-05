@@ -5,8 +5,6 @@ const updateProductStock = async (req: Request, res: Response) => {
 	const { unities } = req.body;
 	const { id } = req.params;
 
-	console.log(`Este es el req body: ${unities}`);
-
 	try {
 		const response = await updateStock(Number(id), unities);
 		if (response) {
