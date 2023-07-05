@@ -45,6 +45,7 @@ const DetailProduct = () => {
 				return {
 					...item,
 					unities: storage.unities,
+					quantity: storage.quantity,
 				};
 			}
 			return item;
@@ -73,7 +74,11 @@ const DetailProduct = () => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
-		setStorage({ ...product, unities: product.unities - quantity });
+		setStorage({
+			...product,
+			unities: product.unities - quantity,
+			quantity: quantity,
+		});
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -81,13 +86,19 @@ const DetailProduct = () => {
 	};
 
 	const handleStockChange = (action: string) => {
+		let newStock = stock;
+		let newUnities = storage.unities;
+
 		if (action === "increment") {
-			setStorage({ ...storage, unities: storage.unities - 1 });
-			setStock(stock + 1);
+			newStock += 1;
+			newUnities -= 1;
 		} else if (action === "decrement") {
-			setStorage({ ...storage, unities: storage.unities + 1 });
-			setStock(stock - 1);
+			newStock -= 1;
+			newUnities += 1;
 		}
+
+		setStock(newStock);
+		setStorage({ ...storage, unities: newUnities, quantity: newStock });
 	};
 
 	useEffect(() => {
@@ -182,18 +193,14 @@ const DetailProduct = () => {
 
 					<section className="detail-product-section">
 						<h2>Unidades:</h2>
-						<h3>{storage.unities <= 0 ? "Agotado" : storage.unities}</h3>
+						<h3>{storage.unities === 0 ? "Agotado" : storage.unities}</h3>
 					</section>
 
 					<section className="detail-product-section">
 						<button
 							className="detail__product_quantity"
-							disabled={
-								storage.unities < product.unities - 1 || storage.unities === 0
-									? false
-									: true
-							}
 							onClick={() => handleStockChange("decrement")}
+							disabled={storage.quantity === 1 ? true : false}
 						>
 							{" "}
 							-{" "}
@@ -201,8 +208,8 @@ const DetailProduct = () => {
 						<h3>{stock}</h3>
 						<button
 							className="detail__product_quantity"
-							disabled={storage.unities === 0 ? true : false}
 							onClick={() => handleStockChange("increment")}
+							disabled={storage.unities === 0 ? true : false}
 						>
 							{" "}
 							+{" "}
