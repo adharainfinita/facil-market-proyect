@@ -1,16 +1,14 @@
-import { cartProductProps } from "../interfaces/propsModel";
+import { ArrayCart, cartProductProps } from "../interfaces/propsModel";
 import Cart from "../models/Cart";
 import Product from "../models/Product";
 
 export const createCart = async (userID: number) => {
-	console.log(`userID: ${userID} `);
-
 	const cartFound = await Cart.findOne({
 		where: { userID: userID },
 	});
 
 	if (cartFound?.dataValues.id) {
-		return "ya existe el carrito";
+		return "Ya existe el carrito";
 	}
 
 	const response = await Cart.create({
@@ -36,21 +34,26 @@ export const getCartById = async (userID: number) => {
 		productID: [],
 	};
 
-	let count = 0;
-	while (myCart?.productID!.length !== count) {
-		const productFound = await Product.findByPk(myCart?.productID![count]);
-		if (productFound) {
-			productsCart.productID.push({
-				id: productFound.id,
-				name: productFound.name,
-				price: productFound.price,
-				categoryID: productFound.categoryID,
-				image: productFound.images[0],
-				quantity: 1,
-			});
-			count++;
-		} else
-			throw Error(`No existe producto con ID: ${myCart?.productID![count]}`);
+	const productsId = myCart.productID?.map((item) => item.productId);
+	const productsQuantity = myCart.productID?.map((item) => item.quantity);
+
+	if (productsId && productsQuantity) {
+		let count = 0;
+		while (productsId.length !== count) {
+			const productFound = await Product.findByPk(productsId[count]);
+			if (productFound) {
+				productsCart.productID.push({
+					id: productFound.id,
+					name: productFound.name,
+					price: productFound.price,
+					categoryID: productFound.categoryID,
+					image: productFound.images[0],
+					quantity: productsQuantity[count],
+				});
+				count++;
+			} else
+				throw Error(`No existe producto con ID: ${myCart?.productID![count]}`);
+		}
 	}
 
 	return productsCart;
@@ -58,7 +61,7 @@ export const getCartById = async (userID: number) => {
 
 export const changeItemsCart = async (
 	userID: number,
-	productID: Array<number>
+	productID: Array<ArrayCart>
 ) => {
 	const myCart = await Cart.findOne({ where: { userID: userID } });
 

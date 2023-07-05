@@ -1,34 +1,53 @@
 .terms-container {
-	max-width: 1000px;
-	margin: 20px auto;
-	padding: 20px;
-	color: #333;
-	background-color: rgba(128, 128, 128, 0.2);
-	border-radius: 40px;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  color: #333;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 40px;
 
 	.title {
 		text-align: center;
 	}
+  .title {
+    text-align: center;
+  }
 
 	h1 {
 		font-size: 24px;
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
 	.section-title {
 		padding: 10px;
 	}
+  .section-title {
+    padding: 10px;
+  }
 
 	.date {
 		font-size: 14px;
 		margin-bottom: 20px;
 	}
+  .date {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 
 	.intro {
 		font-size: 16px;
 		line-height: 1.5;
 	}
+  .intro {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 
 	a {
 
@@ -38,4 +57,12 @@
 			text-decoration: underline;
 		}
 	}
+  a {
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

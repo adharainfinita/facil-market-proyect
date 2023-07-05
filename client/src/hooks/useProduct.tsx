@@ -35,7 +35,7 @@ const useProduct = () => {
 					unities: 0,
 					status: "",
 					active: true,
-					quantity: 0
+					quantity: 0,
 				})
 			);
 		};

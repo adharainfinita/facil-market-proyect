@@ -66,7 +66,7 @@ export interface cartProductProps {
 }
 export interface purchases {
 	userId?: number;
-	productId?: number;
+	products?: Array<BuyProduct>;
 	paymentId: number;
 }
 
@@ -81,4 +81,9 @@ export interface BuyProduct {
 
 export interface PaymentProductsProps {
 	products: Array<BuyProduct>;
+}
+
+export interface ArrayCart {
+	productId: number
+	quantity: number
 }

@@ -1,70 +1,73 @@
 .profile {
-  margin: 0 20px;
+	margin: 0 20px;
 
-  cursor: pointer;
-  .image {
-    display: flex;
-    padding-bottom: 10px;
-    border-bottom: 1px solid  gray;
-    img {
-      margin-right: 15px;
-    }
-  }
-  img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .openProfile {
-    z-index: 2;
-    color: #000;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
-    position: absolute;
-    top: 59px;
-    right: 10px;
-    width: 250px;
-    background: #f3ecec;
+	cursor: pointer;
+	.image {
+		display: flex;
+		padding-bottom: 10px;
+		border-bottom: 1px solid gray;
+		img {
+			margin-right: 15px;
+		}
+	}
+	img {
+		width: 55px;
+		height: 55px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.openProfile {
+		z-index: 2;
+		color: #000;
+		box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+		position: absolute;
+		top: 59px;
+		right: 10px;
+		width: 250px;
+		background: #f3ecec;
 
-    &-name {
-      display: flex;
-      align-items: center;
-    }
+		&-name {
+			
+			display: flex;
+			align-items: center;
+		}
 
-    .box {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      margin-top: 10px;
-      padding: 5px;
-      transition: 0.5s;
-    }
-    .icon {
-      font-size: 20px;
-      margin-right: 15px;
-    }
-    h4 {
-      font-size: 15px;
-      font-weight: 500;
-      color: #111;
-    }
-  }
+		.box {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+			padding: 5px;
+			transition: 0.5s;
+		}
+		.icon {
+			font-size: 20px;
+			margin-right: 15px;
+		}
+		h4 {
+			
+			font-size: 15px;
+			font-weight: 500;
+			color: #111;
+		}
+	}
 }
 
 .openProfile button:hover {
-  background: rgba(147, 75, 255, 0.075);
+	background: rgba(147, 75, 255, 0.075);
 }
 header.active {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-shadow: 0 0 4px 0 rgb(115 115 115 / 20%);
-  z-index: 9999;
-  background: #fff;
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-shadow: 0 0 4px 0 rgb(115 115 115 / 20%);
+	z-index: 9999;
+	background: #fff;
 }
 .boxItems {
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #928e8e;
+	padding: 20px;
+	border-radius: 12px;
+	border: 1px solid #928e8e;
 }
+

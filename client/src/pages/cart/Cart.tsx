@@ -5,8 +5,6 @@ import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
 import { updateItem } from "../../services/cartServicer";
-
-// import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
 
@@ -22,8 +20,20 @@ const Cart = () => {
 	);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
-		console.log(arrayId);
+		const data = window.localStorage.getItem("products");
+		const info = JSON.parse(data || "");
+		setProductsStorage(info.products);
+	}, []);
+
+	const [productsStorage, setProductsStorage] = useState<any>([]);
+
+	useEffect(() => {
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity,
+			};
+		});
 
 		const fetchData = async () => {
 			try {
@@ -52,6 +62,8 @@ const Cart = () => {
 
 	const handleClearCart = () => {
 		dispatch(clearCart());
+		window.localStorage.removeItem("product");
+		window.localStorage.removeItem("products");
 	};
 	useEffect(() => {
 		const getProductsCart = () => {
@@ -73,13 +85,16 @@ const Cart = () => {
 	}, [cartItems, products]);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity,
+			};
+		});
 
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
-				/* console.log("put cart" + userID, arrayId)
-				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -89,24 +104,6 @@ const Cart = () => {
 		fetchData();
 	}, [cartItems]);
 
-	// useEffect(() => {
-	// 	// Cargar productos al backend cuando se accede a la página
-
-	// 	const getProductsCart = () => {
-	// 		let count = 0;
-	// 		while (cartItems?.length !== count) {
-	// 			const productFound = products.find(
-	// 				(match) => match.id === cartItems[count].id
-	// 			);
-	// 			if (productFound) {
-	// 				setProductsCart([...productsCart, productFound]);
-	// 			}
-	//       count++;
-	// 		}
-	// 	};
-	// 	getProductsCart();
-	// }, [cartItems, products]);
-
 	return (
 		<div className="cart-conteiner">
 			{cartItems?.length === 0 ? (
@@ -115,11 +112,18 @@ const Cart = () => {
 				<div className="cart-conteiner">
 					<section className="cart-section">
 						<h1 className="cart-title">Carrito de compras</h1>
-						<button onClick={handleClearCart} className="cart__clear">Limpiar carrito</button>
+						<button onClick={handleClearCart} className="cart__clear">
+							Limpiar carrito
+						</button>
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (
-						<CartItem key={index} item={item} index={index} />
+						<CartItem
+							key={index}
+							item={item}
+							index={index}
+							products={productsStorage}
+						/>
 					))}
 
 					<section className="cart-section">

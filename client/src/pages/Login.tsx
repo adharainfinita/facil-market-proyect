@@ -22,6 +22,10 @@ const Login: React.FC = () => {
 
 	const [message, setMessage] = useState("");
 
+	const updateMessage = (newMessage: string) => {
+    setMessage(newMessage);
+  };
+
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -127,7 +131,7 @@ const Login: React.FC = () => {
 							<input type="submit" value="Iniciar Sesión" />
 						</div>
 						<div className="google-login">
-							<GoogleAuth />
+							<GoogleAuth updateMessage={updateMessage} />
 						</div>
 					</form>
 					<div className="login-signup">

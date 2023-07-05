@@ -3,12 +3,8 @@ import { getPurchaseByUser } from "../../controllers/purchaseController";
 
 const getUserPurchases = async (req: Request, res: Response) => {
 	try {
-		const { id } = req.params;
-		const Userpurchases = await getPurchaseByUser(Number(id));
-		console.log(id);
-		
-		console.log("purchases:", Userpurchases);
-		
+		const { userId } = req.params;
+		const Userpurchases = await getPurchaseByUser(Number(userId));
 
 		return res.status(201).json(Userpurchases);
 	} catch (error: any) {

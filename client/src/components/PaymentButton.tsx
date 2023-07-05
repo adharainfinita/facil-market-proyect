@@ -5,7 +5,9 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../redux/store";
 
 const PaymentButton = (product: Array<BuyProduct>) => {
-	const userID = useSelector((state: RootState)=> state.user.userLogin.user.id)
+	const userID = useSelector(
+		(state: RootState) => state.user.userLogin.user.id
+	);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const generateLink = async () => {

@@ -1,16 +1,14 @@
 import Purchase from "../models/Purchase";
 import { purchases } from "../interfaces/propsModel";
 
-//-----------------------
-
 export const createPurchase = async ({
 	userId,
-	productId,
+	products,
 	paymentId,
 }: purchases) => {
 	const [purchase, created] = await Purchase.findOrCreate({
 		where: { paymentId },
-		defaults: { userId, productId, paymentId },
+		defaults: { userId, products, paymentId },
 	});
 
 
@@ -20,14 +18,15 @@ export const createPurchase = async ({
 		throw Error("La compra ya se encuentra en tus compras");
 	}
 };
-//-----------------------
 
 export const getPurchaseByUser = async (id: number) =>
  await Purchase.findAll({
 		where: {
 			userId: id,
 		},
-		include: ["product"],
 	});
 
 //-----------------------
+
+export const getPurchaseById = async (id: number) =>
+	await Purchase.findByPk(id);

@@ -73,9 +73,9 @@ const Resume = () => {
 	};
 
 	return (
-		<div className="graph-conteiner">
-			<section>
-				<select onChange={handleChange} defaultValue="default">
+		<div className="graph">
+			<section className="graph-section">
+				<select className="graph-select" onChange={handleChange} defaultValue="default">
 					<option disabled value="default">
 						Seleccionar una opción
 					</option>
@@ -83,15 +83,16 @@ const Resume = () => {
 					<option value="circular">Circular</option>
 					<option value="lineal">Lineal</option>
 				</select>
+
+				{renderChart()}
 			</section>
 
-			{renderChart()}
-
+		
 			<section>
 				<h3>Resumen general</h3>
 				<h4>Productos activos: {dataResume.totalProducts}</h4>
 				<h4>Usuarios activos: {dataResume.totalUsers}</h4>
-				<h4>Ventas totales: {dataResume.totalSales}</h4>
+				<h4>Compras totales: {dataResume.totalSales}</h4>
 				<br />
 				<hr />
 

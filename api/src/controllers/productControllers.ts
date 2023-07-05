@@ -34,14 +34,12 @@ export const createProduct = async ({
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
-	console.log(createProduct);
 	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
 	}
 
 	//? Verificar si la categoría existe y obtener su nombre
-
 	let id = categoryID;
 	const categoryFound = await findCategoryByID({ id });
 	if (!categoryFound) {
@@ -76,7 +74,7 @@ export const findProductByName = async (name: string) => {
 	});
 
 	if (!name) {
-		throw new Error(`Se proporcionó un nombre`);
+		throw new Error(`No se proporcionó un nombre`);
 	}
 
 	if (!Object.keys(responseDB).length) {
@@ -86,7 +84,7 @@ export const findProductByName = async (name: string) => {
 	return responseDB;
 };
 
-//?  search id
+//? buscar productos por name
 export const findProductById = async (id: number) => {
 	if (!id) {
 		throw new Error("The id cannot be a string");
@@ -101,8 +99,7 @@ export const findProductById = async (id: number) => {
 	return product;
 };
 
-// import { productProps } from "../interfaces/propsModel";
-// ? PUT
+//? Actualizar un producto
 export const changeProductProperties = async (
 	product: localProps,
 	id: number
@@ -114,8 +111,6 @@ export const changeProductProperties = async (
 };
 
 export const updateStock = async (id: number, unities: number) => {
-	console.log(id, unities);
-
 	const productFound = await Product.findByPk(id);
 
 	if (productFound && unities) {
@@ -125,21 +120,18 @@ export const updateStock = async (id: number, unities: number) => {
 
 	return productFound;
 };
-// ? delete
 
-export const deleteProductProperties = async (
-  id: number,
-  changeActive: string
-) => {
-  const product = await Product.findByPk(id);
-  if (!product) {
-    throw new Error("Producto no encontrado");
-  }
+//? Delete product
+export const deleteProductProperties = async (productID: number) => {
+	const product = await Product.findByPk(productID);
 
-  product.active = changeActive;
+	if (!product) {
+		throw new Error("No se encontro el producto.");
+	}
 
-  await product.save();
+	product.active = !product.active;
 
-  return { message: `Estado del producto: ${changeActive}`, prod: product };
+	await product.save();
+
+	return { message: `Estado del producto: ${product.active}`, prod: product };
 };
-

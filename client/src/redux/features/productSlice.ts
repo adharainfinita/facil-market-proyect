@@ -28,7 +28,7 @@ const initialState: ProductState = {
 		userID: "",
 		userName: "",
 		active: true,
-		quantity: 0
+		quantity: 0,
 	},
 	requireFilters: {
 		status: "",
@@ -159,6 +159,13 @@ const productSlice = createSlice({
 		cleanDetail: (state, action: PayloadAction<Product>) => {
 			state.detail = action.payload;
 		},
+
+		decrementUnities: (state) => {
+			state.detail.unities -= 1;
+		},
+		incrementUnities: (state) => {
+			state.detail.unities += 1;
+		},
 	},
 });
 
@@ -174,5 +181,7 @@ export const {
 	resetFilters,
 	updateRating,
 	updateUnities,
+	decrementUnities,
+	incrementUnities,
 } = productSlice.actions;
 export default productSlice.reducer;

@@ -20,6 +20,7 @@
 	  }
 
   &-title {
+	
     position: relative;
     font-size: 27px;
     font-weight: 600;
@@ -35,6 +36,7 @@
     }
   }
   .input-field {
+	
     position: relative;
     height: 50px;
     width: 100%;
@@ -83,10 +85,12 @@
 		}
 	}
 	.text {
+		
 		color: #333;
 		font-size: 14px;
 	}
 	.checkbox-text {
+		
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -136,6 +140,7 @@
 		}
 	}
 	.error {
+		
 		margin-top: 6px;
 		text-align: left;
 		font-size: 13px;
@@ -143,6 +148,7 @@
 		align-items: center;
 	}
 	.error-message {
+		
 		color: #f30a0a;
 		margin-top: 15px;
 		text-align: left;
