@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { postUserPurchase } from "../services/purchaseServices";
 import { RootState } from "../redux/store";
 import { BuyProduct, Product } from "../utils/interfaces";
 import { BsCheck2Circle } from "react-icons/bs";
+import { clearCart } from "../redux/features/cartSlice";
 
 const ApprovedBuy = () => {
+  const dispatch = useDispatch()
   const currentUser = useSelector((state: RootState) => state.user.userLogin);
   const cartItems = useSelector(
     (state: RootState) => state.cart.cartItems.productID
@@ -46,6 +48,7 @@ const ApprovedBuy = () => {
         };
         if (info.userId !== 0) {
           const responsePurchase = await postUserPurchase(info);
+          dispatch(clearCart())
           return responsePurchase;
         }
       } catch (error: any) {

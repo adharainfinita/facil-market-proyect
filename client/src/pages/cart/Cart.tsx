@@ -22,7 +22,12 @@ const Cart = () => {
 	);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity
+			}
+		});
 		console.log(arrayId);
 
 		const fetchData = async () => {
@@ -73,7 +78,12 @@ const Cart = () => {
 	}, [cartItems, products]);
 
 	useEffect(() => {
-		const arrayId = cartItems.map((item) => item.id);
+		const arrayId = cartItems.map((item) => {
+			return {
+				productId: item.id,
+				quantity: item.quantity
+			}
+		});
 
 		const fetchData = async () => {
 			try {
