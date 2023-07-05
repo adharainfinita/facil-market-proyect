@@ -46,6 +46,7 @@ import {
   changeEmail,
   changeName,
   changeImage,
+  setUserValidator,
 } from "./redux/features/userSlice";
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
@@ -56,17 +57,17 @@ import { startCart } from "./redux/features/cartSlice";
 
 const App = () => {
   const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state.user.userLogin);
+  const { userValidation } = useSelector((state: RootState) => state.user);
+  const permissions = login?.user?.admin;
 
-  const session = Boolean(window.localStorage.getItem("token"));
+  const id = login.user.id;
+  const session = window.localStorage.getItem("token");
+  const sessionActive = Boolean(session);
 
   const headers = {
     Authorization: `Bearer ${session}`,
   };
-
-  const login = useSelector((state: RootState) => state.user.userLogin);
-  const permissions = login?.user?.admin;
-
-  const id = login.user.id;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -90,11 +91,14 @@ const App = () => {
           const newPassword = fetchedUser.password.toString(); // Convertir a cadena
           dispatch(changePassword(newPassword));
         }
+        if (sessionActive === true) {
+          dispatch(setUserValidator(true));
+        }
       }
     };
 
     fetchUserData();
-  }, [dispatch, id]);
+  }, [dispatch, id, sessionActive]);
 
   useEffect(() => {
     if (session) {
@@ -180,7 +184,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
 
         <Route
-          element={<ProtectedRoute isAllowed={session} redirectTo="/" />}
+          element={<ProtectedRoute isAllowed={sessionActive} redirectTo="/" />}
         >
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/compras" element={<ShoppingHistory />} />
@@ -190,20 +194,12 @@ const App = () => {
           <Route path="/product/edit/:id" element={<ProductEdit />} />
           <Route path="/admin" element={<Dashboard />} />
         </Route>
-        <Route
-          path="/login"
-          element={session ? <Navigate to="/" /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={session ? <Navigate to="/" /> : <RegisterForm />}
-        />
 
         <Route
           path="/admin"
           element={
             <ProtectedRoute
-              isAllowed={session && permissions}
+              isAllowed={sessionActive && permissions}
               redirectTo="/admin"
             >
               <Dashboard />
@@ -217,8 +213,14 @@ const App = () => {
 
         <Route path="/products" element={<Market />} />
         <Route path="/product/detail/:id" element={<DetailProduct />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<RegisterForm />} />
+        <Route
+          path="/login"
+          element={userValidation ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={userValidation ? <Navigate to="/" /> : <RegisterForm />}
+        />
         <Route path="/profile/:id" element={<UserProfiles />} />
         <Route path="/review/:id" element={<ProductReviews />} />
 

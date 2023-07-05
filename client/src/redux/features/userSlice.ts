@@ -50,9 +50,9 @@ const userSlice = createSlice({
 		changeImage: (state, action: PayloadAction<string>) => {
 			state.userLogin.user.image = action.payload;
 		},
-		/* setUserValidator: (state, action: PayloadAction<boolean>) => {
-			state.userValidation = action.payload;
-		}, */
+		// setUserValidator: (state, action: PayloadAction<boolean>) => {
+		// 	state.userValidation = action.payload;
+		// },
 		setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
 			if (!action.payload) {
@@ -64,7 +64,6 @@ const userSlice = createSlice({
 			state.userLogin.user.id = action.payload.id;
 			state.userLogin.user.image = action.payload.image; // Actualiza el campo "id" en el estado userLogin
 		},
-
 		userLogin: (state, action: PayloadAction<isLogin>) => {
 			state.userLogin.user = action.payload;
 		},
