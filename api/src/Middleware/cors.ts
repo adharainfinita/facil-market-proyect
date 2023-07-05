@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
 const cors = (_req: Request, res: Response, next: NextFunction) => {
-	res.header("Access-Control-Allow-Origin", "*");
+	res.header(
+		"Access-Control-Allow-Origin",
+		"https://facil-market-proyect-pec6bj9vi-adharainfinita.vercel.app/"
+	);
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header(
 		"Access-Control-Allow-Headers",

@@ -1,0 +1,127 @@
+.shopping-title{
+    margin: 20px 0px;
+    text-align: center;
+    color: #70cd24;
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.shopping-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .shopping-table{
+        margin: 20px 0px;
+        .shopping-th{
+            font-size: 20px;
+            margin: 20px 50px;
+            background-color: #70cd24;
+            height: 30px;
+        }
+
+        .shopping-tr:hover{
+            background-color: #bcbcbc;
+        }
+
+        .shopping-td{
+            width: 300px;
+            text-align: center;
+            height: 50px;
+        }
+    }
+}
+
+.no-purchases{
+    text-align: center;
+    font-weight: 800;
+    margin: 100px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    .warning{
+        margin: 10px 0px;
+        font-size: 80px;
+        color: rgb(255, 72, 72);
+    }
+
+    button{
+        padding: 20px;
+        background-color: green;
+        font-size: 20px;
+        border: none;
+        color: #fff;
+        border-radius: 1rem;
+        cursor: pointer;
+    }
+}
+
+
+.purchase-container{
+    margin: 20px 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .purchase-information{
+        margin: 20px 0px;
+        background-color: #cfcfcf;
+        padding: 10px 30px;
+        border-radius: 1rem;
+
+        h3{
+            margin: 10px 0px;
+        }
+
+        h5{
+            margin: 10px 0px;
+        }
+    }
+
+    .purchase-products{
+        padding: 10px;
+        border: 1px solid #bcbcbc;
+
+        .purchase-product{
+            display: flex;
+            background-color: #ffffff;
+            align-items: center;
+            color: #000;
+            padding: 20px 30px;
+
+            img{
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 100%;
+            }
+
+            h3{
+                margin: 0px 10px;
+            }
+
+            p{
+                margin: 0px 10px;
+            }
+
+            .purchase-total-product{
+                background-color: #70cd2459;
+                padding: 5px;
+            }
+        }
+
+        .purchase-product:hover{
+            background-color: #dfdfdf;
+            border-radius: 1rem;
+        }
+    }
+
+    .purchase-total{
+        background-color: #70cd24;
+        padding: 20px 30px;
+        color: #fff;
+        font-size: 25px;
+    }
+}

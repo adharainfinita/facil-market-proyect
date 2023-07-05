@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product, FiltersCaché } from "../../utils/interfaces";
-import { RootState } from "../store";
+import { Product, FiltersCache } from "../../utils/interfaces";
 //import { URL_API } from "../../utils/URLS";
 
 export interface ProductState {
 	products: Product[];
 	originalCopy: Product[];
 	detail: Product;
-	requireFilters: FiltersCaché;
+	requireFilters: FiltersCache;
 }
 
 const initialState: ProductState = {
@@ -28,6 +27,8 @@ const initialState: ProductState = {
 		categoryName: "",
 		userID: "",
 		userName: "",
+		active: true,
+		quantity: 0,
 	},
 	requireFilters: {
 		status: "",
@@ -50,6 +51,10 @@ const productSlice = createSlice({
 
 		updateRating: (state, action: PayloadAction<number>) => {
 			state.detail.rating = action.payload;
+		},
+
+		updateUnities: (state, action: PayloadAction<number>) => {
+			state.detail.unities = action.payload;
 		},
 
 		filterProductsByCategory: (state, action: PayloadAction<string>) => {
@@ -154,6 +159,13 @@ const productSlice = createSlice({
 		cleanDetail: (state, action: PayloadAction<Product>) => {
 			state.detail = action.payload;
 		},
+
+		decrementUnities: (state) => {
+			state.detail.unities -= 1;
+		},
+		incrementUnities: (state) => {
+			state.detail.unities += 1;
+		},
 	},
 });
 
@@ -168,7 +180,8 @@ export const {
 	getSearchedProducts,
 	resetFilters,
 	updateRating,
+	updateUnities,
+	decrementUnities,
+	incrementUnities,
 } = productSlice.actions;
 export default productSlice.reducer;
-export const selectSearchedProducts = (state: RootState) =>
-	state.product.products;

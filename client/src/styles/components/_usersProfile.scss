@@ -1,0 +1,85 @@
+.Profiles___cont {
+  display: flex;
+  padding-right: 20px;
+}
+
+.Profiles__conteiner {
+  border-radius: 5px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+
+  .Profiles__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    align-items: center;
+    padding: 50px;
+    width: 600px;
+    border-radius: 5px;
+    margin: 10px;
+    text-align: center;
+
+    .Profiles__img {
+      width: 300px;
+      height: 300px;
+      margin: 30px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin: 30px;
+
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333333;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    p {
+      margin: 30px;
+      font-size: 16px;
+
+      color: #666666;
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+  .cards-cont {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+.Profiles__products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  border-radius: 5px;
+
+  &__h2 {
+    margin: 20px;
+
+    text-align: center;
+  }
+}
+.product-card {
+  display: inline-block;
+}

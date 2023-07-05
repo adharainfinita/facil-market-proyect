@@ -22,6 +22,10 @@ const Login: React.FC = () => {
 
 	const [message, setMessage] = useState("");
 
+	const updateMessage = (newMessage: string) => {
+    setMessage(newMessage);
+  };
+
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -40,6 +44,12 @@ const Login: React.FC = () => {
 		event.preventDefault();
 		try {
 			const response = await logUser(formData);
+
+			if (response.user.active === false) {
+				setMessage("Tu cuenta ha sido desactivada");
+				return;
+			}
+
 			const token = response.token;
 			window.localStorage.setItem("token", token);
 
@@ -58,11 +68,6 @@ const Login: React.FC = () => {
 			<div className="forms">
 				<div className="form login">
 					<span className="form-title">Iniciar Sesión</span>
-
-					<div className="google-login">
-						<GoogleAuth />
-					</div>
-					<hr />
 
 					<form onSubmit={handleSubmit}>
 						<div className="input-field">
@@ -124,6 +129,9 @@ const Login: React.FC = () => {
 
 						<div className="input-field button">
 							<input type="submit" value="Iniciar Sesión" />
+						</div>
+						<div className="google-login">
+							<GoogleAuth updateMessage={updateMessage} />
 						</div>
 					</form>
 					<div className="login-signup">

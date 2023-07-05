@@ -5,9 +5,10 @@ const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
 import { user } from "../utils/interfaces";
 
+//? REGISTAR UN USUARIO
 export const postUser = async (userData: NewUser) => {
 	try {
-		const response = await axios.post(`${URL_HOST}/register`, userData);
+		const response = await axios.post(`${URL_HOST}/auth/register`, userData);
 		return response.data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
@@ -18,6 +19,7 @@ export const postUser = async (userData: NewUser) => {
 	}
 };
 
+//? OBTENER TODOS LOS USUARIOS
 export const getAllUsers = async () => {
 	try {
 		const response = await axios.get(`${URL_HOST}/user`);
@@ -32,6 +34,22 @@ export const getAllUsers = async () => {
 	}
 };
 
+//? BORRAR UN USUARIO
+export const deleteUser = async (userID: number) => {
+	try {
+		const response = await axios.put(`${URL_HOST}/user/delete/${userID}`);
+		return response.data;
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		alert(errorMessage);
+		throw error;
+	}
+};
+
+//? ACTUALIZAR UN USUARIO
 export const updateUser = async (userId: string, userData: user) => {
 	try {
 		const response = await axios.put(`${URL_HOST}/user/${userId}`, userData);
@@ -46,9 +64,11 @@ export const updateUser = async (userId: string, userData: user) => {
 	}
 };
 
+//? AUTHENTICAR UN USUARIO
 export const logUser = async (logData: LoginData) => {
 	try {
-		const { data } = await axios.post(`${URL_HOST}/login`, logData);
+		const { data } = await axios.post(`${URL_HOST}/auth/login`, logData);
+
 		return data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
@@ -60,12 +80,13 @@ export const logUser = async (logData: LoginData) => {
 	}
 };
 
-export const getUserById = async (userId: string): Promise<user | null> => {
+//? OBTENER UN USUARIO POR ID
+export const getUserById = async (userId: string | undefined) => {
 	try {
-		const response = await axios.get(`http://localhost:3001/user/${userId}`);
+		const response = await axios.get(`${URL_HOST}/user/${userId}`);
+
 		return response.data;
 	} catch (error) {
 		console.log("Error al obtener los datos del usuario:", error);
-		return null;
 	}
 };

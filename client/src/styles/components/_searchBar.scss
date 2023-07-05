@@ -2,11 +2,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 .search {
-	width: 100%;
-	position: relative;
+	width: 82%;
 	display: flex;
 
 	&__term {
@@ -14,7 +14,7 @@
 		border: 3px solid #1e428a;
 		border-right: none;
 		padding: 5px;
-		height: 32px;
+		height: 45px;
 		border-radius: 5px 0 0 5px;
 		outline: none;
 		color: #9dbfaf;
@@ -27,7 +27,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 42px;
-		height: 32px;
+		height: 45px;
 		border: 1px solid #70cd24;
 		background: #70cd24;
 		text-align: center;

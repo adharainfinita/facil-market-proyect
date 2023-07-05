@@ -28,7 +28,7 @@ class Category extends Model {
 	})
 	id!: number;
 
-	// ! AGREGADO PARA QUE QUEDEN CREADAS LAS CATEGORIAS POR DEFAULT SI YA EXISTEN NO SE DUPLICAN
+	//! AGREGADO PARA QUE QUEDEN CREADAS LAS CATEGORIAS POR DEFAULT SI YA EXISTEN NO SE DUPLICAN
 	public static async loadDefaultCategories() {
 		const defaultCategories = [
 			{
@@ -38,13 +38,13 @@ class Category extends Model {
 				highlight: false,
 			},
 			{
-				name: "Computación",
+				name: "Tecnologia",
 				image:
-					"https://w7.pngwing.com/pngs/426/410/png-transparent-black-dell-computer-monitor-set-illustration-laptop-personal-computer-computer-repair-technician-computer-desktop-pc-electronics-computer-computer-monitor-accessory-thumbnail.png",
+					"https://www.comeros.com.ar/wp-content/uploads/2022/04/UX425EA-a.png",
 				highlight: true,
 			},
 			{
-				name: "Smartphone",
+				name: "Celulares",
 				image:
 					"https://images.samsung.com/is/image/samsung/p6pim/ar/sm-a235mlbearo/gallery/ar-galaxy-a23-sm-a235-sm-a235mlbearo-532206854?$650_519_PNG$",
 				highlight: true,
@@ -52,13 +52,12 @@ class Category extends Model {
 			{
 				name: "Electrodomesticos",
 				image:
-					"https://www.nicepng.com/png/detail/295-2957720_conjunto-de-electrodomsticos-en-lnea-blanca-warranty-appliances.png",
+					"https://images.samsung.com/is/image/samsung/ar-washer-ww90j5410gs-ww90j5410gsubg-frontsilver-148680635?$650_519_PNG$",
 				highlight: true,
 			},
 			{
 				name: "Indumentaria",
-				image:
-					"https://w7.pngwing.com/pngs/987/597/png-transparent-assorted-color-clothes-on-clothes-rack-t-shirt-clothing-armoires-wardrobes-closet-clothes-hanger-clothing-retail-fashion-top-thumbnail.png",
+				image: "https://www.pngmart.com/files/21/Adidas-Shoes-PNG-Pic.png",
 				highlight: true,
 			},
 			{
@@ -106,11 +105,9 @@ class Category extends Model {
 			});
 
 			if (created) {
-				console.log(`Created category: ${category.name}, ${category.image}`);
+				console.log(`Created category: ${category.name}`);
 			} else {
-				console.log(
-					`Category ${category.name}, ${category.image} already exists.`
-				);
+				console.log(`Category ${category.name} already exists.`);
 			}
 		}
 	}

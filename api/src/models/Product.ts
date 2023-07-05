@@ -8,6 +8,7 @@ import {
 } from "sequelize-typescript";
 import Category from "./Category";
 import User from "./User";
+import moment from "moment";
 
 @Table({ tableName: "products" })
 class Product extends Model {
@@ -74,8 +75,27 @@ class Product extends Model {
 	})
 	price!: number;
 
-	//...... Relaciones
+	@Column({
+		type: DataType.DATE,
+		defaultValue: DataType.NOW,
+		field: "createdAt",
+		get() {
+			//? Formatear la fecha utilizando Moment.js
+			return moment(this.getDataValue("createdAt")).format(
+				"DD-MM-YYYY HH:mm:ss"
+			);
+		},
+	})
+	createdAt!: Date;
 
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: boolean;
+
+	//? Relaciones
 	@ForeignKey(() => Category)
 	@Column({
 		type: DataType.INTEGER,
@@ -108,31 +128,5 @@ class Product extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 }
-/* public static async loadDefaultProducts() {
-	const defaultProducts = [
-		{ name: "Ropa y accesorios" },
-		{ name: "Computación" },
-		{ name: "Smartphone" },
-		{ name: "Electrodomesticos" },
-		{ name: "Indumentaria" },
-		{ name: "Inmuebles" },
-		{ name: "Vehiculos"},
-		{ name: "Hogar"},
-		{ name: "Belleza"},
-		{ name: "Libros"},
-	];
 
-	for (const ProductData of defaultProducts) {
-		const [product, created] = await Product.findOrCreate({
-			where: { name: categoryData.name },
-			defaults: categoryData,
-		});
-
-		if (created) {
-			console.log(`Created category: ${category.name}`);
-		} else {
-			console.log(`Category ${category.name} already exists.`);
-		}
-	} 
-}*/
 export default Product;

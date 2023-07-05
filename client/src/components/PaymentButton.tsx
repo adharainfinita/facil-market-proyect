@@ -1,20 +1,19 @@
-import { Product } from "../utils/interfaces";
+import { BuyProduct } from "../utils/interfaces";
 import { useState } from "react";
 import { buyProduct } from "../services/productServices";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { RootState } from "../redux/store";
 
-interface MercadoPagoButtonProps {
-	product: Product;
-}
-
-const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
+const PaymentButton = (product: Array<BuyProduct>) => {
+	const userID = useSelector(
+		(state: RootState) => state.user.userLogin.user.id
+	);
 	const [loading, setLoading] = useState<boolean>(false);
-
-	console.log(product);
 
 	const generateLink = async () => {
 		setLoading(true);
 		try {
-			const data = await buyProduct(product);
+			const data = await buyProduct(product, Number(userID));
 
 			window.location.href = data.init_point;
 		} catch (error) {
@@ -37,4 +36,5 @@ const PaymentButton = ({ product }: MercadoPagoButtonProps) => {
 		</div>
 	);
 };
+
 export default PaymentButton;

@@ -1,64 +1,120 @@
-import useProduct from "../hooks/useProduct";
-import { BsCardImage } from "react-icons/bs";
-import PaymentButton from "./PaymentButton";
 import { useEffect, useState } from "react";
-import { NotificationType } from "../utils/interfaces";
-import RatingStars from "./ReviewStar";
-import { useDispatch } from "react-redux";
-import { updateRating } from "../redux/features/productSlice";
-import { updateProduct } from "../services/productServices";
+import { BsCardImage } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import Reviews from "./Review";
+import { BuyProduct } from "../utils/interfaces";
+import { RootState } from "../redux/store";
+//import { updateUnities } from "../redux/features/productSlice";
+//import { updateStock } from "../services/productServices";
+import { addToCart } from "../redux/features/cartSlice";
+import useProduct from "../hooks/useProduct";
+import { updateItem } from "../services/cartServicer";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const DetailProduct = () => {
 	const product = useProduct();
-	const dispatch = useDispatch();
+	const currentUser = useSelector((state: RootState) => state.user.userLogin);
+	const items = useSelector(
+		(state: RootState) => state.cart.cartItems.productID
+	);
+
+	const quantity =
+		items.find((element) => element.id === product.id)?.quantity || 1;
+
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [_rating, setRating] = useState(0);
-	const [notification, setNotification] = useState<NotificationType>({
-		isOpen: false,
-		type: null,
-		content: "",
+	const [stock, setStock] = useState<number>(1);
+
+	const [storage, setStorage] = useLocalStorage("product", {});
+	const [globalStorage, setGlobalStorage] = useLocalStorage("products", {
+		products: [],
 	});
+	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const status = urlParams.get("status");
+	const data: BuyProduct = {
+		id: product.id,
+		name: product.name,
+		price: product.price,
+		image: product.images[0],
+		quantity: stock,
+	};
 
-		if (status === "approved") {
-			setNotification({
-				content: "Pago aprobado😎",
-				isOpen: true,
-				type: "approved",
-			});
+	const foundProduct = () => {
+		const updatedProducts = globalStorage.products.map((item: any) => {
+			if (item.id === storage.id) {
+				return {
+					...item,
+					unities: storage.unities,
+					quantity: storage.quantity,
+				};
+			}
+			return item;
+		});
+
+		const foundIndex = updatedProducts.findIndex(
+			(item: any) => item.id === storage.id
+		);
+		if (foundIndex === -1) {
+			updatedProducts.push(storage);
 		}
 
-		if (status === "failure") {
-			setNotification({
-				content: "Pago rechazado😢",
-				isOpen: true,
-				type: "failure",
-			});
-		}
-	}, []);
+		return updatedProducts;
+	};
+
+	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
+		const updatedGlobalStorage = {
+			...globalStorage,
+			products: foundProduct(),
+		};
+		setGlobalStorage(updatedGlobalStorage);
+		dispatch(addToCart(data));
+	};
 
 	useEffect(() => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
+		setStorage({
+			...product,
+			unities: product.unities - quantity,
+			quantity: quantity,
+		});
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
 		setSelectedImage(image);
 	};
 
-	const handleRatingChange = async (newRating: number) => {
-		dispatch(updateRating(newRating));
-		setRating(newRating);
-		// Actualizar el objeto `product` si es necesario
+	const handleStockChange = (action: string) => {
+		let newStock = stock;
+		let newUnities = storage.unities;
 
-		const response = await updateProduct(product);
-		// Aplicar los cambios al objeto `product` (puedes enviar la actualización al servidor o actualizar el estado global si es necesario)
-		console.log("Nueva calificación:", response.rating);
+		if (action === "increment") {
+			newStock += 1;
+			newUnities -= 1;
+		} else if (action === "decrement") {
+			newStock -= 1;
+			newUnities += 1;
+		}
+
+		setStock(newStock);
+		setStorage({ ...storage, unities: newUnities, quantity: newStock });
 	};
+
+	useEffect(() => {
+		const fetchInfo = async () => {
+			const arrayID = items.map((item: BuyProduct) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity,
+				};
+			});
+
+			await updateItem(Number(currentUser.user.id), arrayID);
+		};
+
+		fetchInfo();
+	}, [currentUser, product]);
 
 	return (
 		<div className="detail-product-container">
@@ -84,25 +140,23 @@ const DetailProduct = () => {
 				</div>
 
 				<div className="conteiner-info">
-					<div className="conteiner-name-price">
-						<h1 className="detail-product-name">{product.name}</h1>
-						<h1 className="detail-product-price">
-							$
-							{product.price.toLocaleString("es-AR", {
-								minimumFractionDigits: 0,
-							})}
-						</h1>
-					</div>
-
 					<div className="detail-product-info">
+						<div className="conteiner-name-price">
+							<h1 className="detail-product-name">{product.name}</h1>
+							<h1 className="detail-product-price">
+								$
+								{product.price.toLocaleString("es-AR", {
+									minimumFractionDigits: 0,
+								})}
+							</h1>
+						</div>
 						<section className="detail-product-section">
 							<h2>Categoria:</h2>
 							<h3>{product.categoryName}</h3>
 						</section>
-
 						<section className="detail-product-section">
-							<h2>Reseñas:</h2>
-							<h3>{product.rating}</h3>
+							<h2>Estrellas:</h2>
+							<h3>{product.rating}⭐</h3>
 						</section>
 
 						<section className="detail-product-section">
@@ -114,13 +168,18 @@ const DetailProduct = () => {
 							</div>
 						</section>
 					</div>
+					<div className="review__cont">
+						<Reviews></Reviews>
+					</div>
 				</div>
 
 				<div className="detail-product-sales">
 					<h2>Informacion sobre el vendedor</h2>
 					<section className="detail-product-section">
 						<h2>Vendedor:</h2>
-						<h3>{product.userName}</h3>
+						<Link to={`/profile/${product.userID}`}>
+							<h3>{product.userName}</h3>
+						</Link>
 					</section>
 
 					<section className="detail-product-section">
@@ -133,24 +192,39 @@ const DetailProduct = () => {
 					</section>
 
 					<section className="detail-product-section">
-						<h2>Stock:</h2>
-						<h3>{product.stock}</h3>
+						<h2>Unidades:</h2>
+						<h3>{storage.unities === 0 ? "Agotado" : storage.unities}</h3>
 					</section>
-					<div className=".detail-product-button">
-						<PaymentButton product={product} />
-					</div>
+
+					<section className="detail-product-section">
+						<button
+							className="detail__product_quantity"
+							onClick={() => handleStockChange("decrement")}
+							disabled={storage.quantity === 1 ? true : false}
+						>
+							{" "}
+							-{" "}
+						</button>
+						<h3>{stock}</h3>
+						<button
+							className="detail__product_quantity"
+							onClick={() => handleStockChange("increment")}
+							disabled={storage.unities === 0 ? true : false}
+						>
+							{" "}
+							+{" "}
+						</button>
+					</section>
 
 					<div>
-						<section className="detail-product-section">
-							<h2>Reseñas:</h2>
-							<RatingStars
-								rating={product.rating}
-								onRatingChange={handleRatingChange}
-							/>
-						</section>
+						<button
+							className="detail-product-button"
+							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+							disabled={storage.unities < 0}
+						>
+							Agregar al carrito
+						</button>
 					</div>
-
-					{notification.isOpen && <div>{notification.content}</div>}
 				</div>
 			</div>
 		</div>

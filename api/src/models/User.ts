@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import Purchase from "./Purchase";
 
 @Table({ tableName: "users" })
 class User extends Model {
@@ -14,13 +15,6 @@ class User extends Model {
 		allowNull: false,
 	})
 	fullName!: string;
-
-	/* 	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	lastName!: string;
- */
 
 	@Column({
 		type: DataType.STRING,
@@ -40,6 +34,23 @@ class User extends Model {
 		allowNull: true,
 	})
 	image!: string;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true,
+	})
+	active!: boolean;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: true,
+		defaultValue: false,
+	})
+	admin!: string;
+
+	@HasMany(() => Purchase)
+	purchases!: Purchase[];
 }
 
 export default User;

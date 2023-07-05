@@ -17,6 +17,7 @@ const initialState: UserState = {
 			email: "",
 			image:
 				"https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+			admin: false,
 		},
 	},
 	userValidation: false,
@@ -49,9 +50,9 @@ const userSlice = createSlice({
 		changeImage: (state, action: PayloadAction<string>) => {
 			state.userLogin.user.image = action.payload;
 		},
-		/* setUserValidator: (state, action: PayloadAction<boolean>) => {
-			state.userValidation = action.payload;
-		}, */
+		// setUserValidator: (state, action: PayloadAction<boolean>) => {
+		// 	state.userValidation = action.payload;
+		// },
 		setUserValidator: (state, action: PayloadAction<boolean>) => {
 			state.userValidation = action.payload;
 			if (!action.payload) {
@@ -63,7 +64,6 @@ const userSlice = createSlice({
 			state.userLogin.user.id = action.payload.id;
 			state.userLogin.user.image = action.payload.image; // Actualiza el campo "id" en el estado userLogin
 		},
-
 		userLogin: (state, action: PayloadAction<isLogin>) => {
 			state.userLogin.user = action.payload;
 		},
@@ -83,6 +83,4 @@ export const {
 	setLoggedInUserId,
 	userLogin,
 } = userSlice.actions;
-
-userSlice.actions;
 export default userSlice.reducer;

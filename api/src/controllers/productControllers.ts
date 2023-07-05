@@ -15,6 +15,7 @@ interface localProps {
 	price: number;
 	userID: number;
 	categoryID: number;
+	active: boolean;
 }
 
 export const createProduct = async ({
@@ -29,17 +30,16 @@ export const createProduct = async ({
 	price,
 	userID,
 	categoryID,
+	active,
 }: localProps) => {
 	//? Verificar si el usuario está registrado
 	let param = userID;
-	console.log(createProduct);
 	const userFound = await User.findOne({ where: { id: param } });
 	if (!userFound) {
 		throw new Error("User not found");
 	}
 
 	//? Verificar si la categoría existe y obtener su nombre
-
 	let id = categoryID;
 	const categoryFound = await findCategoryByID({ id });
 	if (!categoryFound) {
@@ -61,6 +61,7 @@ export const createProduct = async ({
 		userName: userFound?.fullName,
 		categoryID: categoryFound?.id,
 		categoryName: categoryFound?.name,
+		active,
 	});
 };
 
@@ -83,7 +84,7 @@ export const findProductByName = async (name: string) => {
 	return responseDB;
 };
 
-///// search id /////
+//? buscar productos por name
 export const findProductById = async (id: number) => {
 	if (!id) {
 		throw new Error("The id cannot be a string");
@@ -98,8 +99,7 @@ export const findProductById = async (id: number) => {
 	return product;
 };
 
-// import { productProps } from "../interfaces/propsModel";
-
+//? Actualizar un producto
 export const changeProductProperties = async (
 	product: localProps,
 	id: number
@@ -108,4 +108,30 @@ export const changeProductProperties = async (
 
 	await productFound?.update(product);
 	return productFound;
+};
+
+export const updateStock = async (id: number, unities: number) => {
+	const productFound = await Product.findByPk(id);
+
+	if (productFound && unities) {
+		const updatedUnits = productFound.unities - unities;
+		await productFound.update({ unities: updatedUnits });
+	}
+
+	return productFound;
+};
+
+//? Delete product
+export const deleteProductProperties = async (productID: number) => {
+	const product = await Product.findByPk(productID);
+
+	if (!product) {
+		throw new Error("No se encontro el producto.");
+	}
+
+	product.active = !product.active;
+
+	await product.save();
+
+	return { message: `Estado del producto: ${product.active}`, prod: product };
 };

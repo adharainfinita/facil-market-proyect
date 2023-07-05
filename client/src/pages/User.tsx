@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Link } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
-import { BsBagCheck } from "react-icons/bs";
+import { BsBagCheck, BsCartCheck } from "react-icons/bs";
 
 interface UserProps {
 	handleLogOut: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -25,9 +25,7 @@ const User = ({ handleLogOut }: UserProps) => {
 	return (
 		<>
 			<div className="profile">
-				<div
-					onMouseEnter={handleMouseEnter} /* onMouseLeave={handleMouseLeave} */
-				>
+				<div onMouseEnter={handleMouseEnter} className="profile-user-image">
 					<img src={userLogin.user.image} alt="user image" />
 				</div>
 
@@ -54,11 +52,25 @@ const User = ({ handleLogOut }: UserProps) => {
 						</Link>
 						<div className="box">
 							<BsBagCheck className="icon" />
-							<h4>Mis Productos</h4>
+							<h4>
+								<Link to="/ventas">Mis Productos</Link>
+							</h4>
+						</div>
+						<div className="box">
+							<BsCartCheck className="icon" />
+							<h4>
+								<Link to="/compras">Mis Compras</Link>
+							</h4>
 						</div>
 						<div onClick={(event) => handleLogOut(event)} className="box">
 							<BiLogOut className="icon" />
 							<h4>Cerrar Sesión</h4>
+						</div>
+						<div className="box">
+							<BiSolidDashboard className="icon" />
+							<h4>
+								<Link to="/admin/summary">Dashboard</Link>
+							</h4>
 						</div>
 					</div>
 				)}
