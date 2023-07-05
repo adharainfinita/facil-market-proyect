@@ -5,7 +5,6 @@ import { postUserPurchase } from "../services/purchaseServices";
 import { RootState } from "../redux/store";
 import { BuyProduct, Product } from "../utils/interfaces";
 import { clearCart } from "../redux/features/cartSlice";
-import { updateItem } from "../services/cartServicer";
 
 const ApprovedBuy = () => {
 	const dispatch = useDispatch();
@@ -46,6 +45,7 @@ const ApprovedBuy = () => {
 				};
 				if (info.userId !== 0) {
 					const responsePurchase = await postUserPurchase(info);
+					dispatch(clearCart());
 					return responsePurchase;
 				}
 			} catch (error: any) {
@@ -53,13 +53,8 @@ const ApprovedBuy = () => {
 			}
 		};
 
-/* 		const fechtData = async () => {
-			await updateItem(cartItems.userID, []);
-		};
-		fechtData(); */
-		/* dispatch(clearCart()); */
 		postPurchase();
-	}, [_productsCart]);
+	}, [_productsCart, dispatch]);
 
 	return (
 		<div>
