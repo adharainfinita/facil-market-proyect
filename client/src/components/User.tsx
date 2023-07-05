@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsBagCheck, BsCartCheck } from "react-icons/bs";
@@ -47,35 +47,38 @@ const User = ({ handleLogOut }: UserProps) => {
 
             <div className="box">
               <IoSettingsOutline className="icon" />
-              <NavLink to="/profile">
+              <Link to="/profile">
                 <h4>Mi Perfil</h4>
-              </NavLink>
+              </Link>
             </div>
 
             <div className="box">
               <BsBagCheck className="icon" />
 
-              <NavLink to="/ventas">
+              <Link to="/ventas">
                 <h4>Mis Productos</h4>
-              </NavLink>
+              </Link>
             </div>
             <div className="box">
               <BsCartCheck className="icon" />
 
-              <NavLink to="/compras">
+              <Link to="/compras">
                 <h4>Mis Compras</h4>
-              </NavLink>
+              </Link>
             </div>
             <div onClick={(event) => handleLogOut(event)} className="box">
               <BiLogOut className="icon" />
               <h4>Cerrar Sesión</h4>
             </div>
-            <div className="box">
-              <BiSolidDashboard className="icon" />
-              <NavLink to="/admin/summary">
-                <h4>Dashboard</h4>
-              </NavLink>
-            </div>
+            {userLogin.user.admin && (
+              <div className="box">
+                <BiSolidDashboard className="icon" />
+
+                <Link to="/admin/summary">
+                  <h4>Dashboard</h4>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
