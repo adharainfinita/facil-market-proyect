@@ -214,3 +214,8 @@ export interface Review {
 		id: number;
 		unities: number;
 	}
+
+	export interface ArrayCart {
+		productId: number
+		quantity: number
+	}

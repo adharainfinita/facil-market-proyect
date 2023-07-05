@@ -8,11 +8,13 @@
 
 .shopping-container{
     display: flex;
-    align-items: center;
     justify-content: center;
+    min-height: 400px;
+    
 
     .shopping-table{
         margin: 20px 0px;
+        font-size: 20px;
         .shopping-th{
             font-size: 20px;
             margin: 20px 50px;
@@ -40,6 +42,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 300px;
     
     .warning{
         margin: 10px 0px;

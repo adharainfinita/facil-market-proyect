@@ -54,7 +54,13 @@ const DetailProduct = () => {
 
 	useEffect(() => {
 		const fetchInfo = async () => {
-			const arrayID = items.map((item: BuyProduct) => item.id);
+			const arrayID = items.map((item: BuyProduct) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity
+				};
+			})
+			
 			await updateItem(Number(currentUser.user.id), arrayID);
 		};
 

@@ -1,13 +1,14 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import User from "../pages/User";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Navbar() {
 	const navigate = useNavigate();
 	const session = window.localStorage.getItem("token");
+	const location = useLocation();
 
 	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
@@ -53,15 +54,15 @@ function Navbar() {
 			<div className="nav__bottom-row">
 				<ul className="nav__items">
 					<Link to="/">
-						<li>Inicio</li>
+						<li className={location.pathname === '/' ? 'nav__active': ''}>Inicio</li>
 					</Link>
 
 					<Link to="/products">
-						<li>Productos</li>
+						<li className={location.pathname === '/products' ? 'nav__active': ''}>Productos</li>
 					</Link>
 
 					<Link to="/about">
-						<li>Nosotros</li>
+						<li className={location.pathname === '/about' ? 'nav__active': ''}>Nosotros</li>
 					</Link>
 					
 					<Link to="/vender">

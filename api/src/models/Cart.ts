@@ -8,6 +8,7 @@ import {
 } from "sequelize-typescript";
 import User from "./User";
 import moment from "moment";
+import { ArrayCart } from "../interfaces/propsModel";
 
 @Table({ tableName: "cart" })
 class Cart extends Model {
@@ -30,10 +31,10 @@ class Cart extends Model {
 
 	//? Agregar clave foránea de Product
 	@Column({
-		type: DataType.ARRAY(DataType.INTEGER),
+		type: DataType.ARRAY(DataType.JSON),
 		allowNull: true,
 	})
-	productID?: Array<number>;
+	productID?: Array<ArrayCart>;
 
 	@Column({
 		type: DataType.DATE,
