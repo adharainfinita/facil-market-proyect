@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
+import {toast, ToastContainer} from 'react-toastify';
 
 const EditUser = () => {
 	const { id } = useParams();
@@ -47,7 +48,10 @@ const EditUser = () => {
 			console.log(error);
 		}
 		setUpdating(false);
-		alert("Perfil actualizado");
+		toast.success('Usuario actualizado!', {
+    position: toast.POSITION.TOP_RIGHT
+  });
+
 	};
 
 	return (
@@ -86,6 +90,7 @@ const EditUser = () => {
 						<button type="submit">
 							{updating ? "actualizando..." : "actualizar"}
 						</button>
+						<ToastContainer/>
 					</form>
 				)}
 			</div>

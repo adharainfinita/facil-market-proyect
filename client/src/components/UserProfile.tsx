@@ -13,6 +13,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { BsBagCheck } from "react-icons/bs";
 import { BsPencilFill } from "react-icons/bs";
+import swal from 'sweetalert'
+
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -78,7 +80,7 @@ const UserProfile: React.FC = () => {
           const uploadedFile = res.data;
           setNewImage(uploadedFile.secure_url);
         } catch (error) {
-          console.error("Error al subir la imagen", error);
+          swal("Error al subir la imagen", `${error}`, 'error');
         }
       }
     } catch (error) {
@@ -89,12 +91,13 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     if (newImage !== "") {
       dispatch(changeImage(newImage));
+      swal('Imagen actualizada!', '🤳', 'success');
     }
   }, [newImage, dispatch]);
 
   useEffect(() => {
     if (isPasswordChanged) {
-      console.log("Contraseña actualizada exitosamente");
+      swal("Contraseña actualizada exitosamente",'🕵️' , 'success');
     }
   }, [isPasswordChanged]);
 
@@ -169,6 +172,8 @@ const UserProfile: React.FC = () => {
               <button className="profile__save" onClick={handleFieldChange}>
                 Guardar cambios
               </button>
+						
+
             </div>
           )}
         </div>

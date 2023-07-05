@@ -8,6 +8,7 @@ import { updateProduct } from "../services/productServices";
 import axios from "axios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Category, Product } from "../utils/interfaces";
+import { deleteProduct } from "../services/productServices";
 
 const ProductEdit = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -17,6 +18,8 @@ const ProductEdit = () => {
 	const [editMode, setEditMode] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState("");
+
+
 
 	useEffect(() => {
 		setContent(product);
@@ -31,6 +34,8 @@ const ProductEdit = () => {
 	const handleImageClick = (image: string) => {
 		setSelectedImage(image);
 	};
+
+
 
 	const handleModes = () => {
 		setEditMode(true);
@@ -49,39 +54,45 @@ const ProductEdit = () => {
 		});
 	};
 
+
 	const uploadImages = async (files: File[]): Promise<void> => {
 		setLoading(true);
-
+	  
 		try {
-			const uploadPromises = files.map(async (file: File) => {
-				const formData = new FormData();
-				formData.append("file", file);
-				formData.append("tags", "codeinfuse, medium, gist");
-				formData.append("upload_preset", "facilmarket");
-				formData.append("api_key", "711728988333761");
-
-				const res = await axios.post(
-					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
-					formData,
-					{
-						headers: { "X-Requested-With": "XMLHttpRequest" },
-					}
-				);
-
-				return res.data.secure_url;
-			});
-
-			const uploadedImages = await Promise.all(uploadPromises);
-			setContent({
-				...content,
-				images: [...content.images, ...uploadedImages],
-			});
-			setLoading(false);
+		  const remainingSlots = 4 - content.images.length;
+		  const filesToUpload = files.slice(0, remainingSlots);
+	  
+		  const uploadPromises = filesToUpload.map(async (file: File) => {
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("tags", "codeinfuse, medium, gist");
+			formData.append("upload_preset", "facilmarket");
+			formData.append("api_key", "711728988333761");
+	  
+			const res = await axios.post(
+			  "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+			  formData,
+			  {
+				headers: { "X-Requested-With": "XMLHttpRequest" },
+			  }
+			);
+	  
+			return res.data.secure_url;
+		  });
+	  
+		  const uploadedImages = await Promise.all(uploadPromises);
+		  const newImages = [...content.images, ...uploadedImages.slice(0, remainingSlots)];
+		  setContent({
+			...content,
+			images: newImages,
+		  });
+		  setLoading(false);
 		} catch (error) {
-			console.log(error);
-			setLoading(false);
+		  console.log(error);
+		  setLoading(false);
 		}
-	};
+	  };
+	  
 
 	const contentPrevImages = () => {
 		return (
@@ -124,53 +135,53 @@ const ProductEdit = () => {
 	};
 
 	const editModePrevImages = () => {
+		const showUploadButton = content.images.length < 4;
+	  
 		return (
-			<div className="edit-conteiner-pre-image">
-				{content.images?.map((img: string, index: number) => (
-					<div key={index}>
-						<div
-							className="edit-pre-image"
-							onClick={() => handleImageClick(img)}
-						>
-							<button
-								className="edit__x"
-								type="button"
-								onClick={() => handleDeleteImg(index)}
-								disabled={content.images.length === 1}
-							>
-								X
-							</button>
-
-							<img
-								className="edit-preview-image"
-								src={img}
-								alt="preview images"
-							/>
+		  <div className="edit-conteiner-pre-image">
+			{content.images?.map((img: string, index: number) => (
+			  <div key={index}>
+				<div
+				  className="edit-pre-image"
+				  onClick={() => handleImageClick(img)}
+				>
+				  <button
+					className="edit__x"
+					type="button"
+					onClick={() => handleDeleteImg(index)}
+					disabled={content.images.length === 1}
+				  >
+					X
+				  </button>
+				  <img className="edit-preview-image" src={img} alt="preview images" />
+				</div>
+			  </div>
+			))}
+			
+			{showUploadButton && (
+			  <label htmlFor="form__input-image">
+				<Dropzone onDrop={uploadImages}>
+				  {({ getRootProps, getInputProps }) => (
+					<section>
+					  {loading ? (
+						<span>cargando...</span>
+					  ) : (
+						<div {...getRootProps({ className: "dropzone" })}>
+						  <input {...getInputProps()} />
+						  <div className="edit-pre-image">
+							<h1>+</h1>
+						  </div>
 						</div>
-					</div>
-				))}
-
-				<label htmlFor="form__input-image">
-					<Dropzone onDrop={uploadImages}>
-						{({ getRootProps, getInputProps }) => (
-							<section>
-								{loading ? (
-									<span>cargando...</span>
-								) : (
-									<div {...getRootProps({ className: "dropzone" })}>
-										<input {...getInputProps()} />
-										<div className="edit-pre-image">
-											<h1>+</h1>
-										</div>
-									</div>
-								)}
-							</section>
-						)}
-					</Dropzone>
-				</label>
-			</div>
+					  )}
+					</section>
+				  )}
+				</Dropzone>
+			  </label>
+			)}
+		  </div>
 		);
-	};
+	  };
+	  
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
@@ -343,6 +354,8 @@ const ProductEdit = () => {
 					</div>
 				</div>
 			</form>
+	
+
 		</div>
 	);
 };

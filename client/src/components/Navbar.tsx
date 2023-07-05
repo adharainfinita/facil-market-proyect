@@ -17,6 +17,8 @@ function Navbar() {
 		dispatch(setUserValidator(false))
 		window.localStorage.removeItem("token");
 		window.localStorage.removeItem("items");
+		// !Eliminar el carrito del usuario actual del almacenamiento local
+		window.localStorage.removeItem("cartItems");
 		navigate("/");
 	};
 

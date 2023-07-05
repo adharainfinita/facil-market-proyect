@@ -7,6 +7,7 @@ import { BuyProduct, Product } from "../utils/interfaces";
 import { BsCheck2Circle } from "react-icons/bs";
 import { clearCart } from "../redux/features/cartSlice";
 import { updateStock } from "../services/productServices";
+import { getAllItems } from "../services/cartServicer";
 
 const ApprovedBuy = () => {
 	const dispatch = useDispatch();
@@ -58,6 +59,17 @@ const ApprovedBuy = () => {
 						await updateStock(stockUpdate);
 					}
 					dispatch(clearCart());
+					const userID = Number(currentUser.user.id);
+					const cart = await getAllItems(userID);
+
+					const updatedCart = {
+						id: cart.id,
+						userID: cart.userID,
+						productID: [],
+					};
+
+					localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+
 					return responsePurchase;
 				}
 			} catch (error: any) {
@@ -71,7 +83,7 @@ const ApprovedBuy = () => {
 		fechtData(); */
 		/* dispatch(clearCart()); */
 		postPurchase();
-	}, [_productsCart]);
+	}, [cartItems, currentUser /* _productsCart */]);
 
 	return (
 		<div className="approved-purchase">

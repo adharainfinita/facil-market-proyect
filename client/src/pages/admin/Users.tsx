@@ -4,6 +4,7 @@ import { deleteUser } from "../../services/userServices";
 import { User, user } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import swal from 'sweetalert'
 
 function Users() {
   const users = useSelector((state: RootState) => state.user.users);
@@ -14,7 +15,12 @@ function Users() {
 
   const disabledUser = async (user: user) => {
     if (admin && user.id === currentUser) {
-      alert("No puedes desactivar tu propia cuenta");
+      swal({
+        title: "🤖",
+        text: 'No puedes desactivar tu propia cuenta',
+        icon: "info",
+      });
+  
       return;
     }
 

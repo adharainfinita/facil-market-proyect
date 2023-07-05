@@ -13,6 +13,7 @@ import { RootState } from "../redux/store";
 import { Purchase, Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
 import { getPurchasesByUser } from "../services/purchaseServices";
+import swal from 'sweetalert'
 
 const Reviews: React.FC = () => {
 	const product = useProduct();
@@ -111,7 +112,7 @@ const Reviews: React.FC = () => {
 			setComment("");
 
 			try {
-				updateProduct( productID, productForUpdate);
+				updateProduct( productForUpdate);
 			} catch (error) {
 				console.error(
 					"Error al actualizar la calificación del producto:",
@@ -151,7 +152,7 @@ const Reviews: React.FC = () => {
 
 			try {
 				const updatedProduct = { ...product, rating: formattedAverage };
-				await updateProduct(product.id, updatedProduct);
+				await updateProduct(updatedProduct);
 
 				dispatch(updateRating(formattedAverage));
 			} catch (error) {
@@ -161,7 +162,7 @@ const Reviews: React.FC = () => {
 				);
 			}
 
-			alert("Se eliminó la reseña");
+			swal("Se eliminó la reseña");
 		} catch (error) {
 			console.error("Error al eliminar la review:", error);
 		}

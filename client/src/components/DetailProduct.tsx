@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { RootState } from "../redux/store";
 import { addToCart } from "../redux/features/cartSlice";
 import useProduct from "../hooks/useProduct";
 import { updateItem } from "../services/cartServicer";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import swal from 'sweetalert';
 
 const DetailProduct = () => {
 	const product = useProduct();
@@ -18,17 +18,10 @@ const DetailProduct = () => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
-
-	const quantity =
-		items.find((element) => element.id === product.id)?.quantity || 1;
-
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
+	/* const [disableBuyButton, setDisableBuyButton] = useState(false); */
 
-	const [storage, setStorage] = useLocalStorage("product", {});
-	const [globalStorage, setGlobalStorage] = useLocalStorage("products", {
-		products: [],
-	});
 	const dispatch = useDispatch();
 
 	const data: BuyProduct = {
@@ -39,46 +32,27 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
-	const foundProduct = () => {
-		const updatedProducts = globalStorage.products.map((item: any) => {
-			if (item.id === storage.id) {
-				return {
-					...item,
-					unities: storage.unities,
-					quantity: storage.quantity,
-				};
-			}
-			return item;
-		});
-
-		const foundIndex = updatedProducts.findIndex(
-			(item: any) => item.id === storage.id
-		);
-		if (foundIndex === -1) {
-			updatedProducts.push(storage);
-		}
-
-		return updatedProducts;
-	};
-
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
-		const updatedGlobalStorage = {
-			...globalStorage,
-			products: foundProduct(),
-		};
-		setGlobalStorage(updatedGlobalStorage);
-		dispatch(addToCart(data));
+		if (currentUser.user.id === product.userID) {
+			// Si el userID coincide con el product.userID, el vendedor no puede comprar su propio producto
+			swal('Atención!',"No puedes agregar al carrito tu mismo producto.", 'warning');
+		} else {
+			dispatch(addToCart(data));
+		}
 	};
+
+	/* useEffect(() => {
+		if (currentUser.user.id === product.userID) {
+			setDisableBuyButton(true);
+		} else {
+			setDisableBuyButton(false);
+		}
+	}, [currentUser, product]); */
 
 	useEffect(() => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
-		setStorage({
-			...product,
-			unities: product.unities - quantity,
-			quantity: quantity,
-		});
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -86,19 +60,11 @@ const DetailProduct = () => {
 	};
 
 	const handleStockChange = (action: string) => {
-		let newStock = stock;
-		let newUnities = storage.unities;
-
 		if (action === "increment") {
-			newStock += 1;
-			newUnities -= 1;
-		} else if (action === "decrement") {
-			newStock -= 1;
-			newUnities += 1;
+			setStock(stock + 1);
+		} else {
+			setStock(stock - 1);
 		}
-
-		setStock(newStock);
-		setStorage({ ...storage, unities: newUnities, quantity: newStock });
 	};
 
 	useEffect(() => {
@@ -190,41 +156,64 @@ const DetailProduct = () => {
 						<h2>Estado:</h2>
 						<h3>{product.status}</h3>
 					</section>
+					{/* <section className="detail-product-section">
+						<h2>Stock:</h2>
+						<h3>{product.stock}</h3>
+					</section> */}
 
-					<section className="detail-product-section">
-						<h2>Unidades:</h2>
-						<h3>{storage.unities === 0 ? "Agotado" : storage.unities}</h3>
-					</section>
+					{product.unities > 0 ? (
+						<React.Fragment>
+							<section className="detail-product-section">
+								<h2>Unidades:</h2>
+								<h3>{product.unities}</h3>
+							</section>
 
-					<section className="detail-product-section">
-						<button
-							className="detail__product_quantity"
-							onClick={() => handleStockChange("decrement")}
-							disabled={storage.quantity === 1 ? true : false}
-						>
-							{" "}
-							-{" "}
-						</button>
-						<h3>{stock}</h3>
-						<button
-							className="detail__product_quantity"
-							onClick={() => handleStockChange("increment")}
-							disabled={storage.unities === 0 ? true : false}
-						>
-							{" "}
-							+{" "}
-						</button>
-					</section>
+							<section className="detail-product-section">
+								<button
+									className="detail__product_quantity"
+									disabled={stock === 1 ? true : false}
+									onClick={() => handleStockChange("decrement")}
+								>
+									{" "}
+									-{" "}
+								</button>
+								<h3>{stock}</h3>
+								<button
+									className="detail__product_quantity"
+									disabled={stock === product.unities ? true : false}
+									onClick={() => handleStockChange("increment")}
+								>
+									{" "}
+									+{" "}
+								</button>
+							</section>
 
-					<div>
-						<button
-							className="detail-product-button"
-							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
-							disabled={storage.unities < 0}
-						>
-							Agregar al carrito
-						</button>
-					</div>
+							<div>
+								<button
+									className="detail-product-button"
+									onClick={() =>
+										handleAddToCart(Number(currentUser.user.id), data)
+									}
+								>
+									Agregar al carrito
+								</button>
+								{/* <button
+  									className="detail-product-button"
+  onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+  disabled={disableBuyButton}
+>
+  Agregar al carrito
+</button> */}
+							</div>
+						</React.Fragment>
+					) : (
+						<div>
+							<section className="detail-product-section">
+								<h2>Unidades:</h2>
+								<h3>Agotado</h3>
+							</section>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

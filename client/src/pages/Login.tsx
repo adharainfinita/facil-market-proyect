@@ -8,6 +8,8 @@ import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
+import { getAllItems } from "../services/cartServicer";
+import {toast, ToastContainer} from 'react-toastify'
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -44,6 +46,10 @@ const Login: React.FC = () => {
 		event.preventDefault();
 		try {
 			const response = await logUser(formData);
+			 // Obtener el carrito del usuario
+			 const cartResponse = await getAllItems(response.user.id);
+			 const cartItems = cartResponse.data;
+			 localStorage.setItem("cart", JSON.stringify(cartItems));
 
 			if (response.user.active === false) {
 				setMessage("Tu cuenta ha sido desactivada");
@@ -55,6 +61,9 @@ const Login: React.FC = () => {
 
 			if (response) {
 				dispatch(loggedUser(response));
+				toast.success('Sesión iniciada!', {
+					position: toast.POSITION.BOTTOM_RIGHT
+				});
 				navigate("/");
 			}
 		} catch (error) {
@@ -143,6 +152,7 @@ const Login: React.FC = () => {
 						</span>
 					</div>
 				</div>
+				<ToastContainer/>
 			</div>
 		</div>
 	);

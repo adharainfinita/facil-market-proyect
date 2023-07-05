@@ -4,6 +4,7 @@ import { LoginData, NewUser } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
 import { user } from "../utils/interfaces";
+import swal from 'sweetalert'
 
 //? REGISTAR UN USUARIO
 export const postUser = async (userData: NewUser) => {
@@ -29,7 +30,12 @@ export const getAllUsers = async () => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "error",
+		});
+
 		throw error;
 	}
 };
@@ -59,7 +65,12 @@ export const updateUser = async (userId: string, userData: user) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "error",
+		});
+
 		throw error;
 	}
 };

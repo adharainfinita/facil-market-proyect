@@ -1,5 +1,6 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import swal from 'sweetalert'
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
 
@@ -24,6 +25,16 @@ const cartSlice = createSlice({
 		startCart: (state, action: PayloadAction<Cart>) => {
 			state.cartItems = action.payload;
 		},
+		saveCartToLocalStorage: (state) => {
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
+
+    loadCartFromLocalStorage(state) {
+      const cart = localStorage.getItem("cartItems");
+      if (cart) {
+        state.cartItems = JSON.parse(cart);
+      }
+    },
 		addToCart: (state, action: PayloadAction<BuyProduct>) => {
 			const { id, quantity } = action.payload;
 			const existingProduct = state.cartItems.productID.find(
@@ -36,7 +47,8 @@ const cartSlice = createSlice({
 				state.cartItems.productID.push(action.payload);
 			}
 
-			alert("Producto agregado al carrito");
+			swal("Producto agregado al carrito");
+			// localStorage.setItem("cartItems", JSON.stringify(state.cartItems)); //!
 		},
 
 		decrementQuantity: (state, action: PayloadAction<number>) => {
@@ -85,6 +97,8 @@ export const {
 	startCart,
 	incrementQuantity,
 	decrementQuantity,
+	saveCartToLocalStorage,
+	loadCartFromLocalStorage,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
