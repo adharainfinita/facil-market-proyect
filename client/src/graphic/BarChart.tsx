@@ -133,7 +133,7 @@ const BarChart = () => {
 			tooltip: {
 				callbacks: {
 					title: (config: any) => {
-						let value = config[0].label || "";
+						const value = config[0].label || "";
 						return `UserID: ${value}`;
 					},
 

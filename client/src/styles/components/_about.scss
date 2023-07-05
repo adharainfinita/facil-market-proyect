@@ -11,35 +11,33 @@
 }
 
 .conteiner-aboutCardProfile {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 6rem; /* Ajusta el valor deseado para la separación */
-	width: 100%;
-	height: fit-content;
-	justify-content: center; /* Centra horizontalmente las cards */
-	align-items: center; /* Centra verticalmente las cards */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6rem; /* Ajusta el valor deseado para la separación */
+  width: 100%;
+  height: fit-content;
+  justify-content: center; /* Centra horizontalmente las cards */
+  align-items: center; /* Centra verticalmente las cards */
 }
 
 .section-about {
-	display: flex;
-	flex-direction: column;
-	width: 45%; /* Ajusta el valor para reducir el ancho */
-	height: fit-content;
-	gap: 3rem;
-	text-align: center; /* Centra el texto horizontalmente */
+  display: flex;
+  flex-direction: column;
+  width: 45%; /* Ajusta el valor para reducir el ancho */
+  height: fit-content;
+  gap: 3rem;
+  text-align: center; /* Centra el texto horizontalmente */
 
-	h1 {
-		 font-family: map-get($fonts, "sans-serif");
-		font-size: 2rem;
-		letter-spacing: 1px;
-		font-weight: bold;
-	}
+  h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
 
-	p {
-		 font-family: map-get($fonts, "sans-serif");
-		font-size: 1rem;
-		letter-spacing: 1px;
-		font-weight: bold;
-	}
+  p {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
 }

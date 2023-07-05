@@ -1,24 +1,23 @@
 .page-controls {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 10px;
 
-	.pag-buttons {
-		font-family: map-get($fonts, "sans-serif");
-		padding: 5px 10px;
-		margin: 5px 5px;
-		background-color: #77d42a;
-		color: #fff;
-		font-weight: 800;
-		border: none;
-		cursor: pointer;
-		border-radius: 0.5rem;
-	}
+  .pag-buttons {
+    padding: 5px 10px;
+    margin: 5px 5px;
+    background-color: #77d42a;
+    color: #fff;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
 
-	.pag-buttons:disabled {
-		background-color: #898989;
-		cursor: no-drop;
-		font-weight: 600;
-	}
+  .pag-buttons:disabled {
+    background-color: #898989;
+    cursor: no-drop;
+    font-weight: 600;
+  }
 }

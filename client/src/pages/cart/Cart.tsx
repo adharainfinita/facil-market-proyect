@@ -87,24 +87,6 @@ const Cart = () => {
 		fetchData();
 	}, [cartItems]);
 
-	// useEffect(() => {
-	// 	// Cargar productos al backend cuando se accede a la página
-
-	// 	const getProductsCart = () => {
-	// 		let count = 0;
-	// 		while (cartItems?.length !== count) {
-	// 			const productFound = products.find(
-	// 				(match) => match.id === cartItems[count].id
-	// 			);
-	// 			if (productFound) {
-	// 				setProductsCart([...productsCart, productFound]);
-	// 			}
-	//       count++;
-	// 		}
-	// 	};
-	// 	getProductsCart();
-	// }, [cartItems, products]);
-
 	return (
 		<div className="cart-conteiner">
 			{cartItems?.length === 0 ? (
