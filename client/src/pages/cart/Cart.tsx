@@ -78,8 +78,8 @@ const Cart = () => {
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
-				/* console.log("put cart" + userID, arrayId)
-				console.log("respuesta de put cart" + response) */
+				console.log("put cart" + userID, arrayId)
+				console.log("respuesta de put cart" + response)
 				return response;
 			} catch (error) {
 				console.log(error);
@@ -88,24 +88,6 @@ const Cart = () => {
 
 		fetchData();
 	}, [cartItems]);
-
-	// useEffect(() => {
-	// 	// Cargar productos al backend cuando se accede a la página
-
-	// 	const getProductsCart = () => {
-	// 		let count = 0;
-	// 		while (cartItems?.length !== count) {
-	// 			const productFound = products.find(
-	// 				(match) => match.id === cartItems[count].id
-	// 			);
-	// 			if (productFound) {
-	// 				setProductsCart([...productsCart, productFound]);
-	// 			}
-	//       count++;
-	// 		}
-	// 	};
-	// 	getProductsCart();
-	// }, [cartItems, products]);
 
 	return (
 		<div className="cart-conteiner">

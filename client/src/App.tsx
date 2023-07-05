@@ -1,7 +1,7 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //? Pages
@@ -66,6 +66,8 @@ const App = () => {
   const permissions = login?.user?.admin;
 
   const id = login.user.id;
+
+	const location = useLocation().pathname;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -200,7 +202,7 @@ const App = () => {
 				element={
 					<ProtectedRoute
 						isAllowed={Boolean(session) && permissions}
-						redirectTo="/admin"
+						redirectTo={location}
 					>
 						<Dashboard />
 					</ProtectedRoute>

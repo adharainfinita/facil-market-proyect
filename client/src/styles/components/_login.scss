@@ -20,7 +20,7 @@
 	  }
 
   &-title {
-	font-family: map-get($fonts, "sans-serif");
+	
     position: relative;
     font-size: 27px;
     font-weight: 600;
@@ -36,7 +36,7 @@
     }
   }
   .input-field {
-	font-family: map-get($fonts, "sans-serif");
+	
     position: relative;
     height: 50px;
     width: 100%;
@@ -85,12 +85,12 @@
 		}
 	}
 	.text {
-		font-family: map-get($fonts, "sans-serif");
+		
 		color: #333;
 		font-size: 14px;
 	}
 	.checkbox-text {
-		font-family: map-get($fonts, "sans-serif");
+		
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -140,7 +140,7 @@
 		}
 	}
 	.error {
-		font-family: map-get($fonts, "sans-serif");
+		
 		margin-top: 6px;
 		text-align: left;
 		font-size: 13px;
@@ -148,7 +148,7 @@
 		align-items: center;
 	}
 	.error-message {
-		font-family: map-get($fonts, "sans-serif");
+		
 		color: #f30a0a;
 		margin-top: 15px;
 		text-align: left;

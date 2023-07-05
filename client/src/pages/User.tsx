@@ -69,7 +69,7 @@ const User = ({ handleLogOut }: UserProps) => {
 						<div className="box">
 							<BiSolidDashboard className="icon" />
 							<h4>
-								<Link to="/admin">Dashboard</Link>
+								<Link to="/admin/summary">Dashboard</Link>
 							</h4>
 						</div>
 					</div>

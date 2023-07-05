@@ -38,7 +38,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 			email: "adharanosalevich@gmail.com",
 			phone: {
 				area_code: "54",
-				number: "3644123456",
+				number: 3644123456,
 			},
 			identification: {
 				type: "DNI",
@@ -54,7 +54,7 @@ export const createOrder = async (products: Array<BuyProduct>) => {
 		auto_return: "approved",
 
 		back_urls: {
-			success: `localhost:5173/products`,
+			success: `${URL_HOST}/approved`,
 			failure: `${URL_HOST}/products`,
 			pending: `${URL_HOST}/products`,
 		},

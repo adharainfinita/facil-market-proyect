@@ -1,112 +1,111 @@
 .nav {
-	display: flex;
-	flex-direction: column;
-	padding: 10px 15px;
-	color: #111;
-	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-	position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+  color: #111;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  position: relative;
 
-	&__top-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 10px;
-	}
+  &__top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
 
-	&__logo {
-		font-family: map-get($fonts, "sans-serif");
-		display: flex;
-		align-items: center;
-		color: #111;
-		width: 260px;
-	}
+  &__logo {
+    display: flex;
+    align-items: center;
+    color: #222;
+    width: 260px;
+  }
 
-	&__search-bar {
-		font-family: map-get($fonts, "sans-serif");
-		flex-grow: 1;
-		display: flex;
-		justify-content: center;
-		margin-right: 250px;
-	}
+  &__search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin-right: 250px;
+  }
 
-	&__bottom-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
+  &__bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-	&__items {
-		font-family: map-get($fonts, "sans-serif");
-		color: #111;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1.1rem;
-		gap: 10rem;
-		flex-grow: 1;
-		margin-left: 185px;
-	}
+  &__items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    gap: 10rem;
+    flex-grow: 1;
+    margin-left: 185px;
 
-	&__user {
-		margin-right: 20px;
-		display: flex;
-		align-items: center;
-		gap: 2rem;
-	}
+    li {
+      color: #111;
+    }
+  }
 
-	&__button-login {
-		font-family: map-get($fonts, "sans-serif");
-		box-shadow: 1px 1px 2px 0px #8a2a21;
-		background: linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
-		background-color: #c62d1f;
-		border-radius: 18px;
-		border: 1px solid #d02718;
-		display: inline-block;
-		cursor: pointer;
-		color: #ffffff;
-		font-size: 1rem;
-		padding: 7px 18px;
-		text-decoration: none;
-		text-shadow: 0px 1px 0px #810e05;
+  &__user {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
 
-		&:hover {
-			background: linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
-			background-color: #f24437;
-		}
-		&:active {
-			position: relative;
-			top: 1px;
-		}
-	}
+  &__button-login {
+    box-shadow: 1px 1px 2px 0px #8a2a21;
+    background: linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+    background-color: #c62d1f;
+    border-radius: 18px;
+    border: 1px solid #d02718;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 7px 18px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #810e05;
 
-	&__button-sell {
-		font-family: map-get($fonts, "sans-serif");
-		box-shadow: inset 0px 1px 0px 0px #caefab;
-		background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-		background-color: #77d42a;
-		border-radius: 6px;
-		border: 1px solid #268a16;
-		display: inline-block;
-		cursor: pointer;
-		color: #306108;
-		font-size: 15px;
-		font-weight: bold;
-		padding: 6px 24px;
-		text-decoration: none;
-		text-shadow: 0px 1px 0px #aade7c;
+    &:hover {
+      background: linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
+      background-color: #f24437;
+    }
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  }
 
-		&:hover {
-			background: linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
-			background-color: #5cb811;
-		}
-		&:active {
-			position: relative;
-			top: 1px;
-		}
-		
-	}
-	&__icon{
-		height: 30px;
-		width: 30px;
-	}
+  &__button-sell {
+    box-shadow: inset 0px 1px 0px 0px #caefab;
+    background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background-color: #77d42a;
+    border-radius: 6px;
+    border: 1px solid #268a16;
+    display: inline-block;
+    cursor: pointer;
+    color: #222;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #aade7c;
+
+    &:hover {
+      background: linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
+      background-color: #5cb811;
+    }
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  }
+  &__icon {
+    height: 35px;
+    width: 35px;
+    color: #111;
+  }
 }
