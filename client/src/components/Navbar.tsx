@@ -40,10 +40,6 @@ function Navbar() {
 						<AiOutlineShoppingCart className="nav__icon" />
 					</Link>
 
-					<Link to="/vender">
-						<button className="nav__button-sell">Vender</button>
-					</Link>
-
 					{session && <User handleLogOut={handleLogOut} />}
 
 					{!session && (
@@ -66,6 +62,10 @@ function Navbar() {
 
 					<Link to="/about">
 						<li>Nosotros</li>
+					</Link>
+					
+					<Link to="/vender">
+						<button className="nav__button-sell">Vender</button>
 					</Link>
 				</ul>
 			</div>

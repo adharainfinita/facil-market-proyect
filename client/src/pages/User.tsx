@@ -66,12 +66,14 @@ const User = ({ handleLogOut }: UserProps) => {
 							<BiLogOut className="icon" />
 							<h4>Cerrar Sesión</h4>
 						</div>
-						<div className="box">
-							<BiSolidDashboard className="icon" />
-							<h4>
-								<Link to="/admin">Dashboard</Link>
-							</h4>
-						</div>
+            {userLogin.user.admin && (
+              <div className="box">
+                <BiSolidDashboard className="icon" />
+                <h4>
+                  <Link to="/admin/summary">Dashboard</Link>
+                </h4>
+              </div>
+            )}
 					</div>
 				)}
 			</div>

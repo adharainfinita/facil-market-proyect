@@ -78,8 +78,6 @@ const Cart = () => {
 		const fetchData = async () => {
 			try {
 				const response = await updateItem(Number(userID), arrayId);
-				/* console.log("put cart" + userID, arrayId)
-				console.log("respuesta de put cart" + response) */
 				return response;
 			} catch (error) {
 				console.log(error);
