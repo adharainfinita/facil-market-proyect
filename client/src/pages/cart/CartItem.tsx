@@ -20,7 +20,12 @@ const CartItem = ({ item, index }: CartItemProps) => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 	const handleRemoveFromCart = async (item: BuyProduct) => {
-		const arrayID = items.map((item) => item.id);
+		const arrayID = items.map((item) => {
+			return{
+				productId: item.id,
+				quantity: item.quantity
+			}
+		});
 		dispatch(removeFromCart(item.id));
 		await updateItem(Number(user.id), arrayID);
 	};
