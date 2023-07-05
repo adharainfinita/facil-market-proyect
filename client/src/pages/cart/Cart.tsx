@@ -62,6 +62,8 @@ const Cart = () => {
 
 	const handleClearCart = () => {
 		dispatch(clearCart());
+		window.localStorage.removeItem("product");
+		window.localStorage.removeItem("products");
 	};
 	useEffect(() => {
 		const getProductsCart = () => {
