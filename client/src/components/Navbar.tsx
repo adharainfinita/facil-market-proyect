@@ -4,13 +4,17 @@ import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import User from "../pages/User";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch()
 	const session = window.localStorage.getItem("token");
 
 	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
+		dispatch(setUserValidator(false))
 		window.localStorage.removeItem("token");
 		window.localStorage.removeItem("items");
 		navigate("/");
