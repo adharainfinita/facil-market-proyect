@@ -21,7 +21,11 @@ const CartItem = ({ item, index, products }: CartItemProps) => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 
-	console.log(products);
+	const product: any = {
+		data: [...products],
+	};
+
+	console.log(product);
 
 	const handleRemoveFromCart = async (item: BuyProduct) => {
 		const arrayID = items.map((item) => {
@@ -36,7 +40,7 @@ const CartItem = ({ item, index, products }: CartItemProps) => {
 
 	const handleIncrementQuantity = () => {
 		dispatch(incrementQuantity(item.id));
-		//setUnities(unities - 1)
+		product.data[index].unities = product.data[index].unities - 1;
 	};
 
 	const handleDecrementQuantity = () => {
@@ -69,7 +73,7 @@ const CartItem = ({ item, index, products }: CartItemProps) => {
 						<button
 							onClick={handleDecrementQuantity}
 							className="cart-detail-btn-quantity"
-							disabled={products[index]?.unities === 0 ? true : false}
+							//disabled={products[index]?.unities === 0 ? true : false}
 						>
 							-
 						</button>
@@ -77,7 +81,7 @@ const CartItem = ({ item, index, products }: CartItemProps) => {
 						<button
 							onClick={handleIncrementQuantity}
 							className="cart-detail-btn-quantity"
-							disabled={products[index]?.unities === 0 ? true : false}
+							disabled={product.data[index]?.unities === 0 ? true : false}
 						>
 							+
 						</button>

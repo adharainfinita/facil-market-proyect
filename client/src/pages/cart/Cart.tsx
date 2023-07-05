@@ -19,13 +19,13 @@ const Cart = () => {
 		(state: RootState) => state.user.userLogin.user.id
 	);
 
-	const [productsStorage, setProductsStorage] = useState({});
-
 	useEffect(() => {
 		const data = window.localStorage.getItem("products");
 		const info = JSON.parse(data || "");
 		setProductsStorage(info.products);
 	}, []);
+
+	const [productsStorage, setProductsStorage] = useState<any>([]);
 
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => {
@@ -101,8 +101,6 @@ const Cart = () => {
 
 		fetchData();
 	}, [cartItems]);
-
-	//const product = productsStorage.filter((item) => item.id === caritems)
 
 	return (
 		<div className="cart-conteiner">

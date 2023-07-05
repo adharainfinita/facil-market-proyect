@@ -18,6 +18,10 @@ const DetailProduct = () => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
+
+	const quantity =
+		items.find((element) => element.id === product.id)?.quantity || 1;
+
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
 
@@ -40,7 +44,7 @@ const DetailProduct = () => {
 			if (item.id === storage.id) {
 				return {
 					...item,
-					unities: storage.unities, 
+					unities: storage.unities,
 				};
 			}
 			return item;
@@ -69,7 +73,7 @@ const DetailProduct = () => {
 		if (product?.images.length > 0 && !selectedImage) {
 			setSelectedImage(product.images[0]);
 		}
-		setStorage({ ...product, unities: product.unities - 1 });
+		setStorage({ ...product, unities: product.unities - quantity });
 	}, [product, selectedImage]);
 
 	const handleImageClick = (image: string) => {
@@ -182,7 +186,7 @@ const DetailProduct = () => {
 
 					<section className="detail-product-section">
 						<h2>Unidades:</h2>
-						<h3>{storage.unities}</h3>
+						<h3>{storage.unities <= 0 ? "Agotado" : storage.unities}</h3>
 					</section>
 
 					<section className="detail-product-section">
@@ -209,6 +213,7 @@ const DetailProduct = () => {
 						<button
 							className="detail-product-button"
 							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+							disabled={storage.unities <= 0}
 						>
 							Agregar al carrito
 						</button>
