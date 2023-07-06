@@ -174,7 +174,11 @@ const Terms: React.FC = () => {
 			<p>
 				Si tiene alguna pregunta sobre las condiciones de uso, por favor póngase
 				en contacto con nosotros por correo electrónico
+<<<<<<< HEAD
 				projecto.final.market@gmail.com.
+=======
+				MarketFacil@outlook.com.
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 			</p>
 		</div>
 	);

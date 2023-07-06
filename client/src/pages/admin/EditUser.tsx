@@ -2,7 +2,12 @@ import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
+<<<<<<< HEAD
 import {toast, ToastContainer} from 'react-toastify';
+=======
+import { toast, ToastContainer } from "react-toastify";
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const EditUser = () => {
 	const { id } = useParams();
@@ -41,17 +46,23 @@ const EditUser = () => {
 		setUpdating(true);
 		try {
 			const res = await updateUser(String(id), user);
-			console.log(res);
+			swal("😊", "Usuario actualizado", "error");
 
 			setUser({ ...res.user, password: "" });
 		} catch (error) {
-			console.log(error);
+			swal("😣", "error", "error");
 		}
 		setUpdating(false);
+<<<<<<< HEAD
 		toast.success('Usuario actualizado!', {
     position: toast.POSITION.TOP_RIGHT
   });
 
+=======
+		toast.success("Usuario actualizado!", {
+			position: toast.POSITION.TOP_RIGHT,
+		});
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	};
 
 	return (
@@ -90,7 +101,11 @@ const EditUser = () => {
 						<button type="submit">
 							{updating ? "actualizando..." : "actualizar"}
 						</button>
+<<<<<<< HEAD
 						<ToastContainer/>
+=======
+						<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 					</form>
 				)}
 			</div>

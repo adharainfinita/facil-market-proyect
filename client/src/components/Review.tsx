@@ -13,7 +13,11 @@ import { RootState } from "../redux/store";
 import { Purchase, Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
 import { getPurchasesByUser } from "../services/purchaseServices";
+<<<<<<< HEAD
 import swal from 'sweetalert'
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const Reviews: React.FC = () => {
 	const product = useProduct();
@@ -67,8 +71,6 @@ const Reviews: React.FC = () => {
 					);
 				});
 
-				console.log(findProduct);
-
 				if (findProduct) {
 					setHasBuy(true);
 				}
@@ -89,7 +91,6 @@ const Reviews: React.FC = () => {
 	//? Submitea a la base de datos
 	const submitReview = async () => {
 		if (hasReviewed) {
-			console.log("El usuario ya ha dejado una reseña");
 			setRating(0);
 			setComment("");
 			return;

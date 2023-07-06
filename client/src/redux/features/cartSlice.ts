@@ -1,7 +1,11 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import swal from 'sweetalert'
 
+=======
+import swal from 'sweetalert';
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
 
 interface CartState {
@@ -48,7 +52,10 @@ const cartSlice = createSlice({
 			}
 
 			swal("Producto agregado al carrito");
+<<<<<<< HEAD
 			// localStorage.setItem("cartItems", JSON.stringify(state.cartItems)); //!
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		},
 
 		decrementQuantity: (state, action: PayloadAction<number>) => {

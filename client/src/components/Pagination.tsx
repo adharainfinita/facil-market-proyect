@@ -41,7 +41,7 @@ function Pagination(props: productList) {
 	return (
 		<>
 			{currentProducts.length === 0 && (
-				<p>No se encontraron productos con estas características</p>
+				<p className="no-products">No se encontraron productos con estas características</p>
 			)}
 			<ProductCard products={currentProducts} />
 			<div className="page-controls">
@@ -60,7 +60,7 @@ function Pagination(props: productList) {
 					{"<"}
 				</button>
 				<h3>
-					Pagina {currentPage} de {pagesNumber}
+					Página {currentPage} de {pagesNumber}
 				</h3>
 				<button
 					className="pag-buttons"

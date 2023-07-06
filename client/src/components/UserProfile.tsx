@@ -13,8 +13,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { BsBagCheck } from "react-icons/bs";
 import { BsPencilFill } from "react-icons/bs";
+<<<<<<< HEAD
 import swal from 'sweetalert'
 
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -65,6 +69,7 @@ const UserProfile: React.FC = () => {
     }
   };
 
+<<<<<<< HEAD
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = event.target.files;
@@ -100,6 +105,43 @@ const UserProfile: React.FC = () => {
       swal("Contraseña actualizada exitosamente",'🕵️' , 'success');
     }
   }, [isPasswordChanged]);
+=======
+	const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		try {
+			const file = event.target.files;
+			if (file && file.length > 0) {
+				const data = new FormData();
+				data.append("file", file[0]);
+				data.append("upload_preset", "user_images");
+				try {
+					const res = await axios.post(
+						"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+						data
+					);
+					const uploadedFile = res.data;
+					setNewImage(uploadedFile.secure_url);
+				} catch (error) {
+					swal("Error al subir la imagen", `${error}`, "error");
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		if (newImage !== "") {
+			dispatch(changeImage(newImage));
+			swal("Imagen actualizada!", "🤳", "success");
+		}
+	}, [newImage, dispatch]);
+
+	useEffect(() => {
+		if (isPasswordChanged) {
+			swal("Contraseña actualizada exitosamente", "🕵️", "success");
+		}
+	}, [isPasswordChanged]);
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
   return (
     <div className="Center">

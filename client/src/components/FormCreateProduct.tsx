@@ -11,8 +11,13 @@ import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 import { getProducts } from "../redux/features/productSlice";
+<<<<<<< HEAD
 import {toast, ToastContainer} from 'react-toastify';
 import swal from 'sweetalert';
+=======
+import swal from "sweetalert";
+import { toast, ToastContainer } from "react-toastify";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -75,6 +80,7 @@ const FormCreateProduct: React.FC = () => {
 		setLoading(true);
 	  
 		try {
+<<<<<<< HEAD
 		  const remainingSlots = 4 - images.length;
 		  const filesToUpload = files.slice(0, remainingSlots);
 	  
@@ -100,6 +106,36 @@ const FormCreateProduct: React.FC = () => {
 		  const updatedImages = [...images.slice(0, 4), ...uploadedImages.slice(0, remainingSlots)];
 		  setImages(updatedImages);
 		  setLoading(false);
+=======
+			const remainingSlots = 4 - images.length;
+			const filesToUpload = files.slice(0, remainingSlots);
+
+			const uploadPromises = filesToUpload.map(async (file: File) => {
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("tags", "codeinfuse, medium, gist");
+				formData.append("upload_preset", "facilmarket");
+				formData.append("api_key", "711728988333761");
+
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+					}
+				);
+
+				return res.data.secure_url;
+			});
+
+			const uploadedImages = await Promise.all(uploadPromises);
+			const updatedImages = [
+				...images.slice(0, 4),
+				...uploadedImages.slice(0, remainingSlots),
+			];
+			setImages(updatedImages);
+			setLoading(false);
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		} catch (error) {
 		  console.log(error);
 		  setLoading(false);
@@ -108,6 +144,7 @@ const FormCreateProduct: React.FC = () => {
 	  
 	  
 
+<<<<<<< HEAD
 	  const removeImage = (index: number) => {
 		const updatedImages = [...images];
 		updatedImages.splice(index, 1);
@@ -115,10 +152,20 @@ const FormCreateProduct: React.FC = () => {
 	  };
 	  
 	  const imagePreview = () => {
+=======
+	const removeImage = (index: number) => {
+		const updatedImages = [...images];
+		updatedImages.splice(index, 1);
+		setImages(updatedImages);
+	};
+
+	const imagePreview = () => {
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		if (loading === true) {
 		  return <h3>Cargando Imagenes...</h3>;
 		}
 		if (loading === false) {
+<<<<<<< HEAD
 		  return (
 			<div>
 			  {images.length <= 0 ? (
@@ -133,6 +180,27 @@ const FormCreateProduct: React.FC = () => {
 			  )}
 			</div>
 		  );
+=======
+			return (
+				<div>
+					{images.length <= 0 ? (
+						<p>No hay imágenes</p>
+					) : (
+						images.map((item, index) => (
+							<div key={index} className="image-preview">
+								<img alt="image preview" width={60} height={60} src={item} />
+								<div
+									className="image-preview-button"
+									onClick={() => removeImage(index)}
+								>
+									X
+								</div>
+							</div>
+						))
+					)}
+				</div>
+			);
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		}
 	  };
 
@@ -160,7 +228,11 @@ const FormCreateProduct: React.FC = () => {
 
 			postProduct(product, Headers);
 			setErrors({});
+<<<<<<< HEAD
 			toast("Producto creado correctamente",{position: "bottom-left"});
+=======
+			toast("Producto creado correctamente", { position: "bottom-left" });
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 			window.localStorage.removeItem("items");
 			navigate("/products");
 
@@ -179,7 +251,11 @@ const FormCreateProduct: React.FC = () => {
 			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
+<<<<<<< HEAD
 			swal("Datos incompletos", '😬', 'warning');
+=======
+			swal("Datos incompletos", "😬", "warning");
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		}
 	};
 
@@ -320,8 +396,12 @@ const FormCreateProduct: React.FC = () => {
 							<h2 className="form-verification-text">Ingresar</h2>
 						</Link>
 					</div>
+<<<<<<< HEAD
 				<ToastContainer/>
 
+=======
+					<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 				</div>
 			)}
 		</>

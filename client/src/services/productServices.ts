@@ -6,15 +6,19 @@ import {
 } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
+<<<<<<< HEAD
 import swal from 'sweetalert'
 // const URL_HOST = import.meta.env.VITE_API;
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 //? OBTENER PRODUCTOS POR NOMBRE
 export const getProductsByName = async (name: string) => {
 	try {
 		const { data } = await axios(`${URL_HOST}/product/search?name=${name}`);
 		if (data.length === 0) {
-			window.alert("Producto no encontrado");
+			swal("Producto no encontrado");
 			return;
 		}
 		return data;
@@ -28,7 +32,10 @@ export const getProductsByName = async (name: string) => {
 			text: errorMessage,
 			icon: "warning",
 		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };
@@ -48,7 +55,10 @@ export const getProductsById = async (id: number) => {
 			text: errorMessage,
 			icon: "warning",
 		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };
@@ -69,9 +79,14 @@ export const postProduct = async (
 		swal({
 			title: "🤖",
 			text: errorMessage,
+<<<<<<< HEAD
 			icon: "error",
 		});
 
+=======
+			icon: "warning",
+		});
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };
@@ -91,7 +106,10 @@ export const getAllProducts = async () => {
 			text: errorMessage,
 			icon: "warning",
 		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };
@@ -128,7 +146,10 @@ export const deleteProduct = async (productID: number) => {
 			text: errorMessage,
 			icon: "warning",
 		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };
@@ -159,7 +180,11 @@ export const updateStock = async (product: Stock) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
+<<<<<<< HEAD
 		swal("Atención" ,`Es aqui ${errorMessage}`, 'error');
+=======
+		swal("Atención", `Es aqui ${errorMessage}`, "error");
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
 	}
 };

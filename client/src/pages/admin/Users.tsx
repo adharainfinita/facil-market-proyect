@@ -5,6 +5,10 @@ import { User, user } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import swal from 'sweetalert'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 function Users() {
   const users = useSelector((state: RootState) => state.user.users);
@@ -20,7 +24,10 @@ function Users() {
         text: 'No puedes desactivar tu propia cuenta',
         icon: "info",
       });
+<<<<<<< HEAD
   
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
       return;
     }
 
@@ -40,34 +47,48 @@ function Users() {
   }, [users]);
 
   return (
-    <table className="user-table">
-      <thead>
-        <tr>
-          <th className="user-table-th">ID</th>
-          <th className="user-table-th">Nombre</th>
-          <th className="user-table-th">Email</th>
-          <th className="user-table-th">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {updatedUsers.map((user) => (
-          <tr key={user.id}>
-            <td className="user-table-td">{user.id}</td>
-            <td className="user-table-td">{user.fullName}</td>
-            <td className="user-table-td">{user.email}</td>
-            <td className="user-table-td">
-              <button onClick={() => disabledUser(user)}>
-                {user.active ? "Desactivar" : "Activar"}
-              </button>
-
-              <Link to={`/user/${user.id}`}>
-                <button>Editar</button>
-              </Link>
-            </td>
+    <div className="relocura">
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th className="user-table-th">ID</th>
+            <th className="user-table-th">Nombre</th>
+            <th className="user-table-th">Email</th>
+            <th className="user-table-th">Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {updatedUsers.map((user) => (
+            <tr key={user.id}>
+              <td className="user-table-td">{user.id}</td>
+              <td className="user-table-td">{user.fullName}</td>
+              <td className="user-table-td">{user.email}</td>
+              <td className="user-table-td">
+                {user.active ? (
+                  <button
+                    className="user-table-disableBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Desactivar
+                  </button>
+                ) : (
+                  <button
+                    className="user-table-activeBtn"
+                    onClick={() => disabledUser(user)}
+                  >
+                    Activar
+                  </button>
+                )}
+
+                <Link to={`/user/${user.id}`}>
+                  <button className="user-table-editBtn">Editar</button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

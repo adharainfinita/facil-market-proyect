@@ -10,7 +10,10 @@ import {
 interface CartItemProps {
 	item: BuyProduct;
 	index: number;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 }
 import { Link } from "react-router-dom";
 
@@ -21,13 +24,18 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
+	const product = useSelector((state:RootState)=> state.product.products)
+	const productFound = product.find( match => match.id === item.id)
 
+<<<<<<< HEAD
 	// const product: any = {
 	// 	data: [...products],
 	// };
 
 	// console.log(product);
 	const productFound = product.find( match => match.id === item.id)
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 	const handleRemoveFromCart = async (item: BuyProduct) => {
 		const arrayID = items.map((item: BuyProduct) => {
@@ -41,14 +49,17 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	};
 
 	const handleIncrementQuantity = () => {
+<<<<<<< HEAD
 			dispatch(incrementQuantity(item.id));
 		
 		// product.data[index].unities = product.data[index].unities - 1;
+=======
+		dispatch(incrementQuantity(item.id));
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	};
 
 	const handleDecrementQuantity = () => {
 		dispatch(decrementQuantity(item.id));
-		//setUnities(unities + 1)
 	};
 
 	return (
@@ -67,7 +78,7 @@ const CartItem = ({ item, index }: CartItemProps) => {
 
 				<section className="cart-detail-section">
 					<h4>Precio</h4>
-					<p>{item.price * item.quantity}</p>
+					<p>${item.price * item.quantity}</p>
 				</section>
 
 				<section className="cart-detail-section">
@@ -76,7 +87,6 @@ const CartItem = ({ item, index }: CartItemProps) => {
 						<button
 							onClick={handleDecrementQuantity}
 							className="cart-detail-btn-quantity"
-							//disabled={products[index]?.unities === 0 ? true : false}
 						>
 							-
 						</button>
@@ -85,7 +95,10 @@ const CartItem = ({ item, index }: CartItemProps) => {
 							onClick={handleIncrementQuantity}
 							disabled={productFound!.unities > item.quantity ? false : true}
 							className="cart-detail-btn-quantity"
+<<<<<<< HEAD
 							// disabled={product.data[index]?.unities === 0 ? true : false}
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 						>
 							+
 						</button>

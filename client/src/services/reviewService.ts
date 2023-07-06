@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 import { Review } from "../utils/interfaces";
+import swal from 'sweetalert'
 
 export const createReview = async (
 	userID: number,
@@ -49,8 +50,8 @@ export const deleteReview = async (reviewId: number): Promise<void> => {
 			},
 		});
 
-		console.log("La review ha sido eliminada con éxito");
+		swal("La review ha sido eliminada con éxito",'☺','success');
 	} catch (error) {
-		console.error("Error al eliminar la review:", error);
+		swal("Error al eliminar la review:", 'error', 'error');
 	}
 };

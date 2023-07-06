@@ -7,6 +7,10 @@ import { addUser } from "../redux/features/userSlice";
 import { useState } from "react";
 import { GoogleUser } from "../utils/interfaces";
 import swal from 'sweetalert'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const GoogleRegister = () => {
 	const navigate = useNavigate();

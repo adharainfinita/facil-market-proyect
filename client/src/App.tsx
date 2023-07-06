@@ -58,6 +58,8 @@ import ProductEdit from "./components/ProductEdit";
 import { startCart } from "./redux/features/cartSlice";
 import ApprovedBuy from "./components/ApprovedBuy";
 import Purchase from "./components/Purchase";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const App = () => {
@@ -182,7 +184,11 @@ const App = () => {
 
 	return (
 		<>
+<<<<<<< HEAD
 			<ToastContainer/>
+=======
+			<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 			<Navbar />
 
 			<Routes>

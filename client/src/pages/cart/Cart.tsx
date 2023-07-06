@@ -54,6 +54,7 @@ const Cart = () => {
 		return totalPrice;
 	};
 
+<<<<<<< HEAD
 	const handleClearCart = async () => {
     dispatch(clearCart());
 
@@ -69,6 +70,11 @@ const Cart = () => {
     }
   }; //!
 
+=======
+	const handleClearCart = () => {
+		dispatch(clearCart());
+	};
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	useEffect(() => {
 		const getProductsCart = () => {
 			const tempProductsCart: Product[] = []; // Array temporal para almacenar los productos
@@ -88,6 +94,7 @@ const Cart = () => {
 		getProductsCart();
 	}, [cartItems, products]);
 
+<<<<<<< HEAD
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => {
 			return {
@@ -109,6 +116,8 @@ const Cart = () => {
 
 		fetchData();
 	}, [cartItems]);
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 	//!
 	// useEffect(() => {
@@ -155,7 +164,7 @@ const Cart = () => {
 
 					<section className="cart-section">
 						<h2 className="cart__total">
-							{`Precio Final: ${handleTotalPrice(cartItems)}`}
+							{`Precio Final: $${handleTotalPrice(cartItems)}`}
 						</h2>
 						<PaymentButton {...cartItems} />
 					</section>
