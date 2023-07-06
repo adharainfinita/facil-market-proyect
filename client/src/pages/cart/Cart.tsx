@@ -37,7 +37,7 @@ const Cart = () => {
 		};
 
 		fetchData();
-	}, [cartItems, userID]);
+	}, [cartItems]);
 
 	const products = useSelector((state: RootState) => state.product.products);
 	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
@@ -74,25 +74,6 @@ const Cart = () => {
 		getProductsCart();
 	}, [cartItems, products]);
 
-	useEffect(() => {
-		const arrayId = cartItems.map((item) => {
-			return {
-				productId: item.id,
-				quantity: item.quantity,
-			};
-		});
-
-		const fetchData = async () => {
-			try {
-				const response = await updateItem(Number(userID), arrayId);
-				return response;
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		fetchData();
-	}, [cartItems, userID]);
 
 	return (
 		<div className="cart-conteiner">
@@ -113,7 +94,7 @@ const Cart = () => {
 
 					<section className="cart-section">
 						<h2 className="cart__total">
-							{`Precio Final: ${handleTotalPrice(cartItems)}`}
+							{`Precio Final: $${handleTotalPrice(cartItems)}`}
 						</h2>
 						<PaymentButton {...cartItems} />
 					</section>

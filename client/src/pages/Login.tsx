@@ -8,6 +8,8 @@ import { logUser } from "../services/userServices";
 import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
+import {toast, ToastContainer} from 'react-toastify'
+
 
 const Login: React.FC = () => {
 	const navigate = useNavigate();
@@ -55,6 +57,9 @@ const Login: React.FC = () => {
 
 			if (response) {
 				dispatch(loggedUser(response));
+				toast.success('Sesión iniciada!', {
+					position: toast.POSITION.BOTTOM_RIGHT
+				});
 				navigate("/");
 			}
 		} catch (error) {
@@ -143,6 +148,7 @@ const Login: React.FC = () => {
 						</span>
 					</div>
 				</div>
+				<ToastContainer/>
 			</div>
 		</div>
 	);

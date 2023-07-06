@@ -174,7 +174,7 @@ const Terms: React.FC = () => {
 			<p>
 				Si tiene alguna pregunta sobre las condiciones de uso, por favor póngase
 				en contacto con nosotros por correo electrónico
-				MarketFacil@outloock.com.
+				MarketFacil@outlook.com.
 			</p>
 		</div>
 	);

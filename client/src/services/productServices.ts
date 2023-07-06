@@ -6,14 +6,14 @@ import {
 } from "../utils/interfaces";
 import axios, { AxiosHeaders } from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
-// const URL_HOST = import.meta.env.VITE_API;
+import swal from "sweetalert";
 
 //? OBTENER PRODUCTOS POR NOMBRE
 export const getProductsByName = async (name: string) => {
 	try {
 		const { data } = await axios(`${URL_HOST}/product/search?name=${name}`);
 		if (data.length === 0) {
-			window.alert("Producto no encontrado");
+			swal("Producto no encontrado");
 			return;
 		}
 		return data;
@@ -22,7 +22,11 @@ export const getProductsByName = async (name: string) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "warning",
+		});
 		throw error;
 	}
 };
@@ -37,7 +41,11 @@ export const getProductsById = async (id: number) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "warning",
+		});
 		throw error;
 	}
 };
@@ -55,7 +63,11 @@ export const postProduct = async (
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "warning",
+		});
 		throw error;
 	}
 };
@@ -70,7 +82,11 @@ export const getAllProducts = async () => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "warning",
+		});
 		throw error;
 	}
 };
@@ -102,7 +118,11 @@ export const deleteProduct = async (productID: number) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "warning",
+		});
 		throw error;
 	}
 };
@@ -133,7 +153,7 @@ export const updateStock = async (product: Stock) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(`Es aqui ${errorMessage}`);
+		swal("Atención", `Es aqui ${errorMessage}`, "error");
 		throw error;
 	}
 };

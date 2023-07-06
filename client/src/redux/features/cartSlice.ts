@@ -1,6 +1,6 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import swal from 'sweetalert';
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
 
 interface CartState {
@@ -36,7 +36,7 @@ const cartSlice = createSlice({
 				state.cartItems.productID.push(action.payload);
 			}
 
-			alert("Producto agregado al carrito");
+			swal("Producto agregado al carrito");
 		},
 
 		decrementQuantity: (state, action: PayloadAction<number>) => {

@@ -47,7 +47,7 @@ function Navbar() {
 					{session && <User handleLogOut={handleLogOut} />}
 
 					{!session && (
-						<button className="nav__button-login" onClick={handleLogin}>
+							<button className="nav__button-login" onClick={handleLogin}>
 							Iniciar Sesión
 						</button>
 					)}
@@ -65,7 +65,7 @@ function Navbar() {
 					</Link>
 
 					<Link to="/about">
-						<li>Nosotros</li>
+						<li >Nosotros</li>
 					</Link>
 
 					<Link to="/vender">

@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import { BsCardImage } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Reviews from "./Review";
 import { BuyProduct } from "../utils/interfaces";
 import { RootState } from "../redux/store";
-//import { updateUnities } from "../redux/features/productSlice";
-//import { updateStock } from "../services/productServices";
 import { addToCart } from "../redux/features/cartSlice";
 import useProduct from "../hooks/useProduct";
 import { updateItem } from "../services/cartServicer";
+import swal from 'sweetalert';
 
 const DetailProduct = () => {
+	const navigate = useNavigate();
 	const product = useProduct();
 	const currentUser = useSelector((state: RootState) => state.user.userLogin);
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
-
+	const [goCart, setGoCart] = useState(false)
+	
 	const session = useSelector((state: RootState) => state.user.userValidation);
 
 	const [selectedImage, setSelectedImage] = useState<string>("");
@@ -33,12 +34,31 @@ const DetailProduct = () => {
 		quantity: stock,
 	};
 
+	const goToCart = ()=>{
+		navigate('/cart')
+	}
+
 	const handleAddToCart = async (_userID: number, data: BuyProduct) => {
 		if (currentUser.user.id === product.userID) {
 			// Si el userID coincide con el product.userID, el vendedor no puede comprar su propio producto
-			alert("No puedes agregar al carrito tu mismo producto.");
+			swal('Atención!',"No puedes agregar al carrito tu mismo producto.", 'warning');
 		} else {
 			dispatch(addToCart(data));
+			const before = items.map((item) => {
+				return {
+					productId: item.id,
+					quantity: item.quantity
+				}})
+			const current = [{productId: data.id, quantity: data.quantity}]
+			const arrayId = before.concat(current)
+			try {
+				const response = await updateItem(Number(_userID), arrayId);
+				console.log(response)
+				setGoCart(true)
+				return response;
+			} catch (error) {
+				swal('😣', 'error', 'error');
+			}
 		}
 	};
 
@@ -60,20 +80,7 @@ const DetailProduct = () => {
 		}
 	};
 
-	useEffect(() => {
-		const fetchInfo = async () => {
-			const arrayID = items.map((item: BuyProduct) => {
-				return {
-					productId: item.id,
-					quantity: item.quantity,
-				};
-			});
-
-			await updateItem(Number(currentUser.user.id), arrayID);
-		};
-
-		fetchInfo();
-	}, [currentUser, product]);
+	
 
 	const renderSesion = () => {
 		return (
@@ -115,11 +122,15 @@ const DetailProduct = () => {
 
 				<div>
 					{session ? (
+	
 						<button
 							className="detail-product-button"
-							onClick={() => handleAddToCart(Number(currentUser.user.id), data)}
+							onClick={() => !goCart ?
+								handleAddToCart(Number(currentUser.user.id), data)
+								: goToCart()
+							}
 						>
-							Agregar al carrito
+							{goCart ? "Ir al carrito" : "Agregar al carrito "}
 						</button>
 					) : (
 						renderSesion()

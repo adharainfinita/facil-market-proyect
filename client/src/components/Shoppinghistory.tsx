@@ -15,7 +15,6 @@ const ShoppingHistory = () => {
 		const fetchPurchases = async () => {
 			try {
 				const response = await getPurchasesByUser(Number(user.user.id));
-				console.log(response);
 
 				setPurchases(response);
 			} catch (error: any) {
