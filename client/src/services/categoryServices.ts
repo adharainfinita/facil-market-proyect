@@ -12,7 +12,6 @@ export const postCategory = async (data: string) => {
 		const response = await axios.post(`${URL_HOST}/category`, {
 			name: data,
 		});
-		console.log(`Post successful for category: ${data}`);
 		return response.data;
 	} catch (error) {
 		console.error(`Error posting category: ${data}`);

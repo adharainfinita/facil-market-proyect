@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../redux/features/userSlice";
 import { useState } from "react";
 import { GoogleUser } from "../utils/interfaces";
+import swal from 'sweetalert'
+
 
 const GoogleRegister = () => {
 	const navigate = useNavigate();
@@ -33,7 +35,11 @@ const GoogleRegister = () => {
 								if (response.status === 201) {
 									dispatch(addUser(response.data));
 								}
-								alert("Registro exitoso");
+								swal({
+									title: "Registro exitoso",
+									text: '🤖',
+									icon: "sucess",
+								});
 								navigate("/login");
 							} catch (error: any) {
 								setError(error);

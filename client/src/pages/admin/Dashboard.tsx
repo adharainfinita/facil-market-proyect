@@ -7,22 +7,22 @@ function Dashboard() {
 	return (
 		<div className="dashboard">
 			<aside className="dashboard-aside">
-				<h3>Enlaces</h3>
+				<h3 className="dashboard-aside-title">Enlaces</h3>
 
-				<NavLink className="dashboard-link" to="/admin/summary">
-					<BsGraphUp /> Resumen
+				<NavLink className="dashboard-aside-link" to="/admin/summary">
+					<BsGraphUp className="dashboard-aside-icon" /> Resumen
 				</NavLink>
 
-				<NavLink className="dashboard-link" to="/admin/products">
-					<BiStore /> Productos
+				<NavLink className="dashboard-aside-link" to="/admin/products">
+					<BiStore className="dashboard-aside-icon" /> Productos
 				</NavLink>
 
-				<NavLink className="dashboard-link" to="/admin/orders">
-					<FaClipboardList /> Ordenes
-				</NavLink>
+				<li className="dashboard-aside-link">
+					<FaClipboardList className="dashboard-aside-icon" /> Ordenes
+				</li>
 
-				<NavLink className="dashboard-link" to="/admin/users">
-					<FaUsers /> Usuarios
+				<NavLink className="dashboard-aside-link" to="/admin/users">
+					<FaUsers className="dashboard-aside-icon" /> Usuarios
 				</NavLink>
 			</aside>
 			<section className="dashboard-content">

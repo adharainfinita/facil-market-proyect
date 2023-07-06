@@ -4,6 +4,8 @@ import { LoginData, NewUser } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
 import { user } from "../utils/interfaces";
+import swal from 'sweetalert'
+
 
 //? REGISTAR UN USUARIO
 export const postUser = async (userData: NewUser) => {
@@ -29,7 +31,11 @@ export const getAllUsers = async () => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "error",
+		});
 		throw error;
 	}
 };
@@ -44,7 +50,7 @@ export const deleteUser = async (userID: number) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal(errorMessage, '😣','error');
 		throw error;
 	}
 };
@@ -59,7 +65,11 @@ export const updateUser = async (userId: string, userData: user) => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal({
+			title: "🤖",
+			text: errorMessage,
+			icon: "error",
+		});
 		throw error;
 	}
 };
@@ -86,7 +96,7 @@ export const getUserById = async (userId: string | undefined) => {
 		const response = await axios.get(`${URL_HOST}/user/${userId}`);
 
 		return response.data;
-	} catch (error) {
-		console.log("Error al obtener los datos del usuario:", error);
+	} catch (error:any) {
+		swal("Error al obtener los datos del usuario:", `${error.message}`, 'error');
 	}
 };

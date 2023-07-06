@@ -1,17 +1,21 @@
 import logo from "../assets/marketplace_logo.png";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { useNavigate, useLocation } from "react-router-dom";
-import User from "../pages/User";
+import { useNavigate } from "react-router-dom";
+import User from "./User";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { setUserValidator } from "../redux/features/userSlice";
 
 function Navbar() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
 	const location = useLocation();
 
 	const handleLogOut = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
+		dispatch(setUserValidator(false));
 		window.localStorage.removeItem("token");
 		window.localStorage.removeItem("items");
 		navigate("/");
@@ -44,7 +48,7 @@ function Navbar() {
 					{session && <User handleLogOut={handleLogOut} />}
 
 					{!session && (
-						<button className="nav__button-login" onClick={handleLogin}>
+							<button className="nav__button-login" onClick={handleLogin}>
 							Iniciar Sesión
 						</button>
 					)}
@@ -62,9 +66,9 @@ function Navbar() {
 					</Link>
 
 					<Link to="/about">
-						<li className={location.pathname === '/about' ? 'nav__active': ''}>Nosotros</li>
+						<li >Nosotros</li>
 					</Link>
-					
+
 					<Link to="/vender">
 						<button className="nav__button-sell">Vender</button>
 					</Link>

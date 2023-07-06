@@ -15,6 +15,8 @@ import { NewUser } from "../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import GoogleRegister from "./GoogleRegister";
+import swal from 'sweetalert'
+
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
@@ -86,7 +88,7 @@ const RegisterForm = () => {
 			if (response.status === 201) {
 				dispatch(addUser(response.data));
 			}
-			alert("Registro exitoso");
+			swal("Registro existoso!", "Ahora puedes acceder a todas las funcionalidades", "success");
 			navigate("/login");
 		} catch (error) {
 			console.error(error);

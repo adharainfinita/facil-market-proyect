@@ -29,7 +29,7 @@ class Cart extends Model {
 	@BelongsTo(() => User)
 	user!: User;
 
-	//? Agregar clave foránea de Product
+	//? Agregar clave forÃ¡nea de Product
 	@Column({
 		type: DataType.ARRAY(DataType.JSON),
 		allowNull: true,

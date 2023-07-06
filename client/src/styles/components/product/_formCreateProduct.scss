@@ -123,12 +123,9 @@
     font-weight: 600;
   }
   .image-preview {
-    border: 1px solid rgb(144, 142, 146);
+    display: inline-block;
     margin: 5px;
-    &:hover {
-      border: 1px dashed gray;
-      transition: 0.5s ease all;
-    }
+
   }
   &-input-status {
     display: flex;
@@ -151,4 +148,24 @@
     }
   }
 
+}
+.image-preview-button{
+  height: 18px;
+  width: 15px;
+  position: absolute;
+  margin-top: -63px;
+  background-color: rgb(53, 53, 175, .7);
+  border-radius: 4px;
+}
+
+.image-preview-button:hover{
+  cursor: pointer;
+}
+
+.dropzone{
+  height: 30px;
+  text-align: center;
+  border: 1px dashed gray;
+  border-radius: 5px;
+  width: 100%;
 }

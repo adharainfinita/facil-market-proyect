@@ -13,6 +13,7 @@ import { RootState } from "../redux/store";
 import { Purchase, Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
 import { getPurchasesByUser } from "../services/purchaseServices";
+import swal from "sweetalert";
 
 const Reviews: React.FC = () => {
 	const product = useProduct();
@@ -66,8 +67,6 @@ const Reviews: React.FC = () => {
 					);
 				});
 
-				console.log(findProduct);
-
 				if (findProduct) {
 					setHasBuy(true);
 				}
@@ -88,7 +87,6 @@ const Reviews: React.FC = () => {
 	//? Submitea a la base de datos
 	const submitReview = async () => {
 		if (hasReviewed) {
-			console.log("El usuario ya ha dejado una reseña");
 			setRating(0);
 			setComment("");
 			return;
@@ -161,7 +159,7 @@ const Reviews: React.FC = () => {
 				);
 			}
 
-			alert("Se eliminó la reseña");
+			swal("Se eliminó la reseña");
 		} catch (error) {
 			console.error("Error al eliminar la review:", error);
 		}

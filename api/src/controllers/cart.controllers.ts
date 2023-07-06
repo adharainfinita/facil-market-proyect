@@ -1,4 +1,5 @@
 import { ArrayCart, cartProductProps } from "../interfaces/propsModel";
+import { ArrayCart, cartProductProps } from "../interfaces/propsModel";
 import Cart from "../models/Cart";
 import Product from "../models/Product";
 
@@ -8,6 +9,7 @@ export const createCart = async (userID: number) => {
 	});
 
 	if (cartFound?.dataValues.id) {
+		return "Ya existe el carrito";
 		return "Ya existe el carrito";
 	}
 

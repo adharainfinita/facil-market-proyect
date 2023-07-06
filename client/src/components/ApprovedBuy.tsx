@@ -6,69 +6,83 @@ import { RootState } from "../redux/store";
 import { BuyProduct, Product } from "../utils/interfaces";
 import { BsCheck2Circle } from "react-icons/bs";
 import { clearCart } from "../redux/features/cartSlice";
+import { updateStock } from "../services/productServices";
 
 const ApprovedBuy = () => {
-  const dispatch = useDispatch()
-  const currentUser = useSelector((state: RootState) => state.user.userLogin);
-  const cartItems = useSelector(
-    (state: RootState) => state.cart.cartItems.productID
-  );
-  const products = useSelector((state: RootState) => state.product.products);
-  const [error, setError] = useState<string>("");
-  const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
+	const dispatch = useDispatch();
+	const currentUser = useSelector((state: RootState) => state.user.userLogin);
+	const cartItems = useSelector(
+		(state: RootState) => state.cart.cartItems.productID
+	);
+	const products = useSelector((state: RootState) => state.product.products);
+	const [error, setError] = useState<string>("");
+	const [_productsCart, setProductsCart] = useState<BuyProduct[]>([]);
 
+	useEffect(() => {
+		const getProductsCart = () => {
+			const tempProductsCart: Product[] = [];
 
-  useEffect(() => {
-    const getProductsCart = () => {
-      const tempProductsCart: Product[] = [];
+			for (const cartItem of cartItems) {
+				const productFound = products.find(
+					(product) => product.id === cartItem.id
+				);
+				if (productFound) {
+					tempProductsCart.push(productFound);
+				}
+				/* const asd = await updateStock() */
+			}
 
-      for (const cartItem of cartItems) {
-        const productFound = products.find((product) => product.id === cartItem.id);
-        if (productFound) {
-          tempProductsCart.push(productFound);
-        }
-      }
+			setProductsCart(cartItems);
+		};
+		getProductsCart();
+	}, [cartItems, products]);
 
-      setProductsCart(cartItems);
-    };
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const paymentId = urlParams.get("payment_id");
 
-    getProductsCart();
-  }, [cartItems, products]);
+		const postPurchase = async () => {
+			try {
+				const info = {
+					userId: Number(currentUser.user.id),
+					products: _productsCart,
+					paymentId: Number(paymentId),
+				};
+				if (info.userId !== 0) {
+					const responsePurchase = await postUserPurchase(info);
+					for (const product of _productsCart) {
+						const stockUpdate = {
+							id: product.id,
+							unities: product.quantity,
+						};
+						await updateStock(stockUpdate);
+					}
+					dispatch(clearCart());
+					return responsePurchase;
+				}
+			} catch (error: any) {
+				setError(error);
+			}
+		};
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentId = urlParams.get("payment_id");
+		/* 		const fechtData = async () => {
+			await updateItem(cartItems.userID, []);
+		};
+		fechtData(); */
+		/* dispatch(clearCart()); */
+		postPurchase();
+	}, [_productsCart]);
 
-    const postPurchase = async () => {
-      try {
-        const info = {
-          userId: Number(currentUser.user.id),
-          products: _productsCart,
-          paymentId: Number(paymentId),
-        };
-        if (info.userId !== 0) {
-          const responsePurchase = await postUserPurchase(info);
-          dispatch(clearCart())
-          return responsePurchase;
-        }
-      } catch (error: any) {
-        setError(error);
-      }
-    };
-
-    postPurchase();
-  }, [_productsCart]);
-
-  return (
-    <div className="approved-purchase">
-      <BsCheck2Circle className="approved-check"/>
-      <h1>Tu compra fue aprobada</h1>
-      <Link to="/products">
-        <button>Seguir Comprando</button>
-      </Link>
-      <p>{error}</p>
-    </div>
-  );
+	return (
+		<div className="approved-purchase">
+			<BsCheck2Circle className="approved-check" />
+			<h1>Tu compra fue aprobada</h1>
+			<Link to="/products">
+				<button>Seguir Comprando</button>
+			</Link>
+			<p>{error}</p>
+		</div>
+	);
 };
 
 export default ApprovedBuy;

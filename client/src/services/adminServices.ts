@@ -1,5 +1,6 @@
 import axios from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
+import swal from "sweetalert";
 
 export const getBasicResume = async () => {
 	try {
@@ -10,7 +11,7 @@ export const getBasicResume = async () => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal(errorMessage);
 		throw error;
 	}
 };
@@ -24,7 +25,7 @@ export const getDataAnalytics = async () => {
 		if (axios.isAxiosError(error)) {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
-		alert(errorMessage);
+		swal(errorMessage);
 		throw error;
 	}
 };

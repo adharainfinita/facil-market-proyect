@@ -1,0 +1,143 @@
+$gray-color: #808080;
+
+.Center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%; /* Ajusta la altura al tamaño de la ventana */
+	margin: 20px;
+  }
+
+.Profile__conteiner {
+	width: fit-content; ;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 20px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+	height: 100%;
+  }
+  .user__pencil{
+	margin-left: 10px;
+	margin-top: 30px;
+	height: 25px;
+	width: 25px;
+  }
+  .Profile__data {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 50px;
+		width: 600px;
+		border-radius: 5px;
+		margin: 10px;
+		text-align: center; /* Centra el texto horizontalmente */
+
+  .nav__userLogo {
+    width: 300px;
+    height: 300px;
+    margin: 30px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    margin: 30px;
+    font-size: 24px;
+    margin-bottom: 10px;
+
+    color: #333333;
+    font-weight: bold;
+    text-align: center; /* Centra el texto horizontalmente */
+  }
+
+  p {
+    margin: 30px;
+    font-size: 16px;
+
+    color: #666666;
+    margin-top: 20px;
+    text-align: center; /* Centra el texto horizontalmente */
+  }
+
+  button {
+    background-color: #1d428a;
+    color: #ffffff;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s; /* Transición suave */
+
+    &:hover {
+      background-color: #0c2c5a; /* Color al pasar el cursor */
+    }
+
+    &:active {
+      background-color: #08203f; /* Color al pulsar el botón */
+    }
+  }
+}
+
+.profile__save {
+  margin: 20px;
+}
+
+.change_img_label {
+  display: inline-block;
+  position: absolute;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.change_img_label span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.change_img_label input[type="file"] {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Estilo adicional para los textos más pequeños */
+.Profile__fields h2 {
+  font-size: 18px;
+}
+
+.Profile__imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.Profile__editIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: #1d428a;
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.Profile__editIcon:hover {
+  background-color: #0c2c5a;
+}
+.Profile__myProducts {
+  margin-bottom: 20px; /* Agrega un margen inferior para separarlo del contenido anterior */
+}
+
+.Profile__myProducts h4 {
+  display: flex;
+  align-items: center; /* Centra verticalmente el icono y el texto */
+}
+
+.Profile__myProducts .icon {
+  margin-right: 5px; /* Añade un espacio entre el icono y el texto */
+}

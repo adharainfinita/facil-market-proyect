@@ -19,12 +19,16 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const items = useSelector(
 		(state: RootState) => state.cart.cartItems.productID
 	);
+	const product = useSelector((state:RootState)=> state.product.products)
+	const productFound = product.find( match => match.id === item.id)
+
+
 	const handleRemoveFromCart = async (item: BuyProduct) => {
 		const arrayID = items.map((item) => {
-			return{
+			return {
 				productId: item.id,
-				quantity: item.quantity
-			}
+				quantity: item.quantity,
+			};
 		});
 		dispatch(removeFromCart(item.id));
 		await updateItem(Number(user.id), arrayID);
@@ -54,7 +58,7 @@ const CartItem = ({ item, index }: CartItemProps) => {
 
 				<section className="cart-detail-section">
 					<h4>Precio</h4>
-					<p>{item.price * item.quantity}</p>
+					<p>${item.price * item.quantity}</p>
 				</section>
 
 				<section className="cart-detail-section">
@@ -69,6 +73,7 @@ const CartItem = ({ item, index }: CartItemProps) => {
 						<p>{item.quantity}</p>
 						<button
 							onClick={handleIncrementQuantity}
+							disabled={productFound!.unities > item.quantity ? false : true}
 							className="cart-detail-btn-quantity"
 						>
 							+

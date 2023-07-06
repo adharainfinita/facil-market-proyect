@@ -45,15 +45,14 @@
 	&:active {
 	  background-color: #08203f; /* Color al pulsar el botón */
 	}
-  }
+}
   
-  .product-card {
+.product-card {
 	position: relative;
 	transition: transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
-  }
+}
   
-  .product-card:hover {
+.product-card:hover {
 	transform: translateY(-5px); /* Levantar la tarjeta */
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), 0px 8px 15px rgba(0, 0, 0, 0.1); /* Brillo */
-  }
-  
+}

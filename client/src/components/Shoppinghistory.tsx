@@ -15,7 +15,6 @@ const ShoppingHistory = () => {
 		const fetchPurchases = async () => {
 			try {
 				const response = await getPurchasesByUser(Number(user.user.id));
-				console.log(response);
 
 				setPurchases(response);
 			} catch (error: any) {
@@ -74,8 +73,8 @@ const ShoppingHistory = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{purchases?.map((purchase) => (
-								<tr key={purchase.id} className="shopping-tr">
+							{purchases?.map((purchase, index) => (
+								<tr key={index} className="shopping-tr">
 									<td className="shopping-td">{purchase.paymentId}</td>
 									<td className="shopping-td">
 										{formatDate(purchase.createdAt)}

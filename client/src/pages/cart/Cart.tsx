@@ -5,8 +5,6 @@ import { BuyProduct, Product } from "../../utils/interfaces";
 import PaymentButton from "../../components/PaymentButton";
 import { clearCart } from "../../redux/features/cartSlice";
 import { updateItem } from "../../services/cartServicer";
-
-// import { UpdateCart } from "../../services/cartServicer";
 import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
 
@@ -25,10 +23,9 @@ const Cart = () => {
 		const arrayId = cartItems.map((item) => {
 			return {
 				productId: item.id,
-				quantity: item.quantity
-			}
+				quantity: item.quantity,
+			};
 		});
-		console.log(arrayId);
 
 		const fetchData = async () => {
 			try {
@@ -77,45 +74,6 @@ const Cart = () => {
 		getProductsCart();
 	}, [cartItems, products]);
 
-	useEffect(() => {
-		const arrayId = cartItems.map((item) => {
-			return {
-				productId: item.id,
-				quantity: item.quantity
-			}
-		});
-
-		const fetchData = async () => {
-			try {
-				const response = await updateItem(Number(userID), arrayId);
-				/* console.log("put cart" + userID, arrayId)
-				console.log("respuesta de put cart" + response) */
-				return response;
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		fetchData();
-	}, [cartItems]);
-
-	// useEffect(() => {
-	// 	// Cargar productos al backend cuando se accede a la página
-
-	// 	const getProductsCart = () => {
-	// 		let count = 0;
-	// 		while (cartItems?.length !== count) {
-	// 			const productFound = products.find(
-	// 				(match) => match.id === cartItems[count].id
-	// 			);
-	// 			if (productFound) {
-	// 				setProductsCart([...productsCart, productFound]);
-	// 			}
-	//       count++;
-	// 		}
-	// 	};
-	// 	getProductsCart();
-	// }, [cartItems, products]);
 
 	return (
 		<div className="cart-conteiner">
@@ -125,7 +83,9 @@ const Cart = () => {
 				<div className="cart-conteiner">
 					<section className="cart-section">
 						<h1 className="cart-title">Carrito de compras</h1>
-						<button onClick={handleClearCart} className="cart__clear">Limpiar carrito</button>
+						<button onClick={handleClearCart} className="cart__clear">
+							Limpiar carrito
+						</button>
 					</section>
 
 					{cartItems?.map((item: BuyProduct, index: number) => (
@@ -134,7 +94,7 @@ const Cart = () => {
 
 					<section className="cart-section">
 						<h2 className="cart__total">
-							{`Precio Final: ${handleTotalPrice(cartItems)}`}
+							{`Precio Final: $${handleTotalPrice(cartItems)}`}
 						</h2>
 						<PaymentButton {...cartItems} />
 					</section>
