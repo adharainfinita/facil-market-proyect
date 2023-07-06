@@ -11,9 +11,8 @@ import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 import { getProducts } from "../redux/features/productSlice";
-import swal from 'sweetalert';
-import {toast, ToastContainer} from 'react-toastify';
-
+import swal from "sweetalert";
+import { toast, ToastContainer } from "react-toastify";
 
 const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
@@ -21,7 +20,6 @@ const FormCreateProduct: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const session = window.localStorage.getItem("token");
-	const MAX_IMAGES = 4;
 
 	//? Estado Local
 	const [errors, setErrors] = useState<Partial<ErrorsFormProduct>>({
@@ -74,68 +72,74 @@ const FormCreateProduct: React.FC = () => {
 
 	const uploadImages = async (files: File[]): Promise<void> => {
 		setLoading(true);
-	  
-		try {
-		  const remainingSlots = 4 - images.length;
-		  const filesToUpload = files.slice(0, remainingSlots);
-	  
-		  const uploadPromises = filesToUpload.map(async (file: File) => {
-			const formData = new FormData();
-			formData.append("file", file);
-			formData.append("tags", "codeinfuse, medium, gist");
-			formData.append("upload_preset", "facilmarket");
-			formData.append("api_key", "711728988333761");
-	  
-			const res = await axios.post(
-			  "https://api.cloudinary.com/v1_1/facilmarket/image/upload",
-			  formData,
-			  {
-				headers: { "X-Requested-With": "XMLHttpRequest" },
-			  }
-			);
-	  
-			return res.data.secure_url;
-		  });
-	  
-		  const uploadedImages = await Promise.all(uploadPromises);
-		  const updatedImages = [...images.slice(0, 4), ...uploadedImages.slice(0, remainingSlots)];
-		  setImages(updatedImages);
-		  setLoading(false);
-		} catch (error) {
-		  console.log(error);
-		  setLoading(false);
-		}
-	  };
-	  
-	  
 
-	  const removeImage = (index: number) => {
+		try {
+			const remainingSlots = 4 - images.length;
+			const filesToUpload = files.slice(0, remainingSlots);
+
+			const uploadPromises = filesToUpload.map(async (file: File) => {
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("tags", "codeinfuse, medium, gist");
+				formData.append("upload_preset", "facilmarket");
+				formData.append("api_key", "711728988333761");
+
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/facilmarket/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+					}
+				);
+
+				return res.data.secure_url;
+			});
+
+			const uploadedImages = await Promise.all(uploadPromises);
+			const updatedImages = [
+				...images.slice(0, 4),
+				...uploadedImages.slice(0, remainingSlots),
+			];
+			setImages(updatedImages);
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
+	};
+
+	const removeImage = (index: number) => {
 		const updatedImages = [...images];
 		updatedImages.splice(index, 1);
 		setImages(updatedImages);
-	  };
-	  
-	  const imagePreview = () => {
+	};
+
+	const imagePreview = () => {
 		if (loading === true) {
-		  return <h3>Cargando Imagenes...</h3>;
+			return <h3>Cargando Imagenes...</h3>;
 		}
 		if (loading === false) {
-		  return (
-			<div>
-			  {images.length <= 0 ? (
-				<p>No hay imágenes</p>
-			  ) : (
-				images.map((item, index) => (
-				  <div key={index} className="image-preview">
-					<img alt="image preview" width={60} height={60} src={item} />
-					<div className="image-preview-button" onClick={() => removeImage(index)}>X</div>
-				  </div>
-				))
-			  )}
-			</div>
-		  );
+			return (
+				<div>
+					{images.length <= 0 ? (
+						<p>No hay imágenes</p>
+					) : (
+						images.map((item, index) => (
+							<div key={index} className="image-preview">
+								<img alt="image preview" width={60} height={60} src={item} />
+								<div
+									className="image-preview-button"
+									onClick={() => removeImage(index)}
+								>
+									X
+								</div>
+							</div>
+						))
+					)}
+				</div>
+			);
 		}
-	  };
+	};
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
@@ -161,7 +165,7 @@ const FormCreateProduct: React.FC = () => {
 
 			postProduct(product, Headers);
 			setErrors({});
-			toast("Producto creado correctamente",{position: "bottom-left"});
+			toast("Producto creado correctamente", { position: "bottom-left" });
 			window.localStorage.removeItem("items");
 			navigate("/products");
 
@@ -180,7 +184,7 @@ const FormCreateProduct: React.FC = () => {
 			fetchProducts();
 		} catch (error: any) {
 			console.log(error.message);
-			swal("Datos incompletos", '😬', 'warning');
+			swal("Datos incompletos", "😬", "warning");
 		}
 	};
 
@@ -250,8 +254,7 @@ const FormCreateProduct: React.FC = () => {
 					</label>
 					<label htmlFor="form__input-image">
 						Imagen:
-						<Dropzone onDrop={uploadImages}
-						>
+						<Dropzone onDrop={uploadImages}>
 							{({ getRootProps, getInputProps }) => (
 								<section>
 									<div {...getRootProps({ className: "	" })}>
@@ -321,7 +324,7 @@ const FormCreateProduct: React.FC = () => {
 							<h2 className="form-verification-text">Ingresar</h2>
 						</Link>
 					</div>
-					<ToastContainer/>
+					<ToastContainer />
 				</div>
 			)}
 		</>
