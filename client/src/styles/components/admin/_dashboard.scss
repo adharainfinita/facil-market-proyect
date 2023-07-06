@@ -49,6 +49,30 @@
 }
 
 // Users
+.userTable {
+  width: 80%;
+  height: 100%;
+}
+.relocura {
+  width: 85%;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-type: y mandatory;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 15px;
+    background-color: #647cade8;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #7fc248e7;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+    height: 30px;
+  }
+}
 .user-table {
   border-collapse: collapse;
   width: 80%;
@@ -62,5 +86,16 @@
   &-td {
     padding: 10px;
     text-align: center;
+  }
+  &-disableBtn {
+    @include button(#da3c2e, #bb392fee)
+  }
+
+  &-activeBtn {
+    @include button(#6CC920, #6cb133ef)
+  }
+
+  &-editBtn {
+    @include button(#1E428A, #264177)
   }
 }

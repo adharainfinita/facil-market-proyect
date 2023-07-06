@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { loggedUser } from "../redux/features/userSlice";
 import { useState } from "react";
 import { GoogleUser } from "../utils/interfaces";
+import {toast, ToastContainer} from 'react-toastify'
+
 
 interface GoogleLoginProps {
   updateMessage: (newMessage: string) => void;
@@ -42,6 +44,9 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
 
                 if (response) {
                   dispatch(loggedUser(response));
+                  toast.success('Sesión iniciada!', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                  });
                   navigate("/");
                 }
               } catch (error) {
@@ -56,6 +61,7 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
           setError("Ingreso no permitido");
         }}
       />
+				<ToastContainer/>
       <p>{error ? error : ""}</p>
     </>
   );

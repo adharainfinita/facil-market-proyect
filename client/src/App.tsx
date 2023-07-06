@@ -55,6 +55,8 @@ import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
 import ApprovedBuy from "./components/ApprovedBuy";
 import Purchase from "./components/Purchase";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -178,6 +180,7 @@ const App = () => {
 
 	return (
 		<>
+			<ToastContainer />
 			<Navbar />
 
 			<Routes>

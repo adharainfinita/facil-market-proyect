@@ -64,14 +64,16 @@ const User = ({ handleLogOut }: UserProps) => {
 						</div>
 						<div onClick={(event) => handleLogOut(event)} className="box">
 							<BiLogOut className="icon" />
-							<h4>Cerrar Sesión</h4>
+							<h4>Cerrar sesión</h4>
 						</div>
-						<div className="box">
-							<BiSolidDashboard className="icon" />
-							<h4>
-								<Link to="/admin/summary">Dashboard</Link>
-							</h4>
-						</div>
+						{userLogin.user.admin && (
+							<div className="box">
+								<BiSolidDashboard className="icon" />
+								<h4>
+									<Link to="/admin/summary">Dashboard</Link>
+								</h4>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
