@@ -8,7 +8,6 @@ import { updateProduct } from "../services/productServices";
 import axios from "axios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Category, Product } from "../utils/interfaces";
-import { deleteProduct } from "../services/productServices";
 
 const ProductEdit = () => {
 	const categories = useSelector((state: RootState) => state.category.value);

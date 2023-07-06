@@ -2,7 +2,8 @@ import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
-import {toast, ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
+import swal from "sweetalert";
 
 const EditUser = () => {
 	const { id } = useParams();
@@ -41,17 +42,16 @@ const EditUser = () => {
 		setUpdating(true);
 		try {
 			const res = await updateUser(String(id), user);
-			console.log(res);
+			swal("😊", "Usuario actualizado", "error");
 
 			setUser({ ...res.user, password: "" });
 		} catch (error) {
-			console.log(error);
+			swal("😣", "error", "error");
 		}
 		setUpdating(false);
-		toast.success('Usuario actualizado!', {
-    position: toast.POSITION.TOP_RIGHT
-  });
-
+		toast.success("Usuario actualizado!", {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	};
 
 	return (
@@ -90,7 +90,7 @@ const EditUser = () => {
 						<button type="submit">
 							{updating ? "actualizando..." : "actualizar"}
 						</button>
-						<ToastContainer/>
+						<ToastContainer />
 					</form>
 				)}
 			</div>

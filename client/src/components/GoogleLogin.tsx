@@ -62,7 +62,6 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
         }}
       />
 				<ToastContainer/>
-
       <p>{error ? error : ""}</p>
     </>
   );

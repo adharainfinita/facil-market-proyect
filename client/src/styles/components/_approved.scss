@@ -1,0 +1,34 @@
+.approved-purchase {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 500px;
+
+	h1 {
+		font-size: 40px;
+	}
+
+	.approved-check {
+		color: #77d42a;
+		font-size: 80px;
+		margin: 20px 0px;
+	}
+
+	button {
+		cursor: pointer;
+		padding: 10px 20px;
+		background-color: #77d42a;
+		margin: 20px;
+		border: none;
+		font-weight: 600;
+		color: #fff;
+		border-radius: 0.5rem;
+		font-size: 18px;
+	}
+
+	p {
+		color: rgb(59, 59, 59);
+		font-weight: 600;
+	}
+}

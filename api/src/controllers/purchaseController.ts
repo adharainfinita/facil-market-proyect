@@ -11,7 +11,6 @@ export const createPurchase = async ({
 		defaults: { userId, products, paymentId },
 	});
 
-
 	if (created) {
 		return purchase;
 	} else {
@@ -20,7 +19,7 @@ export const createPurchase = async ({
 };
 
 export const getPurchaseByUser = async (id: number) =>
- await Purchase.findAll({
+	await Purchase.findAll({
 		where: {
 			userId: id,
 		},

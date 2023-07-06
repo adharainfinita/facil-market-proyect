@@ -3,9 +3,6 @@ const URL_HOST = import.meta.env.VITE_HOST;
 import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
 
 //? Pages
 import Login from "./pages/Login";
@@ -53,12 +50,13 @@ import {
 import { getAllUsers, getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
-import { createCart, getAllItems } from "./services/cartServicer";
 import ProductEdit from "./components/ProductEdit";
+import { createCart, getAllItems } from "./services/cartServicer";
 import { startCart } from "./redux/features/cartSlice";
 import ApprovedBuy from "./components/ApprovedBuy";
 import Purchase from "./components/Purchase";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -182,7 +180,7 @@ const App = () => {
 
 	return (
 		<>
-			<ToastContainer/>
+			<ToastContainer />
 			<Navbar />
 
 			<Routes>

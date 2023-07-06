@@ -1,0 +1,101 @@
+.dashboard {
+  display: flex;
+  height: 89vh;
+
+  &-aside {
+    border-right: 1px solid gray;
+    height: calc(100vh - 70px);
+    // position: fixed;
+    overflow-y: auto;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+
+    &-title {
+      margin: 0 0 2rem 0;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 1.7rem;
+      color: #222;
+    }
+    .active {
+      color: #1e428a;
+      border-left: 0.2rem solid green;
+      padding-left: 5px;
+      transition: all 0.2s ease;
+    }
+    &-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #636262;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    &-icon {
+      font-size: 1.5rem;
+    }
+  }
+  &-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+  }
+}
+
+// Users
+.userTable {
+  width: 80%;
+  height: 100%;
+}
+.relocura {
+  width: 85%;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-type: y mandatory;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 15px;
+    background-color: #647cade8;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #7fc248e7;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+    height: 30px;
+  }
+}
+.user-table {
+  border-collapse: collapse;
+  width: 80%;
+  height: 80%;
+
+  &-th {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 5px;
+  }
+  &-td {
+    padding: 10px;
+    text-align: center;
+  }
+  &-disableBtn {
+    @include button(#da3c2e, #bb392fee)
+  }
+
+  &-activeBtn {
+    @include button(#6CC920, #6cb133ef)
+  }
+
+  &-editBtn {
+    @include button(#1E428A, #264177)
+  }
+}

@@ -17,6 +17,7 @@ import { RootState } from "../redux/store";
 import GoogleRegister from "./GoogleRegister";
 import swal from 'sweetalert'
 
+
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

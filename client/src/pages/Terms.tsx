@@ -18,7 +18,7 @@ const Terms: React.FC = () => {
 					rel="noopener noreferrer"
 				>
 					{" "}
-					https://www.facilmarket.com{" "}
+					https://www.marketfacil.com{" "}
 				</a>
 				y de cualquier otro sitio web, tienda o aplicación operada por el
 				titular.
@@ -174,7 +174,7 @@ const Terms: React.FC = () => {
 			<p>
 				Si tiene alguna pregunta sobre las condiciones de uso, por favor póngase
 				en contacto con nosotros por correo electrónico
-				projecto.final.market@gmail.com.
+				MarketFacil@outlook.com.
 			</p>
 		</div>
 	);
