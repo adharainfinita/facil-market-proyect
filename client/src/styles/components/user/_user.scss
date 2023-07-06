@@ -1,0 +1,65 @@
+.profile {
+	margin: 0 20px;
+
+	.image {
+		display: flex;
+		padding-bottom: 10px;
+		border-bottom: 1px solid gray;
+		img {
+			margin-right: 15px;
+		}
+	}
+	img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		object-fit: cover;
+		cursor: pointer;
+	}
+	.openProfile {
+		z-index: 100;
+		color: #000;
+		box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+		position: absolute;
+		top: 56px;
+		right: 10px;
+		width: 250px;
+		background: #f3ecec;
+
+		&-name {
+			
+			display: flex;
+			align-items: center;
+		}
+
+		.box {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+			padding: 5px;
+			transition: 0.5s;
+		}
+		.icon {
+			font-size: 20px;
+			margin-right: 15px;
+		}
+		h4 {
+			font-size: 15px;
+			font-weight: 500;
+			color: #222;
+			cursor: pointer;
+		}
+	}
+}
+
+.openProfile button:hover {
+	background: rgba(147, 75, 255, 0.075);
+}
+
+.boxItems {
+	padding: 20px;
+	border-radius: 12px;
+	border: 1px solid #928e8e;
+}
+

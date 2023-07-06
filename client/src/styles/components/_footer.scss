@@ -1,0 +1,54 @@
+.footer {
+  padding: 38px 6% 38px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+  gap: 3.5rem;
+  background-color: map-get($colors, "footer-background");
+  color: map-get($colors, "white");
+
+  &-content {
+    p {
+      color: map-get($colors, "footer-font");
+      font-size: 1.2rem;
+      line-height: 30px;
+      margin: 20px 0;
+    }
+
+    h4 {
+      margin-bottom: 1.5rem;
+      font-size: 20px;
+    }
+
+    li {
+      margin-bottom: 1rem;
+
+      a {
+        display: block;
+
+        color: map-get($colors, "footer-font");
+        font-size: 20px;
+        font-weight: 400;
+        transition: all 0.4s ease;
+        &:hover {
+          transform: translateY(-3px) translateX(-5px);
+          color: map-get($colors, "white");
+        }
+      }
+    }
+
+    .icons {
+      a {
+        display: inline-block;
+        font-size: 22px;
+
+        color: map-get($colors, "footer-font");
+        margin-right: 20px;
+        transition: all 0.4s ease;
+        &:hover {
+          color: map-get($colors, "white");
+          transform: translateY(-5px);
+        }
+      }
+    }
+  }
+}

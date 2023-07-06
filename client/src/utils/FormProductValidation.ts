@@ -1,0 +1,56 @@
+//? Regex
+// const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp))/;
+
+import { ErrorsFormProduct, FormCreateProduct } from "./interfaces";
+
+export const validate = (data: FormCreateProduct) => {
+	const errors: Partial<ErrorsFormProduct> = {};
+
+	//? validar name
+	if (!data.name) {
+		errors.name = "Este campo es obligatorio";
+	} else if (data.name.length > 35) {
+		errors.name = "Max: 35 caráracteres";
+	}
+
+	//? validar unities
+	if (!data.unities) {
+		errors.unities = "Este campo es obligatorio.";
+	} else if (data.unities < 0) {
+		errors.unities = "El valor ingresado no es válido";
+	}
+	if (!data.status) {
+		errors.status = "Este campo es es obligatorio.";
+	}
+
+	//? validar price
+	if (!data.price) {
+		errors.price = "Este campo es obligatorio.";
+	} else if (data.price < 1) {
+		errors.price = "El valor ingresado no es válido";
+	}
+
+	//? validar location
+	if (!data.location) errors.location = "Este campo es requerido";
+
+	/* 	//? validar image URL
+	if (!data.image?.length) {
+		errors.images = " ";
+	} */
+
+	//? validar descrption
+	if (!data.description.length) {
+		errors.description = "Este campo es obligatario";
+	} else if (data.description.length <= 10) {
+		errors.description = "Debe contener almenos 10 caracteres";
+	} else if (data.description.length >= 5000) {
+		errors.description = "Max: 5000 caracteres";
+	}
+
+	//? validar status
+	if (!data.status) {
+		errors.status = "Este campo es obligatario";
+	}
+
+	return errors;
+};
