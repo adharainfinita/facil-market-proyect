@@ -3,7 +3,12 @@ import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
 import { user } from "../../utils/interfaces";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {toast, ToastContainer} from 'react-toastify';
+=======
+import { toast, ToastContainer } from "react-toastify";
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import { toast, ToastContainer } from "react-toastify";
 import swal from "sweetalert";
@@ -54,10 +59,16 @@ const EditUser = () => {
 		}
 		setUpdating(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		toast.success('Usuario actualizado!', {
     position: toast.POSITION.TOP_RIGHT
   });
 
+=======
+		toast.success("Usuario actualizado!", {
+			position: toast.POSITION.TOP_RIGHT,
+		});
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 		toast.success("Usuario actualizado!", {
 			position: toast.POSITION.TOP_RIGHT,
@@ -102,7 +113,11 @@ const EditUser = () => {
 							{updating ? "actualizando..." : "actualizar"}
 						</button>
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<ToastContainer/>
+=======
+						<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 						<ToastContainer />
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

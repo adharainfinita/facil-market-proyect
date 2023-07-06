@@ -7,8 +7,12 @@ import {
 import axios, { AxiosHeaders } from "axios";
 const URL_HOST = import.meta.env.VITE_HOST;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import swal from 'sweetalert'
 // const URL_HOST = import.meta.env.VITE_API;
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import swal from "sweetalert";
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -33,7 +37,10 @@ export const getProductsByName = async (name: string) => {
 			icon: "warning",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
@@ -56,7 +63,10 @@ export const getProductsById = async (id: number) => {
 			icon: "warning",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
@@ -80,9 +90,14 @@ export const postProduct = async (
 			title: "🤖",
 			text: errorMessage,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			icon: "error",
 		});
 
+=======
+			icon: "warning",
+		});
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 			icon: "warning",
 		});
@@ -107,7 +122,10 @@ export const getAllProducts = async () => {
 			icon: "warning",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
@@ -147,7 +165,10 @@ export const deleteProduct = async (productID: number) => {
 			icon: "warning",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
@@ -181,7 +202,11 @@ export const updateStock = async (product: Stock) => {
 			errorMessage = error.response?.data?.error || errorMessage;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		swal("Atención" ,`Es aqui ${errorMessage}`, 'error');
+=======
+		swal("Atención", `Es aqui ${errorMessage}`, "error");
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 		swal("Atención", `Es aqui ${errorMessage}`, "error");
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

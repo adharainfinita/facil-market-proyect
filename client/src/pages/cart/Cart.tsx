@@ -95,6 +95,7 @@ const Cart = () => {
 	}, [cartItems, products]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	useEffect(() => {
 		const arrayId = cartItems.map((item) => {
 			return {
@@ -146,6 +147,8 @@ const Cart = () => {
 	// 	};
 	// 	getProductsCart();
 	// }, [cartItems, products]);
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 	return (
 		<div className="cart-conteiner">

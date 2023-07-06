@@ -6,6 +6,10 @@ const URL_HOST = import.meta.env.VITE_HOST;
 import { user } from "../utils/interfaces";
 import swal from 'sweetalert'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -40,7 +44,10 @@ export const getAllUsers = async () => {
 			icon: "error",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;
@@ -78,7 +85,10 @@ export const updateUser = async (userId: string, userData: user) => {
 			icon: "error",
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		throw error;

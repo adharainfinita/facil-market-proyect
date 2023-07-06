@@ -12,8 +12,13 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 import { getProducts } from "../redux/features/productSlice";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {toast, ToastContainer} from 'react-toastify';
 import swal from 'sweetalert';
+=======
+import swal from "sweetalert";
+import { toast, ToastContainer } from "react-toastify";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import swal from "sweetalert";
 import { toast, ToastContainer } from "react-toastify";
@@ -81,6 +86,7 @@ const FormCreateProduct: React.FC = () => {
 	  
 		try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  const remainingSlots = 4 - images.length;
 		  const filesToUpload = files.slice(0, remainingSlots);
 	  
@@ -107,6 +113,8 @@ const FormCreateProduct: React.FC = () => {
 		  setImages(updatedImages);
 		  setLoading(false);
 =======
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 			const remainingSlots = 4 - images.length;
 			const filesToUpload = files.slice(0, remainingSlots);
 
@@ -153,6 +161,12 @@ const FormCreateProduct: React.FC = () => {
 	  
 	  const imagePreview = () => {
 =======
+	const removeImage = (index: number) => {
+		const updatedImages = [...images];
+		updatedImages.splice(index, 1);
+		setImages(updatedImages);
+	};
+
 	const removeImage = (index: number) => {
 		const updatedImages = [...images];
 		updatedImages.splice(index, 1);
@@ -229,7 +243,11 @@ const FormCreateProduct: React.FC = () => {
 			postProduct(product, Headers);
 			setErrors({});
 <<<<<<< HEAD
+<<<<<<< HEAD
 			toast("Producto creado correctamente",{position: "bottom-left"});
+=======
+			toast("Producto creado correctamente", { position: "bottom-left" });
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 			toast("Producto creado correctamente", { position: "bottom-left" });
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -252,7 +270,11 @@ const FormCreateProduct: React.FC = () => {
 		} catch (error: any) {
 			console.log(error.message);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			swal("Datos incompletos", '😬', 'warning');
+=======
+			swal("Datos incompletos", "😬", "warning");
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 			swal("Datos incompletos", "😬", "warning");
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -397,8 +419,12 @@ const FormCreateProduct: React.FC = () => {
 						</Link>
 					</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<ToastContainer/>
 
+=======
+					<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 					<ToastContainer />
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

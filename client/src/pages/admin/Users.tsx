@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import swal from 'sweetalert'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -25,7 +29,10 @@ function Users() {
         icon: "info",
       });
 <<<<<<< HEAD
+<<<<<<< HEAD
   
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
       return;

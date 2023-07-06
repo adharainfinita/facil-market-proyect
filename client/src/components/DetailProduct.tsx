@@ -18,11 +18,17 @@ const DetailProduct = () => {
 		(state: RootState) => state.cart.cartItems.productID
 	);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	const [goCart, setGoCart] = useState(false)
 	
 	const session = useSelector((state: RootState) => state.user.userValidation);
 
+<<<<<<< HEAD
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
+=======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	const [selectedImage, setSelectedImage] = useState<string>("");
 	const [stock, setStock] = useState<number>(1);
@@ -39,7 +45,10 @@ const DetailProduct = () => {
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	const goToCart = ()=>{
 		navigate('/cart')
 	}
@@ -52,7 +61,10 @@ const DetailProduct = () => {
 		} else {
 			dispatch(addToCart(data));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 			const before = items.map((item) => {
 				return {
 					productId: item.id,
@@ -68,6 +80,9 @@ const DetailProduct = () => {
 			} catch (error) {
 				swal('😣', 'error', 'error');
 			}
+<<<<<<< HEAD
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
+=======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		}
 	};
@@ -233,6 +248,7 @@ const DetailProduct = () => {
 						<h3>{product.status}</h3>
 					</section>
 <<<<<<< HEAD
+<<<<<<< HEAD
 					{/* <section className="detail-product-section">
 						<h2>Stock:</h2>
 						<h3>{product.stock}</h3>
@@ -292,6 +308,8 @@ const DetailProduct = () => {
 						</div>
 					)}
 =======
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 					<section className="detail-product-section">
 						<h2>Stock:</h2>
 						<h3>{product.stock}</h3>
@@ -302,6 +320,9 @@ const DetailProduct = () => {
 					</section>
 
 					{product.unities <= 0 ? null : renderConditional()}
+<<<<<<< HEAD
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
+=======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 				</div>
 			</div>

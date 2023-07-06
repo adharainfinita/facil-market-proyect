@@ -9,8 +9,13 @@ import { loggedUser } from "../redux/features/userSlice";
 import { RiErrorWarningLine } from "react-icons/ri";
 import GoogleAuth from "../components/GoogleLogin";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { getAllItems } from "../services/cartServicer";
 import {toast, ToastContainer} from 'react-toastify'
+=======
+import {toast, ToastContainer} from 'react-toastify'
+
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import {toast, ToastContainer} from 'react-toastify'
 

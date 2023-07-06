@@ -60,7 +60,10 @@ import ApprovedBuy from "./components/ApprovedBuy";
 import Purchase from "./components/Purchase";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -185,7 +188,11 @@ const App = () => {
 	return (
 		<>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<ToastContainer/>
+=======
+			<ToastContainer />
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 			<ToastContainer />
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

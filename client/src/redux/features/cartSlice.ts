@@ -1,8 +1,12 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import swal from 'sweetalert'
 
+=======
+import swal from 'sweetalert';
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import swal from 'sweetalert';
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
@@ -53,7 +57,10 @@ const cartSlice = createSlice({
 
 			swal("Producto agregado al carrito");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			// localStorage.setItem("cartItems", JSON.stringify(state.cartItems)); //!
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 		},

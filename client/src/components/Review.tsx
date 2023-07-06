@@ -14,7 +14,11 @@ import { Purchase, Review } from "../utils/interfaces";
 import { Link } from "react-router-dom";
 import { getPurchasesByUser } from "../services/purchaseServices";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import swal from 'sweetalert'
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import swal from "sweetalert";
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

@@ -14,8 +14,12 @@ import { Link } from "react-router-dom";
 import { BsBagCheck } from "react-icons/bs";
 import { BsPencilFill } from "react-icons/bs";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import swal from 'sweetalert'
 
+=======
+import swal from "sweetalert";
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 import swal from "sweetalert";
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf

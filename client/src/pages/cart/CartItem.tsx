@@ -11,7 +11,10 @@ interface CartItemProps {
 	item: BuyProduct;
 	index: number;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 }
@@ -28,12 +31,15 @@ const CartItem = ({ item, index }: CartItemProps) => {
 	const productFound = product.find( match => match.id === item.id)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// const product: any = {
 	// 	data: [...products],
 	// };
 
 	// console.log(product);
 	const productFound = product.find( match => match.id === item.id)
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 
@@ -55,6 +61,9 @@ const CartItem = ({ item, index }: CartItemProps) => {
 		// product.data[index].unities = product.data[index].unities - 1;
 =======
 		dispatch(incrementQuantity(item.id));
+<<<<<<< HEAD
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
+=======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 	};
 
@@ -96,7 +105,10 @@ const CartItem = ({ item, index }: CartItemProps) => {
 							disabled={productFound!.unities > item.quantity ? false : true}
 							className="cart-detail-btn-quantity"
 <<<<<<< HEAD
+<<<<<<< HEAD
 							// disabled={product.data[index]?.unities === 0 ? true : false}
+=======
+>>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 =======
 >>>>>>> 41acff5952d6e24e95a625dcb1a3f108511f5dcf
 						>
