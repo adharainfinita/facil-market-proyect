@@ -15,6 +15,15 @@ function Users() {
   const currentUser = login?.user?.id;
 
   const disabledUser = async (user: user) => {
+    if (user.email === "admin@admin.com") {
+      swal({
+        title: "🤖",
+        text: 'No puedes desactivar la cuenta del admin',
+        icon: "info",
+      });
+      return
+    }
+    
     if (admin && user.id === currentUser) {
       swal({
         title: "🤖",

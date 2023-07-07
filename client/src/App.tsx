@@ -40,14 +40,13 @@ import { getAllProducts } from "./services/productServices";
 import { getProducts } from "./redux/features/productSlice";
 import {
 	changePassword,
-	getUsers,
 	userLogin,
 	changeEmail,
 	changeName,
 	changeImage,
 	setUserValidator,
 } from "./redux/features/userSlice";
-import { getAllUsers, getUserById } from "./services/userServices";
+import { getUserById } from "./services/userServices";
 import { getCategories } from "./redux/features/categorySlice";
 import { getCategory } from "./services/categoryServices";
 import ProductEdit from "./components/ProductEdit";
@@ -76,7 +75,7 @@ const App = () => {
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const userId = id; // Reemplaza con el ID del usuario deseado
+			const userId = id;
 			const fetchedUser = await getUserById(userId);
 
 			if (fetchedUser) {
@@ -137,19 +136,6 @@ const App = () => {
 	}, [dispatch, session]);
 
 	useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const response = await getAllUsers();
-
-				if (response) {
-					dispatch(getUsers(response));
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchUsers();
-
 		const fetchProducts = async () => {
 			try {
 				const response = await getAllProducts();
@@ -163,6 +149,7 @@ const App = () => {
 			}
 		};
 		fetchProducts();
+
 		const fetchCategories = async () => {
 			try {
 				const response = await getCategory();
@@ -185,9 +172,10 @@ const App = () => {
 
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/products" element={<Market />} />
 				<Route path="/vender" element={<FormCreateProduct />} />
-				<Route path="/terminos_y_condiciones" element={<Terms />} />
 				<Route path="/about" element={<About />} />
+				<Route path="/terminos_y_condiciones" element={<Terms />} />
 
 				<Route
 					element={<ProtectedRoute isAllowed={sessionActive} redirectTo="/" />}
@@ -219,7 +207,6 @@ const App = () => {
 					<Route path="products" element={<Products />} />
 				</Route>
 
-				<Route path="/products" element={<Market />} />
 				<Route path="/product/detail/:id" element={<DetailProduct />} />
 				<Route
 					path="/login"

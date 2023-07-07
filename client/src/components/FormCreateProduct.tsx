@@ -1,16 +1,16 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { getAllProducts, postProduct } from "../services/productServices";
+import { postProduct } from "../services/productServices";
 import axios, { AxiosHeaderValue } from "axios";
 import { FormCreateProduct, ErrorsFormProduct } from "../utils/interfaces";
 import { validate } from "../utils/FormProductValidation";
 import { capitalizeFirstLetter } from "../utils/capitalizerFirstLetter";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
-import { getProducts } from "../redux/features/productSlice";
+
 import swal from "sweetalert";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -18,7 +18,7 @@ const FormCreateProduct: React.FC = () => {
 	const categories = useSelector((state: RootState) => state.category.value);
 	const userLogin = useSelector((state: RootState) => state.user.userLogin);
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+
 	const session = window.localStorage.getItem("token");
 
 	//? Estado Local
@@ -165,23 +165,19 @@ const FormCreateProduct: React.FC = () => {
 
 			postProduct(product, Headers);
 			setErrors({});
-			toast("Producto creado correctamente", { position: "bottom-left" });
+			toast.success("Producto creado correctamente", {
+				position: "bottom-left",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			});
 			window.localStorage.removeItem("items");
 			navigate("/products");
-
-			const fetchProducts = async () => {
-				try {
-					const response = await getAllProducts();
-					if (response) {
-						dispatch(getProducts(response));
-					} else {
-						console.error("No existen productos");
-					}
-				} catch (error) {
-					console.error("Error al obtener los productos:", error);
-				}
-			};
-			fetchProducts();
+			return
 		} catch (error: any) {
 			console.log(error.message);
 			swal("Datos incompletos", "😬", "warning");

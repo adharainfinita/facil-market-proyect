@@ -12,6 +12,7 @@ import ProductCard from "../components/ProductCard";
 import FeaturedCategory from "../components/FeaturedCategory";
 import { RootState } from "../redux/store";
 import Slider from "../components/Slider";
+import { Product } from "../utils/interfaces";
 
 function Home() {
 	const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function Home() {
 	);
 
 	const productsAuth = products.filter(
-		(product: any) => product.active === true
+		(product: Product) => product.active === true
 	);
 
 	const images = [banner1, banner2, banner3];
@@ -51,11 +52,10 @@ function Home() {
 				return 0; // Los ratings son iguales, no se modifica el orden
 			}
 		})
-		.slice(0, 6);
+		.slice(0, 8);
 
 	return (
 		<>
-			{/* <Banner /> */}
 			<Slider images={images} />
 			<h3 className="trend-title">Categorias destacadas</h3>
 			<FeaturedCategory />

@@ -12,7 +12,7 @@ interface UserProps {
 
 const User = ({ handleLogOut }: UserProps) => {
   const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
-  const { userLogin } = useSelector((state: RootState) => state.user);
+  const { userLogin: userLogin } = useSelector((state: RootState) => state.user);
 
   const handleMouseEnter = () => {
     setProfileOpen(true);

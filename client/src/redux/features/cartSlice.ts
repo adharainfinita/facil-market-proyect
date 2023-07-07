@@ -1,5 +1,6 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import swal from 'sweetalert';
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
 
@@ -35,8 +36,16 @@ const cartSlice = createSlice({
 			} else {
 				state.cartItems.productID.push(action.payload);
 			}
-
-			swal("Producto agregado al carrito");
+			toast.success("Producto agregado al carrito", {
+				position: "bottom-left",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			});
 		},
 
 		decrementQuantity: (state, action: PayloadAction<number>) => {
