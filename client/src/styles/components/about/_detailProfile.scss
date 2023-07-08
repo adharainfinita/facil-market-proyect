@@ -1,0 +1,84 @@
+.about-conteiner-detail {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap; /* Ajusta el valor deseado para la separación */
+	width: 100%;
+	height: fit-content;
+	justify-content: space-around; /* Centra horizontalmente las cards */
+	align-items: center; /* Centra verticalmente las cards */
+	padding: 4rem;
+	gap: 4rem;
+
+	&-team {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+		height: fit-content;
+		width: fit-content;
+		position: relative; /* Añade una posición relativa para poder mover el contenido */
+		perspective: 1000px; /* Añade una perspectiva para el efecto 3D */
+		transition: transform 0.3s ease;
+
+		&-image {
+			width: 14rem;
+			height: 14rem;
+			border-radius: 50%;
+			transform-style: preserve-3d; /* Conserva la transformación 3D */
+			backface-visibility: hidden; /* Oculta las caras traseras */
+			transition: transform 0.3s ease;
+		}
+
+		&-title {
+			font-size: 1.3rem;
+		}
+
+		&-redes {
+			display: flex;
+			gap: 1rem;
+
+		}
+
+		&-icons {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+}
+
+.conteiner-about-contributors {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	height: fit-content;
+	width: fit-content;
+	position: relative; /* Añade una posición relativa para poder mover el contenido */
+	perspective: 1000px; /* Añade una perspectiva para el efecto 3D */
+	transition: transform 0.3s ease;
+}
+
+.image-about-contributors {
+	width: 14rem;
+	height: 14rem;
+	border-radius: 50%;
+	transform-style: preserve-3d; /* Conserva la transformación 3D */
+	backface-visibility: hidden; /* Oculta las caras traseras */
+	transition: transform 0.3s ease;
+}
+
+.title-about-contributors {
+	font-size: 1.3rem;
+}
+
+.redes-about-contributors {
+	display: flex;
+	gap: 1rem;
+
+	img {
+		width: 2rem;
+		height: 2rem;
+	}
+}

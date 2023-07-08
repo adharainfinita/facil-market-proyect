@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { PropsProfile } from "./dataProfile";
 import { Link } from "react-router-dom";
-import linkedin from "../../assets/About/linkedin.svg";
-import github from "../../assets/About/github2.svg";
-import gmail from "../../assets/About/gmail.svg";
+import linkedin from "../../assets/icons/linkedin.svg";
+import gmail from "../../assets/icons/gmail.svg";
+import github from "../../assets/icons/github.svg";
 
 interface DetailProfileProps extends PropsProfile {}
 
@@ -34,31 +34,44 @@ const DetailProfile: React.FC<DetailProfileProps> = (data) => {
 	};
 
 	return (
-		<div
-			className="conteiner-about-contributors"
-			onMouseMove={handleMouseMove}
-			onMouseLeave={handleMouseLeave}
-			ref={cardRef} // Añade la referencia al contenedor principal
-		>
-			<img
-				className="image-about-contributors"
-				src={data.image}
-				alt="Foto de perfil"
-			/>
-			<h1 className="title-about-contributors">{data.fullName}</h1>
+			<div
+				className="about-conteiner-detail-team"
+				onMouseMove={handleMouseMove}
+				onMouseLeave={handleMouseLeave}
+				ref={cardRef} // Añade la referencia al contenedor principal
+			>
+				<img
+					className="about-conteiner-detail-team-image"
+					src={data.image}
+					alt="Foto de perfil"
+				/>
+				<h1 className="about-conteiner-detail-team-title">{data.fullName}</h1>
 
-			<section className="redes-about-contributors">
-				<Link to={data.github} target="_blank">
-					<img src={github} alt="github" />
-				</Link>
-				<Link to={data.linkdin} target="_blank">
-					<img src={linkedin} alt="linkedin" />
-				</Link>
-				<Link to={data.gmail} target="_blank">
-					<img src={gmail} alt="gmail" />
-				</Link>
-			</section>
-		</div>
+				<section className="about-conteiner-detail-team-redes">
+					<Link to={data.github} target="_blank">
+						<img
+							className="about-conteiner-detail-team-icons"
+							src={github}
+							alt="github"
+						/>
+					</Link>
+					<Link to={data.linkdin} target="_blank">
+						<img
+							className="about-conteiner-detail-team-icons"
+							src={linkedin}
+							alt="linkedin"
+						/>
+					</Link>
+					<Link to={data.gmail} target="_blank">
+						<img
+							className="about-conteiner-detail-team-icons"
+							src={gmail}
+							alt="gmail"
+						/>
+					</Link>
+				</section>
+			</div>
+		
 	);
 };
 

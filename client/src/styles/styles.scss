@@ -29,10 +29,13 @@
 @import "./components/admin/editUser";
 @import "./components/shophistory";
 @import "./components/admin/graphic";
-@import "./components/about/about";
-@import "./components/about/aboutCardProfile";
 @import "./components/cart/cartDetail";
 @import "./components/cart/cart";
 @import "./components/user/userProducts";
 @import "./components/user/usersProfile";
 @import "./components/approved";
+
+//? About
+@import "./components/about/about";
+@import "./components/about/detailProfile";
+@import "./components/about/technologies";
