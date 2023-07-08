@@ -44,14 +44,14 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
               try {
                 // Register
                 const existingUser = user.find(
-                  (u) => u.email === userInfo.email
+                  (u) => u.email === userInfoRegister.email
                 );
-                console.log(existingUser);
+
                 if (!existingUser) {
                   const response = await postUser(userInfoRegister);
-                  console.log(response);
+
                   if (response.status === 201) {
-                    dispatch(loggedUser(response.data));
+                    dispatch(loggedUser(response));
                   }
                   const res = await logUser(userInfo);
 
@@ -80,10 +80,10 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
                   }
                 }
                 // Login
-                let userFound = false;
+                // let userFound = false;
                 for (let i = 0; i < user.length; i++) {
                   if (user[i].email === userInfo.email) {
-                    userFound = true;
+                    // userFound = true;
                     const response = await logUser(userInfo);
                     if (response.user.active === false) {
                       if (updateMessage) {
@@ -108,7 +108,7 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
                       });
                       navigate("/");
                     }
-                    break; // Salir del bucle una vez que se encuentre el usuario
+                    break;
                   }
                 }
               } catch (error) {
