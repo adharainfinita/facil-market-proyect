@@ -16,7 +16,7 @@ const initialState: UserState = {
       fullName: "",
       email: "",
       image:
-        "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+        "https://static.thenounproject.com/png/5034901-200.png",
       admin: false,
     },
   },

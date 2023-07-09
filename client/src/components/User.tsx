@@ -66,7 +66,7 @@ const User = ({ handleLogOut }: UserProps) => {
                 <h4>Mis Compras</h4>
               </Link>
             </div>
-            <div onClick={(event) => handleLogOut(event)} className="box">
+            <div onClick={handleLogOut} className="box">
               <BiLogOut className="icon" />
               <h4>Cerrar Sesión</h4>
             </div>

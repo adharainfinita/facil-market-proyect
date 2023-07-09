@@ -6,7 +6,7 @@
 }
 
 .search {
-	width: 82%;
+	width: 80%;
 	display: flex;
 
 	&__term {
@@ -36,5 +36,23 @@
 		border-radius: 0 5px 5px 0;
 		cursor: pointer;
 		font-size: 20px;
+	}
+}
+
+@media (max-width: 767px) {
+	.search {
+		width: 70%;
+		&__term {
+			padding: 5px;
+			height: 35px;
+		}
+		&__button {
+			height: 35px;
+		}
+	}
+}
+@media (min-width: 768px) {
+	.search {
+		width: 70%;
 	}
 }

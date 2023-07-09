@@ -64,16 +64,12 @@ const RegisterForm = () => {
     }
   };
 
-  const handleShowPassword = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
+  const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
       const user = {
         fullName: inputs.fullName,

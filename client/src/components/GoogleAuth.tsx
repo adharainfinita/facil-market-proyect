@@ -40,7 +40,7 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
               image: decoded.picture,
             };
 
-            const LogUser = async () => {
+            const logUserGoogle = async () => {
               try {
                 // Register
                 const existingUser = user.find(
@@ -80,10 +80,8 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
                   }
                 }
                 // Login
-                // let userFound = false;
                 for (let i = 0; i < user.length; i++) {
                   if (user[i].email === userInfo.email) {
-                    // userFound = true;
                     const response = await logUser(userInfo);
                     if (response.user.active === false) {
                       if (updateMessage) {
@@ -116,7 +114,7 @@ const GoogleAuth = ({ updateMessage }: GoogleLoginProps) => {
                 console.error(error);
               }
             };
-            LogUser();
+            logUserGoogle();
           }
         }}
         onError={() => {
