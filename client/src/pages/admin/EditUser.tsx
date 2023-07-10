@@ -42,7 +42,7 @@ const EditUser = () => {
 		setUpdating(true);
 		try {
 			const res = await updateUser(String(id), user);
-			swal("😊", "Usuario actualizado", "error");
+			swal("😊", "Usuario actualizado", "success");
 
 			setUser({ ...res.user, password: "" });
 		} catch (error) {

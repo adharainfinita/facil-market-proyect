@@ -19,6 +19,7 @@ import Users from "./pages/admin/Users";
 import EditUser from "./pages/admin/EditUser";
 import Products from "./pages/admin/Products";
 import Resume from "./pages/admin/Resume";
+import Orders from "./pages/admin/Orders";
 
 //? Components
 import Navbar from "./components/Navbar";
@@ -217,6 +218,8 @@ const App = () => {
 					<Route path="summary" element={<Resume />} />
 					<Route path="users" element={<Users />} />
 					<Route path="products" element={<Products />} />
+					<Route path="orders" element={<Orders />} />
+
 				</Route>
 
 				<Route path="/products" element={<Market />} />

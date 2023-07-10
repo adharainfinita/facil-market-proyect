@@ -18,7 +18,10 @@ function Dashboard() {
 				</NavLink>
 
 				<li className="dashboard-aside-link">
+				<NavLink className="dashboard-aside-link" to="/admin/orders">
 					<FaClipboardList className="dashboard-aside-icon" /> Ordenes
+				</NavLink>
+
 				</li>
 
 				<NavLink className="dashboard-aside-link" to="/admin/users">
