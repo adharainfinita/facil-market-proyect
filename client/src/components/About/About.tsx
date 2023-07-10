@@ -8,8 +8,8 @@ const About = () => {
 			<article className="about-article">
 				<h1>Sobre nosotros ❤️</h1>
 				<p className="about-article-parrafo">
-					Permítanme presentarles a nuestro increíble equipo de desarrollo web.
-					¡Nosotros somos estudiantes de <strong>SoyHenry</strong>! Somos un
+					¡Este es nuestro increíble equipo de desarrollo web!
+					¡Nosotros somos estudiantes de <strong>SoyHenry</strong>! Un
 					grupo de apasionados aprendices de programación y estamos emocionados
 					de estar aquí hoy para compartir nuestro viaje en el mundo del
 					desarrollo web. A pesar de las dificultades, nunca nos rendimos y
