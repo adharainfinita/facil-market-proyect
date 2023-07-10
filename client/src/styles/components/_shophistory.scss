@@ -8,8 +8,10 @@
 
 .shopping-container{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    height: 70vh;
+    margin-bottom: 10rem;
 
     .shopping-table{
         margin: 20px 0px;
