@@ -8,6 +8,7 @@ import {
 } from "sequelize-typescript";
 import User from "./User";
 import Product from "./Product";
+import moment from 'moment';
 
 @Table({ tableName: "reviews" })
 class Review extends Model {
@@ -55,6 +56,19 @@ class Review extends Model {
 		allowNull: false,
 	})
 	rating?: number;
+
+	@Column({
+		type: DataType.DATE,
+		defaultValue: DataType.NOW,
+		field: "createdAt",
+		get() {
+			//? Formatear la fecha utilizando Moment.js
+			return moment(this.getDataValue("createdAt")).format(
+				"DD-MM-YYYY HH:mm:ss"
+			);
+		},
+	})
+	createdAt!: Date;
 }
 
 export default Review;

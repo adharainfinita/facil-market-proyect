@@ -220,3 +220,16 @@ export interface ArrayCart {
 	productId: number;
 	quantity: number;
 }
+
+export interface resumes {
+	createdAt: string;
+	order: number;
+	sellerID: number;
+	grossAmount: number;
+	netAmount: number;
+	status: string;
+	buyerID: number;
+	message: string | null;
+	limitDate: string;
+	items: Product[]
+}

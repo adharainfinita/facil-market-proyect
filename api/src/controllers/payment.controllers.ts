@@ -5,7 +5,6 @@ import Payments from "../models/Payments";
 import User from "../models/User";
 import Product from "../models/Product";
 import { transporter } from "../config/mailer";
-//import { createPurchase } from "./purchaseController";
 
 dotenv.config();
 const { TOKEN, URL_NGROK, URL_HOST } = process.env;
@@ -38,7 +37,8 @@ export const createOrder = async (
 			email: userInfo?.email,
 			// phone: {
 			// 	area_code: "54",
-			// 	number: '3644123456'},,
+			// 	number: 3644123456
+			// },
 
 			identification: {
 				type: "DNI",
@@ -60,7 +60,7 @@ export const createOrder = async (
 		},
 		notification_url: `${URL_NGROK}/payment/webhook`,
 	});
-
+	
 	return result;
 };
 
@@ -70,6 +70,7 @@ export const createNotification = async (id: number) => {
 };
 
 export const createNewPayment = async (data: any) => {
+	
 	const amount = data.transaction_details.net_received_amount;
 
 	const buyerFound = await User.findOne({
@@ -78,31 +79,30 @@ export const createNewPayment = async (data: any) => {
 		},
 	});
 	let count = 0;
-	const sellersFound = [];
 	const newPayments = [];
 
 	const currentDate = new Date();
 	const currentDay = currentDate.getDate();
 	currentDate.setDate(currentDay + 28);
+const formatDate= currentDate.toLocaleString().split('T')[0];
+const productIds = data.additional_info.items.map((item: any) => Number(item.id));
+const productsFound = await Product.findAll({
+  where: {
+    id: productIds,
+  },
+});
 
-	while (data.additional_info.items.length !== count) {
-		let idProduct = Number(data.additional_info.items[count].id);
-		sellersFound.push(await Product.findByPk(idProduct));
-
-		/* 	await createPurchase({
-			userId: buyerFound!.id,
-			products: sellersFound[count]!.id,
-			paymentId: data.id + sellersFound[count]?.userID,
-		}); */
+	while (productsFound.length >= count) {
+		let amountForSeller = Math.floor(amount - productsFound[count]!.price);
 
 		const newPayment = await Payments.create({
-			order: data.id + sellersFound[count]?.userID,
-			sellerID: sellersFound[count]?.userID,
+			order: data.id + productsFound[count]?.userID,
+			sellerID: productsFound[count]?.userID,
 			buyerID: buyerFound!.id,
 			grossAmount: amount,
-			netAmount: amount - amount / 8,
-			limitDate: currentDate,
-			items: sellersFound,
+			netAmount: amountForSeller,
+			limitDate: formatDate,
+			items: productsFound,
 		});
 		newPayments.push(newPayment);
 		count++;

@@ -29,3 +29,17 @@ export const getDataAnalytics = async () => {
 		throw error;
 	}
 };
+
+export const getPaymentResumes = async () => {
+	try {
+		const {data} = await axios(`${URL_HOST}/payment/resumes`);
+		return data
+	} catch (error) {
+		let errorMessage = "An error occurred";
+		if (axios.isAxiosError(error)) {
+			errorMessage = error.response?.data?.error || errorMessage;
+		}
+		swal(errorMessage);
+		throw error;
+	}
+}

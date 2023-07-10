@@ -49,6 +49,7 @@ const Resume = () => {
 				barChart: true,
 				pieChart: false,
 				lineChart: false,
+
 			});
 		}
 
@@ -56,6 +57,15 @@ const Resume = () => {
 			setGraphMode({
 				...graphMode,
 				lineChart: true,
+				barChart: false,
+				pieChart: false,
+			});
+		}
+
+		if (value === "newUsers") {
+			setGraphMode({
+				...graphMode,
+				lineChart: false,
 				barChart: false,
 				pieChart: false,
 			});

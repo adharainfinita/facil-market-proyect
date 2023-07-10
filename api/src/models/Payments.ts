@@ -58,10 +58,10 @@ class Payments extends Model {
 	message!: string;
 
 	@Column({
-		type: DataType.DATE,
+		type: DataType.STRING,
 		allowNull: false,
 	})
-	limitDate!: Date;
+	limitDate!: string;
 
 	@Column({
 		type: DataType.ARRAY(DataType.JSON),
