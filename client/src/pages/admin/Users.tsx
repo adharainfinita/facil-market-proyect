@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteUser, updateUser } from "../../services/userServices";
-import { User, user } from "../../utils/interfaces";
+import { User } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import swal from "sweetalert";
@@ -17,7 +17,7 @@ function Users() {
   const currentUser = login?.user?.id;
   const navigate = useNavigate();
 
-  const disabledUser = async (user: user) => {
+  const disabledUser = async (user: User) => {
     if (admin && user.id === currentUser) {
       swal({
         title: "🤖",
@@ -88,7 +88,7 @@ function Users() {
     setUpdatedUsers(updatedUsersList);
   };
 
-  const handleUserAdmin = async (user: user) => {
+  const handleUserAdmin = async (user: User) => {
     if (user.email === ADMIN_EMAIL) {
       swal({
         title: "🤖",
@@ -145,7 +145,7 @@ function Users() {
     }
   };
 
-  const handleUserEdit = (user: user) => {
+  const handleUserEdit = (user: User) => {
     if (user.email === ADMIN_EMAIL) {
       swal({
         title: "🤖",

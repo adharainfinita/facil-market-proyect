@@ -1,7 +1,6 @@
 import { BuyProduct, Cart } from "../../utils/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import swal from 'sweetalert';
 // const cartItemsFromStorage = localStorage.getItem("cartItems");
 
 interface CartState {

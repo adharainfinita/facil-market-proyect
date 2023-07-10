@@ -56,6 +56,15 @@ export interface User {
 	active?: boolean;
 	admin?: boolean
 }
+export interface userUpdate {
+	id?: string;
+	fullName?: string;
+	email?: string;
+	password?: string;
+	image?: string;
+	active?: boolean;
+	admin?: boolean
+}
 
 export interface FiltersCache {
 	status: string | undefined;
@@ -168,6 +177,7 @@ export interface isLogin {
 	fullName: string;
 	id: string;
 	email: string;
+	password: string;
 	image: string;
 	admin: boolean;
 }

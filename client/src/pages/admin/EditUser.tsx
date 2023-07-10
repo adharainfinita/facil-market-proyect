@@ -1,14 +1,14 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/userServices";
-import { user } from "../../utils/interfaces";
+import { User } from "../../utils/interfaces";
 import { toast, ToastContainer } from "react-toastify";
 import swal from "sweetalert";
 
 const EditUser = () => {
   const { id } = useParams();
 
-  const [user, setUser] = useState<user>({
+  const [user, setUser] = useState<User>({
     id: String(id),
     fullName: "",
     email: "",

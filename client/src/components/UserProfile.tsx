@@ -8,7 +8,7 @@ import {
 	changeName,
 	changeImage,
 } from "../redux/features/userSlice";
-import { user } from "../utils/interfaces";
+import { User } from "../utils/interfaces";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { BsBagCheck } from "react-icons/bs";
@@ -28,7 +28,7 @@ const UserProfile: React.FC = () => {
 
 	const handleFieldChange = async (): Promise<void> => {
 		try {
-			const updatedData: user = {
+			const updatedData: User = {
 				fullName: newName !== "" ? newName : userLogin.user.fullName,
 				email: newEmail !== "" ? newEmail : userLogin.user.email,
 				id: userLogin.user.id,

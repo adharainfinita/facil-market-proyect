@@ -1,9 +1,9 @@
 import axios from "axios";
 // import { URL_API } from "../utils/URLS";
-import { LoginData, NewUser } from "../utils/interfaces";
+import { LoginData, NewUser, userUpdate } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
-import { user } from "../utils/interfaces";
+import { User } from "../utils/interfaces";
 import swal from 'sweetalert'
 
 
@@ -56,7 +56,7 @@ export const deleteUser = async (userID: number) => {
 };
 
 //? ACTUALIZAR UN USUARIO
-export const updateUser = async (userId: string | undefined, userData: user) => {
+export const updateUser = async (userId: string | undefined, userData: userUpdate) => {
 	try {
 		const response = await axios.put(`${URL_HOST}/user/${userId}`, userData);
 		return response.data;

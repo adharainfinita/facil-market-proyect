@@ -15,6 +15,7 @@ const initialState: UserState = {
       id: "",
       fullName: "",
       email: "",
+      password: "",
       image:
         "https://static.thenounproject.com/png/5034901-200.png",
       admin: false,
