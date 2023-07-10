@@ -118,19 +118,10 @@ export interface NewUser {
 	confirm?: string;
 }
 
-export interface user {
-	fullName?: string;
-	password?: string | number;
-	email?: string | number;
-	id?: string;
-	image?: string;
-	active?: boolean;
-	admin?: boolean;
-}
 
 export interface UserData {
 	token: string;
-	user: user;
+	user: User;
 }
 
 export interface LoginData {
