@@ -39,7 +39,7 @@ export const userCredentials = async (authLogin: loginData) => {
 			"El correo electrónico que ingresaste no se encuentra registrado."
 		);
 	}
-
+	
 	//? traigo la password encryptada de la db y comparo con el recibido por body
 	const passwordHash = userExist.password;
 	const isCorrect = await verified(authLogin.password, passwordHash);

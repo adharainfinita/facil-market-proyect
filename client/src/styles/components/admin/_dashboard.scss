@@ -5,7 +5,6 @@
   &-aside {
     border-right: 1px solid gray;
     height: calc(100vh - 70px);
-    // position: fixed;
     overflow-y: auto;
     width: 250px;
     display: flex;
@@ -44,17 +43,15 @@
     display: flex;
     justify-content: center;
     padding: 2rem 3rem;
-    overflow-y: auto;
+    // overflow-y: auto;
   }
 }
 
 // Users
-.userTable {
-  width: 80%;
-  height: 100%;
-}
-.relocura {
-  width: 85%;
+.user-table-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   overflow-y: auto;
   scroll-snap-align: start;
   scroll-snap-type: y mandatory;
@@ -72,11 +69,14 @@
     border: 2px solid #f1f2f3;
     height: 30px;
   }
+  // .userTable {
+  //   width: 85%;
+  //   height: 100%;
+  // }
 }
 .user-table {
   border-collapse: collapse;
-  width: 80%;
-  height: 80%;
+  width: 100%;
 
   &-th {
     border-left: 1px solid #ccc;
@@ -87,15 +87,42 @@
     padding: 10px;
     text-align: center;
   }
+  &-admin {
+    background: rgba(182, 182, 47, 0.877);
+    padding: 3px;
+    border-radius: 2px;
+    color: rgb(241, 241, 7);
+    font-weight: 600;
+  }
+  &-cliente {
+    background: rgba(33, 172, 172, 0.925);
+    padding: 3px;
+    border-radius: 2px;
+    color: #14f0f0;
+    font-weight: 600;
+  }
   &-disableBtn {
-    @include button(#da3c2e, #bb392fee)
+    @include button(#da3c2e, #bb392fee);
   }
 
   &-activeBtn {
-    @include button(#6CC920, #6cb133ef)
+    @include button(#6cc920, #6cb133ef);
   }
 
   &-editBtn {
-    @include button(#1E428A, #264177)
+    @include button(#1e428a, #264177);
+  }
+}
+.user-table-search {
+  display: block;
+  margin: 0.5rem auto 1.5rem;
+  border-color: #ccc;
+  padding: 6px 14px;
+  font-size: 1.1rem;
+  border-width:3px; 
+  border-radius:0px; 
+  border-style:solid;
+  &:focus {
+    outline: none;
   }
 }

@@ -56,7 +56,7 @@ export const deleteUser = async (userID: number) => {
 };
 
 //? ACTUALIZAR UN USUARIO
-export const updateUser = async (userId: string, userData: user) => {
+export const updateUser = async (userId: string | undefined, userData: user) => {
 	try {
 		const response = await axios.put(`${URL_HOST}/user/${userId}`, userData);
 		return response.data;

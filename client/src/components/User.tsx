@@ -12,7 +12,7 @@ interface UserProps {
 
 const User = ({ handleLogOut }: UserProps) => {
   const [profileOpen, setProfileOpen] = useState<boolean | null>(false);
-  const { userLogin } = useSelector((state: RootState) => state.user);
+  const { userLogin: userLogin } = useSelector((state: RootState) => state.user);
 
   const handleMouseEnter = () => {
     setProfileOpen(true);
@@ -66,7 +66,7 @@ const User = ({ handleLogOut }: UserProps) => {
                 <h4>Mis Compras</h4>
               </Link>
             </div>
-            <div onClick={(event) => handleLogOut(event)} className="box">
+            <div onClick={handleLogOut} className="box">
               <BiLogOut className="icon" />
               <h4>Cerrar Sesión</h4>
             </div>

@@ -54,6 +54,7 @@ export interface User {
 	password: string;
 	image: string;
 	active?: boolean;
+	admin?: boolean
 }
 
 export interface FiltersCache {
@@ -113,16 +114,16 @@ export interface NewUser {
 	fullName: string;
 	password: string;
 	email: string;
-	image: string;
+	image?: string;
 	confirm?: string;
 }
 
 export interface user {
-	fullName: string;
+	fullName?: string;
 	password?: string | number;
-	email: string | number;
-	id: string;
-	image: string;
+	email?: string | number;
+	id?: string;
+	image?: string;
 	active?: boolean;
 	admin?: boolean;
 }

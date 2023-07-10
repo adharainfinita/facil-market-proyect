@@ -18,3 +18,24 @@
     top: 1px;
   }
 }
+
+@mixin guest-button($bg-color, $color-font) {
+  background: $bg-color;
+  color: $color-font;
+  display: inline-block;
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #3484fa;
+  width: 47%;
+  cursor: pointer;
+  line-height: 14px;
+  margin-bottom: 6px;
+  &:hover {
+    opacity: 0.95;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}

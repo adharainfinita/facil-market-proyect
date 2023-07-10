@@ -53,7 +53,6 @@ const DetailProduct = () => {
 			const arrayId = before.concat(current)
 			try {
 				const response = await updateItem(Number(_userID), arrayId);
-				console.log(response)
 				setGoCart(true)
 				return response;
 			} catch (error) {

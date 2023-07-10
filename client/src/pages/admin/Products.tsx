@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteProduct } from "../../services/productServices";
 import { Product } from "../../utils/interfaces";
+import { toast } from "react-toastify";
 
 function Products() {
   const products = useSelector((state: RootState) => state.product.products);
@@ -16,6 +17,29 @@ function Products() {
       }
       return p;
     });
+    if(product.active) {
+      toast.warning("Producto desactivado", {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }else {
+      toast.success("Producto activado", {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     setUpdatedProducts(updatedProductsList);
   };
 

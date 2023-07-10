@@ -1,0 +1,121 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 100;
+}
+
+.modal-navbar-container {
+  background-color: #70CD24;
+  padding: 18px 12px;
+}
+.modal-navbar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 79%;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #f8f6f6;
+  transition: left 0.5s ease-in-out;
+  z-index: 100;
+  
+  &__user {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+
+    &-name {
+      font-size: 15px;
+      line-height: 1.29;
+      color: #222;
+      font-weight: 600;
+    }
+  }
+  &__guest-user {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+
+    .guest-user-content {
+      display: flex;
+      flex-direction: column;
+      span {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 3px 0;
+        line-height: 1;
+      }
+      p {
+        font-size: 14px;
+        color: rgba(0,0,0,.45);
+        line-height: 1.14;
+      }
+    }
+  }
+
+  &-img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin-right: 12px;
+  }
+  &-button-login {
+    @include guest-button(#3484fa, #fff);
+  }
+  &-button-register {
+    @include guest-button(#fff, #3484fa)
+  }
+  &-buttons {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+  }
+  &__items {
+    display: block;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.8rem;
+    padding: 20px 16px;
+  }
+
+  &__links {
+    color: #333;
+    font-weight: 700;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &:hover {
+      color: #494444;
+    }
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+    .icon {
+      font-size: 1.4rem;
+      margin-right: 5px;
+      color: rgba(0,0,0,.7);
+    }
+  }
+}
+
+.modal-navbar.active {
+  left: 0;
+  transition: 0.5s;
+}
+.background.active {
+  display: block;
+}

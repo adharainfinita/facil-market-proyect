@@ -75,8 +75,8 @@ export const postProduct = async (
 //? OBTENER TODOS LOS PRODUCTOS
 export const getAllProducts = async () => {
 	try {
-		const { data } = await axios(`${URL_HOST}/product`);
-		return data;
+		const response = await axios(`${URL_HOST}/product`);
+		return response.data;
 	} catch (error) {
 		let errorMessage = "An error occurred";
 		if (axios.isAxiosError(error)) {
