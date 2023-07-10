@@ -117,6 +117,7 @@ const App = () => {
             id: response.data.user.id,
             fullName: response.data.user.fullName,
             email: response.data.user.email,
+            password: "",
             image: response.data.user.image,
             admin: response.data.user.admin,
           };

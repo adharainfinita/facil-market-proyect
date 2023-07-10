@@ -3,7 +3,6 @@ import axios from "axios";
 import { LoginData, NewUser, userUpdate } from "../utils/interfaces";
 const URL_HOST = import.meta.env.VITE_HOST;
 // const URL_HOST = import.meta.env.VITE_API;
-import { User } from "../utils/interfaces";
 import swal from 'sweetalert'
 
 
