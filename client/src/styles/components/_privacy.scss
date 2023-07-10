@@ -1,0 +1,30 @@
+.privacy__cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-bottom: 100px;
+    min-height: 600px;
+}
+
+.privacy__container{
+    display: grid;
+    gap: 20px;
+}
+
+.privacy__data{
+    border-radius: 5px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.privacy__data h2{
+    color: #00BF63;
+    margin: 10px;
+  }
+  
+.privacy__data p {
+   font-size: 15px;
+  }

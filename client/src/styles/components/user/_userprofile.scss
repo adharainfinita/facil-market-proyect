@@ -4,7 +4,7 @@ $gray-color: #808080;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100%; /* Ajusta la altura al tamaño de la ventana */
+	height: 100%;
 	margin: 20px;
   }
 
@@ -30,7 +30,6 @@ $gray-color: #808080;
 		justify-content: center;
 		align-items: center;
 		padding: 50px;
-		width: 600px;
 		border-radius: 5px;
 		margin: 10px;
 		text-align: center; /* Centra el texto horizontalmente */

@@ -33,6 +33,8 @@ import NotFound from "./errors/NotFound";
 import About from "./components/About/About";
 import ShoppingHistory from "./components/Shoppinghistory";
 import UserProfiles from "./components/UsersProfiles";
+import Faqs from "./pages/FAQs";
+import Privacy from "./pages/Privacy";
 
 //? redux/services
 import { RootState } from "./redux/store";
@@ -234,7 +236,8 @@ const App = () => {
         <Route path="/review/:id" element={<ProductReviews />} />
 
         <Route path="/cart" element={<Cart />} />
-
+        <Route path="/faqs" element={<Faqs />} />
+				<Route path="/privacy" element={<Privacy />} />    
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
